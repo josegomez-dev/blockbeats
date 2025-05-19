@@ -223,7 +223,7 @@ const MusicDrawingPage = () => {
         <div style={{ background: "#111", padding: 10, borderRadius: 8, marginTop: -25 }}>
             <div>
                 <span style={{ marginLeft: 10, padding: "4px 8px", background: frequencyStyle.color, color: "#000", borderRadius: 4 }}>{frequencyStyle.name}</span>
-                <button onClick={() => setIsModalOpen(true)} className={styles.submitBtn} style={{ marginLeft: 25  }}>🎚 Freq. Range:</button>
+                <button onClick={() => setIsModalOpen(true)} className={styles.submitBtn} style={{ marginLeft: 25, background: 'transparent', animation: 'none'  }}>🎚 Freq. Range:</button>
             </div>
         </div>
         {/* <div style={{ marginTop: -50 }}>
