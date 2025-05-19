@@ -11,7 +11,7 @@ const DashboardPage = () => {
   const { user, role } = useAuth();
 
   useEffect(() => {
-    toast.success(`Welcome to your dashboard, ${user?.email}!`, { icon: ( 
+    toast.success(`Welcome to your dashboard!`, { icon: ( 
       <Avatar 
         size="50" 
         textSizeRatio={1.75} 
@@ -42,12 +42,6 @@ const DashboardPage = () => {
       </div>
       {/* <p>Your role is: {role}</p> */}
       <MusicDrawingPage />
-      <br />
-      <div style={{ textAlign: "center", margin: "0 auto", maxWidth: "400px", width: "100%" }}>
-        <p>
-          <span className={styles.typewriterLoop}>✨ We turn music into immutable art.</span> <br /><br />
-        </p>
-      </div>
       <br />
       <Footer />
     </>

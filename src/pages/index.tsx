@@ -245,6 +245,11 @@ const Home = () => {
       <div>
         <br />
         <Image src={'/starknet-logo.svg'} alt={'metamask'} width={200} height={50} style={{ filter: 'invert(1) drop-shadow(0 0 0.3rem #ffffff70)' }} />
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        <Image src={'/doradeogomez.png'} alt={'metamask'} width={80} height={100} style={{ marginBottom: '-20px' }} />
+        <Image src={'/musicalpathlogo.png'} alt={'metamask'} width={100} height={70} style={{ marginBottom: '-5px' }} />
       </div>
 
       <br />
