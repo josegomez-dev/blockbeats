@@ -14,7 +14,6 @@ import { auth, db } from "../../firebase";
 import { User } from "@/types/userTypes";
 import Avatar from "react-avatar";
 import Preloader from "@/components/Preloader";
-import { sendEmailVerification } from "firebase/auth";
 
 const slides = [
   { id: "slide-1", title: "Slide 1", img: "/item1.png" },
@@ -192,7 +191,8 @@ const Home = () => {
               <h3>{slide.title}</h3>
               <p>{slide.title}</p>
               <Image src={slide.img} alt={slide.title} width={200} height={200} />
-              <p><b>Price: </b>2.1Eth - $98.123</p>
+              
+              <p><b>Price: </b> <span data-text="2.1Eth" className="glitch">2.1Eth</span> - <span style={{ color: 'gold' }}>$98.123k</span></p>
             </div>
           ))}
         </div>
@@ -238,7 +238,13 @@ const Home = () => {
           <p>
             And take full ownership of your creation through <br /> 🔐 <span data-text="NFTs" className="glitch">NFTs</span>.
           </p>
+          <br />
         </div>
+      </div>
+      
+      <div>
+        <br />
+        <Image src={'/starknet-logo.svg'} alt={'metamask'} width={200} height={50} style={{ filter: 'invert(1) drop-shadow(0 0 0.3rem #ffffff70)' }} />
       </div>
 
       <br />
@@ -301,7 +307,7 @@ const Home = () => {
           {!isLoading ? (
             <>
               <br />
-              <button onClick={handleContinue} className={`${styles.submitBtn} ${!user?.emailVerified && 'disabled'}`} >CONTINUAR 🚀</button>
+              <button onClick={handleContinue} className={`${styles.submitBtn}`} >CONTINUAR 🚀</button>
               <br />
               <br />
               <button disabled={user?.emailVerified} onClick={handleRevenue} className={`${styles.submitBtn} ${!user?.emailVerified && 'disabled'}`} style={{ backgroundColor: 'transparent' }}>Reclama Bonos del Whitelist</button>

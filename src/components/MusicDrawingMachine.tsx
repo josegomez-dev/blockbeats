@@ -1,6 +1,8 @@
 "use client";
 import styles from "@/app/assets/styles/MainPage.module.css";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
 
 const notes: [string, number, string][] = [
   ["C1", 130.81, "kwhite"],
@@ -122,11 +124,21 @@ const PixelCanvas = ({ colorMap, playingIndex }: { colorMap: { noteIndex: number
 };
 
 const FrequencyModal = ({ selected, onSelect }: { selected: string; onSelect: (name: string) => void }) => (
-  <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, background: "rgba(0,0,0,0.8)", color: "white", zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center" }}>
-    <div style={{ background: "#222", padding: 20, borderRadius: 10 }}>
-      <h3>Select Frequency Range</h3>
+  <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, background: "rgba(0,0,0,0.8)", color: "white", zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto" }}>
+    <div style={{ backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', padding: 20, borderRadius: 10,  margin: "0 auto", textAlign: "center", width: "fit-content" }}>
+      <Image
+        style={{ maxWidth: "90%", height: "auto" }}
+        src={'/frequency-types.png'}
+        alt={'frequency types'}
+        width={350}
+        height={350}
+      />
+      <br />
+      <br />
+      <h3 style={{ textAlign: 'center' }}>Select Frequency Range</h3>
+      <br />
       {frequencyRanges.map((r) => (
-        <label key={r.name} style={{ display: "block", margin: "10px 0" }}>
+        <label key={r.name} style={{ display: "block", margin: "10px 0", textTransform: "uppercase", textAlign: "left", fontSize: 18 }}>
           <input type="radio" name="freq" value={r.name} checked={selected === r.name} onChange={() => onSelect(r.name)} />
           <span style={{ color: r.color, marginLeft: 8 }}>{r.name}</span>
         </label>
@@ -206,9 +218,13 @@ const MusicDrawingPage = () => {
     <div className="moving-border" style={{ padding: 20, fontFamily: "monospace", color: "white", backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', width: '400px', position: "relative", margin: "0 auto" }}>
       {/* Color overlay filter */}
       <div style={{ position: "fixed", inset: 0, background: frequencyStyle.color, mixBlendMode: "overlay", opacity: 0.15, pointerEvents: "none", zIndex: 1 }} />
-      {isModalOpen && <FrequencyModal selected={selectedRange} onSelect={(name) => { setSelectedRange(name); setIsModalOpen(false); }} />}
+      {isModalOpen && 
+        <FrequencyModal 
+          selected={selectedRange} 
+          onSelect={(name) => { setSelectedRange(name); setIsModalOpen(false); toast.success(`Selected ${name} frequency range!`, { icon: '🎚️' }) }}
+        />}
       <div style={{ margin: "0 auto", width: "fit-content", textAlign: "center", zIndex: 2 }}> 
-        <h2 style={{ color: frequencyStyle.color }}>BlockBeats NFT Piano 🎹</h2>
+        <h2 style={{ color: frequencyStyle.color }}>🎧 BlockBeats <span data-text="NFT" className="glitch">NFT</span> Piano 🎹</h2>
         <br />
         <div>
             <button onClick={playback} disabled={isPlayingBack} className={styles.launchpadBtn}>▶️ Play</button>
