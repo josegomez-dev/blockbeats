@@ -14,6 +14,7 @@ import { auth, db } from "../../firebase";
 import { User } from "@/types/userTypes";
 import Avatar from "react-avatar";
 import Preloader from "@/components/Preloader";
+import Link from "next/link";
 
 const slides = [
   { id: "slide-1", title: "Slide 1", img: "/item1.png" },
@@ -188,7 +189,7 @@ const Home = () => {
                 index === current ? styles.activeSlide : styles.inactiveSlide
               }`}
             >
-              <h3>{slide.title}</h3>
+              <h3></h3>
               <p>{slide.title}</p>
               <Image src={slide.img} alt={slide.title} width={200} height={200} />
               
@@ -248,8 +249,9 @@ const Home = () => {
         &nbsp;
         &nbsp;
         &nbsp;
-        <Image src={'/doradeogomez.png'} alt={'metamask'} width={80} height={100} style={{ marginBottom: '-20px' }} />
-        <Image src={'/musicalpathlogo.png'} alt={'metamask'} width={100} height={70} style={{ marginBottom: '-5px' }} />
+        <Link href={'https://josegomez-dev.github.io/MusicalPath/'} target={'_blank'}>
+          <Image src={'/musicalpathlogo.png'} alt={'metamask'} width={100} height={70} style={{ marginBottom: '-5px' }} />
+        </Link>
       </div>
 
       <br />

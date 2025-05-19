@@ -1,4 +1,5 @@
 import styles from '@/app/assets/styles/Footer.module.css'
+import Image from 'next/image';
 import Link from 'next/link';
 import { FaLinkedin, FaFacebook, FaInstagram } from "react-icons/fa";
 
@@ -18,6 +19,11 @@ const Footer = () => {
         </Link> */}
       </p>
       {/* <hr style={{ width: "300px", maxWidth: "100%", margin: '0 auto' }} /> */}
+      <Link href={'https://josegomez-dev.github.io/catarsismusical/studio.html'} target={'_blank'}>
+        <Image src={'/doradeogomez.png'} alt={'metamask'} width={80} height={100} style={{ marginBottom: '-20px' }} />
+      </Link>
+      <br />
+      <br />
       <p>&copy; 2025 BlockBeats 3.0 <br /> All rights reserved.</p>
     </footer>
   )
