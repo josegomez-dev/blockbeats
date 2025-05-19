@@ -17,9 +17,9 @@ import Preloader from "@/components/Preloader";
 import Link from "next/link";
 
 const slides = [
-  { id: "slide-1", title: "Slide 1", img: "/item1.png" },
-  { id: "slide-2", title: "Slide 2", img: "/item2.png" },
-  { id: "slide-3", title: "Slide 3", img: "/item3.png" },
+  { id: "slide-1", title: "Crypto Jingle", img: "/item1.png" },
+  { id: "slide-2", title: "Solidity Jingle", img: "/item2.png" },
+  { id: "slide-3", title: "Love Song", img: "/item3.png" },
 ];
 
 const Home = () => {

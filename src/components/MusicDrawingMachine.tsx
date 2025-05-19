@@ -138,7 +138,7 @@ const FrequencyModal = ({ selected, onSelect }: { selected: string; onSelect: (n
       <h3 style={{ textAlign: 'center' }}>Select Frequency Range</h3>
       <br />
       {frequencyRanges.map((r) => (
-        <label key={r.name} style={{ display: "block", margin: "10px 0", textTransform: "uppercase", textAlign: "left", fontSize: 18 }}>
+        <label key={r.name} style={{ display: "block", margin: "10px 0", textTransform: "uppercase", textAlign: "left", fontSize: 18 } }>
           <input type="radio" name="freq" value={r.name} checked={selected === r.name} onChange={() => onSelect(r.name)} />
           <span style={{ color: r.color, marginLeft: 8 }}>{r.name}</span>
         </label>
