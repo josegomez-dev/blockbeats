@@ -1,0 +1,21 @@
+.footer {
+    backdrop-filter: blur(50px);
+    background-color: rgba(0, 0, 0, 0.5); /* Light transparent */    
+    box-shadow: 0 0 5px #0ff;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+  }
+
+  .footer a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+  }
+
+  .footer a:hover {
+    text-decoration: underline;
+  }
