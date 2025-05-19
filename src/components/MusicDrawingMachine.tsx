@@ -118,7 +118,7 @@ const PixelCanvas = ({ colorMap, playingIndex }: { colorMap: { noteIndex: number
     }
   }, [colorMap, playingIndex]);
 
-  return <canvas ref={canvasRef} width={cols * cellSize} height={rows * cellSize} style={{ margin: "10px 0", background: "#111" }} id="pixel-canvas" />;
+  return <canvas ref={canvasRef} width={cols * cellSize} height={rows * cellSize} style={{ margin: "0 auto", background: "#111" }} id="pixel-canvas" />;
 };
 
 const FrequencyModal = ({ selected, onSelect }: { selected: string; onSelect: (name: string) => void }) => (
@@ -216,11 +216,15 @@ const MusicDrawingPage = () => {
             &nbsp;
             <button onClick={resetBoard} disabled={isPlayingBack} className={styles.launchpadBtn}>⚠️ Reset</button>        
         </div>
-        <PixelCanvas colorMap={colorMap} playingIndex={playIndex} />
-        <br />
-        <Piano onNotePlay={handleNotePlay} />
 
-        <div style={{ background: "#111", padding: 10, borderRadius: 8, marginTop: -25 }}>
+        <br />          
+        <div style={{ position: "relative", zIndex: 2, backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+          <PixelCanvas colorMap={colorMap} playingIndex={playIndex} />
+          <br />
+          <Piano onNotePlay={handleNotePlay} />
+        </div>
+
+        <div style={{ background: "#111", padding: 10, marginTop: -50, zIndex: 2, position: "relative", borderRadius: 10 }}>
             <div>
                 <span style={{ marginLeft: 10, padding: "4px 8px", background: frequencyStyle.color, color: "#000", borderRadius: 4 }}>{frequencyStyle.name}</span>
                 <button onClick={() => setIsModalOpen(true)} className={styles.submitBtn} style={{ marginLeft: 25, background: 'transparent', animation: 'none'  }}>🎚 Freq. Range:</button>

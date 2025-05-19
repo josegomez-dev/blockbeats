@@ -21,7 +21,6 @@ const DashboardPage = () => {
         </div>
       </div>
       {/* <p>Your role is: {role}</p> */}
-      <br />
       <MusicDrawingPage />
       <br />
       <div style={{ textAlign: "center", margin: "0 auto", maxWidth: "400px", width: "100%" }}>

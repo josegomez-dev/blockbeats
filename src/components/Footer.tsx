@@ -6,8 +6,8 @@ const Footer = () => {
   return (
     <footer className={styles.footer}>
       <p>  
-        <a data-text="josegomez.dev" className="glitch" href="https://www.linkedin.com/in/josealejandrogomezcastro/">josegomez.dev</a>
-        <Link href="https://www.linkedin.com/in/josealejandrogomezcastro/" target="_blank" rel="noopener noreferrer">
+        {/* <a data-text="josegomez.dev" className="glitch" href="https://www.linkedin.com/in/josealejandrogomezcastro/">josegomez.dev</a> */}
+        {/* <Link href="https://www.linkedin.com/in/josealejandrogomezcastro/" target="_blank" rel="noopener noreferrer">
           <FaLinkedin className={styles.icon} />
         </Link>
         <Link href="https://www.facebook.com/alegomez.cr/" target="_blank" rel="noopener noreferrer">
@@ -15,9 +15,8 @@ const Footer = () => {
         </Link>
         <Link href="https://www.instagram.com/josegomez.dev/" target="_blank" rel="noopener noreferrer">
           <FaInstagram className={styles.icon} />
-        </Link>
+        </Link> */}
       </p>
-      <br />
       {/* <hr style={{ width: "300px", maxWidth: "100%", margin: '0 auto' }} /> */}
       <p>&copy; 2025 BlockBeats 3.0 <br /> All rights reserved.</p>
     </footer>
