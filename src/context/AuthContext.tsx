@@ -178,7 +178,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       });
 
       // Send a welcome email using EmailJS
-      sendWelcomeEmail(email, password);
+      // sendWelcomeEmail(email, password);
 
       console.log("User and profile created successfully.");
     } catch (error) {

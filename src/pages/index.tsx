@@ -283,7 +283,7 @@ const Home = () => {
             <b>¡Estamos emocionados de tenerte a bordo!</b>
           </p>
           <br />
-          {user && !user?.emailVerified && (
+          {!user?.emailVerified && (
             <>
               <hr />
               <br />
