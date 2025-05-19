@@ -203,7 +203,7 @@ const MusicDrawingPage = () => {
   }, []);
 
   return (
-    <div style={{ padding: 20, fontFamily: "monospace", color: "white", backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', width: '400px', position: "relative", margin: "0 auto" }}>
+    <div className="moving-border" style={{ padding: 20, fontFamily: "monospace", color: "white", backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', width: '400px', position: "relative", margin: "0 auto" }}>
       {/* Color overlay filter */}
       <div style={{ position: "fixed", inset: 0, background: frequencyStyle.color, mixBlendMode: "overlay", opacity: 0.15, pointerEvents: "none", zIndex: 1 }} />
       {isModalOpen && <FrequencyModal selected={selectedRange} onSelect={(name) => { setSelectedRange(name); setIsModalOpen(false); }} />}
