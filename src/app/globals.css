@@ -294,22 +294,6 @@ p {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .gallery-screen {
   padding: 50px;
   text-align: center;
@@ -346,4 +330,280 @@ p {
 
 .gallery-image:hover {
   transform: scale(1.05);
+}
+
+
+
+.floating-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #222;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: background 0.3s ease;
+  animation: pulse 2s infinite;
+}
+
+.sidebar-panel {
+  position: fixed;
+  top: 0;
+  right: -320px;
+  width: 300px;
+  height: 100vh;
+  backdrop-filter: blur(50px);
+  background-color: rgba(0, 0, 0, 0.1); /* Light transparent */    
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  transition: right 0.4s ease;
+  z-index: 5000;
+  display: flex;
+  flex-direction: column;
+  color: var(--secondary-color)
+}
+
+.sidebar-panel.open {
+  right: 0;
+}
+
+.close-btn {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  font-size: 20px;
+  margin: 8px 12px;
+  cursor: pointer;
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+}
+
+.tab {
+  flex: 1;
+  padding: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.tab:hover {
+  background-color: #eee;
+}
+
+.tab.active {
+  background-color: #ddd;
+  border-bottom: 2px solid #222;
+  color: var(--primary-color)
+}
+
+.tab-content {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* NFT Styles */
+.nft-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.nft-card {
+  display: flex;
+  align-items: center;
+  background: #f2f2f2;
+  border-radius: 10px;
+  padding: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.nft-actions {
+  display: flex;
+  gap: 2px;
+  margin-top: 2px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.nft-actions button {
+  border: none;
+  border-radius: 6px;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  background: var(--primary-color);
+  color: white;
+  width: auto !important; 
+  animation: none;
+  height: 20px;
+  width: 30px;
+}
+
+.nft-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  margin-right: 12px;
+}
+
+.nft-title {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.nft-meta {
+  font-size: 12px;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-badge {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+}
+
+.status-badge.online { background: limegreen; }
+.status-badge.offline { background: gray; }
+.status-badge.error { background: orange; }
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.5; }
+}
+
+/* Contact List */
+.contacts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contact-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #eee;
+  padding: 8px;
+  border-radius: 8px;
+  transition: opacity 0.3s;
+}
+
+.contact-card.pending {
+  opacity: 0.5;
+}
+
+.invite-button {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 8px;
+  cursor: pointer;
+  animation: fadeIn 0.3s ease-in-out;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  font-weight: bold;
+  margin-top: -55px;
+  margin-right: 10px;
+  margin-left: auto;
+  height: 45px;
+  width: 50px;
+}
+
+/* Token List */
+.token-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.token-card {
+  background: #fff;
+  border-left: 4px solid #0ff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
+.token-symbol {
+  color: var(--primary-color);
+}
+
+/* Chat Bubble */
+.chat-area {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+.chat-input {
+  display: flex;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px 0 0 6px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.chat-input button {
+  padding: 8px 12px;
+  border: none;
+  background-color: #222;
+  color: var(--primary-color);
+  border-radius: 0 6px 6px 0;
+  cursor: pointer;
+}
+
+.chat-bubble {
+  background: #e1f5fe;
+  border-radius: 12px;
+  padding: 10px 14px;
+  margin: 8px 0;
+  font-size: 14px;
+  box-shadow: 1px 1px 4px rgba(0,0,0,0.1);
+}
+
+.chat-bubble.admin {
+  align-self: flex-start;
+}
+
+.chat-bubble.user {
+  background: #c8e6c9;
+  align-self: flex-end;
 }

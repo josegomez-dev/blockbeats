@@ -14,6 +14,7 @@ import type { AppProps } from 'next/app'
 import { Toaster } from 'react-hot-toast'
 
 import Layout from '@/components/Layout'
+import SidebarChatPanel from '@/components/SidebarChatPanel';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const chains = [sepolia];
@@ -27,6 +28,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Layout>
                 <Toaster/>
                 <Component {...pageProps} />
+                <SidebarChatPanel />
             </Layout>
         </GlobalProvider>
       </AuthProvider>
