@@ -579,15 +579,23 @@ p {
   border-radius: 6px 0 0 6px;
   border: 1px solid #ccc;
   outline: none;
+  width: 100px;
 }
 
 .chat-input button {
-  padding: 8px 12px;
+
+  background-color: var(--primary-color);
+  padding: 10px 12px;
   border: none;
-  background-color: #222;
   color: var(--primary-color);
-  border-radius: 0 6px 6px 0;
   cursor: pointer;
+  animation: none;
+  border: white 1px solid;
+  color: white;
+}
+
+.chat-input button:last-child {
+  border-radius: 0 6px 6px 0;
 }
 
 .chat-bubble {

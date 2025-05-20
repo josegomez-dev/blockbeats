@@ -156,6 +156,7 @@ const SidebarChatPanel = () => {
 
       <div ref={panelRef} className={`sidebar-panel ${isOpen ? 'open' : ''}`}>
         <button className="close-btn" onClick={() => setIsOpen(false)}>✖</button>
+        asd
 
         <div className="tabs">
           {TABS.map(tab => (
@@ -263,7 +264,7 @@ const SidebarChatPanel = () => {
                 />
                 <button onClick={handleSend}>Send</button>
                 <button onClick={recording ? stopRecording : startRecording}>
-                  {recording ? '⏹️ Stop' : '🎙️ Record'}
+                  {recording ? '⏹️ Stop' : '⏺️'}
                 </button>
               </div>
             </div>
