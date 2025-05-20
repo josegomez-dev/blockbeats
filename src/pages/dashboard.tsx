@@ -15,7 +15,7 @@ const DashboardPage = () => {
       <Avatar 
         size="50" 
         textSizeRatio={1.75} 
-        name={user?.email || 'Jhon Doe'} 
+        name={user?.email || ''} 
         // facebook-id={'facebookId'}
         // md5Email={'md5Email'}
         // twitterHandle='twitterHandle'

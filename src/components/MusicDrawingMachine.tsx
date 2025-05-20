@@ -81,7 +81,7 @@ const Piano = ({ onNotePlay }: { onNotePlay: (noteIndex: number) => void }) => (
   </div>
 );
 
-const PixelCanvas = ({ colorMap, playingIndex }: { colorMap: { noteIndex: number; time: number; color: string }[]; playingIndex: number | null }) => {
+const PixelCanvas = ({ colorMap, playingIndex, color }: { colorMap: { noteIndex: number; time: number; color: string }[]; playingIndex: number | null; color: string }) => {
   const rows = notes.length;
   const cols = 16;
   const cellSize = 20;
@@ -120,7 +120,7 @@ const PixelCanvas = ({ colorMap, playingIndex }: { colorMap: { noteIndex: number
     }
   }, [colorMap, playingIndex]);
 
-  return <canvas ref={canvasRef} width={cols * cellSize} height={rows * cellSize} style={{ margin: "0 auto", background: "#111" }} id="pixel-canvas" />;
+  return <canvas ref={canvasRef} width={cols * cellSize} height={rows * cellSize} style={{ margin: "0 auto", background: color }} id="pixel-canvas" />;
 };
 
 const FrequencyModal = ({ selected, onSelect }: { selected: string; onSelect: (name: string) => void }) => (
@@ -232,19 +232,19 @@ const MusicDrawingPage = () => {
             &nbsp;
             <button onClick={resetBoard} disabled={isPlayingBack} className={styles.launchpadBtn}>⚠️ Reset</button>        
         </div>
-
-        <br />          
-        <div style={{ position: "relative", zIndex: 2, backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-          <PixelCanvas colorMap={colorMap} playingIndex={playIndex} />
-          <br />
-          <Piano onNotePlay={handleNotePlay} />
-        </div>
-
-        <div style={{ background: "#111", padding: 10, marginTop: -50, zIndex: 2, position: "relative", borderRadius: 10 }}>
+        
+        <div style={{ background: "#111", padding: 10, marginTop: 0, marginBottom: -15, zIndex: 2, position: "relative" }}>
             <div>
                 <span style={{ marginLeft: 10, padding: "4px 8px", background: frequencyStyle.color, color: "#000", borderRadius: 4 }}>{frequencyStyle.name}</span>
                 <button onClick={() => setIsModalOpen(true)} className={styles.submitBtn} style={{ marginLeft: 25, background: 'transparent', animation: 'none'  }}>🎚 Freq. Range:</button>
             </div>
+        </div>
+
+        <br />          
+        <div style={{ position: "relative", zIndex: 2, backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+          <PixelCanvas colorMap={colorMap} playingIndex={playIndex} color={frequencyStyle.color} />
+          <br />
+          <Piano onNotePlay={handleNotePlay} />
         </div>
         {/* <div style={{ marginTop: -50 }}>
             <button disabled className={`${styles.submitBtn} ${'disabled'}`} onClick={downloadCanvas}>🖼 Save NFT</button>
