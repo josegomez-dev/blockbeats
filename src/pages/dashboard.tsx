@@ -34,7 +34,7 @@ const DashboardPage = () => {
       <br />
       <br />
       <div style={{ textAlign: "center", margin: "0 auto" }}>
-        <div style={{ maxWidth: "800px", width: "100%", margin: "0 auto" }}>
+        <div style={{ maxWidth: "800px", width: "100%", margin: "0 auto", marginTop: "-80px" }}>
           <p>
             It’s <span data-text="Web3" className="glitch">Web3</span>’s first community-powered <br /> <b>musical signature generator</b> — <b>mintable, shareable, tradable</b>... <br /><br />
           </p>

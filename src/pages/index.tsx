@@ -165,7 +165,6 @@ const Home = () => {
   return (
     <main className={styles.main}>
     
-      <br />          
       <div className={`${styles.bannerContainer} ${styles.bannerCustomPositioning}`}>
         <p>
           It’s <span data-text="Web3" className="glitch">Web3</span>’s first community-powered <br /> <b>musical signature generator</b> — <b>mintable, shareable, tradable</b>... <br /><br />

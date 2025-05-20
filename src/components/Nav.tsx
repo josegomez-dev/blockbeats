@@ -69,8 +69,12 @@ export default function Nav() {
   return (
     <nav className={styles.navbar}>
       <div className={styles.logoContainer} onClick={() => router.push('/')}>
-        <Image src="/logo.png" alt="blockbeats-logo" width={50} height={50} />
-        <h1 className="glitch" data-text="BlockBeats">BlockBeats</h1>
+        {!authenticated && (
+          <>
+            <Image src="/logo.png" alt="blockbeats-logo" width={50} height={50} />
+            <h1 className="glitch" data-text="BlockBeats">BlockBeats</h1>
+          </>
+        )}
       </div>
 
       <ul className={styles.navList}>
