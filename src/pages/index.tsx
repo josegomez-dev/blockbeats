@@ -304,7 +304,7 @@ const Home = () => {
                 Por favor verifica tu <b>correo electrónico</b> para acceder a <b>todas las funciones</b>.
               </p>
               <br />
-              <button onClick={() => { if (user) verifyEmail(auth?.currentUser || user); }} className={styles.submitBtn}>Verificar correo electrónico</button>
+              <button onClick={() => { if (user) verifyEmail(user); }} className={styles.submitBtn}>Verificar correo electrónico</button>
               <br />
               <br />
               <br />
