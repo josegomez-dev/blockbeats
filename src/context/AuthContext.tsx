@@ -2,7 +2,6 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import {
-  User,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -14,7 +13,7 @@ import {
 } from "firebase/auth";
 import { auth, db } from "./../../firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
-import { EMPTY_USER } from "@/types/userTypes";
+import { EMPTY_USER, User } from "@/types/userTypes";
 import emailjs from 'emailjs-com';
 import toast from 'react-hot-toast';
 import { v4 as uuidv4 } from 'uuid';
@@ -59,8 +58,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           if (accountSnap.exists()) {
             const accountData = accountSnap.data();
             setUser({
-              ...user,
+              ...EMPTY_USER,
               ...accountData,
+              id: user.uid,
+              email: user.email ?? "",
+              role: accountData.role ?? "user",
+              status: accountData.status ?? "active",
             });
             setAuthenticated(true);
             setRole(accountData.role || "user");
@@ -94,8 +97,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
         // Update global user state here
         setUser({
-          ...user,
+          ...EMPTY_USER,
           ...accountData,
+          id: user.uid,
+          email: user.email ?? "",
+          role: accountData.role ?? "user",
+          status: accountData.status ?? "active",
         });
         setAuthenticated(true);
         setRole(accountData.role || "user");
@@ -111,8 +118,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const verifyEmail = async (user: User) => {
     try {
-      await sendEmailVerification(user);
-      toast.success("Verification email sent. Please check your inbox.");
+      if (!user.email) {
+        throw new Error("User email is missing.");
+      }
+      // Optionally, you can check if the current Firebase user matches
+      const currentUser = auth.currentUser;
+      if (currentUser && currentUser.email === user.email) {
+        await sendEmailVerification(currentUser);
+        toast.success("Verification email sent. Please check your inbox.");
+      } else {
+        // Optionally, sign in as the user to send verification
+        const userCredential = await signInWithEmailAndPassword(auth, user.email, 'abc123');
+        await sendEmailVerification(userCredential.user);
+        toast.success("Verification email sent. Please check your inbox.");
+      }
     } catch (error) {
       console.error("Error sending email verification:", error);
       toast.error("Error sending verification email. Please try again.");
@@ -201,8 +220,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   
         // Update global user state here
         setUser({
-          ...user,
+          ...EMPTY_USER,
           ...accountData,
+          id: user.uid,
+          email: user.email ?? "",
+          role: accountData.role ?? "user",
+          status: accountData.status ?? "active",
         });
         setAuthenticated(true);
         setRole(accountData.role || "user");

@@ -93,18 +93,6 @@ a {
   text-align: center;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 #parallax-layers {
   position: fixed;
   top: 0;
@@ -215,16 +203,6 @@ a {
 }
 
 
-
-
-
-
-
-
-
-
-
-
 #root {
   width: 100px;
   height: 100px;
@@ -312,4 +290,13 @@ p {
   0%     { --angle: 0deg; }
   100%   { --angle: 360deg;
   }
+}
+
+.notificationList {
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
+  max-height: 200px;
+  overflow-y: auto;
+  color: red;
 }

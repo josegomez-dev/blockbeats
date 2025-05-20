@@ -5,6 +5,7 @@ export interface User {
     email: string;
     role: 'admin' | 'user' | 'guest'; // Could use an enum for roles too
     status: 'active' | 'inactive' | 'banned'; // Could use an enum for statuses too
+    notifications?: Notification[]; // Assuming you have a Notification type defined somewhere
     emailVerified: boolean;
     createdAt?: Date;
     updatedAt?: Date;
@@ -15,6 +16,7 @@ export interface User {
     id: '',
     displayName: '',
     email: '',
+    notifications: [],
     role: 'user',
     status: 'active',
     emailVerified: false,
