@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import NeonSlider from "./NeonSlider";
+import { cp } from "fs";
 
 const notes: [string, number, string][] = [
   ["C1", 130.81, "kwhite"],
@@ -127,9 +128,10 @@ const PixelCanvas = ({ colorMap, playingIndex, color }: { colorMap: { noteIndex:
 type FrequencyModalProps = {
   selected: string;
   onSelect: (name: string) => void;
+  onSubmit: () => void;
 };
 
-const FrequencyModal = ({ selected, onSelect }: FrequencyModalProps) => {
+const FrequencyModal = ({ selected, onSelect, onSubmit }: FrequencyModalProps) => {
   const [sliderIndex, setSliderIndex] = useState(
     frequencyRanges.findIndex((r) => r.name === selected)
   );
@@ -147,13 +149,16 @@ const FrequencyModal = ({ selected, onSelect }: FrequencyModalProps) => {
       display: "flex", alignItems: "center", justifyContent: "center",
       margin: "0 auto"
     }}>
-      <div style={{
+      <form style={{
         backdropFilter: 'blur(50px)',
         backgroundColor: 'rgba(0, 0, 0, 0.1)',
         padding: 20,
         borderRadius: 10,
         textAlign: "center",
         width: "fit-content"
+      }} onSubmit={(e) => {
+        e.preventDefault();
+        onSubmit();
       }}>
         <Image
           style={{ maxWidth: "90%", height: "auto" }}
@@ -177,7 +182,9 @@ const FrequencyModal = ({ selected, onSelect }: FrequencyModalProps) => {
         <div style={{ fontSize: 18, color: frequencyRanges[sliderIndex].color }}>
           {frequencyRanges[sliderIndex].name}
         </div>
-      </div>
+        <br />
+        <button onSubmit={onSubmit} className={styles.submitBtn}>Choose Freq.</button>
+      </form>
     </div>
   );
 };
@@ -256,7 +263,8 @@ const MusicDrawingPage = () => {
       {isModalOpen && 
         <FrequencyModal 
           selected={selectedRange} 
-          onSelect={(name) => { setSelectedRange(name); setIsModalOpen(false); toast.success(`Selected ${name} frequency range!`, { icon: '🎚️' }) }}
+          onSelect={(name) => { setSelectedRange(name); setIsModalOpen(true); }}
+          onSubmit={() => { setIsModalOpen(false); }}
         />}
       <div style={{ margin: "0 auto", width: "fit-content", textAlign: "center", zIndex: 2 }}> 
         <h2 style={{ color: frequencyStyle.color }}>🎧 BlockBeats <span data-text="NFT" className="glitch">NFT</span> Piano 🎹</h2>
