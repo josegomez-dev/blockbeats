@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useAuth } from '@/context/AuthContext';
 import styles from '@/app/assets/styles/Nav.module.css';
-import { FaSignOutAlt, FaUserCircle, FaCog, FaBell, FaUser } from 'react-icons/fa';
+import { FaSignOutAlt, FaUserCircle, FaCog, FaBell, FaUser, FaHeadphones } from 'react-icons/fa';
 import { RiGalleryView } from "react-icons/ri";
 import { GiWallet } from "react-icons/gi";
 import Avatar from 'react-avatar';
@@ -69,9 +69,9 @@ export default function Nav() {
   return (
     <nav className={styles.navbar}>
       <div className={styles.logoContainer} onClick={() => router.push('/')}>
+        <Image src="/logo.png" alt="blockbeats-logo" width={50} height={50} />
         {!authenticated && (
           <>
-            <Image src="/logo.png" alt="blockbeats-logo" width={50} height={50} />
             <h1 className="glitch" data-text="BlockBeats">BlockBeats</h1>
           </>
         )}
@@ -80,7 +80,13 @@ export default function Nav() {
       <ul className={styles.navList}>
         {authenticated && (
           <>
-            <GiWallet className={styles.icon} /> Wallet: {address?.slice(0, 6)}... {data?.formatted} {data?.symbol}
+            <span>
+              {/* <GiWallet/>   */}
+              <div style={{ color: 'lightgreen' }}>
+                {data?.formatted?.slice(0, 8)}...
+              </div>
+              <span style={{ color: '#0ff' }}>{data?.symbol}</span>
+            </span>
             &nbsp; &nbsp; &nbsp;
             {/* 🔔 Notification Icon with Counter */}
             <div className={styles.notificationWrapper} ref={notifRef}>
@@ -134,6 +140,11 @@ export default function Nav() {
                       <FaUserCircle className={styles.icon} /> Profile
                     </div>
                   </Link> */}
+                  <Link href="/dashboard">
+                    <div className={styles.dropdownItem}>
+                      <FaHeadphones className={styles.icon} /> Drawing Machine
+                    </div>
+                  </Link>
                   <Link href="/gallery">
                     <div className={styles.dropdownItem}>
                       <RiGalleryView className={styles.icon} /> Gallery

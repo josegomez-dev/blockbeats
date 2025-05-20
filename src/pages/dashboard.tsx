@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import Avatar from "react-avatar";
+import NeonSlider from "@/components/NeonSlider";
 
 const DashboardPage = () => {
   const { user, role } = useAuth();
@@ -31,17 +32,16 @@ const DashboardPage = () => {
 
   return (
     <>
-      <br />
-      <br />
-      <div style={{ textAlign: "center", margin: "0 auto" }}>
-        <div style={{ maxWidth: "800px", width: "100%", margin: "0 auto", marginTop: "-80px" }}>
-          <p>
-            It’s <span data-text="Web3" className="glitch">Web3</span>’s first community-powered <br /> <b>musical signature generator</b> — <b>mintable, shareable, tradable</b>... <br /><br />
-          </p>
-        </div>
+      <div className={`${styles.bannerContainer} ${styles.bannerContainerCustom}`}>
+        <br />
+        <br />
       </div>
+      
       {/* <p>Your role is: {role}</p> */}
-      <MusicDrawingPage />
+      <div style={{ zIndex: 1, position: "relative", margin: "0 auto", width: "100%", maxWidth: "800px" }}>
+        <MusicDrawingPage />
+      </div>
+      <br />
       <br />
       <Footer />
     </>

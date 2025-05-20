@@ -15,6 +15,7 @@ import { User } from "@/types/userTypes";
 import Avatar from "react-avatar";
 import Preloader from "@/components/Preloader";
 import Link from "next/link";
+import NeonSlider from "@/components/NeonSlider";
 
 const slides = [
   { id: "slide-1", title: "Crypto Jingle", img: "/item1.png" },
@@ -165,7 +166,12 @@ const Home = () => {
   return (
     <main className={styles.main}>
     
-      <div className={`${styles.bannerContainer} ${styles.bannerCustomPositioning}`}>
+      <div className={`${styles.bannerContainer} ${styles.bannerContainerCustom}`}>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
         <p>
           It’s <span data-text="Web3" className="glitch">Web3</span>’s first community-powered <br /> <b>musical signature generator</b> — <b>mintable, shareable, tradable</b>... <br /><br />
         </p>
@@ -174,42 +180,12 @@ const Home = () => {
         </p>
       </div>
 
-      {/* 🚀 Neon Slider */}
-      <div className={styles.sliderContainer}>
-        <div className={styles.thumbnail + " " + styles.leftThumb}>
-          <Image src={slides[prevIndex].img} alt="prev" width={100} height={100} />
-        </div>
+      <NeonSlider slides={[
+        { id: 1, title: "Starknet Jingle", img: "/nft1.png" },
+        { id: 2, title: "Billy Elli2h Collection", img: "/nft2.png" },
+        { id: 3, title: "Astrofreakazoid", img: "/nft3.png" },
+      ]} />
 
-        <div className={styles.slider}>
-          {slides.map((slide, index) => (
-            <div
-              key={slide.id}
-              className={`${styles.slide} ${
-                index === current ? styles.activeSlide : styles.inactiveSlide
-              }`}
-            >
-              <h3></h3>
-              <p>{slide.title}</p>
-              <Image src={slide.img} alt={slide.title} width={200} height={200} />
-              
-              <p><b>Price: </b> <span data-text="2.1Eth" className="glitch">2.1Eth</span> - <span style={{ color: 'gold' }}>$98.123k</span></p>
-            </div>
-          ))}
-        </div>
-
-        <div className={styles.thumbnail + " " + styles.rightThumb}>
-          <Image src={slides[nextIndex].img} alt="next" width={100} height={100} />
-        </div>
-
-        <div className={styles.sliderControls}>
-          <button onClick={handlePrev} className={styles.prevBtn}>
-            &#60;
-          </button>
-          <button onClick={handleNext} className={styles.nextBtn}>
-            &#62;
-          </button>
-        </div>
-      </div>
       
       <br />
       <br />
@@ -253,10 +229,6 @@ const Home = () => {
         </Link>
       </div>
 
-      <br />
-      <br />
-      <br />
-      <br />
       <br />
       <br />
 

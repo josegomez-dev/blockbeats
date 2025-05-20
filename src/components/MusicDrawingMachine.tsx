@@ -3,6 +3,7 @@ import styles from "@/app/assets/styles/MainPage.module.css";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
+import NeonSlider from "./NeonSlider";
 
 const notes: [string, number, string][] = [
   ["C1", 130.81, "kwhite"],
@@ -123,35 +124,69 @@ const PixelCanvas = ({ colorMap, playingIndex, color }: { colorMap: { noteIndex:
   return <canvas ref={canvasRef} width={cols * cellSize} height={rows * cellSize} style={{ margin: "0 auto", background: color }} id="pixel-canvas" />;
 };
 
-const FrequencyModal = ({ selected, onSelect }: { selected: string; onSelect: (name: string) => void }) => (
-  <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, background: "rgba(0,0,0,0.8)", color: "white", zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto" }}>
-    <div style={{ backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', padding: 20, borderRadius: 10,  margin: "0 auto", textAlign: "center", width: "fit-content" }}>
-      <Image
-        style={{ maxWidth: "90%", height: "auto" }}
-        src={'/frequency-types.png'}
-        alt={'frequency types'}
-        width={350}
-        height={350}
-      />
-      <br />
-      <br />
-      <h3 style={{ textAlign: 'center' }}>Select Frequency Range</h3>
-      <br />
-      {frequencyRanges.map((r) => (
-        <label key={r.name} style={{ display: "block", margin: "10px 0", textTransform: "uppercase", textAlign: "left", fontSize: 18 } }>
-          <input type="radio" name="freq" value={r.name} checked={selected === r.name} onChange={() => onSelect(r.name)} />
-          <span style={{ color: r.color, marginLeft: 8 }}>{r.name}</span>
-        </label>
-      ))}
+type FrequencyModalProps = {
+  selected: string;
+  onSelect: (name: string) => void;
+};
+
+const FrequencyModal = ({ selected, onSelect }: FrequencyModalProps) => {
+  const [sliderIndex, setSliderIndex] = useState(
+    frequencyRanges.findIndex((r) => r.name === selected)
+  );
+
+  useEffect(() => {
+    if (sliderIndex >= 0 && sliderIndex < frequencyRanges.length) {
+      onSelect(frequencyRanges[sliderIndex].name);
+    }
+  }, [sliderIndex]);
+
+  return (
+    <div style={{
+      position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
+      background: "rgba(0,0,0,0.8)", color: "white", zIndex: 200,
+      display: "flex", alignItems: "center", justifyContent: "center",
+      margin: "0 auto"
+    }}>
+      <div style={{
+        backdropFilter: 'blur(50px)',
+        backgroundColor: 'rgba(0, 0, 0, 0.1)',
+        padding: 20,
+        borderRadius: 10,
+        textAlign: "center",
+        width: "fit-content"
+      }}>
+        <Image
+          style={{ maxWidth: "90%", height: "auto" }}
+          src={'/frequency-types.png'}
+          alt={'frequency types'}
+          width={350}
+          height={350}
+        />
+        <br /><br />
+        <h3 style={{ textAlign: 'center' }}>Select Frequency Range</h3>
+        <br />
+        <input
+          type="range"
+          min={0}
+          max={frequencyRanges.length - 1}
+          value={sliderIndex}
+          onChange={(e) => setSliderIndex(Number(e.target.value))}
+          style={{ width: '100%' }}
+        />
+        <br /><br />
+        <div style={{ fontSize: 18, color: frequencyRanges[sliderIndex].color }}>
+          {frequencyRanges[sliderIndex].name}
+        </div>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const MusicDrawingPage = () => {
   const [notesPlayed, setNotesPlayed] = useState<{ noteIndex: number; time: number }[]>([]);
   const [colorMap, setColorMap] = useState<{ noteIndex: number; time: number; color: string }[]>([]);
   const [timeStep, setTimeStep] = useState(0);
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRange, setSelectedRange] = useState("Harmonic");
   const [isPlayingBack, setIsPlayingBack] = useState(false);
   const [playIndex, setPlayIndex] = useState<number | null>(null);
@@ -232,6 +267,7 @@ const MusicDrawingPage = () => {
             &nbsp;
             <button onClick={resetBoard} disabled={isPlayingBack} className={styles.launchpadBtn}>⚠️ Reset</button>        
         </div>
+        <br />
         
         <div style={{ background: "#111", padding: 10, marginTop: 0, marginBottom: -15, zIndex: 2, position: "relative" }}>
             <div>
@@ -253,6 +289,17 @@ const MusicDrawingPage = () => {
             <button disabled className={`${styles.submitBtn} ${'disabled'}`} onClick={() => alert("Shared!")}>🔗 Share</button>
         </div> */}
       </div>
+      <br />
+      <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
+        <p className="glitch">My Collection</p>
+        <br />
+      </div>
+
+      <NeonSlider slides={[
+        { id: 1, title: "Starknet Jingle", img: "/nft1.png" },
+        { id: 2, title: "Billy Elli2h Collection", img: "/nft2.png" },
+        { id: 3, title: "Astrofreakazoid", img: "/nft3.png" },
+      ]} />
     </div>
   );
 };
