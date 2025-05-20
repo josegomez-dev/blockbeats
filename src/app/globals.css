@@ -332,9 +332,8 @@ p {
   overflow: hidden;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
-  width: 100px;
-  height: 100px;
   margin: 0 auto;
+  padding: 15px;
 }
 
 .gallery-image {
@@ -342,6 +341,7 @@ p {
   height: 100%;
   object-fit: cover;
   transition: transform 0.4s ease;
+  margin: 15px 0;
 }
 
 .gallery-image:hover {

@@ -38,7 +38,15 @@ const GalleryScreen = () => {
       <div className="gallery-grid">
         {images.map((src, index) => (
           <div className="gallery-item" key={index}>
-            <img src={src} alt={`Gallery ${index}`} className="gallery-image" />
+            <h3>Title {index + 1}</h3>
+            <p>Description for image {index + 1}</p>                
+            <div className="gallery-item-overlay">
+                <img src={src} alt={`Gallery ${index}`} className="gallery-image" />
+                <button className={styles.submitBtn} style={{ animation: 'none', background: 'transparent' }}>View</button>
+                &nbsp;
+                &nbsp;
+                <button className={styles.submitBtn} style={{ animation: 'none' }}>Buy</button>
+            </div>
           </div>
         ))}
       </div>
