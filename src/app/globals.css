@@ -93,18 +93,6 @@ a {
   text-align: center;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 #parallax-layers {
   position: fixed;
   top: 0;
@@ -182,7 +170,7 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999;
+  z-index: 999;
   transition: opacity 0.3s ease;
 }
 
@@ -213,16 +201,6 @@ a {
   opacity: 0.5 !important;
   animation: none !important;
 }
-
-
-
-
-
-
-
-
-
-
 
 
 #root {
@@ -294,6 +272,7 @@ p {
 .moving-border {
   position: relative;
   padding: 4px;
+  z-index: -1;
 }
 .moving-border::before,
 .moving-border::after {
@@ -312,4 +291,59 @@ p {
   0%     { --angle: 0deg; }
   100%   { --angle: 360deg;
   }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.gallery-screen {
+  padding: 50px;
+  text-align: center;
+}
+
+.gallery-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 10px;
+}
+
+.gallery-item {
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+}
+
+.gallery-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.gallery-image:hover {
+  transform: scale(1.05);
 }

@@ -19,8 +19,8 @@ const Footer = () => {
         </Link> */}
       </p>
       {/* <hr style={{ width: "300px", maxWidth: "100%", margin: '0 auto' }} /> */}
-      <Link href={'https://josegomez-dev.github.io/catarsismusical/studio.html'} target={'_blank'}>
-        <Image src={'/doradeogomez.png'} alt={'metamask'} width={80} height={100} style={{ marginBottom: '-20px' }} />
+      <Link href={'/blockbeats-whitepaper.pdf'} target={'_blank'}>
+        <Image src={'/logo.png'} alt={'metamask'} width={100} height={100} style={{ marginBottom: '-20px' }} />
       </Link>
       <br />
       <br />

@@ -291,7 +291,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 100;
   backdrop-filter: blur(5px);
 }
 
@@ -406,15 +406,13 @@
 
 
 
-
-
-.bannerCustomPositioning {
-  margin-top: 100px;
-}
-
-
 /* Mobile */
 @media (max-width: 700px) {
+
+
+  .bannerContainerCustom {
+    margin-top: -65px !important;
+  }
 
   .leftThumb {
     left: 35px;
@@ -422,10 +420,6 @@
 
   .rightThumb {
     right: 35px;
-  }
-  
-  .bannerCustomPositioning {
-    margin-top: 25px;
   }
 
   .content {

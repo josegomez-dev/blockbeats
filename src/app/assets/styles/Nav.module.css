@@ -6,7 +6,7 @@
     color: white;
     padding: 1rem;
     width: 100%;
-    z-index: 1000;
+    z-index: 5000;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -61,3 +61,136 @@
 .logo {
     animation: pulse 2s infinite ease-in-out;
   }
+
+
+
+
+
+  .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1f2937; /* gray-800 */
+  padding: 10px 20px;
+  color: white;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.logoContainer h1 {
+  margin-left: 10px;
+  font-size: 1.5rem;
+}
+
+.navList {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.navItem {
+  margin-left: 20px;
+  position: relative;
+}
+
+.avatarButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.userEmail {
+  margin-left: 8px;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: var(--secondary-color);
+  color: white !important;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  min-width: 150px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 5000 !important;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.dropdownItem {
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.dropdownItem:hover {
+  background-color: #f0f0f0;
+}
+
+.logout {
+  color: #d32f2f;
+}
+
+.icon {
+  margin-right: 8px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.notificationWrapper {
+  position: relative;
+}
+
+.notifButton {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 1.4rem;
+  position: relative;
+}
+
+.badge {
+  background: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 0.7rem;
+  position: absolute;
+  top: -6px;
+  right: -10px;
+}
+
+.notificationDropdown {
+  position: absolute;
+  right: 0;
+  top: 40px;
+  background: white;
+  color: black;
+  border: 1px solid #ccc;
+  width: 250px;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 5000;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 5px;
+}
+
+.unread {
+  font-weight: bold;
+  background-color: #f0f8ff;
+}
