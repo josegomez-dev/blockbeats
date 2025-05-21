@@ -38,7 +38,7 @@ const DashboardPage = () => {
       </div>
       
       {/* <p>Your role is: {role}</p> */}
-      <div style={{ zIndex: -1, position: "relative", margin: "0 auto", width: "100%", maxWidth: "800px" }}>
+      <div style={{ zIndex: 1, position: "relative", margin: "0 auto", width: "100%", maxWidth: "800px" }}>
         <MusicDrawingPage />
       </div>
       <br />
