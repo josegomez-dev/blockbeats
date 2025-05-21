@@ -337,7 +337,7 @@ p {
 .floating-button {
   position: fixed;
   bottom: 20px;
-  right: 20px;
+  right: 25px;
   background: #222;
   color: white;
   border: none;
