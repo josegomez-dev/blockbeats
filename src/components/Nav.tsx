@@ -82,6 +82,13 @@ export default function Nav() {
           <>
             <span>
               {/* <GiWallet/>   */}
+              <Image
+                src="/coins.png"
+                alt="blockbeats-logo"
+                width={30}
+                height={30}
+                style={{ marginLeft: '10px', marginRight: '10px', animation: 'pulse 1.5s infinite' }}
+              />
               <div style={{ color: 'lightgreen' }}>
                 {data?.formatted?.slice(0, 8)}...
               </div>
