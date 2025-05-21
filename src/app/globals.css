@@ -622,3 +622,10 @@ p {
   background: #c8e6c9;
   align-self: flex-end;
 }
+
+
+@media screen and (max-width: 700px) {
+  .custom-spacer {
+    margin-top: 25px;
+  }
+}
