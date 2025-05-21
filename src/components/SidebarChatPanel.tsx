@@ -5,6 +5,7 @@ import Avatar from 'react-avatar';
 import { useAuth } from '@/context/AuthContext';
 
 import styles from "@/app/assets/styles/MainPage.module.css";
+import Image from 'next/image';
 
 const TABS = ['Contacts', 'NFTs', 'Tokens', 'Chats'];
 
@@ -156,8 +157,11 @@ const SidebarChatPanel = () => {
 
       <div ref={panelRef} className={`sidebar-panel ${isOpen ? 'open' : ''}`}>
         <button className="close-btn" onClick={() => setIsOpen(false)}>✖</button>
-        asd
-
+        <div style={{ textAlign: "center", margin: "0 auto", marginBottom: "25px" }}>
+            <Image src="/logo.png" alt="blockbeats-logo" width={50} height={50} />
+            <h3 className="glitch" data-text="BlockBeats">BlockBeats</h3>
+        </div>
+    
         <div className="tabs">
           {TABS.map(tab => (
             <button

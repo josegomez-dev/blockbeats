@@ -389,7 +389,7 @@ p {
 .tab {
   flex: 1;
   padding: 10px;
-  background: none;
+  background: var(--primary-color);
   border: none;
   cursor: pointer;
   font-weight: bold;
@@ -397,6 +397,13 @@ p {
 
 .tab:hover {
   background-color: #eee;
+  color: var(--primary-color);
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  border-radius: 6px;
+  transform: translateY(-2px);
+  transition: transform 0.3s ease;
+
 }
 
 .tab.active {
