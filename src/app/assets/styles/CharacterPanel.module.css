@@ -1,0 +1,70 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: fadeSlide 0.6s ease-in-out;
+}
+
+.title {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  color: #7df9ff;
+}
+
+.avatarContainer {
+  position: relative;
+  width: 100%;
+  padding: 1rem;
+}
+
+.avatar {
+  width: 300px;
+  max-width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 0 15px #5eead4;
+  transition: transform 0.4s ease;
+}
+
+.avatar:hover {
+  transform: scale(1.05);
+}
+
+.status {
+  margin-top: 0.5rem;
+  color: #ccc;
+}
+
+.stats {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  color: #eee;
+  line-height: 1.6;
+}
+
+.evolveBtn {
+  margin-top: 1.2rem;
+  padding: 0.6rem 1.4rem;
+  background: linear-gradient(135deg, #00ffc3, #0088ff);
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.evolveBtn:hover {
+  background: linear-gradient(135deg, #00f0ff, #0033ff);
+}
+
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

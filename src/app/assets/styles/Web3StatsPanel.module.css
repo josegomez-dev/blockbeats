@@ -1,0 +1,58 @@
+.panel {
+  animation: fadeSlide 0.6s ease-in-out;
+}
+
+.title {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: #00ffe7;
+  text-align: center;
+}
+
+.section {
+  background: rgba(255, 255, 255, 0.05);
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.section h4 {
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  color: #fff;
+}
+
+.section ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.section ul li {
+  margin: 0.4rem 0;
+  color: #ddd;
+}
+
+.section p {
+  font-size: 0.95rem;
+  margin: 0.4rem 0;
+  color: #ccc;
+}
+
+.green {
+  color: #00ffae;
+}
+
+.red {
+  color: #ff5e5e;
+}
+
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

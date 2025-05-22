@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useAuth } from '@/context/AuthContext';
 import styles from '@/app/assets/styles/Nav.module.css';
-import { FaSignOutAlt, FaUserCircle, FaCog, FaBell, FaUser, FaHeadphones } from 'react-icons/fa';
+import { FaSignOutAlt, FaUserCircle, FaCog, FaBell, FaDashcube, FaHeadphones } from 'react-icons/fa';
 import { RiGalleryView } from "react-icons/ri";
 import { GiWallet } from "react-icons/gi";
 import Avatar from 'react-avatar';
@@ -87,37 +87,13 @@ export default function Nav() {
                 alt="blockbeats-logo"
                 width={30}
                 height={30}
-                style={{ marginLeft: '10px', marginRight: '10px', animation: 'pulse 1.5s infinite' }}
+                className='pulse-animation'
               />
               <div style={{ color: 'lightgreen' }}>
                 {data?.formatted?.slice(0, 8)}...
               </div>
-              <span style={{ color: '#0ff' }}>{data?.symbol}</span>
+              {/* <span style={{ color: '#0ff' }}>{data?.symbol}</span> */}
             </span>
-            &nbsp; &nbsp; &nbsp;
-            {/* 🔔 Notification Icon with Counter */}
-            <div className={styles.notificationWrapper} ref={notifRef}>
-              <button className={styles.notifButton} onClick={toggleNotif}>
-                <FaBell />
-                {unreadCount > 0 && <span className={styles.badge}>{unreadCount}</span>}
-              </button>
-              {notifOpen && (
-                <div className={styles.notificationDropdown}>
-                  {notifications.length === 0 ? (
-                    <div className={styles.dropdownItem}>No notifications</div>
-                  ) : (
-                    notifications.map((n: UserNotification) => (
-                      <div
-                        key={n.id}
-                        className={`${styles.dropdownItem} ${!n.visited ? styles.unread : ''}`}
-                      >
-                        {n.text}
-                      </div>
-                    ))
-                  )}
-                </div>
-              )}
-            </div>
 
             {/* 👤 User Menu */}
             <li className={`${styles.navItem} ${styles.dropdown}`} ref={dropdownRef}>
@@ -149,6 +125,11 @@ export default function Nav() {
                   </Link> */}
                   <Link href="/dashboard">
                     <div className={styles.dropdownItem}>
+                      <FaDashcube className={styles.icon} /> Dashboard
+                    </div>
+                  </Link>
+                  <Link href="/machine">
+                    <div className={styles.dropdownItem}>
                       <FaHeadphones className={styles.icon} /> Drawing Machine
                     </div>
                   </Link>
@@ -163,6 +144,33 @@ export default function Nav() {
                 </div>
               )}
             </li>
+
+            &nbsp; &nbsp; &nbsp;
+
+            {/* 🔔 Notification Icon with Counter */}
+            <div className={styles.notificationWrapper} ref={notifRef}>
+              <button className={styles.notifButton} onClick={toggleNotif}>
+                <FaBell />
+                {unreadCount > 0 && <span className={styles.badge}>{unreadCount}</span>}
+              </button>
+              {notifOpen && (
+                <div className={styles.notificationDropdown}>
+                  {notifications.length === 0 ? (
+                    <div className={styles.dropdownItem}>No notifications</div>
+                  ) : (
+                    notifications.map((n: UserNotification) => (
+                      <div
+                        key={n.id}
+                        className={`${styles.dropdownItem} ${!n.visited ? styles.unread : ''}`}
+                      >
+                        {n.text}
+                      </div>
+                    ))
+                  )}
+                </div>
+              )}
+            </div>
+
           </>
         )}
 
