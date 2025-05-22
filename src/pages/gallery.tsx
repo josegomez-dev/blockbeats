@@ -22,6 +22,8 @@ const GalleryScreen = () => {
     <>
       <div className="gallery-screen">
         <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
+          <br />
+          <br />
           <p className="glitch"><h2>My Collection</h2></p>
           <br />
         </div>
@@ -34,7 +36,7 @@ const GalleryScreen = () => {
         <br />
 
         <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
-          <p className="glitch"><h2>Gallery of <span data-text="NFTS" className="glitch">NFTS</span></h2></p>
+          <h2><p className="glitch">Gallery of <span data-text="NFTS" className="glitch">NFTS</span></p></h2>
           <br />
         </div>
         <div className="gallery-grid">
