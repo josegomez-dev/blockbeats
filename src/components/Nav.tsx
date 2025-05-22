@@ -128,11 +128,11 @@ export default function Nav() {
                       <FaDashcube className={styles.icon} /> Dashboard
                     </div>
                   </Link>
-                  <Link href="/machine">
+                  {/* <Link href="/machine">
                     <div className={styles.dropdownItem}>
                       <FaHeadphones className={styles.icon} /> Drawing Machine
                     </div>
-                  </Link>
+                  </Link> */}
                   <Link href="/gallery">
                     <div className={styles.dropdownItem}>
                       <RiGalleryView className={styles.icon} /> Gallery

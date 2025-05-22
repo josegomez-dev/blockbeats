@@ -1,8 +1,42 @@
-// components/Web3StatsPanel.tsx
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "@/app/assets/styles/Web3StatsPanel.module.css";
 
+const newsItems = [
+  "🎶 \"New melodic quest unlocked! Compose a 3-note loop.\"",
+  "⚙️ DAO update voting ends tomorrow.",
+  "🚀 Web3 game partnership announced.",
+];
+
 const Web3StatsPanel = () => {
+  const [index, setIndex] = useState(0);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const nextSlide = () => setIndex((prev) => (prev + 1) % newsItems.length);
+
+  useEffect(() => {
+    startAutoScroll();
+    return stopAutoScroll;
+  }, []);
+
+  const startAutoScroll = () => {
+    stopAutoScroll();
+    intervalRef.current = setInterval(nextSlide, 3000);
+  };
+
+  const stopAutoScroll = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+  };
+
+  const handleWheel = (e: React.WheelEvent) => {
+    if (e.deltaY > 0) {
+      nextSlide();
+    } else {
+      setIndex((prev) => (prev - 1 + newsItems.length) % newsItems.length);
+    }
+    stopAutoScroll(); // optional: stop auto on manual scroll
+  };
+
   return (
     <div className={styles.panel}>
       <h2 className={styles.title}>📊 Web3 Stats & News</h2>
@@ -25,11 +59,17 @@ const Web3StatsPanel = () => {
         </ul>
       </div>
 
-      <div className={styles.section}>
+      <div
+        className={`${styles.section} ${styles.newsSlider}`}
+        onMouseEnter={stopAutoScroll}
+        onMouseLeave={startAutoScroll}
+        onWheel={handleWheel}
+        ref={containerRef}
+      >
         <h4>📰 News Feed</h4>
-        <p>🎶 "New melodic quest unlocked! Compose a 3-note loop."</p>
-        <p>⚙️ DAO update voting ends tomorrow.</p>
-        <p>🚀 Web3 game partnership announced.</p>
+        <div className={styles.newsItem}>
+          {newsItems[index]}
+        </div>
       </div>
     </div>
   );

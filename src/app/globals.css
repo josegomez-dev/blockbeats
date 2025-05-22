@@ -338,7 +338,8 @@ p {
   position: fixed;
   bottom: 20px;
   right: 25px;
-  background: #222;
+  background-color:  0 1px 3px rgba(0,0,0,0.8);;
+  backdrop-filter: blur(100px);
   color: white;
   border: none;
   border-radius: 50%;
@@ -350,6 +351,11 @@ p {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   transition: background 0.3s ease;
   animation: pulse 2s infinite;
+}
+@media (max-width: 700px) {
+  .floating-button {
+    bottom: 100px;
+  }
 }
 
 .sidebar-panel {

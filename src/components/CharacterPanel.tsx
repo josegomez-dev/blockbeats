@@ -9,7 +9,7 @@ const CharacterPanel = () => {
 
       <div className={styles.avatarContainer}>
         <img src="/avatar/male/phase-1.png" alt="Character" className={styles.avatar} />
-        <p className={styles.status}>Level: 2 | XP: 67%</p>
+        <p className={styles.status}>Level: <span data-text="2" className="glitch">2</span> | XP: <span data-text="67%" className="glitch">67%</span></p>
       </div>
 
       <div className={styles.stats}>
