@@ -34,6 +34,7 @@ const DashboardLayout = () => {
           <SiWeb3Dotjs />
         </button>
       </div>
+
       <div className={styles.dashboardContainer}>
         <div className={styles.desktopGrid}>
           <div id="core-left-panel" className={styles.leftPanel}>
@@ -46,6 +47,15 @@ const DashboardLayout = () => {
             <Web3StatsPanel />
           </div>
         </div>
+      </div>
+
+      <div className={`${styles.bannerContainer}`} style={{ textAlign: "center", margin: "0 auto" }}>
+        <p>
+          It’s <span data-text="Web3" className="glitch">Web3</span>’s first community-powered <br /> <b>musical signature generator</b> — <b>mintable, shareable, tradable</b>... <br /><br />
+        </p>
+        <p>
+          <span className={styles.typewriterLoop}>✨ We turn music into immutable art.</span> <br /><br />
+        </p>
       </div>
       <Footer />
     </>

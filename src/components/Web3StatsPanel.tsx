@@ -1,41 +1,90 @@
-import React, { useEffect, useRef, useState } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import styles from "@/app/assets/styles/Web3StatsPanel.module.css";
 
 const newsItems = [
-  "🎶 \"New melodic quest unlocked! Compose a 3-note loop.\"",
+  "🎶 New melodic quest unlocked! Compose a 3-note loop.",
   "⚙️ DAO update voting ends tomorrow.",
   "🚀 Web3 game partnership announced.",
+  "🎧 New synth instrument unlocked in the NFT lab.",
+  "📈 Token market sees surge after community vote.",
+  "🧩 Puzzle challenge released — win token rewards!",
+  "🛠️ Maintenance scheduled for smart contract upgrades.",
+  "🎤 Harmony Festival virtual stage opens next week.",
+  "🧠 AI composer beta released to selected users.",
+  "🌐 Multichain bridge for melody tokens goes live.",
+  "📚 SoundTrackX publishing tool enters open beta.",
+  "👥 New band collaboration feature now live!",
 ];
 
-const Web3StatsPanel = () => {
-  const [index, setIndex] = useState(0);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+const tutorials = [
+  "🔐 How to Connect Wallet",
+  "🎨 Mint your Music NFT",
+  "🧠 Earn XP via Melodies",
+  "📤 Upload & Publish Your First Track",
+  "🎛️ Customize Your NFT Sound Identity",
+  "🧬 Link Traits to Melodic Elements",
+  "🎹 Use the Music Drawing Machine",
+  "💾 Save and Share Your NFT Melody",
+  "🖼️ Add Visual Art to Your Composition",
+  "🪙 Swap Tokens for Rare Audio FX",
+  "📊 Track Your Stats & Progress",
+  "📬 Join a Band & Send Invites",
+];
 
-  const nextSlide = () => setIndex((prev) => (prev + 1) % newsItems.length);
+
+const getRandomChange = () => {
+  const change = (Math.random() * 4 - 2).toFixed(2);
+  return {
+    change,
+    isPositive: parseFloat(change) >= 0,
+  };
+};
+
+const Web3StatsPanel = () => {
+  const [prices, setPrices] = useState({
+    ETH: getRandomChange(),
+    MATIC: getRandomChange(),
+    BTC: getRandomChange(),
+  });
+
+  const [newsIndex, setNewsIndex] = useState(0);
+  const [tutorialIndex, setTutorialIndex] = useState(0);
+  const newsLength = newsItems.length;
 
   useEffect(() => {
-    startAutoScroll();
-    return stopAutoScroll;
+    const tutorialInterval = setInterval(() => {
+      setTutorialIndex((prev) => (prev + 1) % tutorials.length);
+    }, 3000);
+
+    return () => {
+      clearInterval(tutorialInterval);
+    };
   }, []);
 
-  const startAutoScroll = () => {
-    stopAutoScroll();
-    intervalRef.current = setInterval(nextSlide, 3000);
-  };
+  useEffect(() => {
+    const priceInterval = setInterval(() => {
+      setPrices({
+        ETH: getRandomChange(),
+        MATIC: getRandomChange(),
+        BTC: getRandomChange(),
+      });
+    }, 5000);
 
-  const stopAutoScroll = () => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
-  };
+    const newsInterval = setInterval(() => {
+      setNewsIndex((prev) => (prev + 1) % newsLength);
+    }, 4000);
 
-  const handleWheel = (e: React.WheelEvent) => {
-    if (e.deltaY > 0) {
-      nextSlide();
-    } else {
-      setIndex((prev) => (prev - 1 + newsItems.length) % newsItems.length);
-    }
-    stopAutoScroll(); // optional: stop auto on manual scroll
-  };
+    const tutorialInterval = setInterval(() => {
+      setTutorialIndex((prev) => (prev + 1) % tutorials.length);
+    }, 3000);
+
+    return () => {
+      clearInterval(priceInterval);
+      clearInterval(newsInterval);
+      clearInterval(tutorialInterval);
+    };
+  }, []);
 
   return (
     <div className={styles.panel}>
@@ -44,31 +93,50 @@ const Web3StatsPanel = () => {
       <div className={styles.section}>
         <h4>🪙 Market Overview</h4>
         <ul>
-          <li>ETH: $3,187 <span className={styles.green}>▲ +2.1%</span></li>
-          <li>MATIC: $0.91 <span className={styles.red}>▼ -0.4%</span></li>
-          <li>BTC: $64,203 <span className={styles.green}>▲ +1.5%</span></li>
+          {Object.entries(prices).map(([coin, { change, isPositive }]) => (
+            <li key={coin}>
+              {coin}: ${(1000 + Math.random() * 5000).toFixed(2)}{" "}
+              <span className={isPositive ? styles.green : styles.red}>
+                {isPositive ? "▲" : "▼"} {change}%
+              </span>
+            </li>
+          ))}
         </ul>
       </div>
 
       <div className={styles.section}>
         <h4>📖 Quick Tutorials</h4>
-        <ul>
-          <li>🔐 How to Connect Wallet</li>
-          <li>🎨 Mint your Music NFT</li>
-          <li>🧠 Earn XP via Melodies</li>
-        </ul>
+        <div className={styles.tutorialSlider}>
+          <div
+            className={styles.tutorialInner}
+            style={{
+              transform: `translateY(-${tutorialIndex * 33.33}%)`,
+              transition: "transform 0.5s ease-in-out",
+            }}
+          >
+            {tutorials.concat(tutorials).map((text, i) => (
+              <div key={i} className={styles.tutorialItem}>
+                {text}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
-      <div
-        className={`${styles.section} ${styles.newsSlider}`}
-        onMouseEnter={stopAutoScroll}
-        onMouseLeave={startAutoScroll}
-        onWheel={handleWheel}
-        ref={containerRef}
-      >
+      <div className={styles.section}>
         <h4>📰 News Feed</h4>
-        <div className={styles.newsItem}>
-          {newsItems[index]}
+        <div className={styles.newsSlider}>
+          <p>{newsItems[newsIndex]}</p>
+          <div className={styles.dots}>
+            {newsItems.map((_, i) => (
+              <span
+                key={i}
+                className={`${styles.dot} ${
+                  i === newsIndex ? styles.active : ""
+                }`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>
