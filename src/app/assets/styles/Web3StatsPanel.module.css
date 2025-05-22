@@ -58,9 +58,10 @@
 }
 
 .tutorialSlider {
-  height: 4.5rem; /* 3 items x 1.5rem */
+  height: 8.9rem; /* 3 items x 1.5rem */
   overflow: hidden;
   position: relative;
+  overflow-y: auto;
 }
 
 .tutorialInner {
@@ -77,9 +78,6 @@
   align-items: center;
 }
 
-.tutorialSlider {
-  height: 4.8rem;
-}
 
 .tutorialItem {
   height: 1.6rem;

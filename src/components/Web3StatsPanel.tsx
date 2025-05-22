@@ -49,18 +49,8 @@ const Web3StatsPanel = () => {
   });
 
   const [newsIndex, setNewsIndex] = useState(0);
-  const [tutorialIndex, setTutorialIndex] = useState(0);
   const newsLength = newsItems.length;
 
-  useEffect(() => {
-    const tutorialInterval = setInterval(() => {
-      setTutorialIndex((prev) => (prev + 1) % tutorials.length);
-    }, 3000);
-
-    return () => {
-      clearInterval(tutorialInterval);
-    };
-  }, []);
 
   useEffect(() => {
     const priceInterval = setInterval(() => {
@@ -75,14 +65,9 @@ const Web3StatsPanel = () => {
       setNewsIndex((prev) => (prev + 1) % newsLength);
     }, 4000);
 
-    const tutorialInterval = setInterval(() => {
-      setTutorialIndex((prev) => (prev + 1) % tutorials.length);
-    }, 3000);
-
     return () => {
       clearInterval(priceInterval);
       clearInterval(newsInterval);
-      clearInterval(tutorialInterval);
     };
   }, []);
 
@@ -109,10 +94,10 @@ const Web3StatsPanel = () => {
         <div className={styles.tutorialSlider}>
           <div
             className={styles.tutorialInner}
-            style={{
-              transform: `translateY(-${tutorialIndex * 33.33}%)`,
-              transition: "transform 0.5s ease-in-out",
-            }}
+            // style={{
+            //   transform: `translateY(-${tutorialIndex * 33.33}%)`,
+            //   transition: "transform 0.5s ease-in-out",
+            // }}
           >
             {tutorials.concat(tutorials).map((text, i) => (
               <div key={i} className={styles.tutorialItem}>
