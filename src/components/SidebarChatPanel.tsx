@@ -3,7 +3,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import Avatar from 'react-avatar';
 import { useAuth } from '@/context/AuthContext';
-
 import styles from "@/app/assets/styles/MainPage.module.css";
 import Image from 'next/image';
 
@@ -12,6 +11,7 @@ const TABS = ['Contacts', 'NFTs', 'Tokens', 'Chats'];
 const SidebarChatPanel = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('Chats');
+
   type Message = {
     sender: string;
     text: string;
@@ -20,7 +20,6 @@ const SidebarChatPanel = () => {
   };
 
   const user = useAuth();
-
   const [messages, setMessages] = useState<Message[]>([
     { sender: 'admin', text: 'Welcome user, let me know if you need something...', time: new Date() },
   ]);
@@ -53,13 +52,12 @@ const SidebarChatPanel = () => {
 
   const handleSend = () => {
     if (!input.trim()) return;
-
     const userMsg = { sender: 'user', text: input.trim(), time: new Date() };
     setMessages(prev => [...prev, userMsg]);
     setInput('');
 
     const lowerText = userMsg.text.toLowerCase();
-    let response = null;
+    let response: string;
 
     if (lowerText.includes('/nfts')) {
       setActiveTab('NFTs');
@@ -158,10 +156,10 @@ const SidebarChatPanel = () => {
       <div ref={panelRef} className={`sidebar-panel ${isOpen ? 'open' : ''}`}>
         <button className="close-btn" onClick={() => setIsOpen(false)}>✖</button>
         <div style={{ textAlign: "center", margin: "0 auto", marginBottom: "25px" }}>
-            <Image src="/logo.png" alt="blockbeats-logo" width={50} height={50} />
-            <h3 className="glitch" data-text="BlockBeats">BlockBeats</h3>
+          <Image src="/logo.png" alt="blockbeats-logo" width={50} height={50} />
+          <h3 className="glitch" data-text="BlockBeats">BlockBeats</h3>
         </div>
-    
+
         <div className="tabs">
           {TABS.map(tab => (
             <button
@@ -178,20 +176,20 @@ const SidebarChatPanel = () => {
           {activeTab === 'Contacts' && (
             <div className="contacts-list">
               {contacts.map(c => (
-                <>
-                    <div key={c.id} className={`contact-card ${!c.isFriend ? 'pending' : ''}`} style={{ width: !c.isFriend ? '200px' : 'auto' }}>
-                        <Avatar name={c.name} size="30" round className="contact-avatar" />
-                        <span>{c.name}</span>
-                        {c.isOnline ? (
-                            <span className="status-badge online"></span>
-                        ) : (
-                            <span className="status-badge offline" style={{ animation: 'none' }}></span>
-                        )}
-                    </div>
-                    {!c.isFriend && (
-                        <button className='invite-button' onClick={() => toast.success(`Invite sent to ${c.name}`)}>Invite</button>
+                <React.Fragment key={c.id}>
+                  <div className={`contact-card ${!c.isFriend ? 'pending' : ''}`} style={{ width: !c.isFriend ? '200px' : 'auto' }}>
+                    <Avatar name={c.name} size="30" round className="contact-avatar" />
+                    <span>{c.name}</span>
+                    {c.isOnline ? (
+                      <span className="status-badge online"></span>
+                    ) : (
+                      <span className="status-badge offline" style={{ animation: 'none' }}></span>
                     )}
-                </>
+                  </div>
+                  {!c.isFriend && (
+                    <button className='invite-button' onClick={() => toast.success(`Invite sent to ${c.name}`)}>Invite</button>
+                  )}
+                </React.Fragment>
               ))}
             </div>
           )}
@@ -237,24 +235,30 @@ const SidebarChatPanel = () => {
             <div className="chat-area">
               <div className="messages">
                 {messages.map((msg, i) => (
-                  <>
+                  <React.Fragment key={`${msg.sender}-${msg.time.getTime()}`}>
                     {msg.sender === 'admin' && (
-                        <Avatar color='var(--primary-color)' name="Admin Bot" size="30" round style={{ marginLeft: '226px', marginBottom: '-15px' }} />
+                      <Avatar
+                        color='var(--primary-color)'
+                        name="Admin Bot"
+                        size="30"
+                        round
+                        style={{ marginLeft: '226px', marginBottom: '-15px' }}
+                      />
                     )}
-                    <div key={i} className={`chat-bubble ${msg.sender === 'admin' ? 'admin' : 'user'}`}>
-                        <div>
-                            <strong>{msg.sender === 'admin' ? 'Admin' : 'You'}</strong>:
-                            {msg.audioURL ? (
-                                <audio controls src={msg.audioURL} />
-                            ) : (
-                                <span> {msg.text}</span>
-                            )}
-                            <div style={{ fontSize: '10px', color: 'black', textAlign: 'right', marginTop: '5px' }}>
-                                {formatTime(new Date(msg.time))}
-                            </div>
+                    <div className={`chat-bubble ${msg.sender === 'admin' ? 'admin' : 'user'}`}>
+                      <div>
+                        <strong>{msg.sender === 'admin' ? 'Admin' : 'You'}</strong>:
+                        {msg.audioURL ? (
+                          <audio controls src={msg.audioURL} />
+                        ) : (
+                          <span> {msg.text}</span>
+                        )}
+                        <div style={{ fontSize: '10px', color: 'black', textAlign: 'right', marginTop: '5px' }}>
+                          {formatTime(new Date(msg.time))}
                         </div>
+                      </div>
                     </div>
-                  </>
+                  </React.Fragment>
                 ))}
                 <div ref={chatEndRef} />
               </div>
