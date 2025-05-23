@@ -171,8 +171,11 @@ const MusicDrawingPage = () => {
 
   const handleNotePlay = (noteIndex: number) => {
     const color = getRandomColor();
-    setNotesPlayed((prev) => [...prev, { noteIndex, time: timeStep }]);
-    setColorMap((prev) => [...prev, { noteIndex, time: timeStep, color }]);
+    setNotesPlayed((prev) => {
+      const nextTime = prev.length % 16; // wrap around after 16 columns
+      setColorMap((map) => [...map, { noteIndex, time: nextTime, color }]);
+      return [...prev, { noteIndex, time: nextTime }];
+    });
   };
 
   const resetBoard = () => {
@@ -207,13 +210,6 @@ const MusicDrawingPage = () => {
       current++;
     }, 400);
   };
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTimeStep((prev) => (prev + 1) % 16);
-    }, 800);
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <>
