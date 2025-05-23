@@ -322,7 +322,6 @@ p {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: #0066ff;
   color: #fff;
   position: relative;
   z-index: 101;
@@ -455,6 +454,9 @@ p {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
   margin: 0 auto;
   padding: 15px;
+  backdrop-filter: blur(100px);
+  background-color: rgba(0, 0, 0, 0.6); /* Light transparent */    
+  box-shadow: 0 0 5px #0ff;
 }
 
 .gallery-image {

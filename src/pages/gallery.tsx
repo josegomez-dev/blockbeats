@@ -1,37 +1,51 @@
 import NeonSlider from '@/components/NeonSlider';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import styles from "@/app/assets/styles/MainPage.module.css";
 import Footer from '@/components/Footer';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../../firebase';
+import PixelPreview from '@/components/PixelPreview';
 
 
 const images = [
-    '/nft1.png',
-    '/nft2.png',
-    '/nft3.png',
-    '/nft2.png',
-    '/nft3.png',
-    '/nft1.png',
-    '/nft3.png',
+    '/nft1.webp',
+    '/nft2.webp',
+    '/nft3.webp',
+    '/nft2.webp',
+    '/nft3.webp',
+    '/nft1.webp',
+    '/nft3.webp',
     // '/nft2.png',
     // '/nft1.png',
 ];
 
+
 const GalleryScreen = () => {
+
+  const [nfts, setNFTs] = React.useState<any[]>([]);
+
+
+  useEffect(() => {
+    const fetchNFTs = async () => {
+      const querySnapshot = await getDocs(collection(db, "signatures"));
+      const nfts = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      setNFTs(nfts);
+      console.log("NFTs fetched:", nfts);
+    };
+    fetchNFTs();
+  }, []);
+
   return (
     <>
       <div className="gallery-screen">
-        <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
+        <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto", marginBottom: "-50px" }}>
           <br />
           <br />
-          <p className="glitch"><h2>My Collection</h2></p>
-          <br />
+          <h2><p className="glitch">My Collection</p></h2>
         </div>
-        {/* <NeonSlider slides={[
-          { id: 1, title: "Starknet Jingle", img: "/nft1.png" },
-          { id: 2, title: "Billy Elli2h Collection", img: "/nft2.png" },
-          { id: 3, title: "Astrofreakazoid", img: "/nft3.png" },
-        ]} /> */}
+        
+        <NeonSlider slides={nfts} />
 
         <br />
 
@@ -40,12 +54,19 @@ const GalleryScreen = () => {
           <br />
         </div>
         <div className="gallery-grid">
-          {images.map((src, index) => (
+          {nfts.map((src, index) => (
             <div className="gallery-item" key={index}>
-              <h3>Title {index + 1}</h3>
-              <p>Description for image {index + 1}</p>                
+              <h3>{src.songName} {index + 1}</h3>
+              <br />
+              {/* <p>Description for image {index + 1}</p>                 */}
               <div className="gallery-item-overlay">
-                  <img src={src} alt={`Gallery ${index}`} className="gallery-image" />
+                  <PixelPreview
+                    colorMap={src.colorMap || []}
+                    notesCount={src.notesPlayed?.length}
+                    size={100}
+                  />
+                  <br />
+                  {/* <img src={src} alt={`Gallery ${index}`} className="gallery-image" /> */}
                   <button className={styles.submitBtn} style={{ animation: 'none', background: 'transparent' }}>View</button>
                   &nbsp;
                   &nbsp;

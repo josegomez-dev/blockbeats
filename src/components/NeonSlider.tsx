@@ -77,9 +77,11 @@ const NeonSlider: React.FC<NeonSliderProps> = ({ slides }) => {
             <p>
               <b>Price:</b>{" "}
               <span data-text="2.1Eth" className="glitch">
-                2.1Eth
+                {Math.floor(Math.random() * 100) / 10}{"Eth"}
               </span>{" "}
-              - <span style={{ color: "gold" }}>$98.123k</span>
+              - <span style={{ color: "gold" }}>
+                ${Math.floor(Math.random() * 100) / 10}{"K"}
+                </span>
             </p>
           </div>
         ))}
