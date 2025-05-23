@@ -484,10 +484,6 @@
     overflow-y: auto;
   }
 
-  .bannerContainerCustom {
-    margin-top: -65px !important;
-  }
-
   .leftThumb {
     left: 35px;
   }
