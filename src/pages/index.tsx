@@ -40,7 +40,7 @@ const Home = () => {
   const [messageOverlay, setMessageOverlay] = useState("");
   const [nfts, setNFTs] = useState<any[]>([]);
 
-  const { user, signUp, signIn, authenticated, verifyEmail } = useAuth();
+  const { user, signUp, signIn, authenticated, verifyEmail, sendWelcomeEmail } = useAuth();
   const router = useRouter();
 
   if (authenticated) {
@@ -162,8 +162,8 @@ const Home = () => {
         setIsModalOpen(true);
         return;
       } else {
+        await sendWelcomeEmail(email);
         await signUp(email, "abc123");
-        alert("Thanks for joining our whitelist!");
         setLoading(false);
         setIsModalOpen(true);
         setEmail("");
@@ -172,7 +172,7 @@ const Home = () => {
       
     } catch (error) {
       console.error("Error signing up:", error);
-      alert("Error signing up. Please try again.");
+      toast.error("Error signing up. Please try again.");
       setLoading(false);
       return;
     }

@@ -152,15 +152,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       message: `Welcome to BlockBeats! Your account has been created successfully. Your temporary password is: ${password}. Please change it after logging in.`,
       from_name: "BlockBeats",
       subject: "Welcome to BlockBeats!",
-      user_id: uuidv4(),
-      user_email: email,
-      user_password: password,
     };
     emailjs.send(
-      'service_3x2j5gq',
-      'template_4v8z6r7',
+      'service_os6wt5p',
+      'template_ot1nrhe',
       templateParams,
-      'user_9X1Y2Z3A4B5C6D7E8F9G0H1I2J3K4L5M6N7O8P9Q'
+      'XlO-C2PRIvPfFWmnD'
     )
     .then((response) => {
       console.log('Email sent successfully:', response);
@@ -193,15 +190,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setAuthenticated(true);
       setRole(_user.role);
 
-      sendEmailVerification(userCredential.user)
-      .then(() => {
-        // Email verification sent. Inform the user.
-        toast.success("Verification email sent. Please check your inbox.");
-      })
-      .catch((error) => {
-        // An error occurred. Show a message to the user.
-        toast.error("Error sending verification email. Please try again.");
-      });
+      // sendWelcomeEmail(email, password);
+
+      // sendEmailVerification(userCredential.user)
+      // .then(() => {
+      //   // Email verification sent. Inform the user.
+      //   toast.success("Verification email sent. Please check your inbox.");
+      // })
+      // .catch((error) => {
+      //   // An error occurred. Show a message to the user.
+      //   toast.error("Error sending verification email. Please try again.");
+      // });
 
       // Send a welcome email using EmailJS
       // sendWelcomeEmail(email, password);
