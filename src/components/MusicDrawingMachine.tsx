@@ -4,6 +4,9 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import NeonSlider from "./NeonSlider";
+import { addDoc, collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebase";
+import { useAuth } from '../context/AuthContext'
 
 const notes: [string, number, string][] = [
   ["C1", 130.81, "kwhite"], ["CM1", 138.59, "kblack"],
@@ -90,7 +93,7 @@ const PixelCanvas = ({
   onCanvasClick: (noteIndex: number, time: number) => void;
 }) => {
   const rows = notes.length;
-  const cols = 16;
+  const cols = 24;
   const cellSize = 18;
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -132,8 +135,13 @@ const PixelCanvas = ({
     if (!canvas) return;
 
     const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+
+    // Adjust for scale between CSS size and actual canvas size
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+
+    const x = (e.clientX - rect.left) * scaleX;
+    const y = (e.clientY - rect.top) * scaleY;
 
     const time = Math.floor(x / cellSize);
     const noteIndex = Math.floor(y / cellSize);
@@ -147,7 +155,7 @@ const PixelCanvas = ({
       onClick={handleClick}
       width={cols * cellSize}
       height={rows * cellSize}
-      style={{ margin: "0 auto", background: color }}
+      style={{ margin: "0 auto", background: color, overflow: "auto", width: "100%", height: "auto", borderRadius: 8 }}
       id="pixel-canvas"
     />
   );
@@ -198,8 +206,35 @@ const MusicDrawingPage = () => {
   const [selectedRange, setSelectedRange] = useState("Harmonic");
   const [isPlayingBack, setIsPlayingBack] = useState(false);
   const [playIndex, setPlayIndex] = useState<number | null>(null);
+  const [nfts, setNFTs] = useState<any[]>([]);
+
+  const { user } = useAuth();
 
   const frequencyStyle = frequencyRanges.find((r) => r.name === selectedRange)!;
+
+
+  const saveNFTData = async () => {
+    // ask for the name of the song
+    const songName = prompt("Enter the name of the song:");
+    if (!songName) {
+      toast.error("Song name is required");
+      return;
+    }
+    try {
+      await addDoc(collection(db, "signatures"), {
+        notesPlayed,
+        colorMap,
+        frequencyRange: selectedRange,
+        createdAt: new Date(),
+        createdBy: user?.uid,
+        songName,
+      });
+      toast.success("Song-art saved successfully!");
+    } catch (error) {
+      console.error("Error saving NFT:", error);
+      toast.error("Failed to save NFT");
+    }
+  };
 
   const handleCanvasClick = (noteIndex: number, time: number) => {
     setColorMap((prevMap) => {
@@ -225,7 +260,7 @@ const MusicDrawingPage = () => {
   const handleNotePlay = (noteIndex: number) => {
     const color = getRandomColor();
     setNotesPlayed((prev) => {
-      const nextTime = prev.length % 16; // wrap around after 16 columns
+      const nextTime = prev.length % 24; // wrap around after 16 columns
       setColorMap((map) => [...map, { noteIndex, time: nextTime, color }]);
       return [...prev, { noteIndex, time: nextTime }];
     });
@@ -242,7 +277,7 @@ const MusicDrawingPage = () => {
     let current = 0;
     const sorted = [...notesPlayed].sort((a, b) => a.time - b.time);
     const interval = setInterval(() => {
-      if (current >= 16) {
+      if (current >= 24) {
         clearInterval(interval);
         setPlayIndex(null);
         setIsPlayingBack(false);
@@ -264,6 +299,16 @@ const MusicDrawingPage = () => {
     }, 400);
   };
 
+  useEffect(() => {
+    const fetchNFTs = async () => {
+      const querySnapshot = await getDocs(collection(db, "signatures"));
+      const nfts = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      setNFTs(nfts);
+      console.log("NFTs fetched:", nfts);
+    };
+    fetchNFTs();
+  }, []);
+
   return (
     <>
       <div>
@@ -276,11 +321,7 @@ const MusicDrawingPage = () => {
         <br />
         <br />
 
-        <NeonSlider slides={[
-          { id: 1, title: "Starknet Jingle", img: "/nft1.png" },
-          { id: 2, title: "Billy Elli2h Collection", img: "/nft2.png" },
-          { id: 3, title: "Astrofreakazoid", img: "/nft3.png" },
-        ]} />
+        <NeonSlider slides={nfts} />
 
         <br />
 
@@ -312,7 +353,8 @@ const MusicDrawingPage = () => {
         <div style={{ margin: "0 auto", width: "auto", textAlign: "center", position: "relative", zIndex: 2 }}>
           <div style={{ margin: '10px' }}>
             <button onClick={playback} disabled={isPlayingBack} className={styles.launchpadBtn}>▶️ Play</button> &nbsp;&nbsp;
-            <button onClick={resetBoard} disabled={isPlayingBack} className={styles.launchpadBtn}>⚠️ Reset</button>
+            <button onClick={resetBoard} disabled={isPlayingBack} className={styles.launchpadBtn}>⚠️ Reset</button> &nbsp;&nbsp;
+            <button onClick={saveNFTData} disabled={isPlayingBack} className={styles.launchpadBtn}>💾 Save</button>
           </div>
 
           <div style={{ background: "#111", padding: 10, margin: "0", position: "relative" }}>

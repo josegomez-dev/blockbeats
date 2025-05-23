@@ -3,11 +3,18 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from "@/app/assets/styles/MainPage.module.css";
+import PixelPreview from './PixelPreview';
 
 interface Slide {
   id: number | string;
-  title: string;
   img: string;
+  songName: string;
+  colorMap: { 
+    noteIndex: number;
+    time: number;
+    color: string;
+  }[];
+  notesPlayed: string;
 }
 
 interface NeonSliderProps {
@@ -34,11 +41,21 @@ const NeonSlider: React.FC<NeonSliderProps> = ({ slides }) => {
   //   return () => clearInterval(interval);
   // }, []);
 
+  const drawPixelArt = (slide: Slide) => {
+    // Placeholder for pixel art drawing logic
+    return <div className={styles.pixelArt}>{slide.songName}</div>;
+  };
+
   return (
     <div className={styles.sliderContainer}>
       {/* 🚀 Neon Slider */}
+  
       <div className={`${styles.thumbnail} ${styles.leftThumb}`}>
-        <Image src={slides[prevIndex].img} alt="prev" width={100} height={100} />
+        <PixelPreview
+          colorMap={slides[prevIndex]?.colorMap}
+          notesCount={slides[prevIndex]?.notesPlayed.length}
+          size={60}
+        />
       </div>
 
       <div className={styles.slider}>
@@ -49,22 +66,32 @@ const NeonSlider: React.FC<NeonSliderProps> = ({ slides }) => {
               index === current ? styles.activeSlide : styles.inactiveSlide
             }`}
           >
-            <h3></h3>
-            <p>{slide.title}</p>
-            <Image src={slide.img} alt={slide.title} width={200} height={200} />
+            <p>{slide.songName}</p>
+            <br />
+            <br />
+            <PixelPreview
+              colorMap={slide.colorMap || []}
+              notesCount={slide.notesPlayed.length}
+              size={100}
+            />
+            <br />  
             <p>
-              <b>Price:</b>{' '}
+              <b>Price:</b>{" "}
               <span data-text="2.1Eth" className="glitch">
                 2.1Eth
-              </span>{' '}
-              - <span style={{ color: 'gold' }}>$98.123k</span>
+              </span>{" "}
+              - <span style={{ color: "gold" }}>$98.123k</span>
             </p>
           </div>
         ))}
       </div>
 
       <div className={`${styles.thumbnail} ${styles.rightThumb}`}>
-        <Image src={slides[nextIndex].img} alt="next" width={100} height={100} />
+        <PixelPreview
+          colorMap={slides[nextIndex]?.colorMap}
+          notesCount={slides[nextIndex]?.notesPlayed.length}
+          size={60}
+        />
       </div>
 
       <div className={styles.sliderControls}>
