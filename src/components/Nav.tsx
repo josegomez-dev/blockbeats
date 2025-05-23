@@ -112,7 +112,7 @@ export default function Nav() {
 
               {dropdownOpen && (
                 <div className={styles.dropdownMenu}>
-                  <div className={`${styles.dropdownItem}`} style={{ color: 'var(--secondary-color)' }}>
+                  <div className={`${styles.dropdownItem}`} >
                     <FaUserCircle className={styles.icon} /> {user?.displayName || user?.email}
                   </div>
                   <div className={`${styles.dropdownItem} black-color`} style={{ marginBottom: '-15px' }}>

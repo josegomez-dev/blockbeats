@@ -21,7 +21,7 @@ export interface User {
     notifications: [],
     role: 'user',
     status: 'active',
-    emailVerified: false,
+    emailVerified: true,
     createdAt: new Date(),
     updatedAt: new Date(),
   };
