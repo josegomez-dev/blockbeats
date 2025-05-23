@@ -5,6 +5,9 @@ import Avatar from 'react-avatar';
 import { useAuth } from '@/context/AuthContext';
 import styles from "@/app/assets/styles/MainPage.module.css";
 import Image from 'next/image';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../../firebase';
+import PixelPreview from './PixelPreview';
 
 const TABS = ['Contacts', 'NFTs', 'Tokens', 'Chats'];
 
@@ -30,6 +33,28 @@ const SidebarChatPanel = () => {
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const [recording, setRecording] = useState(false);
   const [audioChunks, setAudioChunks] = useState<Blob[]>([]);
+  const [nftItems, setNftItems] = useState<any[]>([]);
+  const [contacts, setContacts] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchNFTs = async () => {
+      const querySnapshot = await getDocs(collection(db, "signatures"));
+      const nfts = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      setNftItems(nfts);
+      console.log("NFTs fetched:", nfts);
+    };
+    fetchNFTs();
+  }, []);
+
+  useEffect(() => {
+    const fetchContacts = async () => {
+      const querySnapshot = await getDocs(collection(db, "accounts"));
+      const contactsData = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      setContacts(contactsData);
+      console.log("Contacts fetched:", contactsData);
+    };
+    fetchContacts();
+  }, []);
 
   const toggleSidebar = () => setIsOpen(!isOpen);
 
@@ -112,31 +137,6 @@ const SidebarChatPanel = () => {
     setRecording(false);
   };
 
-  const nftItems = [
-    { id: 1, title: 'SynthCat #432', image: '/nft1.png', owner: '0xA12...', status: 'online' },
-    { id: 2, title: 'MetaBird #87', image: '/nft2.png', owner: '0xB34...', status: 'offline' },
-    { id: 3, title: 'NeonFrog #23', image: '/nft3.png', owner: '0xC56...', status: 'error' },
-    { id: 4, title: 'CyberTiger #112', image: '/nft5.png', owner: '0xD78...', status: 'online' },
-    { id: 5, title: 'VoidWolf #999', image: '/nft2.png', owner: '0xE90...', status: 'offline' },
-    { id: 6, title: 'GlitchBear #303', image: '/nft1.png', owner: '0xF21...', status: 'online' },
-    { id: 7, title: 'PixelWhale #77', image: '/nft5.png', owner: '0x1A3...', status: 'error' },
-    { id: 8, title: 'QuantumRex #204', image: '/nft1.png', owner: '0x4B5...', status: 'online' },
-    { id: 9, title: 'DreamSloth #666', image: '/nft65.png', owner: '0x8C9...', status: 'offline' },
-  ];
-
-  const contacts = [
-    { id: '1', name: 'Alice', isFriend: true, isOnline: true },
-    { id: '2', name: 'Bob', isFriend: false, isOnline: false },
-    { id: '3', name: 'Charlie', isFriend: true, isOnline: true },
-    { id: '4', name: 'Luis', isFriend: false, isOnline: true },
-    { id: '5', name: 'Marvin', isFriend: false, isOnline: false },
-    { id: '6', name: 'Elida', isFriend: true, isOnline: false },
-    { id: '7', name: 'Nina', isFriend: true, isOnline: true },
-    { id: '8', name: 'Victor', isFriend: false, isOnline: true },
-    { id: '9', name: 'Zoe', isFriend: true, isOnline: false },
-    { id: '10', name: 'Quinn', isFriend: false, isOnline: true },
-  ];
-
   const tokens = [
     { symbol: 'ETH', balance: 2.15, usd: 7183.20 },
     { symbol: 'BBX', balance: 1200, usd: 360.00 },
@@ -178,8 +178,8 @@ const SidebarChatPanel = () => {
               {contacts.map(c => (
                 <React.Fragment key={c.id}>
                   <div className={`contact-card ${!c.isFriend ? 'pending' : ''}`} style={{ width: !c.isFriend ? '200px' : 'auto' }}>
-                    <Avatar name={c.name} size="30" round className="contact-avatar" />
-                    <span>{c.name}</span>
+                    <Avatar name={c.email.split('@')[0]} size="30" round className="contact-avatar" />
+                    <span style={{ width: '100px', overflow: 'auto' }}>{c.email.split('@')[0]}</span>
                     {c.isOnline ? (
                       <span className="status-badge online"></span>
                     ) : (
@@ -198,12 +198,19 @@ const SidebarChatPanel = () => {
             <div className="nft-list">
               {nftItems.map(nft => (
                 <div key={nft.id} className="nft-card">
-                  <img src={nft.image} alt={nft.title} className="nft-avatar" />
+                  <div style={{ padding: '5px 10px ', margin: '0 auto' }}>
+                    <PixelPreview
+                      colorMap={nft?.colorMap}
+                      notesCount={nft?.notesPlayed.length}
+                      size={50}
+                    />
+                  </div>
+                  {/* <img src={nft.image} alt={nft.title} className="nft-avatar" /> */}
                   <div className="nft-info">
-                    <div className="nft-title">{nft.title}</div>
+                    <div className="nft-title">{nft.songName}</div>
                     <div className="nft-meta">
-                      <span className={`status-badge ${nft.status}`}></span>
-                      Owner: {nft.owner}
+                      {/* <span className={`status-badge ${nft.status}`}></span> */}
+                      Owner: {nft.createdBy}
                     </div>
                     <div className="nft-actions">
                       <button className={styles.submitBtn}>View</button>

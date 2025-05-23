@@ -53,7 +53,7 @@ const NeonSlider: React.FC<NeonSliderProps> = ({ slides }) => {
       <div className={`${styles.thumbnail} ${styles.leftThumb}`}>
         <PixelPreview
           colorMap={slides[prevIndex]?.colorMap}
-          notesCount={slides[prevIndex]?.notesPlayed.length}
+          notesCount={slides[prevIndex]?.notesPlayed?.length}
           size={60}
         />
       </div>
@@ -68,10 +68,9 @@ const NeonSlider: React.FC<NeonSliderProps> = ({ slides }) => {
           >
             <p>{slide.songName}</p>
             <br />
-            <br />
             <PixelPreview
               colorMap={slide.colorMap || []}
-              notesCount={slide.notesPlayed.length}
+              notesCount={slide.notesPlayed?.length}
               size={100}
             />
             <br />  
@@ -89,7 +88,7 @@ const NeonSlider: React.FC<NeonSliderProps> = ({ slides }) => {
       <div className={`${styles.thumbnail} ${styles.rightThumb}`}>
         <PixelPreview
           colorMap={slides[nextIndex]?.colorMap}
-          notesCount={slides[nextIndex]?.notesPlayed.length}
+          notesCount={slides[nextIndex]?.notesPlayed?.length}
           size={60}
         />
       </div>

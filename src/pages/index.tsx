@@ -44,6 +44,7 @@ const Home = () => {
   const [claimCoins, setClaimCoins] = useState(false);
   const [showOverlay, setShowOverlay] = useState(false);
   const [messageOverlay, setMessageOverlay] = useState("");
+  const [nfts, setNFTs] = useState<any[]>([]);
 
   const { user, signUp, signIn, authenticated, verifyEmail } = useAuth();
   const router = useRouter();
@@ -59,6 +60,16 @@ const Home = () => {
   const handlePrev = () => {
     setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
   };
+  
+  useEffect(() => {
+    const fetchNFTs = async () => {
+      const querySnapshot = await getDocs(collection(db, "signatures"));
+      const nfts = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      setNFTs(nfts);
+      console.log("NFTs fetched:", nfts);
+    };
+    fetchNFTs();
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -235,7 +246,7 @@ const Home = () => {
         />
       )}
 
-      <div className={`${styles.bannerContainer} ${styles.bannerContainerCustom}`}>
+      <div className={`${styles.bannerContainer} ${styles.bannerContainerCustom}`} style={{ marginBottom: '-80px' }}>
         <br />
         <br />
         <br />
@@ -249,14 +260,8 @@ const Home = () => {
         </p>
       </div>
 
-      <NeonSlider slides={[
-        { id: 1, title: "Starknet Jingle", img: "/nft1.png" },
-        { id: 2, title: "Billy Elli2h Collection", img: "/nft2.png" },
-        { id: 3, title: "Astrofreakazoid", img: "/nft3.png" },
-      ]} />
-
+      <NeonSlider slides={nfts} />
       
-      <br />
       <br />
 
       {/* 🚀 Neon Whitelist Banner */}
