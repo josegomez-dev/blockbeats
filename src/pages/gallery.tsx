@@ -27,11 +27,11 @@ const GalleryScreen = () => {
           <p className="glitch"><h2>My Collection</h2></p>
           <br />
         </div>
-        <NeonSlider slides={[
+        {/* <NeonSlider slides={[
           { id: 1, title: "Starknet Jingle", img: "/nft1.png" },
           { id: 2, title: "Billy Elli2h Collection", img: "/nft2.png" },
           { id: 3, title: "Astrofreakazoid", img: "/nft3.png" },
-        ]} />
+        ]} /> */}
 
         <br />
 
