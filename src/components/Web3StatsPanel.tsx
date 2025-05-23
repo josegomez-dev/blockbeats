@@ -59,11 +59,11 @@ const Web3StatsPanel = () => {
         MATIC: getRandomChange(),
         BTC: getRandomChange(),
       });
-    }, 5000);
+    }, 1500);
 
     const newsInterval = setInterval(() => {
       setNewsIndex((prev) => (prev + 1) % newsLength);
-    }, 4000);
+    }, 2000);
 
     return () => {
       clearInterval(priceInterval);
