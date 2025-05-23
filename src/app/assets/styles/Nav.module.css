@@ -120,12 +120,12 @@
   top: 50px;
   right: 0;
   
-  background: black;
+  background: white !important;
  
-  color: white !important;
+  color: black !important;
   backdrop-filter: blur(50px);
   background-color: rgba(0, 0, 0, 10); /* Light transparent */    
-  box-shadow: 0 0 5px #0ff;
+  box-shadow: 0 0 5px white;
   border: 1px solid #ccc;
   border-radius: 5px;
   min-width: 150px;
@@ -158,6 +158,9 @@
 
 .dropdownItem:hover {
   background-color: var(--secondary-color);
+  color: white;
+  transition: all 0.3s;
+  transform: scale(1.15);
 }
 
 .logout {

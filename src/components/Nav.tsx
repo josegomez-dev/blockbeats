@@ -112,11 +112,11 @@ export default function Nav() {
 
               {dropdownOpen && (
                 <div className={styles.dropdownMenu}>
-                  <div className={`${styles.dropdownItem} neon-color`}>
+                  <div className={`${styles.dropdownItem}`} style={{ color: 'var(--secondary-color)' }}>
                     <FaUserCircle className={styles.icon} /> {user?.displayName || user?.email}
                   </div>
-                  <div className={`${styles.dropdownItem} gold-color`}>
-                    Wallet Address: {address?.slice(0, 6)}... {data?.formatted} {data?.symbol}
+                  <div className={`${styles.dropdownItem} black-color`} style={{ marginBottom: '-15px' }}>
+                    Wallet Address: <span className='gold-color' style={{marginTop: '-15px' }}>{address?.slice(0, 6)} {data?.formatted.slice(0, 6)}... {data?.symbol} </span>
                   </div>
                   <div className={`${styles.dropdownItem} neon-color`}>
                     <Image
