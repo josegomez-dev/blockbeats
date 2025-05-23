@@ -76,6 +76,23 @@ const Web3StatsPanel = () => {
       <h2 className={styles.title}>📊 Web3 Stats & News</h2>
 
       <div className={styles.section}>
+        <h4>📰 News Feed</h4>
+        <div className={styles.newsSlider}>
+          <p>{newsItems[newsIndex]}</p>
+          <div className={styles.dots}>
+            {newsItems.map((_, i) => (
+              <span
+                key={i}
+                className={`${styles.dot} ${
+                  i === newsIndex ? styles.active : ""
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className={styles.section}>
         <h4>🪙 Market Overview</h4>
         <ul>
           {Object.entries(prices).map(([coin, { change, isPositive }]) => (
@@ -108,22 +125,6 @@ const Web3StatsPanel = () => {
         </div>
       </div>
 
-      <div className={styles.section}>
-        <h4>📰 News Feed</h4>
-        <div className={styles.newsSlider}>
-          <p>{newsItems[newsIndex]}</p>
-          <div className={styles.dots}>
-            {newsItems.map((_, i) => (
-              <span
-                key={i}
-                className={`${styles.dot} ${
-                  i === newsIndex ? styles.active : ""
-                }`}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

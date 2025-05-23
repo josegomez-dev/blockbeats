@@ -10,10 +10,11 @@
     "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
     "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
 
-  --primary-color: #2b5876; /* Slate color */
-  --secondary-color: #4e4376; /* Slate color */
-  --white-color: #fff; /* White color for text */
-  --black-color: #000; /* White color for text */
+  --primary-color: #2b5876;
+  --secondary-color: #4e4376;
+  --neon-color: #0ff; 
+  --white-color: #fff; 
+  --black-color: #000; 
 }
 
 * {

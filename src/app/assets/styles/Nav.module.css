@@ -73,6 +73,8 @@
   background-color: #1f2937; /* gray-800 */
   padding: 10px 20px;
   color: white;
+  z-index: 1000;
+  position: fixed;
 }
 
 .logoContainer {
@@ -117,14 +119,31 @@
   position: absolute;
   top: 50px;
   right: 0;
-  background-color: var(--secondary-color);
+  
+  background: rgba(78, 67, 118, 0.9);
+ 
   color: white !important;
-  border: 1px solid #ccc;
+  border: 1px solid var(--neon-color);
   border-radius: 5px;
   min-width: 150px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   animation: fadeIn 0.2s ease-in-out;
   z-index: 1000;
+}
+
+.neon-color {
+  color: var(--neon-color);
+  font-weight: bolder;
+  margin-bottom: -5px;
+}
+
+.black-color {
+  color: black;
+}
+
+.gold-color {
+  color: gold;
+  margin-bottom: -15px;
 }
 
 .dropdownItem {

@@ -80,20 +80,6 @@ export default function Nav() {
       <ul className={styles.navList}>
         {authenticated && (
           <>
-            <span>
-              {/* <GiWallet/>   */}
-              <Image
-                src="/coins.png"
-                alt="blockbeats-logo"
-                width={30}
-                height={30}
-                className='pulse-animation'
-              />
-              <div style={{ color: 'lightgreen' }}>
-                {data?.formatted?.slice(0, 8)}...
-              </div>
-              {/* <span style={{ color: '#0ff' }}>{data?.symbol}</span> */}
-            </span>
 
             {/* 👤 User Menu */}
             <li className={`${styles.navItem} ${styles.dropdown}`} ref={dropdownRef}>
@@ -111,11 +97,23 @@ export default function Nav() {
 
               {dropdownOpen && (
                 <div className={styles.dropdownMenu}>
-                  <div className={styles.dropdownItem}>
+                  <div className={`${styles.dropdownItem} neon-color`}>
                     <FaUserCircle className={styles.icon} /> {user?.displayName || user?.email}
                   </div>
-                  <div className={styles.dropdownItem}>
-                    <GiWallet className={styles.icon} /> Wallet: {address?.slice(0, 6)}... {data?.formatted} {data?.symbol}
+                  <div className={`${styles.dropdownItem} gold-color`}>
+                    Wallet Address: {address?.slice(0, 6)}... {data?.formatted} {data?.symbol}
+                  </div>
+                  <div className={`${styles.dropdownItem} neon-color`}>
+                    <Image
+                      src="/coins.png"
+                      alt="blockbeats-logo"
+                      width={30}
+                      height={30}
+                      className='pulse-animation'
+                    />&nbsp;
+                    <div style={{ color: 'lightgreen' }}>
+                      {data?.formatted?.slice(0, 8)}...
+                    </div>
                   </div>
                   <hr />
                   {/* <Link href="/profile">
