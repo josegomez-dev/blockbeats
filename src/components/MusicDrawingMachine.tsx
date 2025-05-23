@@ -78,7 +78,17 @@ const Piano = ({ onNotePlay }: { onNotePlay: (noteIndex: number) => void }) => (
   </div>
 );
 
-const PixelCanvas = ({ colorMap, playingIndex, color }: { colorMap: { noteIndex: number; time: number; color: string }[]; playingIndex: number | null; color: string }) => {
+const PixelCanvas = ({
+  colorMap,
+  playingIndex,
+  color,
+  onCanvasClick,
+}: {
+  colorMap: { noteIndex: number; time: number; color: string }[];
+  playingIndex: number | null;
+  color: string;
+  onCanvasClick: (noteIndex: number, time: number) => void;
+}) => {
   const rows = notes.length;
   const cols = 16;
   const cellSize = 18;
@@ -117,7 +127,30 @@ const PixelCanvas = ({ colorMap, playingIndex, color }: { colorMap: { noteIndex:
     }
   }, [colorMap, playingIndex]);
 
-  return <canvas ref={canvasRef} width={cols * cellSize} height={rows * cellSize} style={{ margin: "0 auto", background: color }} id="pixel-canvas" />;
+  const handleClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const time = Math.floor(x / cellSize);
+    const noteIndex = Math.floor(y / cellSize);
+
+    onCanvasClick(noteIndex, time);
+  };
+
+  return (
+    <canvas
+      ref={canvasRef}
+      onClick={handleClick}
+      width={cols * cellSize}
+      height={rows * cellSize}
+      style={{ margin: "0 auto", background: color }}
+      id="pixel-canvas"
+    />
+  );
 };
 
 const FrequencyModal = ({ selected, onSelect, onSubmit }: { selected: string; onSelect: (name: string) => void; onSubmit: () => void }) => {
@@ -161,13 +194,33 @@ const FrequencyModal = ({ selected, onSelect, onSubmit }: { selected: string; on
 const MusicDrawingPage = () => {
   const [notesPlayed, setNotesPlayed] = useState<{ noteIndex: number; time: number }[]>([]);
   const [colorMap, setColorMap] = useState<{ noteIndex: number; time: number; color: string }[]>([]);
-  const [timeStep, setTimeStep] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRange, setSelectedRange] = useState("Harmonic");
   const [isPlayingBack, setIsPlayingBack] = useState(false);
   const [playIndex, setPlayIndex] = useState<number | null>(null);
 
   const frequencyStyle = frequencyRanges.find((r) => r.name === selectedRange)!;
+
+  const handleCanvasClick = (noteIndex: number, time: number) => {
+    setColorMap((prevMap) => {
+      const exists = prevMap.find((n) => n.noteIndex === noteIndex && n.time === time);
+      if (exists) {
+        return prevMap.filter((n) => !(n.noteIndex === noteIndex && n.time === time));
+      } else {
+        const color = getRandomColor();
+        return [...prevMap, { noteIndex, time, color }];
+      }
+    });
+
+    setNotesPlayed((prevNotes) => {
+      const exists = prevNotes.find((n) => n.noteIndex === noteIndex && n.time === time);
+      if (exists) {
+        return prevNotes.filter((n) => !(n.noteIndex === noteIndex && n.time === time));
+      } else {
+        return [...prevNotes, { noteIndex, time }];
+      }
+    });
+  };
 
   const handleNotePlay = (noteIndex: number) => {
     const color = getRandomColor();
@@ -268,14 +321,16 @@ const MusicDrawingPage = () => {
           </div>
 
           <div style={{ position: "relative", backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-            <PixelCanvas colorMap={colorMap} playingIndex={playIndex} color={frequencyStyle.color} />
+            <PixelCanvas
+              colorMap={colorMap}
+              playingIndex={playIndex}
+              color={frequencyStyle.color}
+              onCanvasClick={handleCanvasClick}
+            />
             <Piano onNotePlay={handleNotePlay} />
             <div className={styles.melodyDataInfo} style={{ color: frequencyStyle.color }}>
               <div>
                 {notesPlayed.length} <br /> notes played
-              </div>
-              <div>
-                {timeStep} / 16 <br /> time step
               </div>
             </div>
           </div>
