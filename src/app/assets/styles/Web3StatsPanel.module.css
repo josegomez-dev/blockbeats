@@ -59,7 +59,7 @@
 }
 
 .tutorialSlider {
-  height: 8.9rem; /* 3 items x 1.5rem */
+  height: 5.9rem; /* 3 items x 1.5rem */
   overflow: hidden;
   position: relative;
   overflow-y: auto;

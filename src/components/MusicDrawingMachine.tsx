@@ -317,10 +317,6 @@ const MusicDrawingPage = () => {
           lorem ipsum dolor sit amet, consectetur adipiscing elit. <br />
         </p>
 
-        <br />
-        <br />
-        <br />
-
         <NeonSlider slides={nfts} />
 
         <br />
