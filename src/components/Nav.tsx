@@ -11,6 +11,7 @@ import Avatar from 'react-avatar';
 import { useAccount, useBalance } from "@starknet-react/core";
 import { arrayUnion, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
+import toast from 'react-hot-toast';
 
 type UserNotification = {
   id: string;
@@ -166,7 +167,7 @@ export default function Nav() {
                         className={`${styles.dropdownItem} ${n.visited ? styles.unread : ''}`}
                         onClick={() => {
                           // update in firebase 
-                          if (user && (user.uid || user.id)) {
+                          if (user) {
                             const userRef = doc(db, 'accounts', user.uid || user.id);
                             const notificationId = n.id;
                             const notificationMessage = n.text;
@@ -184,6 +185,8 @@ export default function Nav() {
                             .catch((error) => {
                               console.error('Error updating notification: ', error);
                             });
+                          } else {
+                            toast.error('User not found');
                           }
 
                           setNotifications((prev) =>

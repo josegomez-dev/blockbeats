@@ -175,9 +175,14 @@ const CharacterPanel = () => {
         <strong>Boost your creativity</strong> with special items and rewards!
       </p>
 
-      <button onClick={() => toast("Evolve manually!")} className={styles.evolveBtn}>
-        Evolve Character
-      </button>
+      <div style={{ display: "flex", justifyContent: "space-between", gap: "25px" }}>
+        <button onClick={() => toast("icon Claim your Rewards!")} className={styles.evolveBtn}>
+          🪙 Claim Rewards!
+        </button>
+        <button onClick={() => toast("icon Claim your Rewards!")} className={styles.evolveBtn}>
+          🚀 Boosts
+        </button>
+      </div>
     </div>
   );
 };

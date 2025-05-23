@@ -85,17 +85,6 @@
 
 }
 
-.genderButtons button {
-  padding: 0.4rem 1rem;
-  border-radius: 8px;
-  border: none;
-  background: #444;
-  color: white;
-  cursor: pointer;
-  transition: 0.3s ease;
-  font-weight: bold;
-}
-
 .genderButtons button:hover {
   background: #666;
 }

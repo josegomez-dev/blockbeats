@@ -733,7 +733,6 @@ p {
 }
 
 .chat-input button {
-
   background-color: var(--primary-color);
   padding: 10px 12px;
   border: none;
