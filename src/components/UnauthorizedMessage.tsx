@@ -7,7 +7,7 @@ export default function UnauthorizedMessage() {
       <div style={{ height: 200 }} />
       <Image
         style={{ filter: 'invert(1) drop-shadow(0 0 0.3rem #ffffff70)' }}
-        src="/banner-logo.png"
+        src="/logo.webp"
         alt="Catarsis Musical Logo"
         width={200}
         height={200}

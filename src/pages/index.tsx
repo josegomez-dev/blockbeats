@@ -29,12 +29,6 @@ const coins = [
   { x: 'calc(100px + 24px)', y: '-100px', delay: '0.2s' },
 ];
 
-const slides = [
-  { id: "slide-1", title: "Crypto Jingle", img: "/item1.png" },
-  { id: "slide-2", title: "Solidity Jingle", img: "/item2.png" },
-  { id: "slide-3", title: "Love Song", img: "/item3.png" },
-];
-
 const Home = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
@@ -52,14 +46,6 @@ const Home = () => {
   if (authenticated) {
     window.location.href = "/dashboard";
   }
-
-  const handleNext = () => {
-    setCurrent((prev) => (prev + 1) % slides.length);
-  };
-
-  const handlePrev = () => {
-    setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
-  };
   
   useEffect(() => {
     const fetchNFTs = async () => {
@@ -70,16 +56,6 @@ const Home = () => {
     };
     fetchNFTs();
   }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      handleNext();
-    }, 3000); // auto-slide every 3s
-    return () => clearInterval(interval);
-  }, []);
-
-  const prevIndex = (current - 1 + slides.length) % slides.length;
-  const nextIndex = (current + 1) % slides.length;
 
   useEffect(() => {
     document.addEventListener("mousemove", (e) => {
@@ -299,7 +275,7 @@ const Home = () => {
         &nbsp;
         &nbsp;
         <Link href={'https://josegomez-dev.github.io/MusicalPath/'} target={'_blank'}>
-          <Image src={'/musicalpathlogo.png'} alt={'metamask'} width={100} height={70} style={{ marginBottom: '-5px' }} />
+          <Image src={'/musicalpathlogo.webp'} alt={'metamask'} width={100} height={70} style={{ marginBottom: '-5px' }} />
         </Link>
       </div>
 

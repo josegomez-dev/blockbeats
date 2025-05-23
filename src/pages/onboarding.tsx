@@ -9,17 +9,17 @@ const steps = [
   {
     title: "Welcome to the App!",
     description: "We're excited to have you. Let's get started with a quick tour.",
-    imageUrl: "/logo.png"
+    imageUrl: "/logo.webp"
   },
   {
     title: "Create and Buy mintable, shareable, tradable NFTs",
     description: "Music Drawing Machine.",
-    imageUrl: "./item1.png"
+    imageUrl: "./item1.webp"
   },
   {
     title: "Get Started!",
     description: "You're all set. Enjoy using the app and feel free to reach out if you need any help.",
-    imageUrl: "/development-roadmap.png"
+    imageUrl: "/development-roadmap.webp"
   }
 ]
 

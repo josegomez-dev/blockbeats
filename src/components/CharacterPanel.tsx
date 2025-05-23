@@ -97,7 +97,7 @@ const CharacterPanel = () => {
 
   // Compute phase image path from level
   const phase = Math.min(Math.floor(level / 2) + 1, 10); // example max 10 phases
-  const avatarSrc = `/avatar/phase-${phase}.png`;
+  const avatarSrc = `/avatar/phase-${phase}.webp`;
 
   return (
     <div className={styles.panel}>

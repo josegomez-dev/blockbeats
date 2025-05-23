@@ -87,7 +87,7 @@ export default function Nav() {
   return (
     <nav className={styles.navbar}>
       <div className={styles.logoContainer} onClick={() => router.push('/')}>
-        <Image src="/logo.png" alt="blockbeats-logo" width={50} height={50} />
+        <Image src="/logo.webp" alt="blockbeats-logo" width={50} height={50} />
         {!authenticated && (
           <h1 className="glitch" data-text="BlockBeats">BlockBeats</h1>
         )}
@@ -120,7 +120,7 @@ export default function Nav() {
                   </div>
                   <div className={`${styles.dropdownItem} neon-color`}>
                     <Image
-                      src="/coins.png"
+                      src="/coins.webp"
                       alt="blockbeats-logo"
                       width={30}
                       height={30}

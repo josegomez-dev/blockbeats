@@ -20,7 +20,7 @@ const Footer = () => {
       </p>
       {/* <hr style={{ width: "300px", maxWidth: "100%", margin: '0 auto' }} /> */}
       <Link href={'/blockbeats-whitepaper.pdf'} target={'_blank'}>
-        <Image src={'/logo.png'} alt={'metamask'} width={100} height={100} style={{ marginBottom: '-20px' }} />
+        <Image src={'/logo.webp'} alt={'metamask'} width={100} height={100} style={{ marginBottom: '-20px' }} />
       </Link>
       <br />
       <br />

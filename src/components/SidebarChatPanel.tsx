@@ -156,7 +156,7 @@ const SidebarChatPanel = () => {
       <div ref={panelRef} className={`sidebar-panel ${isOpen ? 'open' : ''}`}>
         <button className="close-btn" onClick={() => setIsOpen(false)}>✖</button>
         <div style={{ textAlign: "center", margin: "0 auto", marginBottom: "25px" }}>
-          <Image src="/logo.png" alt="blockbeats-logo" width={50} height={50} />
+          <Image src="/logo.webp" alt="blockbeats-logo" width={50} height={50} />
           <h3 className="glitch" data-text="BlockBeats">BlockBeats</h3>
         </div>
 

@@ -187,7 +187,7 @@ const FrequencyModal = ({ selected, onSelect, onSubmit }: { selected: string; on
           width: "fit-content"
         }}
       >
-        <Image src="/frequency-types.png" alt="frequency types" width={350} height={350} style={{ maxWidth: "90%", height: "auto" }} />
+        <Image src="/frequency-types.webp" alt="frequency types" width={350} height={350} style={{ maxWidth: "90%", height: "auto" }} />
         <br />
         <br />
         <input type="range" min={0} max={frequencyRanges.length - 1} value={sliderIndex} onChange={(e) => setSliderIndex(Number(e.target.value))} style={{ width: '100%' }} />
