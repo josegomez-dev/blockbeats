@@ -164,27 +164,29 @@ export default function Nav() {
                     notifications.map((n) => (
                       <div
                         key={n.id}
-                        className={`${styles.dropdownItem} ${n.visited ? styles.unread : ''}`}
+                        className={`${styles.dropdownItem}`}
                         onClick={() => {
                           // update in firebase 
                           if (user) {
-                            const userRef = doc(db, 'accounts', user.uid || user.id);
-                            const notificationId = n.id;
-                            const notificationMessage = n.text;
-                            const notification = {
-                              id: notificationId,
-                              text: notificationMessage,
-                              visited: true,
-                            };
-                            updateDoc(userRef, {
-                              notifications: arrayUnion(notification),
+                            // find this notification and remove it from the notifications array
+                            const updatedNotifications = (user.notifications ?? []).filter((notif: any) => notif.id !== n.id);
+                          
+                            updateDoc(doc(db, 'accounts', user.uid), {
+                              notifications: updatedNotifications,
                             })
                             .then(() => {
-                              console.log('Notification updated successfully!');
+                              toast.success('Notification marked as read');
                             })
                             .catch((error) => {
-                              console.error('Error updating notification: ', error);
+                              console.error('Error updating document: ', error);
+                              toast.error('Error marking notification as read');
                             });
+
+                            setNotifications((prev) =>
+                              prev.filter((notif) => notif.id !== n.id)
+                            );
+                            
+
                           } else {
                             toast.error('User not found');
                           }
