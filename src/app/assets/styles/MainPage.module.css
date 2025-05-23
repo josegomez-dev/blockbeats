@@ -616,3 +616,34 @@
     display: none;
   }
 }
+
+.buttonsContainerMusicBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin: 25px auto;
+  width: auto;
+}
+
+
+.title {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: #00ffe7;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.melodyDataInfo {
+  margin-top: -50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 50px;
+  padding: 10px;
+}
+
+

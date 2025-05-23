@@ -56,13 +56,15 @@ const Key = ({ note, frequency, type, onPlay }: { note: string; frequency: numbe
       onTouchEnd={stop}
       style={{
         background: type === "kblack" ? "black" : "white",
-        width: type === "kwhite" ? "36px" : "22px",
-        height: type === "kwhite" ? "150px" : "85px",
+        width: type === "kwhite" ? "40px" : "23px",
+        height: type === "kwhite" ? "150px" : "95px",
         marginLeft: type === "kblack" ? "-12px" : "0",
         border: "1px solid black",
         display: "inline-block",
         position: type === "kblack" ? "absolute" : "relative",
-        zIndex: type === "kblack" ? 2 : "auto"
+        zIndex: type === "kblack" ? 2 : "auto",
+        borderBottomLeftRadius: type === "kblack" ? "5px" : "0",
+        borderBottomRightRadius: type === "kblack" ? "5px" : "0",
       }}
     ></div>
   );
@@ -79,7 +81,7 @@ const Piano = ({ onNotePlay }: { onNotePlay: (noteIndex: number) => void }) => (
 const PixelCanvas = ({ colorMap, playingIndex, color }: { colorMap: { noteIndex: number; time: number; color: string }[]; playingIndex: number | null; color: string }) => {
   const rows = notes.length;
   const cols = 16;
-  const cellSize = 16;
+  const cellSize = 18;
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -145,10 +147,12 @@ const FrequencyModal = ({ selected, onSelect, onSubmit }: { selected: string; on
         }}
       >
         <Image src="/frequency-types.png" alt="frequency types" width={350} height={350} style={{ maxWidth: "90%", height: "auto" }} />
-        <h3>Select Frequency Range</h3>
+        <br />
+        <br />
         <input type="range" min={0} max={frequencyRanges.length - 1} value={sliderIndex} onChange={(e) => setSliderIndex(Number(e.target.value))} style={{ width: '100%' }} />
         <div style={{ fontSize: 18, color: frequencyRanges[sliderIndex].color }}>{frequencyRanges[sliderIndex].name}</div>
-        <button type="submit" className={styles.submitBtn}>Choose Freq.</button>
+        <br />  
+        <button type="submit" className={styles.submitBtn} style={{ animation: 'none', background: 'transparent', color: 'white' }}>Choose Freq.</button>
       </form>
     </div>
   );
@@ -212,36 +216,76 @@ const MusicDrawingPage = () => {
   }, []);
 
   return (
-    <div style={{ padding: 20, fontFamily: "monospace", color: "white", backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', width: '300px', position: "relative", margin: "0 auto" }}>
-      {/* Color overlay */}
-      <div style={{ position: "fixed", inset: 0, background: frequencyStyle.color, mixBlendMode: "overlay", opacity: 0.15, pointerEvents: "none", zIndex: 1 }} />
+    <>
+      <div>
+        <h2 className={styles.title}>🎧 Music Drawing Machine 🎹</h2>
+        <p style={{ fontSize: 14, color: 'gray' }}>
+          lorem ipsum dolor sit amet, consectetur adipiscing elit. <br />
+        </p>
 
-      {isModalOpen && (
-        <FrequencyModal
-          selected={selectedRange}
-          onSelect={setSelectedRange}
-          onSubmit={() => setIsModalOpen(false)}
-        />
-      )}
+        <br />
+        <br />
+        <br />
 
-      <div style={{ margin: "0 auto", width: "auto", textAlign: "center", position: "relative", zIndex: 2 }}>
-        <h2 style={{ color: frequencyStyle.color }}>🎧 BlockBeats <span data-text="NFT" className="glitch">NFT</span> 🎹</h2>
-        <div>
-          <button onClick={playback} disabled={isPlayingBack} className={styles.launchpadBtn}>▶️ Play</button>
-          <button onClick={resetBoard} disabled={isPlayingBack} className={styles.launchpadBtn}>⚠️ Reset</button>
+        <NeonSlider slides={[
+          { id: 1, title: "Starknet Jingle", img: "/nft1.png" },
+          { id: 2, title: "Billy Elli2h Collection", img: "/nft2.png" },
+          { id: 3, title: "Astrofreakazoid", img: "/nft3.png" },
+        ]} />
+
+        <br />
+
+        <div className={styles.buttonsContainerMusicBox}>
+          <button className={styles.submitBtn} style={{ background: 'transparent', color: 'white', animation: 'none' }}>🪙 Mint</button> &nbsp;&nbsp;
+          <button className={styles.submitBtn} style={{ background: 'transparent', color: 'white', animation: 'none' }}>🔄 Trade</button> &nbsp;&nbsp;
         </div>
 
-        <div style={{ background: "#111", padding: 10, margin: "10px 0", position: "relative" }}>
-          <span style={{ padding: "4px 8px", background: frequencyStyle.color, color: "#000", borderRadius: 4 }}>{frequencyStyle.name}</span>
-          <button onClick={() => setIsModalOpen(true)} style={{ marginLeft: 25, animation: 'none' }}>🎚 Freq. Range</button>
-        </div>
+        <p style={{ fontSize: 14, color: 'gray' }}>
+          lorem ipsum dolor sit amet, consectetur adipiscing elit. <br />
+        </p>
+      </div>
+                  
+      <div style={{ padding: 0, borderRadius: 8, fontFamily: "monospace", color: "white", backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', width: '300px', position: "relative", margin: "10px auto" }}>
+        <br />
+        <h3 style={{ color: frequencyStyle.color, textAlign: 'center', marginBottom: '0px' }}>BlockBeats <span data-text="NFT" className="glitch">NFT</span></h3>
+        <hr />
+        {/* Color overlay */}
+        <div style={{ position: "fixed", borderRadius: 8, inset: 0, background: frequencyStyle.color, mixBlendMode: "overlay", opacity: 0.15, pointerEvents: "none", zIndex: 1 }} />
 
-        <div style={{ position: "relative", backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-          <PixelCanvas colorMap={colorMap} playingIndex={playIndex} color={frequencyStyle.color} />
-          <Piano onNotePlay={handleNotePlay} />
+        {isModalOpen && (
+          <FrequencyModal
+            selected={selectedRange}
+            onSelect={setSelectedRange}
+            onSubmit={() => setIsModalOpen(false)}
+          />
+        )}
+
+        <div style={{ margin: "0 auto", width: "auto", textAlign: "center", position: "relative", zIndex: 2 }}>
+          <div style={{ margin: '10px' }}>
+            <button onClick={playback} disabled={isPlayingBack} className={styles.launchpadBtn}>▶️ Play</button> &nbsp;&nbsp;
+            <button onClick={resetBoard} disabled={isPlayingBack} className={styles.launchpadBtn}>⚠️ Reset</button>
+          </div>
+
+          <div style={{ background: "#111", padding: 10, margin: "0", position: "relative" }}>
+            <span style={{ padding: "4px 8px", background: frequencyStyle.color, color: "#000", borderRadius: 4 }}>{frequencyStyle.name}</span>
+            <button onClick={() => setIsModalOpen(true)} style={{ marginLeft: 25, animation: 'none' }}>🎚 Freq. Range</button>
+          </div>
+
+          <div style={{ position: "relative", backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+            <PixelCanvas colorMap={colorMap} playingIndex={playIndex} color={frequencyStyle.color} />
+            <Piano onNotePlay={handleNotePlay} />
+            <div className={styles.melodyDataInfo} style={{ color: frequencyStyle.color }}>
+              <div>
+                {notesPlayed.length} <br /> notes played
+              </div>
+              <div>
+                {timeStep} / 16 <br /> time step
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

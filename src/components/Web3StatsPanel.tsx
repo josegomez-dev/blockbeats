@@ -9,7 +9,6 @@ const newsItems = [
   "🎧 New synth instrument unlocked in the NFT lab.",
   "📈 Token market sees surge after community vote.",
   "🧩 Puzzle challenge released — win token rewards!",
-  "🛠️ Maintenance scheduled for smart contract upgrades.",
   "🎤 Harmony Festival virtual stage opens next week.",
   "🧠 AI composer beta released to selected users.",
   "🌐 Multichain bridge for melody tokens goes live.",
@@ -78,7 +77,7 @@ const Web3StatsPanel = () => {
       <div className={styles.section}>
         <h4>📰 News Feed</h4>
         <div className={styles.newsSlider}>
-          <p>{newsItems[newsIndex]}</p>
+          <p className={styles.newsText}>{newsItems[newsIndex]}</p>
           <div className={styles.dots}>
             {newsItems.map((_, i) => (
               <span

@@ -17,13 +17,21 @@
   position: relative;
   width: 100%;
   padding: 1rem;
+  margin-top: 70px;
+}
+
+.stats {
+  font-size: 0.8rem !important;
+}
+
+.description {
+  font-size: 0.72rem;
 }
 
 .avatar {
   width: 300px;
   max-width: 100%;
   border-radius: 12px;
-  box-shadow: 0 0 15px #5eead4;
   transition: transform 0.4s ease;
 }
 
@@ -68,4 +76,127 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.genderButtons {
+  margin-top: 1rem;
+  display: flex;
+  gap: 10px;
+
+}
+
+.genderButtons button {
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+  border: none;
+  background: #444;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s ease;
+  font-weight: bold;
+}
+
+.genderButtons button:hover {
+  background: #666;
+}
+
+.activeGender {
+  background: linear-gradient(135deg, #00ffc3, #0088ff);
+  color: #000;
+}
+
+.bars {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 80%;
+  justify-content: space-between;
+  position: absolute;
+  width: 300px;
+  top: 80px;
+}
+
+.bars label {
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+.progressBar {
+  background: #222;
+  border: 1px solid #555;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 10px;
+  margin-bottom: 10px;
+  width: 90px;
+}
+
+.energyBar {
+  height: 100%;
+  background-color: #00ffd0;
+  transition: width 1s ease-in-out;
+}
+
+.creativityBar {
+  height: 100%;
+  background-color: #eab308;
+  transition: width 1s ease-in-out;
+}
+
+.xpBar {
+  height: 100%;
+  background-color: #4f46e5;
+  transition: width 1s ease-in-out;
+}
+
+.levelUp {
+  animation: pulseGlow 1.2s ease-in-out forwards;
+  color: #00ffd5;
+  font-weight: bold;
+  font-size: 2rem;
+  text-shadow: 0 0 8px #00ffd5, 0 0 20px #00ffd5;
+}
+
+@keyframes pulseGlow {
+  0% {
+    transform: scale(1);
+    opacity: 0;
+    text-shadow: none;
+  }
+  25% {
+    transform: scale(1.6);
+    opacity: 1;
+    text-shadow: 0 0 12px #00ffd5, 0 0 24px #00ffd5;
+  }
+  50% {
+    transform: scale(1.3) rotate(-2deg);
+  }
+  75% {
+    transform: scale(1.4) rotate(2deg);
+  }
+  100% {
+    transform: scale(1);
+    text-shadow: 0 0 8px #00ffd5, 0 0 20px #00ffd5;
+  }
+}
+
+
+
+.barGroup {
+  margin-bottom: 1rem;
+}
+
+.barLabel {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 20px;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.barText {
+  text-align: center;
+  font-size: 0.55rem;
+  color: #aaa;
+  margin-top: 4px;
 }

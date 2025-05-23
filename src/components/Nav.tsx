@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useRef, useEffect, use } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -7,9 +7,10 @@ import { useAuth } from '@/context/AuthContext';
 import styles from '@/app/assets/styles/Nav.module.css';
 import { FaSignOutAlt, FaUserCircle, FaCog, FaBell, FaDashcube, FaHeadphones } from 'react-icons/fa';
 import { RiGalleryView } from "react-icons/ri";
-import { GiWallet } from "react-icons/gi";
 import Avatar from 'react-avatar';
 import { useAccount, useBalance } from "@starknet-react/core";
+import { arrayUnion, doc, updateDoc } from 'firebase/firestore';
+import { db } from '../../firebase';
 
 type UserNotification = {
   id: string;
@@ -31,17 +32,22 @@ export default function Nav() {
   const dropdownRef = useRef<HTMLLIElement>(null);
   const notifRef = useRef<HTMLDivElement>(null);
 
-  const [notifications, setNotifications] = useState<UserNotification[]>(
-    Array.isArray(user?.notifications)
-      ? user.notifications.map((n: any) => ({
+  const [notifications, setNotifications] = useState<UserNotification[]>([]);
+
+  // Sync notifications from user context
+  useEffect(() => {
+    if (Array.isArray(user?.notifications)) {
+      setNotifications(
+        user.notifications.map((n: any) => ({
           id: n.id,
           text: n.text,
           visited: n.visited,
         }))
-      : []
-  );
+      );
+    }
+  }, [user]);
 
-  const unreadCount = notifications.filter((n: UserNotification) => !n.visited).length;
+  const unreadCount = notifications.filter((n) => !n.visited).length;
 
   const handleLogout = () => {
     setAuthenticated(false);
@@ -50,7 +56,18 @@ export default function Nav() {
   };
 
   const toggleDropdown = () => setDropdownOpen(prev => !prev);
-  const toggleNotif = () => setNotifOpen(prev => !prev);
+
+  const toggleNotif = () => {
+    setNotifOpen(prev => {
+      if (!prev) {
+        // Mark all notifications as visited
+        setNotifications((prevNotifs) =>
+          prevNotifs.map((n) => ({ ...n, visited: true }))
+        );
+      }
+      return !prev;
+    });
+  };
 
   const closeDropdowns = (e: MouseEvent) => {
     if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
@@ -71,16 +88,13 @@ export default function Nav() {
       <div className={styles.logoContainer} onClick={() => router.push('/')}>
         <Image src="/logo.png" alt="blockbeats-logo" width={50} height={50} />
         {!authenticated && (
-          <>
-            <h1 className="glitch" data-text="BlockBeats">BlockBeats</h1>
-          </>
+          <h1 className="glitch" data-text="BlockBeats">BlockBeats</h1>
         )}
       </div>
 
       <ul className={styles.navList}>
         {authenticated && (
           <>
-
             {/* 👤 User Menu */}
             <li className={`${styles.navItem} ${styles.dropdown}`} ref={dropdownRef}>
               <button className={styles.avatarButton} onClick={toggleDropdown}>
@@ -116,21 +130,11 @@ export default function Nav() {
                     </div>
                   </div>
                   <hr />
-                  {/* <Link href="/profile">
-                    <div className={styles.dropdownItem}>
-                      <FaUserCircle className={styles.icon} /> Profile
-                    </div>
-                  </Link> */}
                   <Link href="/dashboard">
                     <div className={styles.dropdownItem}>
                       <FaDashcube className={styles.icon} /> Dashboard
                     </div>
                   </Link>
-                  {/* <Link href="/machine">
-                    <div className={styles.dropdownItem}>
-                      <FaHeadphones className={styles.icon} /> Drawing Machine
-                    </div>
-                  </Link> */}
                   <Link href="/gallery">
                     <div className={styles.dropdownItem}>
                       <RiGalleryView className={styles.icon} /> Gallery
@@ -156,10 +160,38 @@ export default function Nav() {
                   {notifications.length === 0 ? (
                     <div className={styles.dropdownItem}>No notifications</div>
                   ) : (
-                    notifications.map((n: UserNotification) => (
+                    notifications.map((n) => (
                       <div
                         key={n.id}
-                        className={`${styles.dropdownItem} ${!n.visited ? styles.unread : ''}`}
+                        className={`${styles.dropdownItem} ${n.visited ? styles.unread : ''}`}
+                        onClick={() => {
+                          // update in firebase 
+                          if (user && (user.uid || user.id)) {
+                            const userRef = doc(db, 'accounts', user.uid || user.id);
+                            const notificationId = n.id;
+                            const notificationMessage = n.text;
+                            const notification = {
+                              id: notificationId,
+                              text: notificationMessage,
+                              visited: true,
+                            };
+                            updateDoc(userRef, {
+                              notifications: arrayUnion(notification),
+                            })
+                            .then(() => {
+                              console.log('Notification updated successfully!');
+                            })
+                            .catch((error) => {
+                              console.error('Error updating notification: ', error);
+                            });
+                          }
+
+                          setNotifications((prev) =>
+                            prev.map((notif) =>
+                              notif.id === n.id ? { ...notif, visited: true } : notif
+                            )
+                          );
+                        }}
                       >
                         {n.text}
                       </div>
@@ -168,7 +200,6 @@ export default function Nav() {
                 </div>
               )}
             </div>
-
           </>
         )}
 

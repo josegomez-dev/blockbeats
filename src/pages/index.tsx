@@ -16,6 +16,18 @@ import Avatar from "react-avatar";
 import Preloader from "@/components/Preloader";
 import Link from "next/link";
 import NeonSlider from "@/components/NeonSlider";
+import LevelUpOverlay from "@/components/LevelUpOverlay";
+import { createPortal } from "react-dom";
+
+const coins = [
+  { x: 'calc(-100px + 24px)', y: 'calc(-105px + 24px)', delay: '0.3s' },
+  { x: 'calc(-70px + 24px)', y: '-90px', delay: '0.1s' },
+  { x: 'calc(-30px + 24px)', y: '-125px', delay: '0s' },
+  { x: 'calc(10px + 24px)', y: '-130px', delay: '0.2s' },
+  { x: 'calc(30px + 24px)', y: '-100px', delay: '0.1s' },
+  { x: 'calc(70px + 24px)', y: '-95px', delay: '0.4s' },
+  { x: 'calc(100px + 24px)', y: '-100px', delay: '0.2s' },
+];
 
 const slides = [
   { id: "slide-1", title: "Crypto Jingle", img: "/item1.png" },
@@ -29,6 +41,9 @@ const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [current, setCurrent] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [claimCoins, setClaimCoins] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(false);
+  const [messageOverlay, setMessageOverlay] = useState("");
 
   const { user, signUp, signIn, authenticated, verifyEmail } = useAuth();
   const router = useRouter();
@@ -104,6 +119,32 @@ const Home = () => {
     });
   }, []);
 
+  const triggerCoinAnimation = () => {
+  const container = document.createElement("div");
+  container.className = styles["coin-animation-container"];
+  document.body.appendChild(container);
+
+  for (let i = 0; i < 20; i++) {
+    const coin = document.createElement("div");
+    coin.className = styles.coin;
+
+    // Randomize position a bit
+    coin.style.left = `${window.innerWidth / 2 + (Math.random() - 0.5) * 100}px`;
+    coin.style.top = `${window.innerHeight / 2 + (Math.random() - 0.5) * 100}px`;
+
+    container.appendChild(coin);
+
+    setTimeout(() => {
+      coin.remove();
+    }, 1500);
+  }
+
+  // Cleanup container
+  setTimeout(() => {
+    container.remove();
+  }, 1600);
+};
+
 
   const getAllAccounts = async () => {
         try {
@@ -155,17 +196,45 @@ const Home = () => {
     await signIn(email, "abc123");
   }
 
+  const playSucessSound = () => {
+    const audio = new Audio("/sounds/coins.mp3");
+    audio.volume = 0.6;
+    audio.play();
+  };
+
+  const playLevelUp2Sound = () => {
+    const audio = new Audio("/sounds/level-up-2.mp3");
+    audio.volume = 0.6;
+    audio.play();
+  };
+
   const handleRevenue = () => {
-    toast.loading("Loading revenue...");
+    setMessageOverlay("💰 Claim your coins!");
+    setShowOverlay(true);
+    triggerCoinAnimation();
+    playLevelUp2Sound();
+
     setTimeout(() => {
-      toast.dismiss();
-      toast.success("Revenue loaded successfully!");
-    }, 2000);
+      setShowOverlay(false);
+      setMessageOverlay("");
+      setClaimCoins(true);
+      playSucessSound();
+    }, 3000);
+
+    setTimeout(() => {
+      setClaimCoins(false);
+    }, 6000);
   }
 
   return (
     <main className={styles.main}>
-    
+      {showOverlay && (
+        <LevelUpOverlay
+          message={messageOverlay}
+          onClose={() => setShowOverlay(true)}
+        />
+      )}
+
       <div className={`${styles.bannerContainer} ${styles.bannerContainerCustom}`}>
         <br />
         <br />
@@ -234,12 +303,12 @@ const Home = () => {
 
       <Modal classNames={{ root: styles.modal }} open={isModalOpen} onClose={() => setIsModalOpen(false)} styles={{ modal: {  backdropFilter: 'blur(100px)', backgroundColor: 'rgba(20, 50, 100, 0.2)' } }} center>
         <div className="modal-content">
-          <h2 className={styles.modalTitle}>¡Gracias por unirte a nuestra whitelist!</h2>
+          <h2 className={styles.modalTitle}>Thanks to join our whitelist</h2>
           <br />
           <Avatar 
             size="50" 
             textSizeRatio={1.75} 
-            name={user?.email || 'Jhon Doe'} 
+            name={user?.email || ''} 
             // facebook-id={'facebookId'}
             // md5Email={'md5Email'}
             // twitterHandle='twitterHandle'
@@ -253,11 +322,11 @@ const Home = () => {
           <br />
           <br />
           <p className={styles.modalText}>
-            Tu correo electrónico es: &nbsp; 
+            Your email is: &nbsp; 
             <b>{user?.email} ({user?.emailVerified ? (
-              <span style={{ color: 'green' }}>Verificado</span>
+              <span style={{ color: 'green' }}>Verified</span>
             ) : (
-              <span style={{ color: 'red' }}>No verificado</span>
+              <span style={{ color: 'red' }}>Unverified</span>
             )})</b>
             &nbsp;
           </p>
@@ -266,6 +335,30 @@ const Home = () => {
           <p data-text="¡Estamos emocionados de tenerte a bordo!" className={`glitch ${styles.modalText}`}>
             <b>¡Estamos emocionados de tenerte a bordo!</b>
           </p>
+          
+           {claimCoins && (
+            <div className="wrap">
+              <div className="wallet" id="wallet">
+                <div className="icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 458.5 458.5" fill="currentColor">
+                    <path d="M336.7 344c-22 0-39.9-18-39.9-39.9V238c0-22 18-39.8 39.9-39.8h105.7v-65.9c0-17-13.8-30.7-30.7-30.7h-381c-17 0-30.7 13.7-30.7 30.7v277.6c0 17 13.8 30.8 30.7 30.8h381c17 0 30.7-13.8 30.7-30.8V344H336.7z" />
+                    <path d="M440.5 220H336.7c-10 0-18 8-18 18V304c0 10 8 18 18 18h103.8c10 0 18-8 18-18V238c0-10-8-18-18-18zm-68 77a26 26 0 1 1 0-52 26 26 0 0 1 0 52zM358.2 45.2A39.7 39.7 0 0 0 308 20L152 71.6h214.9l-8.7-26.4z" />
+                  </svg>
+                </div>
+                {coins.map((coin, index) => (
+                  <div
+                    key={index}
+                    className="coin coin--animated"
+                    style={{
+                      '--coin-to-x': coin.x,
+                      '--coin-to-y': coin.y,
+                      '--coin-delay': coin.delay,
+                    } as any}
+                  />
+                ))}
+              </div>
+            </div>)}
+            
           <br />
           {!user?.emailVerified && (
             <>
@@ -288,7 +381,13 @@ const Home = () => {
               <button onClick={handleContinue} className={`${styles.submitBtn}`} >CONTINUAR 🚀</button>
               <br />
               <br />
-              <button disabled={user?.emailVerified} onClick={handleRevenue} className={`${styles.submitBtn} ${!user?.emailVerified && 'disabled'}`} style={{ backgroundColor: 'transparent' }}>Reclama Bonos del Whitelist</button>
+              <button 
+                onClick={handleRevenue} 
+                className={`${styles.submitBtn} ${!user?.emailVerified && 'disabled'}`} 
+                style={{ backgroundColor: !user?.emailVerified ? 'transparent' : '#0ff', color: !user?.emailVerified ? 'white' : 'var(--primary-color)' }}>
+                  💰 Claim Coins!
+              </button>
+              
             </>
           ) : (
             <>

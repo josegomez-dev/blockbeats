@@ -120,13 +120,16 @@
   top: 50px;
   right: 0;
   
-  background: rgba(78, 67, 118, 0.9);
+  background: black;
  
   color: white !important;
-  border: 1px solid var(--neon-color);
+  backdrop-filter: blur(50px);
+  background-color: rgba(0, 0, 0, 10); /* Light transparent */    
+  box-shadow: 0 0 5px #0ff;
+  border: 1px solid #ccc;
   border-radius: 5px;
   min-width: 150px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
   animation: fadeIn 0.2s ease-in-out;
   z-index: 1000;
 }
@@ -154,7 +157,7 @@
 }
 
 .dropdownItem:hover {
-  background-color: #f0f0f0;
+  background-color: var(--secondary-color);
 }
 
 .logout {
@@ -212,4 +215,6 @@
 .unread {
   font-weight: bold;
   background-color: #f0f8ff;
+  opacity: 0.8;
+  color: red !important;
 }

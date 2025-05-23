@@ -42,7 +42,9 @@ const DashboardLayout = () => {
             <CharacterPanel />
           </div>
           <div id="core-center-panel" className={styles.centerPanel}>
-            <MusicDrawingPage />
+            <>
+              <MusicDrawingPage />
+            </>
           </div>
           <div id="core-right-panel" className={styles.rightPanel}>
             <Web3StatsPanel />
@@ -50,14 +52,6 @@ const DashboardLayout = () => {
         </div>
       </div>
 
-      <div className={`${styles.bannerContainer}`} style={{ textAlign: "center", margin: "0 auto" }}>
-        <p>
-          It’s <span data-text="Web3" className="glitch">Web3</span>’s first community-powered <br /> <b>musical signature generator</b> — <b>mintable, shareable, tradable</b>... <br /><br />
-        </p>
-        <p>
-          <span className={styles.typewriterLoop}>✨ We turn music into immutable art.</span> <br /><br />
-        </p>
-      </div>
       <Footer />
     </>
   );

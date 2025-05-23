@@ -257,6 +257,143 @@ p {
 
 
 
+.wrap {
+  position: relative;
+}
+
+.wallet {
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.icon {
+  z-index: 2;
+  position: relative;
+}
+
+.coin {
+  width: 20px;
+  height: 20px;
+  background: gold;
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.coin--animated {
+  animation: moveCoin 0.6s forwards;
+  animation-delay: var(--coin-delay);
+}
+
+@keyframes moveCoin {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--coin-to-x), var(--coin-to-y)) scale(1);
+    opacity: 0;
+  }
+}
+
+
+.wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.wallet {
+  width: 64px;
+  height: 64px;
+  position: relative;
+}
+
+.icon {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #0066ff;
+  color: #fff;
+  position: relative;
+  z-index: 101;
+}
+
+.coin {
+  position: absolute;
+  top: var(--coin-from-x, 24px);
+  left: var(--coin-from-y, 24px);
+  z-index: 100;
+  opacity: 0;
+}
+
+.coin::after {
+  content: "$";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  font-size: 10px;
+  color: rgb(237, 196, 107);
+  background: rgb(227, 162, 23);
+  border: 2px solid rgb(237, 196, 107);
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.coin--animated,
+.coin--animated::after {
+  animation-delay: var(--coin-delay, 0s);
+  animation-duration: var(--coin-duration, 1.5s);
+  animation-direction: normal;
+  animation-fill-mode: both;
+  animation-play-state: running;
+  animation-iteration-count: infinite;
+}
+
+.coin--animated {
+  animation-name: coin-x-axis;
+  animation-timing-function: ease-in;
+}
+
+.coin--animated::after {
+  animation-name: coin-y-axis-and-flip;
+  animation-timing-function: ease-out;
+}
+
+@keyframes coin-x-axis {
+  30% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  to {
+    left: calc(var(--coin-to-x) * 1.5);
+  }
+}
+
+@keyframes coin-y-axis-and-flip {
+  30% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  to {
+    transform: translateY(calc(var(--coin-to-y) * 1.5)) rotate3d(1, 1, 1, 1080deg);
+  }
+}
 
 
 

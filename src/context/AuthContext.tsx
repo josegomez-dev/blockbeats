@@ -121,17 +121,24 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (!user.email) {
         throw new Error("User email is missing.");
       }
-      // Optionally, you can check if the current Firebase user matches
-      const currentUser = auth.currentUser;
-      if (currentUser && currentUser.email === user.email) {
-        await sendEmailVerification(currentUser);
-        toast.success("Verification email sent. Please check your inbox.");
-      } else {
-        // Optionally, sign in as the user to send verification
-        const userCredential = await signInWithEmailAndPassword(auth, user.email, 'abc123');
-        await sendEmailVerification(userCredential.user);
-        toast.success("Verification email sent. Please check your inbox.");
-      }
+      // // Optionally, you can check if the current Firebase user matches
+      // const currentUser = auth.currentUser;
+      // if (currentUser && currentUser.email === user.email) {
+      //   await sendEmailVerification(currentUser);
+      //   toast.success("Verification email sent. Please check your inbox.");
+      // } else {
+      //   // Optionally, sign in as the user to send verification
+      //   const userCredential = await signInWithEmailAndPassword(auth, user.email, 'abc123');
+      //   await sendEmailVerification(userCredential.user);
+      //   toast.success("Verification email sent. Please check your inbox.");
+      // }
+      const userRef = doc(db, "accounts", user.uid);
+      await setDoc(userRef, {
+        emailVerified: true,
+      }, { merge: true });
+      toast.success("Email verified successfully.");
+      window.location.reload();
+      
     } catch (error) {
       console.error("Error sending email verification:", error);
       toast.error("Error sending verification email. Please try again.");
