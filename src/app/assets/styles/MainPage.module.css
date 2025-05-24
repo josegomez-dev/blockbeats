@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  
+  color: var(--white-color);
 }
 
 .description {
@@ -178,13 +178,15 @@
 
 .bannerTitle {
   color: white;
+
+
   font-size: 1rem;
   margin-bottom: 1rem;
   text-shadow: 0 0 10px black;
 }
 
 .form {
-  display: flex;
+  /* display: flex; */
   flex-direction: row;
   gap: 15px;
   justify-content: center;
@@ -223,6 +225,7 @@
   cursor: pointer;
   border-radius: 50px;
   height: 50px;
+  margin: 15px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   white-space: nowrap;
   animation: pulse 2s infinite ease-in-out;
