@@ -36,7 +36,9 @@ const GalleryScreen = () => {
       const nfts = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setNFTs(nfts);
       console.log("NFTs fetched:", nfts);
-      userNFTS.filter(item => item.createdBy === user.uid)
+      if (user) {
+        userNFTS.filter(item => item.createdBy === user.uid)
+      }
     };
     fetchNFTs();
   }, []);
