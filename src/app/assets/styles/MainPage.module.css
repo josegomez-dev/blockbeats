@@ -621,14 +621,13 @@
   justify-content: center;
   align-items: center;
   gap: 5px;
-  margin: 25px auto;
+  margin: 0 auto;
   width: auto;
 }
 
 
 .title {
-  font-size: 1.4rem;
-  margin-bottom: 1rem;
+  font-size: 1rem;
   color: #00ffe7;
   text-align: center;
   display: flex;

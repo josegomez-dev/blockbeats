@@ -313,22 +313,14 @@ const MusicDrawingPage = () => {
     <>
       <div>
         <h2 className={styles.title}>🎧 Music Drawing Machine 🎹</h2>
-        <p style={{ fontSize: 14, color: 'gray' }}>
-          lorem ipsum dolor sit amet, consectetur adipiscing elit. <br />
-        </p>
-
-        <NeonSlider slides={nfts} />
-
-        <br />
-
+        <div style={{ marginTop: "-50px" }}>
+          <NeonSlider slides={nfts} />
+        </div>
         <div className={styles.buttonsContainerMusicBox}>
           <button className={styles.submitBtn} style={{ background: 'transparent', color: 'white', animation: 'none' }}>🪙 Mint</button> &nbsp;&nbsp;
           <button className={styles.submitBtn} style={{ background: 'transparent', color: 'white', animation: 'none' }}>🔄 Trade</button> &nbsp;&nbsp;
         </div>
 
-        <p style={{ fontSize: 14, color: 'gray' }}>
-          lorem ipsum dolor sit amet, consectetur adipiscing elit. <br />
-        </p>
       </div>
                   
       <div style={{ padding: 0, borderRadius: 8, fontFamily: "monospace", color: "white", backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', width: '300px', position: "relative", margin: "10px auto" }}>
