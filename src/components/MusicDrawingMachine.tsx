@@ -7,6 +7,7 @@ import NeonSlider from "./NeonSlider";
 import { addDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useAuth } from '../context/AuthContext'
+import Preloader from "./Preloader";
 
 const notes: [string, number, string][] = [
   ["C1", 130.81, "kwhite"], ["CM1", 138.59, "kblack"],
@@ -207,6 +208,7 @@ const MusicDrawingPage = () => {
   const [isPlayingBack, setIsPlayingBack] = useState(false);
   const [playIndex, setPlayIndex] = useState<number | null>(null);
   const [nfts, setNFTs] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const { user } = useAuth();
 
@@ -304,6 +306,7 @@ const MusicDrawingPage = () => {
       const querySnapshot = await getDocs(collection(db, "signatures"));
       const nfts = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setNFTs(nfts);
+      setLoading(false);
       console.log("NFTs fetched:", nfts);
     };
     fetchNFTs();
@@ -314,7 +317,8 @@ const MusicDrawingPage = () => {
       <div>
         <h2 className={styles.title}>🎧 Music Drawing Machine 🎹</h2>
         <div style={{ marginTop: "-50px" }}>
-          <NeonSlider slides={nfts} />
+          {!loading ? 
+            <NeonSlider slides={nfts} /> : <Preloader />}
         </div>
         <div className={styles.buttonsContainerMusicBox}>
           <button className={styles.submitBtn} style={{ background: 'transparent', color: 'white', animation: 'none' }}>🪙 Mint</button> &nbsp;&nbsp;

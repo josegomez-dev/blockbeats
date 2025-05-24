@@ -75,7 +75,7 @@ const Web3StatsPanel = () => {
       <h2 className={styles.title}>📊 Web3 Stats & News</h2>
 
       <div className={styles.section}>
-        <h4>📰 News Feed</h4>
+        <h5>📰 News Feed</h5>
         <div className={styles.newsSlider}>
           <p className={styles.newsText}>{newsItems[newsIndex]}</p>
           <div className={styles.dots}>
@@ -92,12 +92,12 @@ const Web3StatsPanel = () => {
       </div>
 
       <div className={styles.section}>
-        <h4>🪙 Market Overview</h4>
+        <h5>🪙 Market Overview</h5>
         <ul>
           {Object.entries(prices).map(([coin, { change, isPositive }]) => (
-            <li key={coin}>
+            <li className={styles.coinsContainer} key={coin}>
               {coin}: ${(1000 + Math.random() * 5000).toFixed(2)}{" "}
-              <span className={isPositive ? styles.green : styles.red}>
+              <span className={`${styles.coinsText} ${isPositive ? styles.green : styles.red}`}>
                 {isPositive ? "▲" : "▼"} {change}%
               </span>
             </li>
@@ -106,7 +106,7 @@ const Web3StatsPanel = () => {
       </div>
 
       <div className={styles.section}>
-        <h4>📖 Quick Tutorials</h4>
+        <h5>📖 Quick Tutorials</h5>
         <div className={styles.tutorialSlider}>
           <div
             className={styles.tutorialInner}
