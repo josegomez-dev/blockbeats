@@ -162,7 +162,7 @@ const Home = () => {
         setIsModalOpen(true);
         return;
       } else {
-        await sendWelcomeEmail(email);
+        await sendWelcomeEmail(email, "abc123");
         await signUp(email, "abc123");
         setLoading(false);
         setIsModalOpen(true);
