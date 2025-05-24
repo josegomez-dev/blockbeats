@@ -17,10 +17,24 @@
   --black-color: #000; 
 }
 
+@font-face {
+  font-family: 'BlockBeatsFont';
+  src: local('Arial Black'), local('Impact'), local('Helvetica Bold'), local('Bebas Neue');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.reg-p{
+  font-family: 'BlockBeatsFont', Arial, Helvetica, sans-serif;
+  font-weight: bold;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  font-family: 'BlockBeatsFont', Arial, Helvetica, sans-serif;
+  font-weight: bold;
 }
 
 html,

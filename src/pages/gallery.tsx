@@ -1,6 +1,7 @@
 import NeonSlider from '@/components/NeonSlider';
 import React, { useEffect } from 'react';
-
+import Link from 'next/link';
+import { useAuth } from "@/context/AuthContext";
 import styles from "@/app/assets/styles/MainPage.module.css";
 import Footer from '@/components/Footer';
 import { collection, getDocs } from 'firebase/firestore';
@@ -24,6 +25,9 @@ const images = [
 const GalleryScreen = () => {
 
   const [nfts, setNFTs] = React.useState<any[]>([]);
+  const [userNFTS, setUserNFTS] = React.useState<any[]>([]);
+  const { user } = useAuth();
+
 
 
   useEffect(() => {
@@ -32,6 +36,7 @@ const GalleryScreen = () => {
       const nfts = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setNFTs(nfts);
       console.log("NFTs fetched:", nfts);
+      userNFTS.filter(item => item.createdBy === user.uid)
     };
     fetchNFTs();
   }, []);
@@ -39,18 +44,29 @@ const GalleryScreen = () => {
   return (
     <>
       <div className="gallery-screen">
-        <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto", marginBottom: "-50px" }}>
+        <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
           <br />
           <br />
           <h2><p className="glitch">My Collection</p></h2>
         </div>
         
-        <NeonSlider slides={nfts} />
+        {user && (
+          userNFTS.length > 0 ? (
+            <NeonSlider slides={userNFTS} />
+          ) : (
+            <div>
+              <h4 className='reg-p'>You haven't created any BB yet :-(</h4>
+                <Link href="/dashboard">
+                  <button className={styles.launchpadBtn}>💾 Create your first Blockbeat</button>
+                </Link>
+            </div>
+          )
+        )}
 
         <br />
 
         <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
-          <h2><p className="glitch">Gallery of <span data-text="NFTS" className="glitch">NFTS</span></p></h2>
+          <h2><p className="glitch">Blockbeats <span data-text="NFTS" className="glitch">Marketplace</span></p></h2>
           <br />
         </div>
         <div className="gallery-grid">
