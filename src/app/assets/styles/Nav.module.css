@@ -119,17 +119,16 @@
   position: absolute;
   top: 50px;
   right: 0;
-  
-  background: white !important;
- 
-  color: black !important;
-  backdrop-filter: blur(50px);
-  background-color: rgba(0, 0, 0, 10); /* Light transparent */    
-  box-shadow: 0 0 5px white;
-  border: 1px solid #ccc;
+  background: #1f2937;
+  /* color: black !important;
+  backdrop-filter: blur(50px); */
+  /* background-color: rgba(0, 0, 0, 10); /* Light transparent */     */
+  /* box-shadow: 0 0 5px white; */
+  /* border: 1px solid #ccc; */
   border-radius: 5px;
   min-width: 150px;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 5px 0 5px 4px #0ff;
+  /* box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1); */
   animation: fadeIn 0.2s ease-in-out;
   z-index: 1000;
 }
@@ -140,9 +139,9 @@
   margin-bottom: -5px;
 }
 
-.black-color {
+/* .black-color {
   color: black;
-}
+} */
 
 .gold-color {
   color: gold;
