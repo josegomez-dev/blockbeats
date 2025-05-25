@@ -29,9 +29,13 @@ interface AuthContextType {
   setRole: React.Dispatch<React.SetStateAction<string>>
   authenticated: boolean
   setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
+  walletConnectionAuth: any
+  setWalletConnectionAuth: React.Dispatch<React.SetStateAction<any>>
 
   signUp: (email: string, password: string) => Promise<void>;
+  signUpWithWallet: (email: string, password: string, _walletConnection: any) => Promise<void>;
   signIn: (email: string, password: string) => Promise<void>;
+  signInWithWallet: (walletAddress: string) => Promise<void>;
   signInWithGoogle: () => Promise<void>;
   verifyEmail: (user: User) => Promise<void>;
   sendWelcomeEmail: (email: string, password: string) => void;
@@ -47,40 +51,41 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
   const [role, setRole] = useState<string>('user')
   const [authenticated, setAuthenticated] = useState<boolean>(false)
+  const [walletConnectionAuth, setWalletConnectionAuth] = useState<any>(null);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
       
-      if (user) {
-        // User is signed in, fetch user data from Firestore
-        const accountRef = doc(db, "accounts", user.uid);
-        getDoc(accountRef).then((accountSnap) => {
-          if (accountSnap.exists()) {
-            const accountData = accountSnap.data();
-            setUser({
-              ...EMPTY_USER,
-              ...accountData,
-              id: user.uid,
-              email: user.email ?? "",
-              role: accountData.role ?? "user",
-              status: accountData.status ?? "active",
-            });
-            setAuthenticated(true);
-            setRole(accountData.role || "user");
-            console.log("User signed in and account fetched successfully.");
-          } else {
-            console.warn("No account document found for this user.");
-          }
-        });
-      } else {
-        // User is signed out
-        setUser(null);
-      }
+  //     if (user) {
+  //       // User is signed in, fetch user data from Firestore
+  //       const accountRef = doc(db, "accounts", user.uid);
+  //       getDoc(accountRef).then((accountSnap) => {
+  //         if (accountSnap.exists()) {
+  //           const accountData = accountSnap.data();
+  //           setUser({
+  //             ...EMPTY_USER,
+  //             ...accountData,
+  //             id: user.uid,
+  //             email: user.email ?? "",
+  //             role: accountData.role ?? "user",
+  //             status: accountData.status ?? "active",
+  //           });
+  //           setAuthenticated(true);
+  //           setRole(accountData.role || "user");
+  //           console.log("User signed in and account fetched successfully.");
+  //         } else {
+  //           console.warn("No account document found for this user.");
+  //         }
+  //       });
+  //     } else {
+  //       // User is signed out
+  //       setUser(null);
+  //     }
       
-      setLoading(false);
-    });
-    return () => unsubscribe();
-  }, []);
+  //     setLoading(false);
+  //   });
+  //   return () => unsubscribe();
+  // }, []);
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
@@ -179,31 +184,55 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         uid: user.uid,
         email: user.email,
       };
-
-      // Create associated account in Firestore
-      await setDoc(doc(db, "accounts", user.uid), {
-        ..._user,
-        notifications: NOTIFICATIONS
-      });
   
       setUser(_user as any);
       setAuthenticated(true);
       setRole(_user.role);
 
-      // sendWelcomeEmail(email, password);
+      console.log("User and profile created successfully.");
+    } catch (error) {
+      console.error("Error signing up:", error);
+      throw error;
+    }
+  };
 
-      // sendEmailVerification(userCredential.user)
-      // .then(() => {
-      //   // Email verification sent. Inform the user.
-      //   toast.success("Verification email sent. Please check your inbox.");
-      // })
-      // .catch((error) => {
-      //   // An error occurred. Show a message to the user.
-      //   toast.error("Error sending verification email. Please try again.");
-      // });
+const removeUndefined = (obj: any): any => {
+  if (Array.isArray(obj)) {
+    return obj.map(removeUndefined);
+  } else if (typeof obj === 'object' && obj !== null) {
+    const cleaned: any = {};
+    for (const key in obj) {
+      const value = obj[key];
+      if (value !== undefined) {
+        cleaned[key] = removeUndefined(value);
+      }
+    }
+    return cleaned;
+  }
+  return obj;
+}
 
-      // Send a welcome email using EmailJS
-      // sendWelcomeEmail(email, password);
+  const signUpWithWallet = async (email: string, password: string = 'abc123', _walletConnection: any) => {
+     try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      const _user = {
+        ...EMPTY_USER,
+        uid: user.uid,
+        email: user.email,
+        walletStored: _walletConnection.address,
+        emailVerified: true,
+      };
+
+      const sanitizedUser = removeUndefined({
+        ..._user,
+        notifications: NOTIFICATIONS,
+      });
+
+      await setDoc(doc(db, "accounts", user.uid), sanitizedUser);
+  
+      setUser(_user as any);
 
       console.log("User and profile created successfully.");
     } catch (error) {
@@ -235,6 +264,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         });
         setAuthenticated(true);
         setRole(accountData.role || "user");
+
+        router.push('/dashboard');
   
         console.log("User signed in and account fetched successfully.");
       } else {
@@ -242,6 +273,39 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
     } catch (error) {
       console.error("Error signing in:", error);
+      throw error;
+    }
+  };
+
+  const signInWithWallet = async (walletAddress: string) => {
+    try {
+      const uid = walletAddress.toLowerCase(); // or use a hash if you want more privacy
+
+      // Fetch corresponding account from Firestore
+      const accountRef = doc(db, "accounts", uid);
+      const accountSnap = await getDoc(accountRef);
+
+      if (accountSnap.exists()) {
+        const accountData = accountSnap.data();
+
+        // Update global user state here
+        setUser({
+          ...EMPTY_USER,
+          ...accountData,
+          id: uid,
+          email: accountData.email ?? "",
+          role: accountData.role ?? "user",
+          status: accountData.status ?? "active",
+        });
+        setAuthenticated(true);
+        setRole(accountData.role || "user");
+
+        console.log("Wallet-based user signed in and account fetched successfully.");
+      } else {
+        console.warn("No account document found for this wallet address.");
+      }
+    } catch (error) {
+      console.error("Error signing in with wallet:", error);
       throw error;
     }
   };
@@ -267,8 +331,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setRole,
         authenticated,
         setAuthenticated,
+        walletConnectionAuth,
+        setWalletConnectionAuth,
         signUp, 
+        signUpWithWallet,
         signIn, 
+        signInWithWallet,
         signInWithGoogle,
         verifyEmail,
         sendWelcomeEmail,

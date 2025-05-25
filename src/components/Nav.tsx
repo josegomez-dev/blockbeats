@@ -118,6 +118,9 @@ export default function Nav() {
                   <div className={`${styles.dropdownItem} black-color`} style={{ marginBottom: '-15px' }}>
                     Wallet Address: <span className='gold-color' style={{marginTop: '-15px' }}>{address?.slice(0, 6)} {data?.formatted.slice(0, 6)}... {data?.symbol} </span>
                   </div>
+                  <div className={`${styles.dropdownItem} black-color`} style={{ marginBottom: '-15px' }}>
+                    Starknet Wallet Address: <span className='gold-color' style={{marginTop: '-15px' }}>{address?.slice(0, 6)} {data?.formatted.slice(0, 6)}... {data?.symbol} </span>
+                  </div>
                   <div className={`${styles.dropdownItem} neon-color`}>
                     <Image
                       src="/coins.webp"

@@ -318,7 +318,13 @@ const MusicDrawingPage = () => {
         <h2 className={styles.title}>🎧 Music Drawing Machine 🎹</h2>
         <div style={{ marginTop: "-50px" }}>
           {!loading ? 
-            <NeonSlider slides={nfts} /> : <Preloader />}
+            nfts.length > 0 ? (<NeonSlider slides={nfts} />) : (<p>
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              Please Register First NFT</p>) : <Preloader />}
         </div>
         <div className={styles.buttonsContainerMusicBox}>
           <button className={styles.submitBtn} style={{ background: 'transparent', color: 'white', animation: 'none' }}>🪙 Mint</button> &nbsp;&nbsp;

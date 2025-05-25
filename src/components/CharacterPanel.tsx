@@ -59,8 +59,6 @@ const CharacterPanel = () => {
   }, []);
 
   const updateUserNotifications = (newLevel: number) => {    
-    console.log("user: ", user);
-    console.log("user id: ", user?.uid);
     if (user) {
       const userRef = doc(db, "accounts", user.id);
       const notificationId = uuidv4();
@@ -175,14 +173,14 @@ const CharacterPanel = () => {
         <strong>Boost your creativity</strong> with special items and rewards!
       </p>
 
-      {/* <div style={{ display: "flex", justifyContent: "space-between", gap: "25px" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", gap: "25px" }}>
         <button onClick={() => toast("icon Claim your Rewards!")} className={styles.evolveBtn}>
           🪙 Claim Rewards!
         </button>
         <button onClick={() => toast("icon Claim your Rewards!")} className={styles.evolveBtn}>
           🚀 Boosts
         </button>
-      </div> */}
+      </div>
     </div>
   );
 };

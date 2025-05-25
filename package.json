@@ -25,6 +25,7 @@
     "react-icons": "^5.2.1",
     "react-responsive-modal": "^6.4.2",
     "starknet": "^6.24.1",
+    "starknetkit": "^2.10.4",
     "uuid": "^11.1.0"
   },
   "devDependencies": {
