@@ -129,6 +129,16 @@ const Home = () => {
       // wallet: null,
       address: address || '',
     });
+
+    // fetch all accounts from firebase to check if the account.walletStored is already registered
+    const accounts = await getAllAccounts();
+    const existingAccount = accounts.find((account) => account.walletStored === address);
+    if (existingAccount) {
+      await signIn(existingAccount.email, "abc123");
+      toast.success("You're already in.");
+      return;
+    }
+
     if (address) {
       handleConnect(address);
     }
@@ -198,11 +208,10 @@ const Home = () => {
       // check if email is already in accounts collection in firebase
 
       const accounts = await getAllAccounts();
-      const emailExists = accounts.some((account) => account.email === email);
-      if (emailExists) {
+      const existingAccount = accounts.find((account) => account.email === email);
+      if (existingAccount) {
         toast.success("You're already in.");
-        setLoading(false);
-        setIsModalOpen(true);
+        await signIn(existingAccount.email, "abc123");
         return;
       } else {
         await sendWelcomeEmail(email, "abc123");
@@ -255,6 +264,15 @@ const Home = () => {
       setClaimCoins(false);
     }, 6000);
   }
+
+  const getWallet = () => {
+    if (user?.walletStored) {
+      return user.walletStored ? `${user.walletStored.slice(0, 6)}...${user.walletStored.slice(-4)}` : 'Not connected';
+    }
+    if (walletConnection?.address) {
+      return walletConnectionAuth?.address ? `${walletConnectionAuth.address.slice(0, 6)}...${walletConnectionAuth.address.slice(-4)}` : 'Not connected';
+    }
+  };
 
   return (
     <main className={styles.main}>
@@ -396,9 +414,7 @@ const Home = () => {
           <p style={{ fontSize: '12px' }}>
             Your Wallet Address:&nbsp;
             <b style={{ color: 'gold' }}>
-              {walletConnectionAuth?.address
-                ? `${walletConnectionAuth.address.slice(0, 6)}...${walletConnectionAuth.address.slice(-4)}`
-                : 'Not connected'}
+              {getWallet()}
             </b>
             &nbsp;
           </p>
