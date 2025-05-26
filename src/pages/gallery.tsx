@@ -35,9 +35,9 @@ const GalleryScreen = () => {
       const querySnapshot = await getDocs(collection(db, "signatures"));
       const nfts = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setNFTs(nfts);
-      console.log("NFTs fetched:", nfts);
       if (user) {
         userNFTS.filter(item => item.createdBy === user.uid)
+        setUserNFTS(nfts.filter(item => item.createdBy === user.uid));
       }
     };
     fetchNFTs();
@@ -52,18 +52,7 @@ const GalleryScreen = () => {
           <h2><p className="glitch">My Collection</p></h2>
         </div>
         
-        {user && (
-          userNFTS.length > 0 ? (
-            <NeonSlider slides={userNFTS} />
-          ) : (
-            <div>
-              <h4 className='reg-p'>You haven't created any BB yet :-(</h4>
-                <Link href="/dashboard">
-                  <button className={styles.launchpadBtn}>💾 Create your first Blockbeat</button>
-                </Link>
-            </div>
-          )
-        )}
+        <NeonSlider slides={userNFTS} />
 
         <br />
 
@@ -83,17 +72,15 @@ const GalleryScreen = () => {
                     notesCount={src.notesPlayed?.length}
                     size={100}
                   />
-                  <br />
                   {/* <img src={src} alt={`Gallery ${index}`} className="gallery-image" /> */}
-                  <button className={styles.submitBtn} style={{ animation: 'none', background: 'transparent' }}>View</button>
-                  &nbsp;
-                  &nbsp;
+                  {/* <button className={styles.submitBtn} style={{ animation: 'none', background: 'transparent' }}>View</button> */}
                   <button className={styles.submitBtn} style={{ animation: 'none' }}>Buy</button>
               </div>
             </div>
           ))}
         </div>
       </div>
+      <br />
       <Footer />
     </>
   );

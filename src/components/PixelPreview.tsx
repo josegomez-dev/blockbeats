@@ -30,7 +30,7 @@ const PixelPreview: React.FC<PixelPreviewProps> = ({ colorMap, notesCount, size 
         gridAutoColumns: "1fr",
         gridAutoRows: "1fr",
         display: "grid",
-        gridTemplateRows: `repeat(${(notesCount / 2) -5}, 1fr)`,
+        gridTemplateRows: `repeat(12, 1fr)`,
         overflow: "hidden",
         ...style,
       }}

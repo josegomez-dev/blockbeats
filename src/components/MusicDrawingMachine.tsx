@@ -214,6 +214,17 @@ const MusicDrawingPage = () => {
 
   const frequencyStyle = frequencyRanges.find((r) => r.name === selectedRange)!;
 
+  const fetchNFTs = async () => {
+      const querySnapshot = await getDocs(collection(db, "signatures"));
+      const nfts = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      setNFTs(nfts);
+      setLoading(false);
+      console.log("NFTs fetched:", nfts);
+    };
+
+  useEffect(() => {
+    fetchNFTs();
+  }, []);
 
   const saveNFTData = async () => {
     // ask for the name of the song
@@ -232,6 +243,7 @@ const MusicDrawingPage = () => {
         songName,
       });
       toast.success("Song-art saved successfully!");
+      fetchNFTs(); // Refresh the NFTs after saving
     } catch (error) {
       console.error("Error saving NFT:", error);
       toast.error("Failed to save NFT");
@@ -301,16 +313,6 @@ const MusicDrawingPage = () => {
     }, 400);
   };
 
-  useEffect(() => {
-    const fetchNFTs = async () => {
-      const querySnapshot = await getDocs(collection(db, "signatures"));
-      const nfts = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setNFTs(nfts);
-      setLoading(false);
-      console.log("NFTs fetched:", nfts);
-    };
-    fetchNFTs();
-  }, []);
 
   return (
     <>
