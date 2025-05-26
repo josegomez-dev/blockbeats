@@ -24,8 +24,18 @@ const images = [
 
 const GalleryScreen = () => {
 
-  const [nfts, setNFTs] = React.useState<any[]>([]);
-  const [userNFTS, setUserNFTS] = React.useState<any[]>([]);
+  type NFT = {
+    id: string;
+    createdBy?: string;
+    songName?: string;
+    colorMap?: any[];
+    notesPlayed?: any[];
+    img?: string;
+    // add other properties as needed
+  };
+
+  const [nfts, setNFTs] = React.useState<NFT[]>([]);
+  const [userNFTS, setUserNFTS] = React.useState<NFT[]>([]);
   const { user } = useAuth();
 
 
@@ -33,10 +43,9 @@ const GalleryScreen = () => {
   useEffect(() => {
     const fetchNFTs = async () => {
       const querySnapshot = await getDocs(collection(db, "signatures"));
-      const nfts = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      const nfts = querySnapshot.docs.map((doc) => ({ ...(doc.data() as NFT), id: doc.id })) as NFT[];
       setNFTs(nfts);
       if (user) {
-        userNFTS.filter(item => item.createdBy === user.uid)
         setUserNFTS(nfts.filter(item => item.createdBy === user.uid));
       }
     };
@@ -52,7 +61,15 @@ const GalleryScreen = () => {
           <h2><p className="glitch">My Collection</p></h2>
         </div>
         
-        <NeonSlider slides={userNFTS} />
+        <NeonSlider
+          slides={userNFTS.map(nft => ({
+            id: nft.id,
+            img: nft.img || '/nft1.webp', // fallback image if not present
+            songName: nft.songName || '',
+            colorMap: nft.colorMap || [],
+            notesPlayed: (nft.notesPlayed || []).join(','),
+          }))}
+        />
 
         <br />
 
@@ -69,7 +86,7 @@ const GalleryScreen = () => {
               <div className="gallery-item-overlay">
                   <PixelPreview
                     colorMap={src.colorMap || []}
-                    notesCount={src.notesPlayed?.length}
+                    notesCount={src.notesPlayed ? src.notesPlayed.length : 0}
                     size={100}
                   />
                   {/* <img src={src} alt={`Gallery ${index}`} className="gallery-image" /> */}

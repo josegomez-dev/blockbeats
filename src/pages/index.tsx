@@ -321,8 +321,8 @@ const Home = () => {
                 className={styles.submitBtnLarge}
                 onClick={readWalletAddress}
               >
-                <img src="/starknet-logo.svg" style={{ position: 'absolute', top: 30, margin: '0 auto', marginLeft: 20 }} alt="blockbeats-logo" width={60} />
-                Connect Wallet
+                <span style={{ position: 'relative', marginTop: '-20px' }}>Connect Wallet</span>
+                <img src="/starknet-logo.svg" style={{ position: 'absolute', top: 30, margin: '0 auto', left: 10 }} alt="blockbeats-logo" width={60} />
               </button>
             )}
           </>
@@ -348,7 +348,7 @@ const Home = () => {
 
           <br />
           <br />
-          <form onSubmit={handleSubmit} className={styles.form}>
+          {/* <form onSubmit={handleSubmit} className={styles.form}>
             <input
               type="email"
               required
@@ -363,9 +363,8 @@ const Home = () => {
             ) : (
               <Preloader />
             )}
-          </form>
+          </form> */}
 
-          <br />
           <p>
             And take full ownership of your creation through <br /> 🔐 <span data-text="NFTs" className="glitch">NFTs</span>.
           </p>
