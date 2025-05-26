@@ -227,6 +227,18 @@
   white-space: nowrap;
   animation: pulse 2s infinite ease-in-out;
 }
+.submitBtnLarge {
+  background: gold;
+  color: var(--secondary-color);
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 50px;
+  height: 50px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  white-space: nowrap;
+  animation: pulse 2s infinite ease-in-out;
+  width: 100%;
+}
 
 .submitBtn:hover {
   transform: scale(1.15);

@@ -71,19 +71,13 @@
 }
 
 .tutorialItem {
-  height: 1.5rem;
-  padding: 20px 0;
+  line-height: 20px;
   color: #ccc;
   font-size: 0.75rem;
   display: flex;
   align-items: center;
+  margin-top: 10px;
 }
-
-
-.tutorialItem {
-  height: 1.6rem;
-}
-
 
 .newsSlider {
   text-align: center;
