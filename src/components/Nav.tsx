@@ -161,7 +161,7 @@ export default function Nav() {
             {/* 👤 User Menu */}
             <li className={styles.navItem}>
               <AnimatedBalance start={user?.bbcPoints || 0} end={getCoinsToAdd} />&nbsp;
-              <span data-text="BBC" className="glitch">BBC</span>
+              <span className="glitch">BBC</span>
             </li>
             <li className={`${styles.navItem} ${styles.dropdown}`} ref={dropdownRef}>
               <button className={styles.avatarButton} onClick={toggleDropdown}>
@@ -182,10 +182,7 @@ export default function Nav() {
                     <FaUserCircle className={styles.icon} /> {user?.displayName || user?.email}
                   </div>
                   <div className={`${styles.dropdownItem} black-color`} style={{ marginBottom: '-15px' }}>
-                    Wallet Address: <span className='gold-color' style={{marginTop: '-15px' }}>{address?.slice(0, 6)} {data?.formatted.slice(0, 6)}... {data?.symbol} </span>
-                  </div>
-                  <div className={`${styles.dropdownItem} black-color`} style={{ marginBottom: '-15px' }}>
-                    Starknet Wallet Address: <span className='gold-color' style={{marginTop: '-15px' }}>{address?.slice(0, 6)} {data?.formatted.slice(0, 6)}... {data?.symbol} </span>
+                    Address:&nbsp;<span className='gold-color' style={{marginTop: '-15px' }}>{user?.walletStored?.slice(0, 5)}... {data?.symbol} </span>
                   </div>
                   <div className={`${styles.dropdownItem} neon-color`}>
                     <Image
@@ -196,7 +193,7 @@ export default function Nav() {
                       className='pulse-animation'
                     />&nbsp;
                     <div style={{ color: 'lightgreen' }}>
-                      {data?.formatted?.slice(0, 8)}...
+                      {user?.bbcPoints} <span data-text="BBC" className="glitch">BBC</span>
                     </div>
                   </div>
                   <hr />
