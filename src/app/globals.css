@@ -789,3 +789,29 @@ p {
   }
 }
 
+
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(2);
+  }
+  50% {
+    transform: scale(1);
+  }
+  75% {
+    transform: scale(2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.pulse-animation {
+  animation: pulse 1s ease-in-out;
+  color: gold;
+  font-weight: bold;
+  display: inline-block;
+}

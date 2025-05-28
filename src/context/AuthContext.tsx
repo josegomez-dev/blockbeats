@@ -12,7 +12,7 @@ import {
   sendEmailVerification,
 } from "firebase/auth";
 import { auth, db } from "./../../firebase";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
 import { EMPTY_USER, User } from "@/types/userTypes";
 import emailjs from 'emailjs-com';
 import toast from 'react-hot-toast';
@@ -23,8 +23,11 @@ import router from "next/router";
 
 interface AuthContextType {
   user: User | null;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
   loading: boolean;
   
+  updateCoinsInFirestore: (amount: number, message: string) => Promise<void>;
+
   role: string
   setRole: React.Dispatch<React.SetStateAction<string>>
   authenticated: boolean
@@ -86,6 +89,42 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   //   });
   //   return () => unsubscribe();
   // }, []);
+
+  const updateCoinsInFirestore = async (amount: number, message: string) => {
+      // update user coins in Firestore
+    if (user) {
+      const userRef = doc(db, "accounts", user.uid);
+      const coinsToAdd = amount; // Example amount
+      updateDoc(userRef, {
+        bbcPoints: (user.bbcPoints || 0) + coinsToAdd,
+        tnxLog: {
+          id: uuidv4(),
+          date: new Date().toISOString(),
+          type: "revenue",
+          amount: coinsToAdd,
+          description: message,
+        }
+        // walletStored: (user.walletStored || []).concat(coinsToAdd),
+      })
+      .then(async () => {
+        const updatedSnap = await getDoc(userRef);
+        if (updatedSnap.exists()) {
+          const updatedUser = updatedSnap.data();
+          setUser({
+            ...user,
+            bbcPoints: updatedUser.bbcPoints || 0,
+            tnxLog: updatedUser.tnxLog || [],
+            // walletStored: updatedUser.walletStored || [],
+          });
+        }
+        console.log("Coins claimed successfully!");
+      })
+      .catch((error) => {
+        console.error("Error claiming coins: ", error);
+        toast.error("Error claiming coins");
+      });
+    }
+  }
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
@@ -326,7 +365,9 @@ const removeUndefined = (obj: any): any => {
     <AuthContext.Provider
       value={{ 
         user, 
+        setUser,
         loading, 
+        updateCoinsInFirestore,
         role,
         setRole,
         authenticated,

@@ -221,3 +221,16 @@
   opacity: 0.8;
   color: red !important;
 }
+.clearButton {
+  background: none;
+  border: none;
+  color: red;
+  font-weight: bold;
+  padding: 8px;
+  width: 235px;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: right;
+  position: fixed;
+  background-color: white;
+}

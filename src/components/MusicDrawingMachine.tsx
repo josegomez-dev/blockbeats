@@ -329,8 +329,8 @@ const MusicDrawingPage = () => {
               Please Register First NFT</p>) : <Preloader />}
         </div>
         <div className={styles.buttonsContainerMusicBox}>
-          <button className={styles.submitBtn} style={{ background: 'transparent', color: 'white', animation: 'none' }}>🪙 Mint</button> &nbsp;&nbsp;
-          <button className={styles.submitBtn} style={{ background: 'transparent', color: 'white', animation: 'none' }}>🔄 Trade</button> &nbsp;&nbsp;
+          <button disabled className={styles.submitBtn} style={{ background: 'transparent', color: 'white', animation: 'none', opacity: '0.5' }}>🪙 Mint</button> &nbsp;&nbsp;
+          <button disabled className={styles.submitBtn} style={{ background: 'transparent', color: 'white', animation: 'none', opacity: '0.5' }}>🔄 Trade</button> &nbsp;&nbsp;
         </div>
 
       </div>

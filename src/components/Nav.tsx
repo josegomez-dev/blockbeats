@@ -84,6 +84,68 @@ export default function Nav() {
     return () => document.removeEventListener('click', closeDropdowns);
   }, []);
 
+  type AnimatedBalanceProps = {
+    start: number;
+    end: number;
+    duration?: number;
+  };
+
+  const AnimatedBalance: React.FC<AnimatedBalanceProps> = ({ start, end, duration = 1000 }) => {
+    const [displayedValue, setDisplayedValue] = useState(start);
+    const [isAnimating, setIsAnimating] = useState(false);
+
+    useEffect(() => {
+      const difference = end - start;
+      if (difference === 0) return;
+
+      setIsAnimating(true); // Start animation
+
+      const increment = difference / (duration / 30); // change every 30ms
+      let current = start;
+
+      const timer = setInterval(() => {
+        current += increment;
+        if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+          current = end;
+          clearInterval(timer);
+          setIsAnimating(false); // Stop animation
+        }
+        setDisplayedValue(Math.floor(current));
+      }, 30);
+
+      return () => clearInterval(timer);
+    }, [start, end, duration]);
+
+    return (
+      <span className={isAnimating ? "pulse-animation" : ""}>
+        {displayedValue}
+    </span>
+    );
+  };
+
+
+  const getCoinsToAdd = user?.bbcPoints ? user.bbcPoints + 100 : 100;
+
+
+  const handleClearNotifications = () => {
+    if (!user) {
+      toast.error('User not found');
+      return;
+    }
+
+    updateDoc(doc(db, 'accounts', user.uid), {
+      notifications: [], // Clear all
+    })
+      .then(() => {
+        toast.success('All notifications cleared');
+        setNotifications([]); // Update local state
+      })
+      .catch((error) => {
+        console.error('Error clearing notifications:', error);
+        toast.error('Failed to clear notifications');
+      });
+  };
+
   return (
     <nav className={styles.navbar}>
       <div className={styles.logoContainer} onClick={() => router.push('/')}>
@@ -97,6 +159,10 @@ export default function Nav() {
         {authenticated && (
           <>
             {/* 👤 User Menu */}
+            <li className={styles.navItem}>
+              <AnimatedBalance start={user?.bbcPoints || 0} end={getCoinsToAdd} />&nbsp;
+              <span data-text="BBC" className="glitch">BBC</span>
+            </li>
             <li className={`${styles.navItem} ${styles.dropdown}`} ref={dropdownRef}>
               <button className={styles.avatarButton} onClick={toggleDropdown}>
                 <Avatar
@@ -164,7 +230,20 @@ export default function Nav() {
                   {notifications.length === 0 ? (
                     <div className={styles.dropdownItem}>No notifications</div>
                   ) : (
-                    notifications.map((n) => (
+                    notifications.map((n, index) => (
+                     <>
+                        {index === 0 && (
+                          <div className={styles.clearButtonWrapper} key="clear-notifications">
+                            <button
+                              className={styles.clearButton}
+                              onClick={handleClearNotifications}
+                            >
+                              Clear Notifications
+                            </button>
+                            <br />
+                          </div>
+                        )}
+
                       <div
                         key={n.id}
                         className={`${styles.dropdownItem}`}
@@ -202,7 +281,10 @@ export default function Nav() {
                         }}
                       >
                         {n.text}
+                        
                       </div>
+                      <hr />
+                     </>
                     ))
                   )}
                 </div>

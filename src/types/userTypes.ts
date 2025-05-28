@@ -1,3 +1,5 @@
+import { TNXLOG } from "./tnxTypes";
+
 // Interface for a User
 export interface User {
   id: string;
@@ -9,6 +11,8 @@ export interface User {
   notifications?: Notification[];
   walletStored?: string;
   emailVerified?: boolean;
+  bbcPoints?: number;
+  tnxLog?: TNXLOG[];
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -22,6 +26,8 @@ export const EMPTY_USER: User = {
   notifications: [],
   role: 'user',
   status: 'active',
+  bbcPoints: 0,
+  tnxLog: [],
   emailVerified: true,
   createdAt: new Date(),
   updatedAt: new Date(),

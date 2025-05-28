@@ -7,6 +7,7 @@ import Footer from '@/components/Footer';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
 import PixelPreview from '@/components/PixelPreview';
+import { Modal } from "react-responsive-modal";
 
 
 const images = [
@@ -36,9 +37,10 @@ const GalleryScreen = () => {
 
   const [nfts, setNFTs] = React.useState<NFT[]>([]);
   const [userNFTS, setUserNFTS] = React.useState<NFT[]>([]);
+  const [showViewModal, setShowViewModal] = React.useState(false);
+  const [selectedNFT, setSelectedNFT] = React.useState<NFT | null>(null);
+
   const { user } = useAuth();
-
-
 
   useEffect(() => {
     const fetchNFTs = async () => {
@@ -52,6 +54,32 @@ const GalleryScreen = () => {
     fetchNFTs();
   }, []);
 
+
+  const handleViewNFT = (nft: NFT) => {
+    setSelectedNFT(nft);
+    setShowViewModal(true);
+  };
+  const handleCloseModal = () => {
+    setShowViewModal(false);
+    setSelectedNFT(null);
+  };
+
+  if (!user) {
+    return (
+      <div className="gallery-screen">
+        <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
+          <br />
+          <br />
+          <h2><p className="glitch">My Collection</p></h2>
+        </div>
+        <div className={styles.modalContent}>
+          <h2>Please log in to view your collection</h2>
+          <Link href="/" className={styles.submitBtn}>Login</Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="gallery-screen">
@@ -61,6 +89,25 @@ const GalleryScreen = () => {
           <h2><p className="glitch">My Collection</p></h2>
         </div>
         
+        <Modal
+          open={userNFTS.length <= 0}
+          onClose={() => {}}
+          center
+          classNames={{ modal: styles.modal }}
+          styles={{ modal: { backgroundColor: 'rgba(0, 0, 0, 0.8)' } }}
+          closeOnEsc={false}
+          closeOnOverlayClick={false}
+          showCloseIcon={false}
+        >
+          <div className={styles.modalContent}>
+            <h2>No NFTs Found</h2>
+            <p>You haven't created any NFTs yet. Start creating your own unique NFTs today!</p>
+            <br />
+            <Link href="/dashboard" className={styles.submitBtn}>Create NFT</Link>
+          </div>
+
+        </Modal>
+
         <NeonSlider
           slides={userNFTS.map(nft => ({
             id: nft.id,
@@ -74,7 +121,7 @@ const GalleryScreen = () => {
         <br />
 
         <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
-          <h2><p className="glitch">Blockbeats <span data-text="NFTS" className="glitch">Marketplace</span></p></h2>
+          <h2><p className="glitch">Blockbeats <span data-text="Marketplace" className="glitch">Marketplace</span></p></h2>
           <br />
         </div>
         <div className="gallery-grid">
@@ -91,13 +138,16 @@ const GalleryScreen = () => {
                   />
                   {/* <img src={src} alt={`Gallery ${index}`} className="gallery-image" /> */}
                   {/* <button className={styles.submitBtn} style={{ animation: 'none', background: 'transparent' }}>View</button> */}
-                  <button className={styles.submitBtn} style={{ animation: 'none' }}>Buy</button>
+                  <button className={styles.submitBtn} style={{ animation: 'none' }}>View</button>
               </div>
             </div>
           ))}
         </div>
       </div>
       <br />
+
+
+
       <Footer />
     </>
   );

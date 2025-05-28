@@ -442,36 +442,6 @@ const Home = () => {
               </div>
             </div>
           )}
-          
-           {claimCoins && (
-            <div className="wrap">
-              <div className="wallet" id="wallet">
-                <div className="icon">
-                  <Image
-                    src="/coins.webp"
-                    alt="blockbeats-logo"
-                    width={65}
-                    height={65}
-                    className='pulse-animation'
-                  />
-                  {/* <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 458.5 458.5" fill="currentColor">
-                    <path d="M336.7 344c-22 0-39.9-18-39.9-39.9V238c0-22 18-39.8 39.9-39.8h105.7v-65.9c0-17-13.8-30.7-30.7-30.7h-381c-17 0-30.7 13.7-30.7 30.7v277.6c0 17 13.8 30.8 30.7 30.8h381c17 0 30.7-13.8 30.7-30.8V344H336.7z" />
-                    <path d="M440.5 220H336.7c-10 0-18 8-18 18V304c0 10 8 18 18 18h103.8c10 0 18-8 18-18V238c0-10-8-18-18-18zm-68 77a26 26 0 1 1 0-52 26 26 0 0 1 0 52zM358.2 45.2A39.7 39.7 0 0 0 308 20L152 71.6h214.9l-8.7-26.4z" />
-                  </svg> */}
-                </div>
-                {coins.map((coin, index) => (
-                  <div
-                    key={index}
-                    className="coin coin--animated"
-                    style={{
-                      '--coin-to-x': coin.x,
-                      '--coin-to-y': coin.y,
-                      '--coin-delay': coin.delay,
-                    } as any}
-                  />
-                ))}
-              </div>
-            </div>)}
             
           {/* {!user?.emailVerified && (
             <>
