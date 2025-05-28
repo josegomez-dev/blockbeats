@@ -89,7 +89,36 @@ const GalleryScreen = () => {
           <h2><p className="glitch">My Collection</p></h2>
         </div>
         
-        <Modal
+        {selectedNFT && (
+          <Modal
+            open={showViewModal}
+            onClose={() => handleCloseModal()}
+            center
+            classNames={{ modal: styles.modal }}
+            styles={{ modal: { backgroundColor: 'rgba(0, 0, 0, 0.8)' } }}
+            showCloseIcon={false}
+          >
+            <div className={styles.modalContent} style={{ textAlign: 'center' }}>
+              <h2>View NFT</h2>
+              <div className={styles.nftDetails}>
+                <h3>{selectedNFT.songName || 'Untitled'}</h3>
+                <br />
+                <PixelPreview
+                  colorMap={selectedNFT.colorMap || []}
+                  notesCount={selectedNFT.notesPlayed ? selectedNFT.notesPlayed.length : 0}
+                  size={200}
+                />
+                <br />
+                <p>Created by: {selectedNFT.createdBy || 'Unknown'}</p>
+                {/* <p>Notes Played: {selectedNFT.notesPlayed ? selectedNFT.notesPlayed.join(', ') : 'None'}</p> */}
+              </div>
+              <button className={styles.submitBtn} onClick={handleCloseModal}>Close</button>
+            </div>
+
+          </Modal>
+        )}
+
+        {/* <Modal
           open={userNFTS.length <= 0}
           onClose={() => {}}
           center
@@ -106,7 +135,7 @@ const GalleryScreen = () => {
             <Link href="/dashboard" className={styles.submitBtn}>Create NFT</Link>
           </div>
 
-        </Modal>
+        </Modal> */}
 
         <NeonSlider
           slides={userNFTS.map(nft => ({
@@ -126,7 +155,7 @@ const GalleryScreen = () => {
         </div>
         <div className="gallery-grid">
           {nfts.map((src, index) => (
-            <div className="gallery-item" key={index}>
+            <div className="gallery-item" key={index} onClick={() => handleViewNFT(src)}>
               <h3>{src.songName} {index + 1}</h3>
               <br />
               {/* <p>Description for image {index + 1}</p>                 */}

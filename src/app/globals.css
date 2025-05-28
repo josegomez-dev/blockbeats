@@ -504,7 +504,7 @@ p {
   z-index: 1000;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   transition: background 0.3s ease;
-  animation: pulse 2s infinite;
+  animation: pulseChat 2s infinite;
 }
 @media (max-width: 700px) {
   .floating-button {
@@ -649,14 +649,14 @@ p {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  animation: pulse 1.5s infinite;
+  animation: pulseChat 1.5s infinite;
 }
 
 .status-badge.online { background: limegreen; }
 .status-badge.offline { background: gray; }
 .status-badge.error { background: orange; }
 
-@keyframes pulse {
+@keyframes pulseChat {
   0%, 100% { transform: scale(1); opacity: 1; }
   50% { transform: scale(1.4); opacity: 0.5; }
 }
