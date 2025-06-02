@@ -228,12 +228,12 @@ export default function Nav() {
                       <RiGalleryView className={styles.icon} /> Mini-Games
                     </div>
                   </Link>
-                  <Link href="/minigames">
+                  <Link href="/tutorials">
                     <div className={styles.dropdownItem}>
                       <RiGalleryView className={styles.icon} /> Tutorials & Guides
                     </div>
                   </Link>
-                  <Link href="/minigames">
+                  <Link href="/news">
                     <div className={styles.dropdownItem}>
                       <RiGalleryView className={styles.icon} /> News & Updates
                     </div>
