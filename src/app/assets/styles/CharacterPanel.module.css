@@ -194,9 +194,10 @@
 
 
 .levelUpGif {
-  width: 100px;
+  width: 250px;
+  position: absolute;
   height: auto;
-  margin-top: 8px;
+  left: 35px;
   animation: fadeInOut 3s ease-in-out;
 }
 

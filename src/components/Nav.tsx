@@ -223,6 +223,21 @@ export default function Nav() {
                       <RiGalleryView className={styles.icon} /> Fans Club &nbsp; <button style={{ padding: '0 10px' }}>Buy MERCH</button>
                     </div>
                   </Link>
+                  <Link href="/minigames">
+                    <div className={styles.dropdownItem}>
+                      <RiGalleryView className={styles.icon} /> Mini-Games
+                    </div>
+                  </Link>
+                  <Link href="/minigames">
+                    <div className={styles.dropdownItem}>
+                      <RiGalleryView className={styles.icon} /> Tutorials & Guides
+                    </div>
+                  </Link>
+                  <Link href="/minigames">
+                    <div className={styles.dropdownItem}>
+                      <RiGalleryView className={styles.icon} /> News & Updates
+                    </div>
+                  </Link>
                   {/* <Link href="/">
                     <div className={styles.dropdownItem}>
                       <RiGalleryView className={styles.icon} /> NEWS / Tutorials

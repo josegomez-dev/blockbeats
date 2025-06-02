@@ -190,7 +190,7 @@ const CharacterPanel = () => {
         />
         {showGif && (
           <img
-            src="/gifs/level-up.gif"
+            src="/evolve.gif"
             alt="Level Up Animation"
             className={styles.levelUpGif}
           />
