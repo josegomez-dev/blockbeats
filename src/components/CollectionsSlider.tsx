@@ -16,8 +16,9 @@ interface CollectionProps {
 
 const CollectionsSlider: React.FC<CollectionProps> = ({ fullWidth, title }) => {
   return (
-    <div style={{ padding: '25px' }}>
+    <div style={{ padding: '5px' }}>
       <h2 className={styles.title}>{title}</h2>
+      <br />
       <div className={styles.sliderWrapper} style={{ width: fullWidth ? '100%' : '' }}>
         <div className={styles.sliderTrack}>
           {[...favoriteCollections, ...favoriteCollections].map((item, i) => (

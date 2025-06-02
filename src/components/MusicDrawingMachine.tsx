@@ -342,9 +342,7 @@ const MusicDrawingPage = () => {
           <button disabled className={styles.submitBtn} style={{ background: 'transparent', color: 'white', animation: 'none', opacity: '0.5' }}>🔄 Trade</button> &nbsp;&nbsp;
         </div>
 
-        <br />
-
-        <CollectionsSlider />
+        <CollectionsSlider title="Top FANS Collections" />
       </div>
                   
       <div style={{ padding: 0, borderRadius: 8, fontFamily: "monospace", color: "white", backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', width: '300px', position: "relative", margin: "10px auto" }}>

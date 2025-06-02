@@ -166,8 +166,8 @@ const GalleryScreen = () => {
 
         <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
           <h2><p className="glitch">Explore <span data-text="TOP FANS" className="glitch">TOP FANS</span> COLLECTIONS</p></h2>
-          <p>Discover unique NFTs created by other artists.</p>
           <br />
+          <p>Discover unique NFTs created by other artists.</p>
           <CollectionsSlider title='' fullWidth />
         </div>
 
