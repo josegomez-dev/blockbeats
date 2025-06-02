@@ -12,6 +12,7 @@ interface Props {
   onSave: () => void;
   onOpenModal: () => void;
   frequencyStyle: { name: string; color: string };
+  onIAGeneration?: () => void; // Optional prop for AI generation
 }
 
 const ControlsPanel: React.FC<Props> = ({
@@ -24,6 +25,7 @@ const ControlsPanel: React.FC<Props> = ({
   onSave,
   onOpenModal,
   frequencyStyle,
+  onIAGeneration = () => {}, // Default to a no-op function if not provided
 }) => (
   <div className={`${isPlayingBack && 'disabled'}`} style={{ position: "relative", backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
     <div style={{ background: "#111", padding: 10, margin: "0", position: "relative" }}>

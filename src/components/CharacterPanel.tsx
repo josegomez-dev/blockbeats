@@ -30,6 +30,8 @@ const CharacterPanel = () => {
   const [showOverlay, setShowOverlay] = useState(false);
   const [messageOverlay, setMessageOverlay] = useState("");
   const [claimCoins, setClaimCoins] = useState(false);
+  const [showGif, setShowGif] = useState(false);
+
   
   const { user, setUser, updateCoinsInFirestore } = useAuth();
 
@@ -51,12 +53,14 @@ const CharacterPanel = () => {
             playLevelUp2Sound();
             playLevelUpSound();
             updateUserNotifications(newLevel)
+            setShowGif(true);
 
             setTimeout(() => {
               updateCoinsInFirestore(100, `100 Coins Claimed on level ${level}!`);
               playCoinsSound();
               setAnimateLevel(false);
               setShowOverlay(false);
+              setShowGif(false); // Hide gif after 3 seconds
             }, 3000);
 
             return newLevel;
@@ -184,6 +188,13 @@ const CharacterPanel = () => {
             animateLevel ? styles.avatarEvolve : ""
           }`}
         />
+        {showGif && (
+          <img
+            src="/gifs/level-up.gif"
+            alt="Level Up Animation"
+            className={styles.levelUpGif}
+          />
+        )}
         <p className={styles.status}>
           Level:{" "}
           <span

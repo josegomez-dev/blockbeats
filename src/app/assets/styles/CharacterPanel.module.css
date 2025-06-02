@@ -190,3 +190,30 @@
   color: #aaa;
   margin-top: 4px;
 }
+
+
+
+.levelUpGif {
+  width: 100px;
+  height: auto;
+  margin-top: 8px;
+  animation: fadeInOut 3s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}

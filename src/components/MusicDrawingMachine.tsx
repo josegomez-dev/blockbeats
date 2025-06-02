@@ -6,11 +6,14 @@ import { addDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useAuth } from '../context/AuthContext'
 import FrequencyModal from "./FrequencyModal";
-import { frequencyRanges, notes } from "@/utils/constants/musicDrawingMachine";
+import { frequencyRanges, notes, SCALE_NAMES, scaleDescriptions, scaleIntervals, ScaleName } from "@/utils/constants/musicDrawingMachine";
 import PixelCanvas from "./PixelCanvas";
 import Piano from "./Piano";
 import NFTSliderPanel from "./NFTSliderPanel";
 import ControlsPanel from "./ControlPanel";
+import Modal from "react-responsive-modal";
+import Image from "next/image";
+import PixelPreview from "./PixelPreview";
 
 const AudioContext = typeof window !== "undefined" ? window.AudioContext || (window as any).webkitAudioContext : null;
 const ctx = AudioContext ? new AudioContext() : null;
@@ -26,6 +29,12 @@ const MusicDrawingPage = () => {
   const [playIndex, setPlayIndex] = useState<number | null>(null);
   const [nfts, setNFTs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isIAGeneratorOpen, setIsIAGeneratorOpen] = useState(false);
+
+  const [selectedScale, setSelectedScale] = useState<ScaleName>('minor'); // default scale
+
+  const [melodyKind, setMelodyKind] = useState<'chords' | 'solo' | 'both'>('both');
+  const [firstNote, setFirstNote] = useState<string>('C1'); // default
 
   const playbackIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const drumIntervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -104,6 +113,84 @@ const MusicDrawingPage = () => {
       drumIntervalRef.current = null;
     }
   };
+
+
+  const generateRandomMelody = (): { noteIndex: number; time: number }[] => {
+  const steps = 24;
+  const melody: { noteIndex: number; time: number }[] = [];
+  const usedTimes = new Set<number>();
+
+  // Get the index of the selected base/root note
+  const baseIndex = notes.findIndex(([name]) => name === firstNote);
+  if (baseIndex === -1) return melody;
+
+  // Get selected scale intervals and map to note indices
+  const intervals = scaleIntervals[selectedScale];
+  if (!intervals) return melody;
+
+  const scaleNoteIndices = intervals
+    .map(interval => (baseIndex + interval) % notes.length)
+    .filter(index => index >= 0 && index < notes.length); // safety check
+
+  for (let time = 0; time < steps; time++) {
+    if (Math.random() < 0.6 && !usedTimes.has(time)) {
+      usedTimes.add(time);
+
+      switch (melodyKind) {
+        case 'chords': {
+          // Always generate two different notes at the same time
+          const idx1 = Math.floor(Math.random() * scaleNoteIndices.length);
+          let idx2 = Math.floor(Math.random() * scaleNoteIndices.length);
+          while (idx2 === idx1 && scaleNoteIndices.length > 1) {
+            idx2 = Math.floor(Math.random() * scaleNoteIndices.length);
+          }
+          melody.push({ noteIndex: scaleNoteIndices[idx1], time });
+          melody.push({ noteIndex: scaleNoteIndices[idx2], time });
+          break;
+        }
+
+        case 'solo': {
+          // Only a single note
+          const noteIndex = scaleNoteIndices[Math.floor(Math.random() * scaleNoteIndices.length)];
+          melody.push({ noteIndex, time });
+          break;
+        }
+
+        case 'both': {
+          // Always a single note
+          const baseNote = scaleNoteIndices[Math.floor(Math.random() * scaleNoteIndices.length)];
+          melody.push({ noteIndex: baseNote, time });
+
+          // 25% chance to add harmony
+          if (Math.random() < 0.25) {
+            const harmony = scaleNoteIndices[Math.floor(Math.random() * scaleNoteIndices.length)];
+            melody.push({ noteIndex: harmony, time });
+          }
+          break;
+        }
+
+        default:
+          break;
+      }
+    }
+  }
+
+  return melody;
+};
+
+
+
+
+  const loadRandomMelody = () => {
+    const melody = generateRandomMelody();
+    setNotesPlayed(melody);
+    setColorMap(melody.map(({ noteIndex, time }) => ({
+      noteIndex,
+      time,
+      color: getRandomColor(),
+    })));
+  };
+
 
   const fetchNFTs = async () => {
       const querySnapshot = await getDocs(collection(db, "signatures"));
@@ -236,6 +323,14 @@ const MusicDrawingPage = () => {
 
       <div className={styles.musicBox}>
         <h3 style={{ color: frequencyStyle.color }}>BlockBeats <span data-text="NFT" className="glitch">NFT</span></h3>
+        <div onClick={() => setIsIAGeneratorOpen(true)} style={{ display: "inline-block", cursor: "pointer", position: "relative", zIndex: 2 }}>
+          <Image
+            src={`/logo.webp`}
+            alt="BlockBeats Logo"
+            width={50}
+            height={50}
+          />  
+        </div>
         <hr />
 
         {/* Color overlay */}
@@ -251,6 +346,87 @@ const MusicDrawingPage = () => {
 
         <div style={{ margin: "0 auto", width: "auto", textAlign: "center", position: "relative", zIndex: 2 }}>
 
+          <Modal
+            open={isIAGeneratorOpen}
+            onClose={() => setIsIAGeneratorOpen(false)}
+            styles={{
+              modal: {
+                width: '90%',
+                maxWidth: '600px',
+                margin: '0 auto',
+                textAlign: 'center',
+                height: 'auto',
+                marginTop: '50px',
+                backgroundColor: '#222',
+                color: frequencyStyle.color,
+                borderRadius: '8px',
+                padding: '20px',
+              },
+              overlay: {
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              },
+            }}
+            classNames={{ modal: styles.modal }}
+          >
+            <div style={{ margin: '20px 0', color: frequencyStyle.color }}>
+
+              <PixelPreview
+                colorMap={notesPlayed.map(({ noteIndex, time }) => ({
+                  noteIndex,
+                  time,
+                  color: getRandomColor(),
+                }))}
+                notesCount={notes.length}
+                size={240}
+                style={{ marginTop: "10px", borderRadius: "12px" }}
+              />
+              <br />
+
+              <label htmlFor="scaleSelect">🎼 Scale: </label>
+              <select
+                id="scaleSelect"
+                value={selectedScale}
+                onChange={(e) => setSelectedScale(e.target.value as ScaleName)}
+              >
+                {SCALE_NAMES.map((scaleKey) => (
+                  <option key={scaleKey} value={scaleKey}>
+                    {scaleDescriptions[scaleKey]}
+                  </option>
+                ))}
+              </select>
+
+                <br /><br />
+
+                <label htmlFor="firstNoteSelect">🎶 Base/Root Note: </label>
+                <select
+                  id="firstNoteSelect"
+                  value={firstNote}
+                  onChange={(e) => setFirstNote(e.target.value)}
+                >
+                  {notes.map(([note]) => (
+                    <option key={note} value={note}>{note}</option>
+                  ))}
+                </select>
+
+                <br /><br />
+
+                <label htmlFor="melodyKind">🎼 Mode: </label>
+                <select
+                  id="melodyKind"
+                  value={melodyKind}
+                  onChange={(e) => setMelodyKind(e.target.value as 'chords' | 'solo' | 'both')}
+                >
+                  <option value="chords">Chords</option>
+                  <option value="solo">Single Notes</option>
+                  <option value="both">Both</option>
+                </select>
+                  <br />
+                  <br />
+
+              <button onClick={loadRandomMelody} disabled={isPlayingBack} className={styles.submitBtn} style={{ marginBottom: '-10px' }}>🎧 Generate Random Song</button>
+            </div>
+          </Modal>
+
           <ControlsPanel
             isPlayingBack={isPlayingBack}
             tempo={tempo}
@@ -261,6 +437,7 @@ const MusicDrawingPage = () => {
             onSave={saveNFTData}
             onOpenModal={() => setIsModalOpen(true)}
             frequencyStyle={frequencyStyle}
+            onIAGeneration={loadRandomMelody}
           />
           
           <div className={`${isPlayingBack && 'disabled'}`} style={{ position: "relative", backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
@@ -271,12 +448,13 @@ const MusicDrawingPage = () => {
               color={frequencyStyle.color}
               onCanvasClick={handleCanvasClick}
             />
-
+          
             <Piano onNotePlay={handleNotePlay} ctx={ctx} />
             <div className={styles.melodyDataInfo} style={{ color: frequencyStyle.color, zIndex: 2, position: "relative", textAlign: "center" }}>
               <div>
                 {/* {notesPlayed.length} notes played
                 <br /> */}
+                {/* <p>🌟 Root Note: <strong>{firstNote}</strong></p> */}
                 <label>🎵 Tempo: {tempo} BPM 🥁</label>
                 <input type="range" min={60} max={420} value={tempo} onChange={(e) => setTempo(Number(e.target.value))} />
               </div>
