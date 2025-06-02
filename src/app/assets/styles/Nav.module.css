@@ -120,9 +120,8 @@
   top: 50px;
   right: 0;
   
-  background: white !important;
  
-  color: black !important;
+  color: var(--secondary-color) !important;
   backdrop-filter: blur(50px);
   background-color: rgba(0, 0, 0, 10); /* Light transparent */    
   box-shadow: 0 0 5px white;
@@ -132,6 +131,9 @@
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
   animation: fadeIn 0.2s ease-in-out;
   z-index: 1000;
+
+  backdrop-filter: blur(50px) !important;
+  background: rgba(0, 0, 0, 0.9) !important; /* Light transparent */    
 }
 
 .neon-color {

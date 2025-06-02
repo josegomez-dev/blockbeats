@@ -11,6 +11,7 @@ import { SiWeb3Dotjs } from "react-icons/si";
 import { FaMusic } from "react-icons/fa";
 import Modal from 'react-responsive-modal';
 import { useAuth } from "@/context/AuthContext";
+import SidebarChatPanel from "@/components/SidebarChatPanel";
 
 const DashboardLayout = () => {
 
@@ -57,6 +58,8 @@ const DashboardLayout = () => {
 
   return (
     <>
+      <SidebarChatPanel />
+
       <div className={styles.buttonsContainer}>
         <button onClick={() => showPanel('left')} className={styles.button}>
           <RxAvatar />

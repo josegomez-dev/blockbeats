@@ -593,6 +593,7 @@ p {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  
 }
 
 .nft-card {
@@ -600,29 +601,25 @@ p {
   align-items: center;
   background: #f2f2f2;
   border-radius: 10px;
-  padding: 8px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 .nft-actions {
   display: flex;
-  gap: 2px;
-  margin-top: 2px;
   animation: fadeIn 0.3s ease-in-out;
+  width: 100%;
 }
 
 .nft-actions button {
   border: none;
   border-radius: 6px;
-  padding: 4px 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   background: var(--primary-color);
   color: white;
-  width: auto !important; 
   animation: none;
-  height: 20px;
-  width: 30px;
+  font-size: 10px;
+  padding: 10px;
 }
 
 .nft-avatar {

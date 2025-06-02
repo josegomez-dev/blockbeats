@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useAuth } from '@/context/AuthContext';
 import styles from '@/app/assets/styles/Nav.module.css';
+import stylesMain from "@/app/assets/styles/MainPage.module.css";
 import { FaSignOutAlt, FaUserCircle, FaCog, FaBell, FaDashcube, FaHeadphones } from 'react-icons/fa';
 import { RiGalleryView } from "react-icons/ri";
 import Avatar from 'react-avatar';
@@ -178,24 +179,26 @@ export default function Nav() {
 
               {dropdownOpen && (
                 <div className={styles.dropdownMenu}>
-                  <div className={`${styles.dropdownItem}`} >
-                    <FaUserCircle className={styles.icon} /> {user?.displayName || user?.email}
+                  <div style={{ display: 'flex', alignItems: 'center', padding: '10px', color: 'white' }}>
+                    <Avatar name={user?.email.split('@')[0]} size="30" round className="contact-avatar" />
+                    &nbsp;
+                    {user?.displayName || user?.email}
                   </div>
-                  <div className={`${styles.dropdownItem} black-color`} style={{ marginBottom: '-15px' }}>
+                  {user?.walletStored ? (
+                    <div className={`${styles.dropdownItem} black-color`} style={{ marginBottom: '-15px' }}>
                     Address:&nbsp;<span className='gold-color' style={{marginTop: '-15px' }}>{user?.walletStored?.slice(0, 5)}... {data?.symbol} </span>
-                  </div>
-                  <div className={`${styles.dropdownItem} neon-color`}>
-                    <Image
-                      src="/coins.webp"
-                      alt="blockbeats-logo"
-                      width={30}
-                      height={30}
-                      className='pulse-animation'
-                    />&nbsp;
-                    <div style={{ color: 'lightgreen' }}>
-                      {user?.bbcPoints} <span data-text="BBC" className="glitch">BBC</span>
+                  </div> ) : (
+                    <div style={{ marginBottom: '5px' }} className={`${styles.dropdownItem} black-color`}>
+                        <button
+                          className={stylesMain.submitBtnLarge}
+                          // onClick={readWalletAddress}
+                        >
+                          <span style={{ position: 'relative', marginTop: '-20px' }}>Connect Wallet</span>
+                          <img src="/starknet-logo.svg" style={{ position: 'absolute', top: 30, margin: '0 auto', left: 10 }} alt="blockbeats-logo" width={60} />
+                        </button>
+                        <br />
                     </div>
-                  </div>
+                  )}
                   <hr />
                   <Link href="/dashboard">
                     <div className={styles.dropdownItem}>

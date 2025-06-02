@@ -56,39 +56,39 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [authenticated, setAuthenticated] = useState<boolean>(false)
   const [walletConnectionAuth, setWalletConnectionAuth] = useState<any>(null);
 
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       
-  //     if (user) {
-  //       // User is signed in, fetch user data from Firestore
-  //       const accountRef = doc(db, "accounts", user.uid);
-  //       getDoc(accountRef).then((accountSnap) => {
-  //         if (accountSnap.exists()) {
-  //           const accountData = accountSnap.data();
-  //           setUser({
-  //             ...EMPTY_USER,
-  //             ...accountData,
-  //             id: user.uid,
-  //             email: user.email ?? "",
-  //             role: accountData.role ?? "user",
-  //             status: accountData.status ?? "active",
-  //           });
-  //           setAuthenticated(true);
-  //           setRole(accountData.role || "user");
-  //           console.log("User signed in and account fetched successfully.");
-  //         } else {
-  //           console.warn("No account document found for this user.");
-  //         }
-  //       });
-  //     } else {
-  //       // User is signed out
-  //       setUser(null);
-  //     }
+      if (user) {
+        // User is signed in, fetch user data from Firestore
+        const accountRef = doc(db, "accounts", user.uid);
+        getDoc(accountRef).then((accountSnap) => {
+          if (accountSnap.exists()) {
+            const accountData = accountSnap.data();
+            setUser({
+              ...EMPTY_USER,
+              ...accountData,
+              id: user.uid,
+              email: user.email ?? "",
+              role: accountData.role ?? "user",
+              status: accountData.status ?? "active",
+            });
+            setAuthenticated(true);
+            setRole(accountData.role || "user");
+            console.log("User signed in and account fetched successfully.");
+          } else {
+            console.warn("No account document found for this user.");
+          }
+        });
+      } else {
+        // User is signed out
+        setUser(null);
+      }
       
-  //     setLoading(false);
-  //   });
-  //   return () => unsubscribe();
-  // }, []);
+      setLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const updateCoinsInFirestore = async (amount: number, message: string) => {
       // update user coins in Firestore
@@ -223,6 +223,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         uid: user.uid,
         email: user.email,
       };
+
+      const sanitizedUser = removeUndefined({
+        ..._user,
+        notifications: NOTIFICATIONS,
+        emailVerified: true, // Set emailVerified to true for new users
+      });
+      
+      await setDoc(doc(db, "accounts", user.uid), sanitizedUser);
   
       setUser(_user as any);
       setAuthenticated(true);

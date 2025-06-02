@@ -199,24 +199,22 @@ const SidebarChatPanel = () => {
               {nftItems.map(nft => (
                 <div key={nft.id} className="nft-card">
                   <div style={{ padding: '5px 10px ', margin: '0 auto' }}>
+                    <div className="nft-title">{nft.songName}</div>
                     <PixelPreview
                       colorMap={nft?.colorMap}
                       notesCount={nft?.notesPlayed.length}
                       size={50}
                     />
+                    <div className="nft-meta" style={{ fontSize: '8px', color: '#555' }}>
+                      {/* <span className={`status-badge ${nft.status}`}></span> */}
+                      Owner: {nft.createdBy.slice(0, 6)}...
+                    </div>
                   </div>
                   {/* <img src={nft.image} alt={nft.title} className="nft-avatar" /> */}
                   <div className="nft-info">
-                    <div className="nft-title">{nft.songName}</div>
-                    <div className="nft-meta">
-                      {/* <span className={`status-badge ${nft.status}`}></span> */}
-                      Owner: {nft.createdBy}
-                    </div>
                     <div className="nft-actions">
                       <button className={styles.submitBtn}>View</button>
                       <button className={styles.submitBtn}>Buy</button>
-                      <button className={styles.submitBtn}>Sell</button>
-                      <button className={styles.submitBtn}>Share</button>
                     </div>
                   </div>
                 </div>

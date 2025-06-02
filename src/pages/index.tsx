@@ -11,11 +11,7 @@ import { User } from "@/types/userTypes";
 import Avatar from "react-avatar";
 import Preloader from "@/components/Preloader";
 import Link from "next/link";
-import LevelUpOverlay from "@/components/LevelUpOverlay";
-
-// import { WebWalletConnector } from "starknetkit/webwallet"
-// import { useConnect } from "@starknet-react/core";
-// import WalletConnector from "@/components/WalletConector";
+import { useRouter } from 'next/router';
 
 import { IWalletConnection } from "@/types/walletTypes";
 import { connect, disconnect } from "starknetkit";
@@ -31,22 +27,19 @@ const coins = [
 ];
 
 const Home = () => {
+  const router = useRouter();
+  const { user, signUpWithWallet, signUp, signIn, authenticated, verifyEmail, sendWelcomeEmail, walletConnectionAuth, setWalletConnectionAuth } = useAuth();
+  const [walletConnection, setWalletConnection] = useState<IWalletConnection | null>(null);
+
   const [email, setEmail] = useState("");
   const [createAccountEmail, setCreateAccountEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [claimCoins, setClaimCoins] = useState(false);
-  const [showOverlay, setShowOverlay] = useState(false);
-  const [messageOverlay, setMessageOverlay] = useState("");
- 
-  const [walletConnection, setWalletConnection] = useState<IWalletConnection | null>(null);
 
-  const { user, signUpWithWallet, signUp, signIn, authenticated, verifyEmail, sendWelcomeEmail, walletConnectionAuth, setWalletConnectionAuth } = useAuth();
-
-  // if (authenticated) {
-  //   window.location.href = "/dashboard";
-  // }
+  if (user && authenticated) {
+    router.push('/dashboard');
+  }
 
   useEffect(() => {
     document.addEventListener("mousemove", (e) => {
@@ -97,32 +90,7 @@ const Home = () => {
     });
   }, []);
 
-  const triggerCoinAnimation = () => {
-  const container = document.createElement("div");
-  container.className = styles["coin-animation-container"];
-  document.body.appendChild(container);
-
-  for (let i = 0; i < 20; i++) {
-    const coin = document.createElement("div");
-    coin.className = styles.coin;
-
-    // Randomize position a bit
-    coin.style.left = `${window.innerWidth / 2 + (Math.random() - 0.5) * 100}px`;
-    coin.style.top = `${window.innerHeight / 2 + (Math.random() - 0.5) * 100}px`;
-
-    container.appendChild(coin);
-
-    setTimeout(() => {
-      coin.remove();
-    }, 1500);
-  }
-
-  // Cleanup container
-  setTimeout(() => {
-    container.remove();
-  }, 1600);
-};
-
+  
   const readWalletAddress = async () => {
     const address = prompt("Please enter your wallet address:")
     setWalletConnection({
@@ -204,9 +172,7 @@ const Home = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      
       // check if email is already in accounts collection in firebase
-
       const accounts = await getAllAccounts();
       const existingAccount = accounts.find((account) => account.email === email);
       if (existingAccount) {
@@ -214,7 +180,7 @@ const Home = () => {
         await signIn(existingAccount.email, "abc123");
         return;
       } else {
-        await sendWelcomeEmail(email, "abc123");
+        // await sendWelcomeEmail(email, "abc123");
         await signUp(email, "abc123");
         setLoading(false);
         setIsModalOpen(true);
@@ -235,36 +201,6 @@ const Home = () => {
     await signIn(createAccountEmail, "abc123");
   }
 
-  const playSucessSound = () => {
-    const audio = new Audio("/sounds/coins.mp3");
-    audio.volume = 0.6;
-    audio.play();
-  };
-
-  const playLevelUp2Sound = () => {
-    const audio = new Audio("/sounds/level-up-2.mp3");
-    audio.volume = 0.6;
-    audio.play();
-  };
-
-  const handleRevenue = () => {
-    setMessageOverlay("💰 Claim your coins!");
-    setShowOverlay(true);
-    triggerCoinAnimation();
-    playLevelUp2Sound();
-
-    setTimeout(() => {
-      setShowOverlay(false);
-      setMessageOverlay("");
-      setClaimCoins(true);
-      playSucessSound();
-    }, 3000);
-
-    setTimeout(() => {
-      setClaimCoins(false);
-    }, 6000);
-  }
-
   const getWallet = () => {
     if (user?.walletStored) {
       return user.walletStored ? `${user.walletStored.slice(0, 6)}...${user.walletStored.slice(-4)}` : 'Not connected';
@@ -276,13 +212,7 @@ const Home = () => {
 
   return (
     <main className={styles.main}>
-      {showOverlay && (
-        <LevelUpOverlay
-          message={messageOverlay}
-          onClose={() => setShowOverlay(true)}
-        />
-      )}
-
+      
       <div className={`${styles.bannerContainer} ${styles.bannerContainerCustom}`} style={{ marginBottom: '-80px' }}>
         <br />
         <br />
@@ -327,28 +257,12 @@ const Home = () => {
             )}
           </>
 
-          {/* <form onSubmit={handleSubmit} className={styles.form}>
-            <input
-              type="email"
-              required
-              value={walletAddress}
-              onChange={(e) => setWalletAddress(e.target.value)}
-              placeholder="Enter your wallet address"
-              className={styles.emailInput}
-              disabled={loading}
-            />
-            {!loading ? (
-              <WalletConnector />
-            ) : (
-              <Preloader />
-            )}
-          </form> */}
-
-          {/* <button onClick={handleConnect} className={styles.submitBtnLarge} disabled style={{ background: 'goldenrod', animation: 'none', opacity: 0.5 }}>Connect Wallet</button> */}
-
           <br />
           <br />
-          {/* <form onSubmit={handleSubmit} className={styles.form}>
+          <hr />
+          <br />
+
+          <form onSubmit={handleSubmit} className={styles.form}>
             <input
               type="email"
               required
@@ -359,11 +273,11 @@ const Home = () => {
               disabled={loading}
             />
             {!loading ? (
-              <button type="submit" className={styles.submitBtn}>Join Now 🚀</button>
+              <button type="submit" className={styles.submitBtn} style={{ animation: 'none'}}>Join Now 🚀</button>
             ) : (
               <Preloader />
             )}
-          </form> */}
+          </form>
 
           <p>
             And take full ownership of your creation through <br /> 🔐 <span data-text="NFTs" className="glitch">NFTs</span>.
@@ -410,24 +324,34 @@ const Home = () => {
           
           <br />
           <br />
-          <p style={{ fontSize: '12px' }}>
-            Your Wallet Address:&nbsp;
-            <b style={{ color: 'gold' }}>
-              {getWallet()}
-            </b>
-            &nbsp;
-          </p>
+          {user?.walletStored ? (
+            <p style={{ fontSize: '12px' }}>
+              Your Wallet Address:&nbsp;
+              <b style={{ color: 'gold' }}>
+                {getWallet()}
+              </b>
+              &nbsp;
+            </p>
+            ) : (
+            <p style={{ fontSize: '12px' }}>
+              Your Wallet Address:&nbsp;
+              <b style={{ color: 'red' }}>Not connected</b>
+            </p>
+            )}
           <br />
           <p style={{ fontSize: '12px' }}>
-            Your email is: &nbsp; 
-            <b>{user?.email} ({user?.email ? (
-              <span style={{ color: 'green' }}>Verified</span>
-            ) : (
-              <span style={{ color: 'red' }}>Unverified</span>
-            )})</b>
-            &nbsp;
+            Your email is: <b>{user?.email}</b> 
           </p>
 
+          <br />
+          <button className={styles.submitBtn} onClick={() => {
+            if (user) {
+              setIsModalOpen(false);
+              router.push('/dashboard');
+            }
+          }}>
+            Let's go! 🎶
+          </button>
 
           {!user && (
             <div>
@@ -437,7 +361,7 @@ const Home = () => {
                 <button className={styles.submitBtn} style={{ width: '100px', padding: '0 20px' }} onClick={() => {
                   signUpWithWallet(createAccountEmail, "abc123", walletConnectionAuth || null);
                 }}>
-                  Create <br/>  Account
+                  Create <br/> Account
                 </button>
               </div>
             </div>
@@ -458,23 +382,8 @@ const Home = () => {
               <hr />
             </>
           )} */}
-          {!isLoading ? (
-            <>
-              {user && (<button onClick={handleContinue} className={`${styles.submitBtn} ${!user?.email && 'disabled'}`} >LET'S BEGIN 🚀</button>)}
-              <hr />
-              <button 
-                onClick={handleRevenue} 
-                className={`${styles.submitBtn} ${!user?.email && 'disabled'}`} 
-                style={{ backgroundColor: !user?.emailVerified ? 'transparent' : '#0ff', color: !user?.emailVerified ? 'white' : 'var(--primary-color)' }}>
-                  Claim Coins! 💰
-              </button>
-              
-            </>
-          ) : (
-            <>
-              <Preloader />
-            </>
-          )}
+          <br />
+          <b>Note:</b> If you already have an account, you can <span className="glitch" style={{ color: 'var(--primary-color)' }}>continue</span> with your email.
           <br />
           <p className={`glitch ${styles.modalText}`} style={{ fontSize: '12px' }}>
             <b>We're excited to have you on board!</b>
