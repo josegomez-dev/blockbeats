@@ -27,13 +27,41 @@ const frequencyRanges = [
   { name: "Celestial", min: 5201, max: 5907, color: "violet" },
 ];
 
-const favoriteCollections = [
-  { id: 1, title: 'Hype Beast', color: '#00f2ff' },
-  { id: 2, title: 'Retro Vinyls', color: '#ff00e0' },
-  { id: 3, title: 'Synth Wave Art', color: '#ffff00' },
-  { id: 4, title: 'Pixel Legends', color: '#00ff7f' },
-  { id: 5, title: 'Glitch Avatars', color: '#ff4500' },
-];
+const playDrumLoop = (tempo: number) => {
+  if (!ctx) return;
+  const interval = (60 / tempo) * 1000; // ms per beat
+  let count = 0;
+  const kick = () => {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.frequency.setValueAtTime(150, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.5);
+  };
+  const snare = () => {
+    const noise = ctx.createBufferSource();
+    const buffer = ctx.createBuffer(1, ctx.sampleRate * 0.2, ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < data.length; i++) data[i] = Math.random();
+    noise.buffer = buffer;
+
+    const gain = ctx.createGain();
+    gain.gain.setValueAtTime(0.5, ctx.currentTime);
+    noise.connect(gain).connect(ctx.destination);
+    noise.start();
+    noise.stop(ctx.currentTime + 0.2);
+  };
+
+  const loop = setInterval(() => {
+    if (count % 4 === 0) kick();
+    if (count % 4 === 2) snare();
+    count++;
+  }, interval);
+
+  return () => clearInterval(loop);
+};
 
 const AudioContext = typeof window !== "undefined" ? window.AudioContext || (window as any).webkitAudioContext : null;
 const ctx = AudioContext ? new AudioContext() : null;
@@ -219,9 +247,28 @@ const MusicDrawingPage = () => {
   const [nfts, setNFTs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const playbackIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
   const { user } = useAuth();
 
   const frequencyStyle = frequencyRanges.find((r) => r.name === selectedRange)!;
+
+  const [tempo, setTempo] = useState(120);
+  const [drumLoop, setDrumLoop] = useState<(() => void) | null>(null);
+
+  const startDrums = () => {
+    if (!drumLoop) {
+      const stopFn = playDrumLoop(tempo); // <- stopFn is the returned () => clearInterval(...)
+      setDrumLoop(() => stopFn); // Save it in state so we can call it later
+    }
+  };
+
+  const stopDrums = () => {
+    if (drumLoop) {
+      drumLoop(); // Call the stop function
+      setDrumLoop(null);
+    }
+  };
 
   const fetchNFTs = async () => {
       const querySnapshot = await getDocs(collection(db, "signatures"));
@@ -295,17 +342,35 @@ const MusicDrawingPage = () => {
     setPlayIndex(null);
   };
 
+  const stopPlayback = () => {
+    if (playbackIntervalRef.current) {
+      clearInterval(playbackIntervalRef.current);
+      playbackIntervalRef.current = null;
+    }
+    setIsPlayingBack(false);
+    setPlayIndex(null);
+    stopDrums();
+  };
+
+
   const playback = () => {
     setIsPlayingBack(true);
+    startDrums();
+
     let current = 0;
     const sorted = [...notesPlayed].sort((a, b) => a.time - b.time);
-    const interval = setInterval(() => {
+    const interval = (60 / tempo) * 1000;
+
+    const loop = setInterval(() => {
       if (current >= 24) {
-        clearInterval(interval);
+        clearInterval(loop);
+        playbackIntervalRef.current = null;
         setPlayIndex(null);
         setIsPlayingBack(false);
+        stopDrums();
         return;
       }
+
       setPlayIndex(current);
       const hits = sorted.filter((n) => n.time === current);
       hits.forEach(({ noteIndex }) => {
@@ -313,13 +378,17 @@ const MusicDrawingPage = () => {
         if (osc) {
           osc.frequency.value = notes[noteIndex][1];
           osc.type = "sawtooth";
-          osc.connect(ctx!.destination);
-          osc.start();
-          osc.stop(ctx!.currentTime + 0.2);
+          if (ctx) {
+            osc.connect(ctx.destination);
+            osc.start();
+            osc.stop(ctx.currentTime + 0.2);
+          }
         }
       });
       current++;
-    }, 400);
+    }, interval);
+
+    playbackIntervalRef.current = loop;
   };
 
 
@@ -362,8 +431,15 @@ const MusicDrawingPage = () => {
 
         <div style={{ margin: "0 auto", width: "auto", textAlign: "center", position: "relative", zIndex: 2 }}>
           <div style={{ margin: '10px' }}>
-            <button onClick={playback} disabled={isPlayingBack} className={styles.launchpadBtn}>▶️ Play</button> &nbsp;&nbsp;
-            <button onClick={resetBoard} disabled={isPlayingBack} className={styles.launchpadBtn}>⚠️ Reset</button> &nbsp;&nbsp;
+            {!isPlayingBack ? (
+              <button onClick={playback} className={styles.launchpadBtn}>▶️ Play</button>
+            ) : (
+              <>
+                <button onClick={stopPlayback} disabled={!isPlayingBack} className={styles.launchpadBtn}>⏹ Stop</button>
+              </>
+            )}
+            &nbsp;&nbsp;
+            <button onClick={resetBoard} disabled={isPlayingBack} className={styles.launchpadBtn}>⚠️ Reset Board </button> &nbsp;&nbsp;
             <button onClick={saveNFTData} disabled={isPlayingBack} className={styles.launchpadBtn}>💾 Save</button>
           </div>
 
@@ -382,7 +458,10 @@ const MusicDrawingPage = () => {
             <Piano onNotePlay={handleNotePlay} />
             <div className={styles.melodyDataInfo} style={{ color: frequencyStyle.color }}>
               <div>
-                {notesPlayed.length} <br /> notes played
+                {/* {notesPlayed.length} notes played
+                <br /> */}
+                <label>🎵 Tempo: {tempo} BPM 🥁</label>
+                <input type="range" min={60} max={200} value={tempo} onChange={(e) => setTempo(Number(e.target.value))} />
               </div>
             </div>
           </div>
