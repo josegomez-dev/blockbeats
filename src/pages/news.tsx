@@ -9,6 +9,8 @@ const NewsAndUpdatesScreen = () => {
   return (
     <>
       <div style={{ textAlign: 'center', padding: '2rem' }}>
+        <br />
+        <br />
         <h1 className="glitch">📰 News & Updates</h1>
         <p>Stay in the loop with the latest from BlockBeats, Catarsis Musical, and the Web3 music world.</p>
         <Image
