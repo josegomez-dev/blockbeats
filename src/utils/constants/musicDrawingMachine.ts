@@ -23,3 +23,6 @@ export const AudioContext =
     : null;
 
 export const ctx = AudioContext ? new AudioContext() : null;
+
+export type KeyType = 'kwhite' | 'kblack';
+export const keyTypes: KeyType[] = ['kwhite', 'kblack'];

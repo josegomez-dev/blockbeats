@@ -1,12 +1,13 @@
 // components/Key.tsx
 'use client';
 
+import { KeyType } from '@/utils/constants/musicDrawingMachine';
 import React, { useRef } from 'react';
 
 interface KeyProps {
   note: string;
   frequency: number;
-  type: 'kwhite' | 'kblack';
+  type: KeyType;
   onPlay: () => void;
   ctx: AudioContext | null;
 }

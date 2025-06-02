@@ -3,7 +3,7 @@
 
 import React from 'react';
 import Key from './Key';
-import { notes } from './../utils/constants/musicDrawingMachine'; // Update path as needed
+import { KeyType, notes } from './../utils/constants/musicDrawingMachine'; // Update path as needed
 
 interface PianoProps {
   onNotePlay: (noteIndex: number) => void;
@@ -18,7 +18,7 @@ const Piano: React.FC<PianoProps> = ({ onNotePlay, ctx }) => {
           key={note}
           note={note}
           frequency={freq}
-          type={type}
+          type={type as KeyType}
           onPlay={() => onNotePlay(i)}
           ctx={ctx}
         />
