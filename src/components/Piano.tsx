@@ -12,7 +12,7 @@ interface PianoProps {
 
 const Piano: React.FC<PianoProps> = ({ onNotePlay, ctx }) => {
   return (
-    <div style={{ position: 'relative', height: '200px' }}>
+    <div style={{ position: 'relative', height: '200px', marginTop: '5px' }}>
       {notes.map(([note, freq, type], i) => (
         <Key
           key={note}

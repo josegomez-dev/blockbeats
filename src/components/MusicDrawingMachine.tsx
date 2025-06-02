@@ -2,16 +2,15 @@
 import styles from "@/app/assets/styles/MainPage.module.css";
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
-import NeonSlider from "./NeonSlider";
 import { addDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useAuth } from '../context/AuthContext'
-import Preloader from "./Preloader";
-import CollectionsSlider from "./CollectionsSlider";
 import FrequencyModal from "./FrequencyModal";
 import { frequencyRanges, notes } from "@/utils/constants/musicDrawingMachine";
 import PixelCanvas from "./PixelCanvas";
 import Piano from "./Piano";
+import NFTSliderPanel from "./NFTSliderPanel";
+import ControlsPanel from "./ControlPanel";
 
 const AudioContext = typeof window !== "undefined" ? window.AudioContext || (window as any).webkitAudioContext : null;
 const ctx = AudioContext ? new AudioContext() : null;
@@ -35,7 +34,7 @@ const MusicDrawingPage = () => {
 
   const frequencyStyle = frequencyRanges.find((r) => r.name === selectedRange)!;
 
-  const [tempo, setTempo] = useState(120);
+  const [tempo, setTempo] = useState(350);
   const [drumLoop, setDrumLoop] = useState<(() => void) | null>(null);
 
   const playDrumLoop = (tempo: number, drumIntervalRef: React.MutableRefObject<NodeJS.Timeout | null>) => {
@@ -230,30 +229,15 @@ const MusicDrawingPage = () => {
 
   return (
     <>
-      <div>
-        <h2 className={styles.title}>BLOCKBEATS Marketplace</h2>
-        <div style={{ marginTop: "-50px" }}>
-          {!loading ? 
-            nfts.length > 0 ? (<NeonSlider slides={nfts} />) : (<p>
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              Please Register First NFT</p>) : <Preloader />}
-        </div>
-        <div className={styles.buttonsContainerMusicBox}>
-          <button disabled className={styles.submitBtn} style={{ background: 'transparent', color: 'white', animation: 'none', opacity: '0.5' }}>🪙 Mint</button> &nbsp;&nbsp;
-          <button disabled className={styles.submitBtn} style={{ background: 'transparent', color: 'white', animation: 'none', opacity: '0.5' }}>🔄 Trade</button> &nbsp;&nbsp;
-        </div>
+      <NFTSliderPanel 
+        nfts={nfts}
+        loading={loading}
+      />
 
-        <CollectionsSlider title="Top FANS Collections" />
-      </div>
-                  
-      <div style={{ padding: 0, borderRadius: 8, fontFamily: "monospace", color: "white", backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', width: '300px', position: "relative", margin: "10px auto" }}>
-        <br />
-        <h3 style={{ color: frequencyStyle.color, textAlign: 'center', marginBottom: '0px' }}>BlockBeats <span data-text="NFT" className="glitch">NFT</span></h3>
+      <div className={styles.musicBox}>
+        <h3 style={{ color: frequencyStyle.color }}>BlockBeats <span data-text="NFT" className="glitch">NFT</span></h3>
         <hr />
+
         {/* Color overlay */}
         <div style={{ position: "fixed", borderRadius: 8, inset: 0, background: frequencyStyle.color, mixBlendMode: "overlay", opacity: 0.15, pointerEvents: "none", zIndex: 1 }} />
 
@@ -266,24 +250,20 @@ const MusicDrawingPage = () => {
         )}
 
         <div style={{ margin: "0 auto", width: "auto", textAlign: "center", position: "relative", zIndex: 2 }}>
-          <div style={{ margin: '10px' }}>
-            {!isPlayingBack ? (
-              <button onClick={playback} className={styles.launchpadBtn}>▶️ Play</button>
-            ) : (
-              <>
-                <button onClick={stopPlayback} disabled={!isPlayingBack} className={styles.launchpadBtn}>⏹ Stop</button>
-              </>
-            )}
-            &nbsp;&nbsp;
-            <button onClick={resetBoard} disabled={isPlayingBack} className={`${styles.launchpadBtn} ${isPlayingBack && 'disabled'}`}>⚠️ Reset </button> &nbsp;&nbsp;
-            <button onClick={saveNFTData} disabled={isPlayingBack} className={`${styles.launchpadBtn} ${isPlayingBack && 'disabled'}`}>💾 Save</button>&nbsp;&nbsp;
-          </div>
 
+          <ControlsPanel
+            isPlayingBack={isPlayingBack}
+            tempo={tempo}
+            setTempo={setTempo}
+            onPlay={playback}
+            onStop={stopPlayback}
+            onReset={resetBoard}
+            onSave={saveNFTData}
+            onOpenModal={() => setIsModalOpen(true)}
+            frequencyStyle={frequencyStyle}
+          />
+          
           <div className={`${isPlayingBack && 'disabled'}`} style={{ position: "relative", backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-            <div style={{ background: "#111", padding: 10, margin: "0", position: "relative" }}>
-              <span style={{ padding: "4px 8px", background: frequencyStyle.color, color: "#000", borderRadius: 4 }}>{frequencyStyle.name}</span>
-              <button onClick={() => setIsModalOpen(true)} style={{ marginLeft: 25, animation: 'none' }}>🎚 Freq. Range</button>
-            </div>
 
             <PixelCanvas
               colorMap={colorMap}
@@ -291,13 +271,14 @@ const MusicDrawingPage = () => {
               color={frequencyStyle.color}
               onCanvasClick={handleCanvasClick}
             />
+
             <Piano onNotePlay={handleNotePlay} ctx={ctx} />
             <div className={styles.melodyDataInfo} style={{ color: frequencyStyle.color, zIndex: 2, position: "relative", textAlign: "center" }}>
               <div>
                 {/* {notesPlayed.length} notes played
                 <br /> */}
                 <label>🎵 Tempo: {tempo} BPM 🥁</label>
-                <input type="range" min={60} max={350} value={tempo} onChange={(e) => setTempo(Number(e.target.value))} />
+                <input type="range" min={60} max={420} value={tempo} onChange={(e) => setTempo(Number(e.target.value))} />
               </div>
             </div>
           </div>

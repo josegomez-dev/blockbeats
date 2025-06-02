@@ -12,6 +12,7 @@ import { FaMusic } from "react-icons/fa";
 import Modal from 'react-responsive-modal';
 import { useAuth } from "@/context/AuthContext";
 import SidebarChatPanel from "@/components/SidebarChatPanel";
+import SignInUnautorizedModal from "@/components/SignInUnautorizedModal";
 
 const DashboardLayout = () => {
 
@@ -29,30 +30,11 @@ const DashboardLayout = () => {
 
   if (!user) {
     return (
-      <Modal
+      <SignInUnautorizedModal 
         open={true}
         onClose={() => {}}
-        center
-        classNames={{ modal: styles.modal }}
-        styles={{ modal: { width: '100%', background: 'transparent', padding: 50 } }}
-        closeOnEsc={false}
-        closeOnOverlayClick={false}
-        showCloseIcon={false}
-        animationDuration={0}
-        closeIcon={<span className={styles.closeIcon}>×</span>}        
-      >
-        <div className={styles.modalContent}>
-          <h2 className={styles.modalTitle}>Please Sign In</h2>
-          <br />
-          <p className={styles.modalText}>
-            You need to sign in to access the dashboard. Please sign in using your wallet.
-          </p>
-          <br />
-          <button className={styles.submitBtnLarge} onClick={() => window.location.href = '/'}>
-            Sign In
-          </button>
-        </div>
-      </Modal>
+        pageName="Dashboard"
+      />
     );
   }
 

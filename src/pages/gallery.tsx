@@ -9,6 +9,7 @@ import { db } from '../../firebase';
 import PixelPreview from '@/components/PixelPreview';
 import { Modal } from "react-responsive-modal";
 import CollectionsSlider from '@/components/CollectionsSlider';
+import SignInUnautorizedModal from '@/components/SignInUnautorizedModal';
 
 const favoriteCollections = [
   { id: 1, title: 'Hype Beast', color: '#00f2ff' },
@@ -61,17 +62,11 @@ const GalleryScreen = () => {
 
   if (!user) {
     return (
-      <div className="gallery-screen">
-        <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
-          <br />
-          <br />
-          <h2><p className="glitch">Blockbeats <span data-text="Marketplace" className="glitch">Marketplace</span></p></h2>
-        </div>
-        <div className={styles.modalContent}>
-          <h2>Please log in to view your collection</h2>
-          <Link href="/" className={styles.submitBtn}>Login</Link>
-        </div>
-      </div>
+      <SignInUnautorizedModal 
+        open={true}
+        onClose={() => {}}
+        pageName="Gallery"
+      />
     );
   }
 
