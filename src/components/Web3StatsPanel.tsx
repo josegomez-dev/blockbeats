@@ -3,18 +3,24 @@ import React, { useEffect, useState } from "react";
 import styles from "@/app/assets/styles/Web3StatsPanel.module.css";
 
 const newsItems = [
-  "🎶 New melodic quest unlocked! Compose a 3-note loop.",
-  "⚙️ DAO update voting ends tomorrow.",
-  "🚀 Web3 game partnership announced.",
-  "🎧 New synth instrument unlocked in the NFT lab.",
-  "📈 Token market sees surge after community vote.",
-  "🧩 Puzzle challenge released — win token rewards!",
-  "🎤 Harmony Festival virtual stage opens next week.",
-  "🧠 AI composer beta released to selected users.",
-  "🌐 Multichain bridge for melody tokens goes live.",
-  "📚 SoundTrackX publishing tool enters open beta.",
-  "👥 New band collaboration feature now live!",
+  {
+    text: "🎶 New melodic quest unlocked! Compose a 3-note loop.",
+    url: null,
+  },
+  {
+    text: "📺 Watch the full demo presentation on YouTube!",
+    url: "https://www.youtube.com/watch?v=W84Qst6bHxU&t=20s",
+  },
+  {
+    text: "🏆 BlockBeats won 2nd place at the Starknet Hackathon!",
+    url: "https://www.youtube.com/watch?v=Uk9lCM9xS5Y",
+  },
+  {
+    text: "🌍 Web3 Music Revolution Starts Here",
+    url: "https://www.youtube.com/watch?v=6aGIqnu1UP8",
+  },
 ];
+
 
 const tutorials = [
   "🔐 How to Connect Wallet",
@@ -77,14 +83,26 @@ const Web3StatsPanel = () => {
       <div className={styles.section}>
         <h5>📰 News Feed</h5>
         <div className={styles.newsSlider}>
-          <p className={styles.newsText}>{newsItems[newsIndex]}</p>
+          {newsItems[newsIndex].url ? (
+            <>
+              🍿 Youtube:{" "}
+              <a
+                href={newsItems[newsIndex].url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.newsText}
+              >
+                {newsItems[newsIndex].text}
+              </a>
+            </>
+          ) : (
+            <p className={styles.newsText}>{newsItems[newsIndex].text}</p>
+          )}
           <div className={styles.dots}>
             {newsItems.map((_, i) => (
               <span
                 key={i}
-                className={`${styles.dot} ${
-                  i === newsIndex ? styles.active : ""
-                }`}
+                className={`${styles.dot} ${i === newsIndex ? styles.active : ""}`}
               />
             ))}
           </div>

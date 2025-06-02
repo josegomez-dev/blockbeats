@@ -30,7 +30,7 @@ const ControlsPanel: React.FC<Props> = ({
       <span style={{ padding: "4px 8px", background: frequencyStyle.color, color: "#000", borderRadius: 4 }}>{frequencyStyle.name}</span>
       <button onClick={onOpenModal} style={{ marginLeft: 25, animation: 'none' }}>🎚 Freq. Range</button>
     </div>
-    <div style={{ textAlign: "center" }}>
+    <div style={{ textAlign: "center", marginTop: 10, marginBottom: '-10px' }}>
       {!isPlayingBack ? (
         <button onClick={onPlay} className={styles.launchpadBtn}>▶️ Play</button>
       ) : (
@@ -39,6 +39,8 @@ const ControlsPanel: React.FC<Props> = ({
       &nbsp;&nbsp;
       <button onClick={onReset} disabled={isPlayingBack} className={styles.launchpadBtn}>⚠️ Reset</button>&nbsp;&nbsp;
       <button onClick={onSave} disabled={isPlayingBack} className={styles.launchpadBtn}>💾 Save</button>
+      <br />
+      <br />
     </div>
     {/* <div className={styles.melodyDataInfo} style={{ color: frequencyStyle.color, zIndex: 2, position: "relative", textAlign: "center" }}>
       <label>🎵 Tempo: {tempo} BPM 🥁</label>

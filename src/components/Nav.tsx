@@ -218,6 +218,21 @@ export default function Nav() {
                       <RiGalleryView className={styles.icon} /> Marketplace
                     </div>
                   </Link>
+                  <Link href="/fans">
+                    <div className={styles.dropdownItem}>
+                      <RiGalleryView className={styles.icon} /> Fans Club &nbsp; <button style={{ padding: '0 10px' }}>Buy MERCH</button>
+                    </div>
+                  </Link>
+                  {/* <Link href="/">
+                    <div className={styles.dropdownItem}>
+                      <RiGalleryView className={styles.icon} /> NEWS / Tutorials
+                    </div>
+                  </Link>
+                  <Link href="/">
+                    <div className={styles.dropdownItem}>
+                      <RiGalleryView className={styles.icon} /> Help / FAQ / Contact
+                    </div>
+                  </Link> */}
                   <div className={`${styles.dropdownItem} ${styles.logout}`} onClick={handleLogout}>
                     <FaSignOutAlt className={styles.icon} /> Logout
                   </div>

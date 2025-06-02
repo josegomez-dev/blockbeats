@@ -232,7 +232,7 @@ const Home = () => {
         <Preloader />
       ) : (
       <div className={styles.bannerContainer}>
-           {/* 🚀 Neon Whitelist Banner */}
+        {/* 🚀 Neon Whitelist Banner */}
      
         <div className={styles.banner}>
           <h2 className={styles.bannerTitle}>🎧 Join <span data-text="BLOCKBEATS" className="glitch">BLOCKBEATS</span></h2>
