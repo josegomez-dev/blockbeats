@@ -8,6 +8,7 @@ import { addDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useAuth } from '../context/AuthContext'
 import Preloader from "./Preloader";
+import CollectionsSlider from "./CollectionsSlider";
 
 const notes: [string, number, string][] = [
   ["C1", 130.81, "kwhite"], ["CM1", 138.59, "kblack"],
@@ -24,6 +25,14 @@ const frequencyRanges = [
   { name: "Ornamental", min: 2041, max: 3240, color: "dodgerblue" },
   { name: "Fractal", min: 3835, max: 4840, color: "gold" },
   { name: "Celestial", min: 5201, max: 5907, color: "violet" },
+];
+
+const favoriteCollections = [
+  { id: 1, title: 'Hype Beast', color: '#00f2ff' },
+  { id: 2, title: 'Retro Vinyls', color: '#ff00e0' },
+  { id: 3, title: 'Synth Wave Art', color: '#ffff00' },
+  { id: 4, title: 'Pixel Legends', color: '#00ff7f' },
+  { id: 5, title: 'Glitch Avatars', color: '#ff4500' },
 ];
 
 const AudioContext = typeof window !== "undefined" ? window.AudioContext || (window as any).webkitAudioContext : null;
@@ -333,6 +342,9 @@ const MusicDrawingPage = () => {
           <button disabled className={styles.submitBtn} style={{ background: 'transparent', color: 'white', animation: 'none', opacity: '0.5' }}>🔄 Trade</button> &nbsp;&nbsp;
         </div>
 
+        <br />
+
+        <CollectionsSlider />
       </div>
                   
       <div style={{ padding: 0, borderRadius: 8, fontFamily: "monospace", color: "white", backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', width: '300px', position: "relative", margin: "10px auto" }}>

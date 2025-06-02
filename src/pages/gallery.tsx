@@ -8,20 +8,15 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
 import PixelPreview from '@/components/PixelPreview';
 import { Modal } from "react-responsive-modal";
+import CollectionsSlider from '@/components/CollectionsSlider';
 
-
-const images = [
-    '/nft1.webp',
-    '/nft2.webp',
-    '/nft3.webp',
-    '/nft2.webp',
-    '/nft3.webp',
-    '/nft1.webp',
-    '/nft3.webp',
-    // '/nft2.png',
-    // '/nft1.png',
+const favoriteCollections = [
+  { id: 1, title: 'Hype Beast', color: '#00f2ff' },
+  { id: 2, title: 'Retro Vinyls', color: '#ff00e0' },
+  { id: 3, title: 'Synth Wave Art', color: '#ffff00' },
+  { id: 4, title: 'Pixel Legends', color: '#00ff7f' },
+  { id: 5, title: 'Glitch Avatars', color: '#ff4500' },
 ];
-
 
 const GalleryScreen = () => {
 
@@ -70,7 +65,7 @@ const GalleryScreen = () => {
         <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
           <br />
           <br />
-          <h2><p className="glitch">My Collection</p></h2>
+          <h2><p className="glitch">Blockbeats <span data-text="Marketplace" className="glitch">Marketplace</span></p></h2>
         </div>
         <div className={styles.modalContent}>
           <h2>Please log in to view your collection</h2>
@@ -87,6 +82,21 @@ const GalleryScreen = () => {
           <br />
           <br />
           <h2><p className="glitch">My Collection</p></h2>
+
+          {userNFTS.length <= 0 ? (
+            <div className={styles.modalContent}>
+              <br />
+              <h2>No NFTs Found</h2>
+              <p>You haven't created any NFTs yet. <br /> Start creating your own unique NFTs today!</p>
+              <br />
+              <br />
+              <Link href="/dashboard" className={styles.submitBtn}>Create NFT</Link>
+              <br />
+              <br />
+            </div>
+          ) : (
+            <p>Here you can view all the NFTs you have created.</p>
+          )}
         </div>
         
         {selectedNFT && (
@@ -99,7 +109,6 @@ const GalleryScreen = () => {
             showCloseIcon={false}
           >
             <div className={styles.modalContent} style={{ textAlign: 'center' }}>
-              <h2>View NFT</h2>
               <div className={styles.nftDetails}>
                 <h3>{selectedNFT.songName || 'Untitled'}</h3>
                 <br />
@@ -109,7 +118,11 @@ const GalleryScreen = () => {
                   size={200}
                 />
                 <br />
-                <p>Created by: {selectedNFT.createdBy || 'Unknown'}</p>
+                <p>
+                  Created by: {selectedNFT.createdBy
+                    ? `${selectedNFT.createdBy.slice(0, 6)}...${selectedNFT.createdBy.slice(-4)}`
+                    : 'Unknown'}
+                </p>
                 {/* <p>Notes Played: {selectedNFT.notesPlayed ? selectedNFT.notesPlayed.join(', ') : 'None'}</p> */}
               </div>
               <button className={styles.submitBtn} onClick={handleCloseModal}>Close</button>
@@ -147,6 +160,19 @@ const GalleryScreen = () => {
           }))}
         />
 
+        <br />
+        <hr />
+        <br />
+
+        <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
+          <h2><p className="glitch">Explore <span data-text="TOP FANS" className="glitch">TOP FANS</span> COLLECTIONS</p></h2>
+          <p>Discover unique NFTs created by other artists.</p>
+          <br />
+          <CollectionsSlider title='' fullWidth />
+        </div>
+
+        <br />
+        <hr />
         <br />
 
         <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
