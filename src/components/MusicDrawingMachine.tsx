@@ -324,6 +324,16 @@ const MusicDrawingPage = () => {
       <div className={styles.musicBox}>
         <h3 style={{ color: frequencyStyle.color }}>BlockBeats <span data-text="NFT" className="glitch">NFT</span></h3>
         <div onClick={() => setIsIAGeneratorOpen(true)} style={{ display: "inline-block", cursor: "pointer", position: "relative", zIndex: 2 }}>
+          <span style={{ position: 'absolute', left: '-50px', fontSize: '12px', top: 0, textAlign: 'left' }}>
+            <Image
+              src={`/arrow-pink.gif`}
+              alt="AI Icon"
+              width={50}
+              height={50}
+              style={{ filter: 'drop-shadow(0 0 5px #ff00ff)', transform: 'rotate(90deg)' }}
+            />
+          </span>
+          <span style={{ position: 'absolute', left: 50, fontSize: '12px', top: 8, textAlign: 'left' }}>IA Generator</span>
           <Image
             src={`/logo.webp`}
             alt="BlockBeats Logo"
