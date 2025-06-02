@@ -188,7 +188,7 @@ export default function Nav() {
                     <div className={`${styles.dropdownItem} black-color`} style={{ marginBottom: '-15px' }}>
                     Address:&nbsp;<span className='gold-color' style={{marginTop: '-15px' }}>{user?.walletStored?.slice(0, 5)}... {data?.symbol} </span>
                   </div> ) : (
-                    <div style={{ marginBottom: '5px', marginTop: '-10px' }}>
+                    <div style={{ margin: '15px 25px', marginTop: '5px' }}>
                         <button
                           className={stylesMain.submitBtnLarge}
                           // onClick={readWalletAddress}
