@@ -58,10 +58,17 @@ const playDrumLoop = (tempo: number, drumIntervalRef: React.MutableRefObject<Nod
   };
 
   const loop = setInterval(() => {
+    if (count >= 24) {
+      clearInterval(loop);
+      drumIntervalRef.current = null;
+      return;
+    }
+
     if (count % 4 === 0) kick();
     if (count % 4 === 2) snare();
     count++;
   }, interval);
+
 
   drumIntervalRef.current = loop;
 
@@ -366,6 +373,22 @@ const MusicDrawingPage = () => {
     stopDrums();
   };
 
+  const clearAllIntervals = () => {
+    if (playbackIntervalRef.current) {
+      clearInterval(playbackIntervalRef.current);
+      playbackIntervalRef.current = null;
+    }
+
+    if (drumIntervalRef.current) {
+      clearInterval(drumIntervalRef.current);
+      drumIntervalRef.current = null;
+    }
+
+    setDrumLoop(null);
+    setIsPlayingBack(false);
+    setPlayIndex(null);
+  };
+
 
   const playback = () => {
     setIsPlayingBack(true);
@@ -453,16 +476,17 @@ const MusicDrawingPage = () => {
               </>
             )}
             &nbsp;&nbsp;
-            <button onClick={resetBoard} disabled={isPlayingBack} className={styles.launchpadBtn}>⚠️ Reset Board </button> &nbsp;&nbsp;
-            <button onClick={saveNFTData} disabled={isPlayingBack} className={styles.launchpadBtn}>💾 Save</button>
+            <button onClick={resetBoard} disabled={isPlayingBack} className={`${styles.launchpadBtn} ${isPlayingBack && 'disabled'}`}>⚠️ Reset </button> &nbsp;&nbsp;
+            <button onClick={saveNFTData} disabled={isPlayingBack} className={`${styles.launchpadBtn} ${isPlayingBack && 'disabled'}`}>💾 Save</button>&nbsp;&nbsp;
+            <button onClick={clearAllIntervals} disabled={isPlayingBack} className={`${styles.launchpadBtn} ${isPlayingBack && 'disabled'}`}>💾 STOP</button>&nbsp;&nbsp;
           </div>
 
-          <div style={{ background: "#111", padding: 10, margin: "0", position: "relative" }}>
-            <span style={{ padding: "4px 8px", background: frequencyStyle.color, color: "#000", borderRadius: 4 }}>{frequencyStyle.name}</span>
-            <button onClick={() => setIsModalOpen(true)} style={{ marginLeft: 25, animation: 'none' }}>🎚 Freq. Range</button>
-          </div>
+          <div className={`${isPlayingBack && 'disabled'}`} style={{ position: "relative", backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+            <div style={{ background: "#111", padding: 10, margin: "0", position: "relative" }}>
+              <span style={{ padding: "4px 8px", background: frequencyStyle.color, color: "#000", borderRadius: 4 }}>{frequencyStyle.name}</span>
+              <button onClick={() => setIsModalOpen(true)} style={{ marginLeft: 25, animation: 'none' }}>🎚 Freq. Range</button>
+            </div>
 
-          <div style={{ position: "relative", backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
             <PixelCanvas
               colorMap={colorMap}
               playingIndex={playIndex}
@@ -470,12 +494,12 @@ const MusicDrawingPage = () => {
               onCanvasClick={handleCanvasClick}
             />
             <Piano onNotePlay={handleNotePlay} />
-            <div className={styles.melodyDataInfo} style={{ color: frequencyStyle.color }}>
+            <div className={styles.melodyDataInfo} style={{ color: frequencyStyle.color, zIndex: 2, position: "relative", textAlign: "center" }}>
               <div>
                 {/* {notesPlayed.length} notes played
                 <br /> */}
                 <label>🎵 Tempo: {tempo} BPM 🥁</label>
-                <input type="range" min={60} max={200} value={tempo} onChange={(e) => setTempo(Number(e.target.value))} />
+                <input type="range" min={60} max={350} value={tempo} onChange={(e) => setTempo(Number(e.target.value))} />
               </div>
             </div>
           </div>
