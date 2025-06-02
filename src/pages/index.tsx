@@ -196,11 +196,6 @@ const Home = () => {
     }
   };
 
-  const handleContinue = async () => {
-    setIsLoading(true);
-    await signIn(createAccountEmail, "abc123");
-  }
-
   const getWallet = () => {
     if (user?.walletStored) {
       return user.walletStored ? `${user.walletStored.slice(0, 6)}...${user.walletStored.slice(-4)}` : 'Not connected';
@@ -233,8 +228,12 @@ const Home = () => {
       <br />
       <br />
 
-      {/* 🚀 Neon Whitelist Banner */}
+      {authenticated ? (
+        <Preloader />
+      ) : (
       <div className={styles.bannerContainer}>
+           {/* 🚀 Neon Whitelist Banner */}
+     
         <div className={styles.banner}>
           <h2 className={styles.bannerTitle}>🎧 Join <span data-text="BLOCKBEATS" className="glitch">BLOCKBEATS</span></h2>
           
@@ -285,6 +284,7 @@ const Home = () => {
           <br />
         </div>
       </div>
+      )}
       
       <div>
         <br />
