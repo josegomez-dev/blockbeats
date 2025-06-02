@@ -721,8 +721,9 @@
   border-radius: 8px;
   font-family: monospace;
   color: white;
-  backdrop-filter: blur(50px);
-  background-color: rgba(0, 0, 0, 0.1);
+  /* backdrop-filter: blur(50px); */
+  border: 3px solid var(--neon-color);
+  border-radius: 10px;
   width: 300px;
   position: relative;
   margin: 10px auto;
