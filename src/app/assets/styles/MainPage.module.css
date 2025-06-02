@@ -722,8 +722,7 @@
   font-family: monospace;
   color: white;
   backdrop-filter: blur(50px);
-  border: 3px solid var(--neon-color);
-  border-radius: 10px;
+  border: 2px solid var(--white-color);
   width: 300px;
   position: relative;
   margin: 10px auto;

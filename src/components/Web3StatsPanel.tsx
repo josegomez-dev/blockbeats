@@ -91,6 +91,7 @@ const Web3StatsPanel = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.newsText}
+                style={{ color: "var(--neon-color)" }}
               >
                 {newsItems[newsIndex].text}
               </a>
