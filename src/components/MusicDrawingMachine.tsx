@@ -27,10 +27,12 @@ const frequencyRanges = [
   { name: "Celestial", min: 5201, max: 5907, color: "violet" },
 ];
 
-const playDrumLoop = (tempo: number) => {
+const playDrumLoop = (tempo: number, drumIntervalRef: React.MutableRefObject<NodeJS.Timeout | null>) => {
   if (!ctx) return;
+
   const interval = (60 / tempo) * 1000; // ms per beat
   let count = 0;
+
   const kick = () => {
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
@@ -40,6 +42,7 @@ const playDrumLoop = (tempo: number) => {
     osc.start();
     osc.stop(ctx.currentTime + 0.5);
   };
+
   const snare = () => {
     const noise = ctx.createBufferSource();
     const buffer = ctx.createBuffer(1, ctx.sampleRate * 0.2, ctx.sampleRate);
@@ -60,8 +63,14 @@ const playDrumLoop = (tempo: number) => {
     count++;
   }, interval);
 
-  return () => clearInterval(loop);
+  drumIntervalRef.current = loop;
+
+  return () => {
+    clearInterval(loop);
+    drumIntervalRef.current = null;
+  };
 };
+
 
 const AudioContext = typeof window !== "undefined" ? window.AudioContext || (window as any).webkitAudioContext : null;
 const ctx = AudioContext ? new AudioContext() : null;
@@ -248,6 +257,7 @@ const MusicDrawingPage = () => {
   const [loading, setLoading] = useState(true);
 
   const playbackIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const drumIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const { user } = useAuth();
 
@@ -257,16 +267,19 @@ const MusicDrawingPage = () => {
   const [drumLoop, setDrumLoop] = useState<(() => void) | null>(null);
 
   const startDrums = () => {
-    if (!drumLoop) {
-      const stopFn = playDrumLoop(tempo); // <- stopFn is the returned () => clearInterval(...)
-      setDrumLoop(() => stopFn); // Save it in state so we can call it later
-    }
+    stopDrums(); // always stop any running loop
+    const stopFn = playDrumLoop(tempo, drumIntervalRef);
+    setDrumLoop(() => stopFn);
   };
 
   const stopDrums = () => {
     if (drumLoop) {
-      drumLoop(); // Call the stop function
+      drumLoop(); // clears the interval
       setDrumLoop(null);
+    }
+    if (drumIntervalRef.current) {
+      clearInterval(drumIntervalRef.current);
+      drumIntervalRef.current = null;
     }
   };
 
@@ -340,6 +353,7 @@ const MusicDrawingPage = () => {
     setNotesPlayed([]);
     setColorMap([]);
     setPlayIndex(null);
+    stopDrums();
   };
 
   const stopPlayback = () => {
