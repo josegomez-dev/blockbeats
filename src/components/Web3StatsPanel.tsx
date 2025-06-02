@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "@/app/assets/styles/Web3StatsPanel.module.css";
+import Link from "next/link";
 
 const newsItems = [
   {
@@ -127,7 +128,8 @@ const Web3StatsPanel = () => {
       <div className={styles.section}>
         <h5>📖 Quick Tutorials</h5>
         <div className={styles.tutorialSlider}>
-          <div
+          <Link
+            href="/tutorials"
             className={styles.tutorialInner}
             // style={{
             //   transform: `translateY(-${tutorialIndex * 33.33}%)`,
@@ -139,7 +141,7 @@ const Web3StatsPanel = () => {
                 {text}
               </div>
             ))}
-          </div>
+          </Link>
         </div>
       </div>
 
