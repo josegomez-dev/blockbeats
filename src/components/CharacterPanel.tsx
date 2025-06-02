@@ -73,7 +73,7 @@ const CharacterPanel = () => {
       });
 
       setCreativity((prev) => (prev < 20 ? prev + 1 : 8));
-    }, 1000);
+    }, 10000);
 
     return () => clearInterval(interval);
   }, []);
