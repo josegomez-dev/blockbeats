@@ -25,17 +25,6 @@ const newsItems = [
 
 const tutorials = [
   "🔐 How to Connect Wallet",
-  "🎨 Mint your Music NFT",
-  "🧠 Earn XP via Melodies",
-  "📤 Upload & Publish Your First Track",
-  "🎛️ Customize Your NFT Sound Identity",
-  "🧬 Link Traits to Melodic Elements",
-  "🎹 Use the Music Drawing Machine",
-  "💾 Save and Share Your NFT Melody",
-  "🖼️ Add Visual Art to Your Composition",
-  "🪙 Swap Tokens for Rare Audio FX",
-  "📊 Track Your Stats & Progress",
-  "📬 Join a Band & Send Invites",
 ];
 
 
@@ -136,8 +125,8 @@ const Web3StatsPanel = () => {
             //   transition: "transform 0.5s ease-in-out",
             // }}
           >
-            {tutorials.concat(tutorials).map((text, i) => (
-              <div key={i} className={styles.tutorialItem}>
+            {tutorials.map((text, i) => (
+              <div key={i} className={`${styles.tutorialItem }`} style={{ color: 'var(--neon-color)' }}>
                 {text}
               </div>
             ))}
