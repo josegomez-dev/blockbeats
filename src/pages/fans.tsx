@@ -15,16 +15,16 @@ const FansClub = () => {
         <br />
         <h2 className="glitch">🎯 Join the Community</h2>
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem' }}>
-          <a href="https://t.me/blockbeatsbot" target="_blank" className={styles.submitBtn}>🤖 Join Telegram Bot</a>
-          <a href="https://discord.gg/blockbeats" target="_blank" className={styles.submitBtn}>💬 Join Discord Server</a>
-          <a href="https://facebook.com/catarsismusical" target="_blank" className={styles.submitBtn}>📘 Visit Facebook Page</a>
+          <a href="https://t.me/block_beats_bot/blockbeats" target="_blank" className={styles.submitBtn}>🤖 Join Telegram Bot</a>
+          <a href="https://discord.gg/dT4Kb85F" target="_blank" className={styles.submitBtn}>💬 Join Discord Server</a>
+          <a href="https://www.facebook.com/profile.php?id=61576616834732" target="_blank" className={styles.submitBtn}>📘 Visit Facebook Page</a>
         </div>
 
         <br />
         <h2 className="glitch">📢 Stay Updated</h2>
         <p>Follow our official news channel and never miss an update from <b>Catarsis Musical</b> and check <b>BlockBeats NEWS</b> playslist:</p>
         <br />
-        <a href="https://t.me/catarsismusical" target="_blank" className={styles.submitBtn}>📡 JOIN Catarsis Musical CHANNEL</a>
+        <a href="https://www.youtube.com/playlist?list=PLgMfuGMZ_fu_94LIaTUKwWvd1qZuFua0x" target="_blank" className={styles.submitBtn}>📡 JOIN Catarsis Musical CHANNEL</a>
 
         {/* <br />
         <br />
