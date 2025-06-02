@@ -188,12 +188,12 @@ export default function Nav() {
                     <div className={`${styles.dropdownItem} black-color`} style={{ marginBottom: '-15px' }}>
                     Address:&nbsp;<span className='gold-color' style={{marginTop: '-15px' }}>{user?.walletStored?.slice(0, 5)}... {data?.symbol} </span>
                   </div> ) : (
-                    <div style={{ marginBottom: '5px' }} className={`${styles.dropdownItem} black-color`}>
+                    <div style={{ marginBottom: '5px', marginTop: '-10px' }}>
                         <button
                           className={stylesMain.submitBtnLarge}
                           // onClick={readWalletAddress}
                         >
-                          <span style={{ position: 'relative', marginTop: '-20px' }}>Connect Wallet</span>
+                          <span>Connect Wallet</span>
                           <img src="/starknet-logo.svg" style={{ position: 'absolute', top: 30, margin: '0 auto', left: 10 }} alt="blockbeats-logo" width={60} />
                         </button>
                         <br />
@@ -207,7 +207,7 @@ export default function Nav() {
                   </Link>
                   <Link href="/gallery">
                     <div className={styles.dropdownItem}>
-                      <RiGalleryView className={styles.icon} /> Gallery
+                      <RiGalleryView className={styles.icon} /> Marketplace
                     </div>
                   </Link>
                   <div className={`${styles.dropdownItem} ${styles.logout}`} onClick={handleLogout}>

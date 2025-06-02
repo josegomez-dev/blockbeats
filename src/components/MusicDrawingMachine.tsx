@@ -317,7 +317,7 @@ const MusicDrawingPage = () => {
   return (
     <>
       <div>
-        <h2 className={styles.title}>🎧 Music Drawing Machine 🎹</h2>
+        <h2 className={styles.title}>BLOCKBEATS Marketplace</h2>
         <div style={{ marginTop: "-50px" }}>
           {!loading ? 
             nfts.length > 0 ? (<NeonSlider slides={nfts} />) : (<p>
