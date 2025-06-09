@@ -27,6 +27,8 @@ interface VegasMintGameProps {
 const VegasMintGame: React.FC<VegasMintGameProps> = ({ onClose, nfts }) => {
   const [spinning, setSpinning] = useState(false);
   const [result, setResult] = useState<NFTData[]>([nfts[0], nfts[1], nfts[2]]);
+  const [isAnimating, setIsAnimating] = useState(false);
+
 
   const playSound = () => {
     const audio = new Audio('/sounds/spin.mp3');
@@ -36,12 +38,14 @@ const VegasMintGame: React.FC<VegasMintGameProps> = ({ onClose, nfts }) => {
   const spin = () => {
     setSpinning(true);
     playSound();
+    setIsAnimating(true);
     setTimeout(() => {
       const newResult = Array(3)
         .fill(null)
         .map(() => nfts[Math.floor(Math.random() * nfts.length)]);
       setResult(newResult);
       setSpinning(false);
+      setIsAnimating(false)
     }, 1500);
   };
 
@@ -52,7 +56,7 @@ const VegasMintGame: React.FC<VegasMintGameProps> = ({ onClose, nfts }) => {
 
         <div className={styles.slots}>
           {result.map((nft, i) => (
-            <div key={i} className={`${styles.slot} ${spinning ? styles.spinning : ''}`}>
+            <div key={i} className={`${styles.slot} ${spinning ? styles.spinning : ''} ${isAnimating ? styles.animating : ''}`}>
               <PixelPreview
                 colorMap={nft.colorMap}
                 notesCount={12}
