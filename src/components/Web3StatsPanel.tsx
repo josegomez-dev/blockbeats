@@ -4,10 +4,10 @@ import styles from "@/app/assets/styles/Web3StatsPanel.module.css";
 import Link from "next/link";
 
 const newsItems = [
-  {
-    text: "🎶 New melodic quest unlocked! Compose a 3-note loop.",
-    url: null,
-  },
+  // {
+  //   text: "🎶 New melodic quest unlocked! Compose a 3-note loop.",
+  //   url: null,
+  // },
   {
     text: "📺 Watch the full demo presentation on YouTube!",
     url: "https://www.youtube.com/watch?v=W84Qst6bHxU&t=20s",

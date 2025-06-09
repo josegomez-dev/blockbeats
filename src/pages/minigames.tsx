@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './../app/assets/styles/MiniGames.module.css';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
@@ -9,9 +9,21 @@ import VegasMintGame from '@/components/VegasMintGame';
 import DronesShowGame from '@/components/DronesShowGame';
 import SmartLightGame from '@/components/SmartLightGame';
 import HolographicArenaGame from '@/components/HolographicArenaGame';
+import { collection, getDocs } from 'firebase/firestore';
+import { auth, db } from '../../firebase';
 // import DronesGame from '@/components/DronesGame';
 // import SmartLightGame from '@/components/SmartLightGame';
 // import HolographicGame from '@/components/HolographicGame';
+
+type NFT = {
+  id: string;
+  createdBy?: string;
+  songName?: string;
+  colorMap?: any[];
+  notesPlayed?: any[];
+  img?: string;
+  // add other properties as needed
+};
 
 const miniGames = [
   {
@@ -21,7 +33,7 @@ const miniGames = [
     key: 'drones',
   },
   {
-    title: '🎰 Vegas Mint Machine',
+    title: '🎰 Mint Machine',
     description: 'Spin the reels and mint your exclusive NFT surprise!',
     image: '/games/_2.png',
     key: 'vegas',
@@ -41,6 +53,8 @@ const miniGames = [
 ];
 
 const MiniGamesScreen = () => {
+  const [nfts, setNFTs] = React.useState<NFT[]>([]);
+  
   const [showDronesGame, setShowDronesGame] = React.useState(false);
   const [showVegasGame, setShowVegasGame] = React.useState(false);
   const [showSmartLightGame, setShowSmartLightGame] = React.useState(false);
@@ -62,6 +76,16 @@ const MiniGamesScreen = () => {
         break;
     }
   };
+
+   useEffect(() => {
+    const fetchNFTs = async () => {
+      const querySnapshot = await getDocs(collection(db, "signatures"));
+      const nfts = querySnapshot.docs.map((doc) => ({ ...(doc.data() as NFT), id: doc.id })) as NFT[];
+      setNFTs(nfts);
+    };
+    fetchNFTs();
+  }, []);
+
 
   return (
     <>
@@ -105,29 +129,70 @@ const MiniGamesScreen = () => {
           </div>
         )}
 
-        {showVegasGame && <VegasMintGame onClose={() => setShowVegasGame(false)} />}
-        {showDronesGame && <DronesShowGame onClose={() => setShowDronesGame(false)} />}
-        {showSmartLightGame && <SmartLightGame onClose={() => setShowSmartLightGame(false)} />}
-        {showHoloGame && <HolographicArenaGame onClose={() => setShowHoloGame(false)} />}
-
+        {showVegasGame && (
+          <VegasMintGame
+            onClose={() => setShowVegasGame(false)}
+            nfts={nfts.map(nft => ({
+              id: nft.id,
+              title: nft.songName || 'Untitled',
+              author: nft.createdBy || 'Unknown',
+              image: '/nft1.webp',
+              colorMap: nft.colorMap ?? [],
+            }))}
+          />
+        )}
+        {showDronesGame && (
+          <DronesShowGame
+            onClose={() => setShowDronesGame(false)}
+            artworks={nfts.map(nft => ({
+              ...nft,
+              title: nft.songName || 'Untitled',
+              author: nft.createdBy || 'Unknown',
+              colorMap: nft.colorMap ?? [], // Ensure colorMap is always an array
+            }))}
+          />
+        )}
         {showSmartLightGame && (
-          <div className={styles.fullscreen}>
-            <div className={styles.placeholder}>
-              <h2>🌆 Smart Light City - Coming Soon</h2>
-              <button onClick={() => setShowSmartLightGame(false)}>Exit</button>
-            </div>
-            {/* <SmartLightGame onClose={() => setShowSmartLightGame(false)} /> */}
-          </div>
+          <SmartLightGame
+            onClose={() => setShowSmartLightGame(false)}
+            nfts={nfts.map(nft => ({
+              title: nft.songName || 'Untitled',
+              author: nft.createdBy || 'Unknown',
+              colorMap: nft.colorMap ?? [],
+            }))}
+          />
         )}
-        {showHoloGame && (
-          <div className={styles.fullscreen}>
-            <div className={styles.placeholder}>
-              <h2>🪐 Holographic Arena - Coming Soon</h2>
-              <button onClick={() => setShowHoloGame(false)}>Exit</button>
+        <>
+          {showHoloGame && (
+            <HolographicArenaGame
+              onClose={() => setShowHoloGame(false)}
+              nft={nfts.map(nft => ({
+                title: nft.songName || 'Untitled',
+                author: nft.createdBy || 'Unknown',
+                colorMap: nft.colorMap ?? [],
+              }))}
+            />
+          )}
+        
+          {showSmartLightGame && (
+            <div className={styles.fullscreen}>
+              <div className={styles.placeholder}>
+                <h2>🌆 Smart Light City - Coming Soon</h2>
+                <button onClick={() => setShowSmartLightGame(false)}>Exit</button>
+              </div>
+              {/* <SmartLightGame onClose={() => setShowSmartLightGame(false)} /> */}
             </div>
-            {/* <HolographicGame onClose={() => setShowHoloGame(false)} /> */}
-          </div>
-        )}
+          )}
+          {showHoloGame && (
+            <div className={styles.fullscreen}>
+              <div className={styles.placeholder}>
+                <h2>🪐 Holographic Arena - Coming Soon</h2>
+                <button onClick={() => setShowHoloGame(false)}>Exit</button>
+              </div>
+              {/* <HolographicGame onClose={() => setShowHoloGame(false)} /> */}
+            </div>
+          )}
+        </>
 
         <div style={{ textAlign: 'center', marginTop: '60px' }}>
           <Image
