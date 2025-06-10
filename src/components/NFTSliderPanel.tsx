@@ -30,7 +30,7 @@ const NFTSliderPanel = ({ nfts, loading }: { nfts: any[]; loading: boolean }) =>
       &nbsp;&nbsp;
       <button disabled className={styles.submitBtn} style={{ background: 'transparent', color: 'white', animation: 'none', opacity: '0.5' }}>🔄 Trade</button>
     </div>
-    <CollectionsSlider title="Top Collections" />
+    {/* <CollectionsSlider title="Top Collections" /> */}
   </div>
 );
 

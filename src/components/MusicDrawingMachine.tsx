@@ -9,7 +9,7 @@ import FrequencyModal from "./FrequencyModal";
 import { frequencyRanges, notes, SCALE_NAMES, scaleDescriptions, scaleIntervals, ScaleName } from "@/utils/constants/musicDrawingMachine";
 import PixelCanvas from "./PixelCanvas";
 import Piano from "./Piano";
-import NFTSliderPanel from "./NFTSliderPanel";
+// import NFTSliderPanel from "./NFTSliderPanel";
 import ControlsPanel from "./ControlPanel";
 import Modal from "react-responsive-modal";
 import Image from "next/image";
@@ -27,8 +27,6 @@ const MusicDrawingPage = () => {
   const [selectedRange, setSelectedRange] = useState("Harmonic");
   const [isPlayingBack, setIsPlayingBack] = useState(false);
   const [playIndex, setPlayIndex] = useState<number | null>(null);
-  const [nfts, setNFTs] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
   const [isIAGeneratorOpen, setIsIAGeneratorOpen] = useState(false);
 
   const [selectedScale, setSelectedScale] = useState<ScaleName>('minor'); // default scale
@@ -178,9 +176,6 @@ const MusicDrawingPage = () => {
   return melody;
 };
 
-
-
-
   const loadRandomMelody = () => {
     const melody = generateRandomMelody();
     setNotesPlayed(melody);
@@ -190,19 +185,6 @@ const MusicDrawingPage = () => {
       color: getRandomColor(),
     })));
   };
-
-
-  const fetchNFTs = async () => {
-      const querySnapshot = await getDocs(collection(db, "signatures"));
-      const nfts = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setNFTs(nfts);
-      setLoading(false);
-      console.log("NFTs fetched:", nfts);
-    };
-
-  useEffect(() => {
-    fetchNFTs();
-  }, []);
 
   const saveNFTData = async () => {
     // ask for the name of the song
@@ -221,7 +203,6 @@ const MusicDrawingPage = () => {
         songName,
       });
       toast.success("Song-art saved successfully!");
-      fetchNFTs(); // Refresh the NFTs after saving
     } catch (error) {
       console.error("Error saving NFT:", error);
       toast.error("Failed to save NFT");
@@ -316,10 +297,10 @@ const MusicDrawingPage = () => {
 
   return (
     <>
-      <NFTSliderPanel 
+      {/* <NFTSliderPanel 
         nfts={nfts}
         loading={loading}
-      />
+      /> */}
 
       <div className={styles.musicBox}>
         <h3 style={{ color: frequencyStyle.color }}>BlockBeats <span data-text="NFT" className="glitch">NFT</span></h3>
