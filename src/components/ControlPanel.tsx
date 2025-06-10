@@ -28,11 +28,11 @@ const ControlsPanel: React.FC<Props> = ({
   onIAGeneration = () => {}, // Default to a no-op function if not provided
 }) => (
   <div className={`${isPlayingBack && 'disabled'}`} style={{ position: "relative", backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-    {/* <div style={{ background: "#111", padding: 10, margin: "0", position: "relative" }}>
+    <div style={{ background: "#111", padding: 10, margin: "0", position: "relative" }}>
       <span style={{ padding: "4px 8px", background: frequencyStyle.color, color: "#000", borderRadius: 4 }}>{frequencyStyle.name}</span>
       <button onClick={onOpenModal} style={{ marginLeft: 25, animation: 'none' }}>🎚 Freq. Range</button>
-    </div> */}
-    <div style={{ textAlign: "center", marginBottom: '-10px' }}>
+    </div>
+    <div style={{ textAlign: "center", marginBottom: '-15px' }}>
       {!isPlayingBack ? (
         <button onClick={onPlay} className={styles.launchpadBtn}>▶️ Play</button>
       ) : (

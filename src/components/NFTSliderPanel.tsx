@@ -7,6 +7,7 @@ import styles from '@/app/assets/styles/MainPage.module.css';
 
 const NFTSliderPanel = ({ nfts, loading }: { nfts: any[]; loading: boolean }) => (
   <div>
+    <br />
     <h2 className={styles.title}>BLOCKBEATS Marketplace</h2>
     <div style={{ marginTop: "-50px" }}>
       {!loading ? (

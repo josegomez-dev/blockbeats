@@ -117,12 +117,10 @@ const LandingPage = () => {
   ];
 
   const sponsors = [
+    '/1.png',
+    '/dojo.png',
     '/starknet-logo.svg',
-    '/metamask.webp',
-    '/musicalpathlogo.webp',
-    '/starknet-logo.svg',
-    '/metamask.webp',
-    '/musicalpathlogo.webp',
+    // '/ebook-banner.png',
   ];
 
 
@@ -184,38 +182,7 @@ const LandingPage = () => {
           <Link target='_blank' href="https://discord.gg/hrjuWATX" className={stylesMain.registerLink}>
             <button style={{ animation: 'none', background: 'transparent', color: 'white' }} className={stylesMain.submitBtn}>JOIN US ON DISCORD</button>
           </Link>
-          <ul className={styles.socialMediaLinks}>
-            <li>
-              <a href="https://x.com/blockbeats3pt0" target="_blank" rel="noopener noreferrer">
-                <FaTwitter className={styles.twitterIcon} />
-              </a>
-            </li>
-            <li>
-              <a href="https://discord.gg/hrjuWATX" target="_blank" rel="noopener noreferrer">
-                <FaDiscord className={styles.discordIcon} />
-              </a>
-            </li>
-            <li>
-              <a href="https://www.youtube.com/@BlockBeats3.0" target="_blank" rel="noopener noreferrer">
-                <FaYoutube className={styles.youtubeIcon} />
-              </a>
-            </li>
-            <li>
-              <a href="https://www.facebook.com/profile.php?id=61576616834732" target="_blank" rel="noopener noreferrer">
-                <FaFacebook className={styles.facebookIcon} />
-              </a>
-            </li>
-            <li>
-              <a href="https://medium.com/@blockbeatscr" target="_blank" rel="noopener noreferrer">
-                <FaMedium className={styles.mediumIcon} />
-              </a>
-            </li>
-            <li>
-              <a href="https://t.me/block_beats_bot/blockbeats" target="_blank" rel="noopener noreferrer">
-                <FaTelegram className={styles.telegramIcon} />
-              </a>
-            </li>
-          </ul>
+         
           <br />
           <img className={styles.character2} src="/avatar/phase-5.webp" style={{ width: '200px', height: 'auto', marginBottom: '-120px'  }} alt="BlockBeats Robot"  />
           <img className={styles.character3} src="/avatar/phase-4.webp" style={{ width: '200px', height: 'auto', marginBottom: '-120px'  }} alt="BlockBeats Robot"  />
@@ -237,6 +204,41 @@ const LandingPage = () => {
 
       {/* Services Section */}
       <section className={styles.servicesSection}>
+        Join Us
+        <ul className={styles.socialMediaLinks}>
+          <li>
+            <a href="https://x.com/blockbeats3pt0" target="_blank" rel="noopener noreferrer">
+              <FaTwitter className={styles.twitterIcon} />
+            </a>
+          </li>
+          <li>
+            <a href="https://discord.gg/hrjuWATX" target="_blank" rel="noopener noreferrer">
+              <FaDiscord className={styles.discordIcon} />
+            </a>
+          </li>
+          <li>
+            <a href="https://www.youtube.com/@BlockBeats3.0" target="_blank" rel="noopener noreferrer">
+              <FaYoutube className={styles.youtubeIcon} />
+            </a>
+          </li>
+          <li>
+            <a href="https://www.facebook.com/profile.php?id=61576616834732" target="_blank" rel="noopener noreferrer">
+              <FaFacebook className={styles.facebookIcon} />
+            </a>
+          </li>
+          <li>
+            <a href="https://medium.com/@blockbeatscr" target="_blank" rel="noopener noreferrer">
+              <FaMedium className={styles.mediumIcon} />
+            </a>
+          </li>
+          <li>
+            <a href="https://t.me/block_beats_bot/blockbeats" target="_blank" rel="noopener noreferrer">
+              <FaTelegram className={styles.telegramIcon} />
+            </a>
+          </li>
+        </ul>
+        <br />
+        <br />
         <div className={styles.servicesGrid}>
           {services.map((service, index) => (
             <div className={styles.serviceItem} key={index}>
@@ -322,7 +324,7 @@ const LandingPage = () => {
           <h2>🎼 Powered by our Sponsors</h2>
           <div className={styles.sponsorsSlider}>
             <div className={styles.sliderTrack}>
-              {sponsors.concat(sponsors).map((sponsor, index) => (
+              {sponsors.map((sponsor, index) => (
                 <div className={styles.slide} key={index}>
                   <img src={sponsor} alt={`Sponsor ${index + 1}`} />
                 </div>

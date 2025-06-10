@@ -175,6 +175,8 @@ const CharacterPanel = () => {
         />
       )}
 
+        <br />
+
       <p className={styles.description}>
         This is your personal music bot! <br />
         <strong>Level up</strong> by completing quests and earning XP!

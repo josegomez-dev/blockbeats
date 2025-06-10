@@ -303,11 +303,11 @@ export default function Nav() {
           </>
         )}
 
-        {!authenticated && (
+        {/* {!authenticated && (
           <li className={styles.navItem}>
             <Link href="/blockbeats-whitepaper.pdf">🛩️</Link>
           </li>
-        )}
+        )} */}
       </ul>
     </nav>
   );

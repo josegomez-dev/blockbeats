@@ -6,9 +6,9 @@
 
 /* Hero */
 .hero {
-  /* background: linear-gradient(135deg, #6a00f4, #ff0099); */
-  background: url('/bg.gif');
-    background-size: cover;
+  background: linear-gradient(135deg, #6a00f4, #ff0099);
+  /* background: url('/bg.gif'); */
+  /* background-size: cover; */
   padding: 100px 20px;
   text-align: center;
   color: white;
@@ -383,7 +383,7 @@
 
 .parallaxOverlay {
   backdrop-filter: blur(50px);
-  background-color: rgba(999, 999, 999, 0.1); /* Light transparent */    
+  background-color:rgba(169, 132, 164, 0.331); /* Light transparent */    
   padding: 40px;
   text-align: center;
   color: #fff;
@@ -405,19 +405,16 @@
 
 .sliderTrack {
   display: flex;
-  width: fit-content; /* Allow dynamic width */
-  animation: scroll 20s linear infinite;
 }
 
 .slide {
-  flex: 0 0 200px;
+  /* flex: 0 0 200px; */
   height: 100px;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
+  padding: 0 10px;
   filter: brightness(0.9);
   transition: transform 0.3s ease, filter 0.3s ease;
+  margin: 0 auto;
 }
 
 .slide img {
