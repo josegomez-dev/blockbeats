@@ -193,7 +193,7 @@ export default function Nav() {
                     {user?.displayName || user?.email}
                   </div>
                   {user?.walletStored ? (
-                    <div className={`${styles.dropdownItem} black-color`} style={{ marginBottom: '-15px' }}>
+                    <div className={` neon-color`} style={{ marginBottom: '10px' }}>
                     Address:&nbsp;<span className='gold-color' style={{marginTop: '-15px' }}>{user?.walletStored?.slice(0, 5)}... {data?.symbol} </span>
                   </div> ) : (
                     <div style={{ margin: '15px 25px', marginTop: '5px' }}>

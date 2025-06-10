@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import styles from './../app/assets/styles/MiniGames.module.css';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -10,10 +9,7 @@ import DronesShowGame from '@/components/DronesShowGame';
 import SmartLightGame from '@/components/SmartLightGame';
 import HolographicArenaGame from '@/components/HolographicArenaGame';
 import { collection, getDocs } from 'firebase/firestore';
-import { auth, db } from '../../firebase';
-// import DronesGame from '@/components/DronesGame';
-// import SmartLightGame from '@/components/SmartLightGame';
-// import HolographicGame from '@/components/HolographicGame';
+import { db } from '../../firebase';
 
 type NFT = {
   id: string;
@@ -89,24 +85,24 @@ const MiniGamesScreen = () => {
 
   return (
     <>
-      <div className={styles.container}>
-        <h1 className={`${styles.title} glitch`}>🚀 BlockBeats MiniGames Hub</h1>
-        <p className={styles.subtitle}>
+      <div className={'container'}>
+        <h1 className={`title glitch`}>🚀 BlockBeats MiniGames Hub</h1>
+        <p className={'subtitle'}>
           Welcome to the future of music & entertainment. Explore our interactive mini experiences below:
         </p>
 
-        <div className={styles.grid}>
+        <div className={'grid'}>
           {miniGames.map((game, index) => (
             <div
               key={index}
-              className={styles.card}
+              className={'card'}
               onClick={() => handleCardClick(game.key)}
               style={{ cursor: 'pointer' }}
             >
               <img
                 src={game.image}
                 alt={game.title}
-                className={styles.image}
+                className={'image'}
                 style={{ height: 'auto' }}
               />
               {/* You can re-enable this block for text under each card */}
@@ -120,8 +116,8 @@ const MiniGamesScreen = () => {
 
         {/* Game full-screen overlays */}
         {showDronesGame && (
-          <div className={styles.fullscreen}>
-            <div className={styles.placeholder}>
+          <div className={'fullscreen'}>
+            <div className={'placeholder'}>
               <h2>🚁 Drones Show - Coming Soon</h2>
               <button onClick={() => setShowDronesGame(false)}>Exit</button>
             </div>
@@ -175,8 +171,8 @@ const MiniGamesScreen = () => {
           )}
         
           {showSmartLightGame && (
-            <div className={styles.fullscreen}>
-              <div className={styles.placeholder}>
+            <div className={'fullscreen'}>
+              <div className={'placeholder'}>
                 <h2>🌆 Smart Light City - Coming Soon</h2>
                 <button onClick={() => setShowSmartLightGame(false)}>Exit</button>
               </div>
@@ -184,8 +180,8 @@ const MiniGamesScreen = () => {
             </div>
           )}
           {showHoloGame && (
-            <div className={styles.fullscreen}>
-              <div className={styles.placeholder}>
+            <div className={'fullscreen'}>
+              <div className={'placeholder'}>
                 <h2>🪐 Holographic Arena - Coming Soon</h2>
                 <button onClick={() => setShowHoloGame(false)}>Exit</button>
               </div>
