@@ -189,7 +189,6 @@
 }
 .socialMediaLinks a:hover {
   color:#ff0099;
-  font-size: 2rem;
   transition: all 0.3s, color 0.3s ease;
 }
 

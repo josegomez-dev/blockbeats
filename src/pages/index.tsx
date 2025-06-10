@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './../app/assets/styles/LandingPage.module.css';
 import stylesMain from "@/app/assets/styles/MainPage.module.css";
 import { Modal } from 'react-responsive-modal';
-import { FaRegNewspaper, FaTwitter, FaDiscord, FaYoutube, FaFacebook, FaMedium, FaTelegram } from 'react-icons/fa';
+import { FaRegNewspaper, FaTwitter, FaDiscord, FaYoutube, FaFacebook, FaMedium, FaTelegram, FaLinkedin, FaInstagram, FaTiktok } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
@@ -92,37 +92,68 @@ const LandingPage = () => {
     },
   ];
 
-
   const teamMembers = [
     {
       name: 'José Alejandro Gómez Castro',
       role: 'Founder, CTO & Creative Director',
       avatar: '/team/ale.png',
+      socialMediaLinks: [
+        { url: 'https://www.linkedin.com/in/josealejandrogomezcastro/', icon: <FaLinkedin /> },
+        { url: 'https://josegomezdev.medium.com/', icon: <FaMedium /> },
+        { url: 'https://www.youtube.com/@musiqueandola', icon: <FaYoutube /> },
+      ],
+      extraLinks: [
+        { url: 'https://x.com/josegomez_dev', icon: <FaTwitter /> },
+        { url: 'https://discord.gg/hrjuWATX', icon: <FaDiscord /> },
+        { url: 'https://t.me/josegomezdev', icon: <FaTelegram /> },
+      ],
+      socialLinks: [
+        { url: 'https://www.facebook.com/alegomez.cr', icon: <FaFacebook /> },
+        { url: 'https://www.instagram.com/alegomez.cr/', icon: <FaInstagram /> },
+        { url: 'https://www.tiktok.com/@musiqueandola', icon: <FaTiktok /> },
+      ],
     },
     {
       name: 'Ricardo Patino',
       role: 'Operations Manager',
       avatar: '/team/richard.png',
+      socialMediaLinks: [
+        { url: 'https://www.facebook.com/ricardo.p.jimenez.5', icon: <FaFacebook className={styles.twitterIcon} /> },
+        { url: 'https://www.linkedin.com/in/ricardopatino1/', icon: <FaLinkedin className={styles.discordIcon} /> },
+      ],
+      extraLinks: [],
+      socialLinks: []
     },
     {
       name: 'Pamela Sanchez',
       role: 'Accessibility Specialist',
       avatar: '/team/pame.png',
+      socialMediaLinks: [
+        { url: 'https://www.facebook.com/pamela.sanchez.771282', icon: <FaFacebook className={styles.twitterIcon} /> },
+        { url: 'https://www.linkedin.com/in/wensdy-s%C3%A1nchez-carranza-ing-sistemas/', icon: <FaLinkedin className={styles.discordIcon} /> },
+      ],
+      extraLinks: [],
+      socialLinks: []
     },
     {
       name: 'Luis Elias Gomez Castro',
       role: 'Audience Engagement',
       avatar: '/team/elias.png',
+      socialMediaLinks: [
+        { url: 'https://www.facebook.com/eliasdevcr', icon: <FaFacebook className={styles.twitterIcon} /> },
+        { url: 'https://www.linkedin.com/in/eliasgomezcastro/', icon: <FaLinkedin className={styles.discordIcon} /> },
+      ],
+      extraLinks: [],
+      socialLinks: []
     },
   ];
 
-  const sponsors = [
-    '/1.png',
-    '/dojo.png',
-    '/starknet-logo.svg',
-    // '/ebook-banner.png',
-  ];
 
+  const sponsors = [
+  { image: '/1.png', url: 'https://josegomez-dev.github.io/catarsismusical/' },
+  { image: '/dojo.png', url: 'https://dojoengine.org' },
+  { image: '/starknet-logo.svg', url: 'https://starknet.io' },
+];
 
 
   const newsItems = [
@@ -312,11 +343,40 @@ const LandingPage = () => {
               </div>
               <h3>{member.name}</h3>
               <p>{member.role}</p>
+
+              <ul className={styles.socialMediaLinks}>
+                {member.socialMediaLinks.map((link, linkIndex) => (
+                  <li key={linkIndex}>
+                    <a href={link.url} target="_blank" rel="noopener noreferrer">
+                      {link.icon}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+             
+              <ul className={styles.socialMediaLinks}>
+                {member.extraLinks.map((link, linkIndex) => (
+                  <li key={linkIndex}>
+                    <a href={link.url} target="_blank" rel="noopener noreferrer">
+                      {link.icon}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              
+              <ul className={styles.socialMediaLinks}>
+                {member.socialLinks.map((link, linkIndex) => (
+                  <li key={linkIndex}>
+                    <a href={link.url} target="_blank" rel="noopener noreferrer">
+                      {link.icon}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
           ))}
         </div>
       </section>
-
 
       {/* Parallax + Sponsors Section */}
       <section className={styles.parallaxSponsorsSection}>
@@ -326,14 +386,16 @@ const LandingPage = () => {
             <div className={styles.sliderTrack}>
               {sponsors.map((sponsor, index) => (
                 <div className={styles.slide} key={index}>
-                  <img src={sponsor} alt={`Sponsor ${index + 1}`} />
+                  <a href={sponsor.url} target="_blank" rel="noopener noreferrer">
+                    <img src={sponsor.image} alt={`Sponsor ${index + 1}`} />
+                  </a>
                 </div>
               ))}
             </div>
-
           </div>
         </div>
       </section>
+
 
       {/* Video Modal */}
       <Modal
