@@ -132,8 +132,10 @@ const LandingPage = () => {
       socialMediaLinks: [
         { url: 'https://www.facebook.com/pamela.sanchez.771282', icon: <FaFacebook className={styles.twitterIcon} /> },
         { url: 'https://www.linkedin.com/in/wensdy-s%C3%A1nchez-carranza-ing-sistemas/', icon: <FaLinkedin className={styles.discordIcon} /> },
+        { url: 'https://t.me/PameSC', icon: <FaTelegram /> },
       ],
-      extraLinks: [],
+      extraLinks: [
+      ],
       socialLinks: []
     },
     {
@@ -144,7 +146,10 @@ const LandingPage = () => {
         { url: 'https://www.facebook.com/eliasdevcr', icon: <FaFacebook className={styles.twitterIcon} /> },
         { url: 'https://www.linkedin.com/in/eliasgomezcastro/', icon: <FaLinkedin className={styles.discordIcon} /> },
       ],
-      extraLinks: [],
+      extraLinks: [ 
+        { url: 'https://discord.gg/yesduet', icon: <FaDiscord/> },
+        { url: 'https://t.me/yesduet/', icon: <FaTelegram /> },
+      ],
       socialLinks: []
     },
   ];
@@ -153,7 +158,7 @@ const LandingPage = () => {
   const sponsors = [
   { image: '/1.png', url: 'https://josegomez-dev.github.io/catarsismusical/' },
   { image: '/dojo.png', url: 'https://dojoengine.org' },
-  { image: '/starknet-logo.svg', url: 'https://starknet.io' },
+  { image: '/download.jpeg', url: 'https://starknet.io' },
 ];
 
 
