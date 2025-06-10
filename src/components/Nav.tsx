@@ -185,7 +185,7 @@ export default function Nav() {
                     {user?.displayName || user?.email}
                   </div>
                   {user?.walletStored ? (
-                    <div className={` neon-color`} style={{ marginBottom: '10px' }}>
+                    <div className={` neon-color`} style={{ marginBottom: '10px' }}> &nbsp;&nbsp;
                     Address:&nbsp;<span className='gold-color' style={{marginTop: '-15px' }}>{user?.walletStored?.slice(0, 5)}... {data?.symbol} </span>
                   </div> ) : (
                     <div style={{ margin: '15px 25px', marginTop: '5px' }}>
@@ -206,6 +206,11 @@ export default function Nav() {
                     </div>
                   </Link>
                   <Link href="/gallery">
+                    <div className={styles.dropdownItem}>
+                      <RiGalleryView className={styles.icon} /> Gallery
+                    </div>
+                  </Link>
+                  <Link href="/marketplace">
                     <div className={styles.dropdownItem}>
                       <RiGalleryView className={styles.icon} /> Marketplace
                     </div>

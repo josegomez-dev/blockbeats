@@ -105,7 +105,7 @@ const GalleryScreen = () => {
             onClose={() => handleCloseModal()}
             center
             classNames={{ modal: styles.modal }}
-            styles={{ modal: { backgroundColor: 'rgba(0, 0, 0, 0.8)' } }}
+            styles={{ modal: { backgroundColor: 'rgba(0, 0, 0, 0.8)', height: 'auto' } }}
             showCloseIcon={false}
           >
             <div className={styles.modalContent} style={{ textAlign: 'center' }}>
@@ -164,42 +164,17 @@ const GalleryScreen = () => {
         <hr />
         <br />
 
-        <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
+        <div style={{ textAlign: "center", margin: "0 auto", padding: "25px" }}>
           <h2><p className="glitch">Explore <span data-text="TOP FANS" className="glitch">TOP FANS</span> COLLECTIONS</p></h2>
           <br />
           <button onClick={() => router.push('/createTopCollection')} className={styles.submitBtn}>Create Top Fan Collection</button>
           <CollectionsSlider title='' fullWidth topCollections={topCollections} />
         </div>
-
         <br />
-        <hr />
+        <br />
         <br />
 
-        <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
-          <h2><p className="glitch">Blockbeats <span data-text="Marketplace" className="glitch">Marketplace</span></p></h2>
-          <br />
-        </div>
-        <div className="gallery-grid">
-          {nfts.map((src, index) => (
-            <div className="gallery-item" key={index} onClick={() => handleViewNFT(src)}>
-              <h3>{src.songName} {index + 1}</h3>
-              <br />
-              {/* <p>Description for image {index + 1}</p>                 */}
-              <div className="gallery-item-overlay">
-                  <PixelPreview
-                    colorMap={src.colorMap || []}
-                    notesCount={src.notesPlayed ? src.notesPlayed.length : 0}
-                    size={100}
-                  />
-                  {/* <img src={src} alt={`Gallery ${index}`} className="gallery-image" /> */}
-                  {/* <button className={styles.submitBtn} style={{ animation: 'none', background: 'transparent' }}>View</button> */}
-                  <button className={styles.submitBtn} style={{ animation: 'none' }}>View</button>
-              </div>
-            </div>
-          ))}
-        </div>
       </div>
-      <br />
 
       <Footer />
     </>
