@@ -20,6 +20,30 @@ const newsItems = [
     text: "🌍 Web3 Music Revolution Starts Here",
     url: "https://www.youtube.com/watch?v=6aGIqnu1UP8",
   },
+  {
+    text: "🚀 The Future of Gaming & Music Is HERE 🎮🎵 | BlockBeats Holographic Arena Reveal!",
+    url: "https://www.youtube.com/watch?v=xm516bJeQOg",
+  },
+  {
+    text: "🎰 Spin to WIN! The Mint Machine by BlockBeats — NFTs Meet the Thrill of Surprise! 🚀🎵",
+    url: "https://www.youtube.com/watch?v=-adNKTEbynI",
+  },
+  {
+    text: "🌆 Smart Light City by BlockBeats — When Architecture Becomes Alive! 🚀🎵",
+    url: "https://www.youtube.com/watch?v=VmtUS50OEA8",
+  },
+  {
+    text: "🚁 BlockBeats Drone Show | Turning the Sky Into a Stage with Music, Blockchain & Light ✨🎶",
+    url: "https://www.youtube.com/watch?v=3SxxMuSFfEo",
+  },
+  {
+    text: "🚁 BlockBeats Drone Show | Turning the Sky Into a Stage with Music, Blockchain & Light ✨🎶",
+    url: "https://www.youtube.com/watch?v=JMBUPRZ3cYk",
+  },
+  {
+    text: "🎙️ BlockBeats | Music for Everyone 🎶✨ – Inclusive Music Drawing & NFTs for Deaf & Blind Creators 🚀",
+    url: "https://www.youtube.com/watch?v=aSXn2tCq9LE",
+  },
 ];
 
 
@@ -75,7 +99,6 @@ const Web3StatsPanel = () => {
         <div className={styles.newsSlider}>
           {newsItems[newsIndex].url ? (
             <>
-              🍿 Youtube:{" "}
               <a
                 href={newsItems[newsIndex].url}
                 target="_blank"
