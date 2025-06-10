@@ -58,8 +58,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      
-      if (user) {
+      if (user && window.location.pathname !== '/') {
         // User is signed in, fetch user data from Firestore
         const accountRef = doc(db, "accounts", user.uid);
         getDoc(accountRef).then((accountSnap) => {
