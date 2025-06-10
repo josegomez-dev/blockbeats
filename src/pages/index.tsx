@@ -98,7 +98,7 @@ const LandingPage = () => {
     },
     {
       name: 'Ricardo Patino',
-      role: 'Operations Manager & Partnerships Lead',
+      role: 'Operations Manager',
       avatar: '/team/richard.png',
     },
     {
@@ -171,7 +171,7 @@ const LandingPage = () => {
       {/* Hero Section */}
       <section className={styles.hero}>
         <div className={styles.heroContent}>
-          <h1>🎵 BlockBeats </h1>
+          <h1>🎧 BlockBeats </h1>
           <h2 className={styles.typewriter} style={{fontSize: '20px'}}>The Future of Music & Art NFTs</h2>
 
           <br />
