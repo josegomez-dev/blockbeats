@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "@/app/assets/styles/Web3StatsPanel.module.css";
 import Link from "next/link";
+import { Sparklines, SparklinesLine } from "react-sparklines";
 
 const newsItems = [
   // {
@@ -70,6 +71,24 @@ const Web3StatsPanel = () => {
   const [newsIndex, setNewsIndex] = useState(0);
   const newsLength = newsItems.length;
 
+  const [sparkData, setSparkData] = useState<Record<string, number[]>>({});
+
+     // Simulate auto-updating sparkline data
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSparkData((prevData) => {
+        const newData = { ...prevData };
+        Object.keys(prices).forEach((coin) => {
+          if (!newData[coin]) newData[coin] = [];
+          const nextValue = 1000 + Math.random() * 5000;
+          newData[coin] = [...newData[coin].slice(-20), nextValue]; // keep last 20 points
+        });
+        return newData;
+      });
+    }, 1000); // update every second
+    return () => clearInterval(interval);
+  }, [prices]);
+
 
   useEffect(() => {
     const priceInterval = setInterval(() => {
@@ -92,10 +111,10 @@ const Web3StatsPanel = () => {
 
   return (
     <div className={styles.panel}>
-      <h2 className={styles.title}>📊 Web3 Stats & News</h2>
+      <h2 className={styles.title} style={{ color: 'white' }}>📊 Web3 Stats & News</h2>
 
       <div className={styles.section}>
-        <h5>📰 News Feed</h5>
+        {/* <h5>📰 News Feed</h5> */}
         <div className={styles.newsSlider}>
           {newsItems[newsIndex].url ? (
             <>
@@ -123,18 +142,58 @@ const Web3StatsPanel = () => {
         </div>
       </div>
 
-      <div className={styles.section}>
+       <div className={styles.section}>
         <h5>🪙 Market Overview</h5>
-        <ul>
-          {Object.entries(prices).map(([coin, { change, isPositive }]) => (
-            <li className={styles.coinsContainer} key={coin}>
-              {coin}: ${(1000 + Math.random() * 5000).toFixed(2)}{" "}
-              <span className={`${styles.coinsText} ${isPositive ? styles.green : styles.red}`}>
-                {isPositive ? "▲" : "▼"} {change}%
-              </span>
-            </li>
-          ))}
-        </ul>
+        <div style={{ maxHeight: "150px", overflowY: "auto", display: "flex", flexDirection: "row", justifyContent: "space-between", gap: "50px" }}>
+          <ul>
+            {Object.entries(prices).map(([coin, { change, isPositive }]) => (
+              <li className={styles.coinsContainer} key={coin}>
+                <div className={styles.coinRow}>
+                  <div>
+                    <strong>{coin}</strong>: ${(sparkData[coin]?.slice(-1)[0] || 1000).toFixed(2)}{" "}
+                    <span
+                      className={`${styles.coinsText} ${
+                        isPositive ? styles.green : styles.red
+                      }`}
+                    >
+                      {isPositive ? "▲" : "▼"} {change}%
+                    </span>
+                  </div>
+                  <div style={{ width: "120px", height: "30px" }}>
+                    <Sparklines data={sparkData[coin] || []}>
+                      <SparklinesLine color={isPositive ? "green" : "red"} style={{ strokeWidth: 3 }} />
+                    </Sparklines>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          <ul>
+            {Object.entries(prices).map(([coin, { change, isPositive }]) => (
+              <li className={styles.coinsContainer} key={coin}>
+                <div className={styles.coinRow}>
+                  <div>
+                    <strong>{coin}</strong>: ${(sparkData[coin]?.slice(-1)[0] || 1000).toFixed(2)}{" "}
+                    <span
+                      className={`${styles.coinsText} ${
+                        isPositive ? styles.green : styles.red
+                      }`}
+                    >
+                      {isPositive ? "▲" : "▼"} {change}%
+                    </span>
+                  </div>
+                  <div style={{ width: "120px", height: "30px" }}>
+                    <Sparklines data={sparkData[coin] || []}>
+                      <SparklinesLine color={isPositive ? "green" : "red"} style={{ strokeWidth: 3 }} />
+                    </Sparklines>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+
+        </div>
       </div>
 
       <div className={styles.section}>
