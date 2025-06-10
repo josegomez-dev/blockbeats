@@ -2,15 +2,18 @@
 import React, { useEffect, useState } from 'react';
 import styles from './../app/assets/styles/LandingPage.module.css';
 import stylesMain from "@/app/assets/styles/MainPage.module.css";
-import Footer from '@/components/Footer';
 import { Modal } from 'react-responsive-modal';
-import { FaRegNewspaper } from 'react-icons/fa';
+import { FaRegNewspaper, FaTwitter, FaDiscord, FaYoutube, FaFacebook, FaMedium, FaTelegram } from 'react-icons/fa';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const LandingPage = () => {
   const [open, setOpen] = useState(false);
   const [selectedEmbedHtml, setSelectedEmbedHtml] = useState<string | null>(null);
   const [selectedTitle, setSelectedTitle] = useState<string | null>(null);
   const [selectedDescription, setSelectedDescription] = useState<string | null>(null);
+
+  const router = useRouter();
 
   const robotMessages = [
     'Howdy Web3 explorer!',
@@ -177,6 +180,42 @@ const LandingPage = () => {
           <br />
           <span data-text="Create, share, and experience music like never before — powered by Web3." className="glitch">Create, share, and experience music like never before — powered by Web3.</span>
           <br />
+          <button className={stylesMain.submitBtn} onClick={() => router.push('/login')}>LOGIN TO YOUR ACCOUNT</button>
+          <Link target='_blank' href="https://discord.gg/hrjuWATX" className={stylesMain.registerLink}>
+            <button style={{ animation: 'none', background: 'transparent', color: 'white' }} className={stylesMain.submitBtn}>JOIN US ON DISCORD</button>
+          </Link>
+          <ul className={styles.socialMediaLinks}>
+            <li>
+              <a href="https://x.com/blockbeats3pt0" target="_blank" rel="noopener noreferrer">
+                <FaTwitter className={styles.twitterIcon} />
+              </a>
+            </li>
+            <li>
+              <a href="https://discord.gg/hrjuWATX" target="_blank" rel="noopener noreferrer">
+                <FaDiscord className={styles.discordIcon} />
+              </a>
+            </li>
+            <li>
+              <a href="https://www.youtube.com/@BlockBeats3.0" target="_blank" rel="noopener noreferrer">
+                <FaYoutube className={styles.youtubeIcon} />
+              </a>
+            </li>
+            <li>
+              <a href="https://www.facebook.com/profile.php?id=61576616834732" target="_blank" rel="noopener noreferrer">
+                <FaFacebook className={styles.facebookIcon} />
+              </a>
+            </li>
+            <li>
+              <a href="https://medium.com/@blockbeatscr" target="_blank" rel="noopener noreferrer">
+                <FaMedium className={styles.mediumIcon} />
+              </a>
+            </li>
+            <li>
+              <a href="https://t.me/block_beats_bot/blockbeats" target="_blank" rel="noopener noreferrer">
+                <FaTelegram className={styles.telegramIcon} />
+              </a>
+            </li>
+          </ul>
           <br />
           <img className={styles.character2} src="/avatar/phase-5.webp" style={{ width: '200px', height: 'auto', marginBottom: '-120px'  }} alt="BlockBeats Robot"  />
           <img className={styles.character3} src="/avatar/phase-4.webp" style={{ width: '200px', height: 'auto', marginBottom: '-120px'  }} alt="BlockBeats Robot"  />
