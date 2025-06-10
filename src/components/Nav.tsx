@@ -163,14 +163,6 @@ export default function Nav() {
             <li className={styles.navItem}>
               <AnimatedBalance start={user?.bbcPoints || 0} end={getCoinsToAdd} />&nbsp;
               <span className="glitch">BBC</span>
-              <div style={{ display: 'inline-block', marginTop: '15px' }}>
-                <Image
-                  src="/coins.webp"
-                  alt="blockbeats-logo"
-                  width={25}
-                  height={25}
-                />
-              </div>
             </li>
             <li className={`${styles.navItem} ${styles.dropdown}`} ref={dropdownRef}>
               <button className={styles.avatarButton} onClick={toggleDropdown}>
