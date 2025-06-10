@@ -393,7 +393,7 @@
 .parallaxOverlay h2 {
   font-size: 2rem;
   margin-bottom: 30px;
-  color: #ff0099;
+  color: var(--white-color);
   animation: fadeIn 2s ease-in-out;
 }
 
