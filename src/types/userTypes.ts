@@ -13,6 +13,7 @@ export interface User {
   emailVerified?: boolean;
   bbcPoints?: number;
   tnxLog?: TNXLOG[];
+  collections?: string[];
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -26,6 +27,7 @@ export const EMPTY_USER: User = {
   notifications: [],
   role: 'user',
   status: 'active',
+  collections: [],
   bbcPoints: 0,
   tnxLog: [],
   emailVerified: true,

@@ -7,7 +7,6 @@ import PixelPreview from './PixelPreview';
 
 interface Slide {
   id: number | string;
-  img: string;
   songName: string;
   colorMap: { 
     noteIndex: number;

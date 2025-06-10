@@ -210,14 +210,14 @@ export default function Nav() {
                       <RiGalleryView className={styles.icon} /> Marketplace
                     </div>
                   </Link>
-                  <Link href="/minigames">
-                    <div className={styles.dropdownItem}>
-                      <RiGalleryView className={styles.icon} /> Mini-Games
-                    </div>
-                  </Link>
                   <Link href="/tutorials">
                     <div className={styles.dropdownItem}>
                       <RiGalleryView className={styles.icon} /> Tutorials & Guides
+                    </div>
+                  </Link>
+                  <Link href="/minigames">
+                    <div className={styles.dropdownItem}>
+                      <RiGalleryView className={styles.icon} /> Mini-Games
                     </div>
                   </Link>
                   <div className={`${styles.dropdownItem} ${styles.logout}`} onClick={handleLogout}>

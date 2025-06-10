@@ -9,11 +9,12 @@ import FrequencyModal from "./FrequencyModal";
 import { frequencyRanges, notes, SCALE_NAMES, scaleDescriptions, scaleIntervals, ScaleName } from "@/utils/constants/musicDrawingMachine";
 import PixelCanvas from "./PixelCanvas";
 import Piano from "./Piano";
-// import NFTSliderPanel from "./NFTSliderPanel";
+import NFTSliderPanel from "./NFTSliderPanel";
 import ControlsPanel from "./ControlPanel";
 import Modal from "react-responsive-modal";
 import Image from "next/image";
 import PixelPreview from "./PixelPreview";
+import { TopCollections } from "@/types/topCollections";
 
 const AudioContext = typeof window !== "undefined" ? window.AudioContext || (window as any).webkitAudioContext : null;
 const ctx = AudioContext ? new AudioContext() : null;
@@ -27,6 +28,9 @@ const MusicDrawingPage = () => {
   const [selectedRange, setSelectedRange] = useState("Harmonic");
   const [isPlayingBack, setIsPlayingBack] = useState(false);
   const [playIndex, setPlayIndex] = useState<number | null>(null);
+  const [nfts, setNFTs] = useState<any[]>([]);
+  const [topCollections, setTopCollections] = useState<TopCollections[]>([]);
+  const [loading, setLoading] = useState(true);
   const [isIAGeneratorOpen, setIsIAGeneratorOpen] = useState(false);
 
   const [selectedScale, setSelectedScale] = useState<ScaleName>('minor'); // default scale
@@ -112,69 +116,68 @@ const MusicDrawingPage = () => {
     }
   };
 
-
   const generateRandomMelody = (): { noteIndex: number; time: number }[] => {
-  const steps = 24;
-  const melody: { noteIndex: number; time: number }[] = [];
-  const usedTimes = new Set<number>();
+    const steps = 24;
+    const melody: { noteIndex: number; time: number }[] = [];
+    const usedTimes = new Set<number>();
 
-  // Get the index of the selected base/root note
-  const baseIndex = notes.findIndex(([name]) => name === firstNote);
-  if (baseIndex === -1) return melody;
+    // Get the index of the selected base/root note
+    const baseIndex = notes.findIndex(([name]) => name === firstNote);
+    if (baseIndex === -1) return melody;
 
-  // Get selected scale intervals and map to note indices
-  const intervals = scaleIntervals[selectedScale];
-  if (!intervals) return melody;
+    // Get selected scale intervals and map to note indices
+    const intervals = scaleIntervals[selectedScale];
+    if (!intervals) return melody;
 
-  const scaleNoteIndices = intervals
-    .map(interval => (baseIndex + interval) % notes.length)
-    .filter(index => index >= 0 && index < notes.length); // safety check
+    const scaleNoteIndices = intervals
+      .map(interval => (baseIndex + interval) % notes.length)
+      .filter(index => index >= 0 && index < notes.length); // safety check
 
-  for (let time = 0; time < steps; time++) {
-    if (Math.random() < 0.6 && !usedTimes.has(time)) {
-      usedTimes.add(time);
+    for (let time = 0; time < steps; time++) {
+      if (Math.random() < 0.6 && !usedTimes.has(time)) {
+        usedTimes.add(time);
 
-      switch (melodyKind) {
-        case 'chords': {
-          // Always generate two different notes at the same time
-          const idx1 = Math.floor(Math.random() * scaleNoteIndices.length);
-          let idx2 = Math.floor(Math.random() * scaleNoteIndices.length);
-          while (idx2 === idx1 && scaleNoteIndices.length > 1) {
-            idx2 = Math.floor(Math.random() * scaleNoteIndices.length);
+        switch (melodyKind) {
+          case 'chords': {
+            // Always generate two different notes at the same time
+            const idx1 = Math.floor(Math.random() * scaleNoteIndices.length);
+            let idx2 = Math.floor(Math.random() * scaleNoteIndices.length);
+            while (idx2 === idx1 && scaleNoteIndices.length > 1) {
+              idx2 = Math.floor(Math.random() * scaleNoteIndices.length);
+            }
+            melody.push({ noteIndex: scaleNoteIndices[idx1], time });
+            melody.push({ noteIndex: scaleNoteIndices[idx2], time });
+            break;
           }
-          melody.push({ noteIndex: scaleNoteIndices[idx1], time });
-          melody.push({ noteIndex: scaleNoteIndices[idx2], time });
-          break;
-        }
 
-        case 'solo': {
-          // Only a single note
-          const noteIndex = scaleNoteIndices[Math.floor(Math.random() * scaleNoteIndices.length)];
-          melody.push({ noteIndex, time });
-          break;
-        }
-
-        case 'both': {
-          // Always a single note
-          const baseNote = scaleNoteIndices[Math.floor(Math.random() * scaleNoteIndices.length)];
-          melody.push({ noteIndex: baseNote, time });
-
-          // 25% chance to add harmony
-          if (Math.random() < 0.25) {
-            const harmony = scaleNoteIndices[Math.floor(Math.random() * scaleNoteIndices.length)];
-            melody.push({ noteIndex: harmony, time });
+          case 'solo': {
+            // Only a single note
+            const noteIndex = scaleNoteIndices[Math.floor(Math.random() * scaleNoteIndices.length)];
+            melody.push({ noteIndex, time });
+            break;
           }
-          break;
-        }
 
-        default:
-          break;
+          case 'both': {
+            // Always a single note
+            const baseNote = scaleNoteIndices[Math.floor(Math.random() * scaleNoteIndices.length)];
+            melody.push({ noteIndex: baseNote, time });
+
+            // 25% chance to add harmony
+            if (Math.random() < 0.25) {
+              const harmony = scaleNoteIndices[Math.floor(Math.random() * scaleNoteIndices.length)];
+              melody.push({ noteIndex: harmony, time });
+            }
+            break;
+          }
+
+          default:
+            break;
+        }
       }
     }
-  }
 
-  return melody;
-};
+    return melody;
+  };
 
   const loadRandomMelody = () => {
     const melody = generateRandomMelody();
@@ -185,6 +188,36 @@ const MusicDrawingPage = () => {
       color: getRandomColor(),
     })));
   };
+
+
+  const fetchNFTs = async () => {
+      const querySnapshot = await getDocs(collection(db, "signatures"));
+      const nfts = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      if (user) {
+        const userNFTs = nfts.filter((item: any) => item.createdBy === user.uid);
+        setNFTs(userNFTs);
+        setLoading(false);
+        console.log("NFTs fetched:", nfts);
+      }
+    };
+
+  useEffect(() => {
+    fetchNFTs();
+  }, []);
+
+  const fetchTopCollections = async () => {
+      setLoading(true);
+
+      const querySnapshot = await getDocs(collection(db, "topCollections"));
+      const collections = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      setTopCollections(collections as TopCollections[]);
+
+      setLoading(false);
+    };
+
+  useEffect(() => {
+    fetchTopCollections();
+  }, []);
 
   const saveNFTData = async () => {
     // ask for the name of the song
@@ -203,6 +236,7 @@ const MusicDrawingPage = () => {
         songName,
       });
       toast.success("Song-art saved successfully!");
+      fetchNFTs(); // Refresh the NFTs after saving
     } catch (error) {
       console.error("Error saving NFT:", error);
       toast.error("Failed to save NFT");
@@ -297,10 +331,11 @@ const MusicDrawingPage = () => {
 
   return (
     <>
-      {/* <NFTSliderPanel 
+      <NFTSliderPanel 
         nfts={nfts}
+        collections={topCollections}
         loading={loading}
-      /> */}
+      />
 
       <div className={styles.musicBox}>
         <h3 style={{ color: frequencyStyle.color }}>BlockBeats <span data-text="NFT" className="glitch">NFT</span></h3>

@@ -10,14 +10,7 @@ import PixelPreview from '@/components/PixelPreview';
 import { Modal } from "react-responsive-modal";
 import CollectionsSlider from '@/components/CollectionsSlider';
 import SignInUnautorizedModal from '@/components/SignInUnautorizedModal';
-
-const favoriteCollections = [
-  { id: 1, title: 'Hype Beast', color: '#00f2ff' },
-  { id: 2, title: 'Retro Vinyls', color: '#ff00e0' },
-  { id: 3, title: 'Synth Wave Art', color: '#ffff00' },
-  { id: 4, title: 'Pixel Legends', color: '#00ff7f' },
-  { id: 5, title: 'Glitch Avatars', color: '#ff4500' },
-];
+import { useRouter } from 'next/router';
 
 const GalleryScreen = () => {
 
@@ -33,10 +26,13 @@ const GalleryScreen = () => {
 
   const [nfts, setNFTs] = React.useState<NFT[]>([]);
   const [userNFTS, setUserNFTS] = React.useState<NFT[]>([]);
+  const [topCollections, setTopCollections] = React.useState<any[]>([]); // Adjust type as needed
+
   const [showViewModal, setShowViewModal] = React.useState(false);
   const [selectedNFT, setSelectedNFT] = React.useState<NFT | null>(null);
 
   const { user } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     const fetchNFTs = async () => {
@@ -50,11 +46,20 @@ const GalleryScreen = () => {
     fetchNFTs();
   }, []);
 
+  useEffect(() => {
+    const fetchTopCollections = async () => {
+      const querySnapshot = await getDocs(collection(db, "topCollections"));
+      const topCollections = querySnapshot.docs.map((doc) => ({ ...(doc.data() as any), id: doc.id }));
+      setTopCollections(topCollections);
+    };
+    fetchTopCollections();
+  }, []);
 
   const handleViewNFT = (nft: NFT) => {
     setSelectedNFT(nft);
     setShowViewModal(true);
   };
+  
   const handleCloseModal = () => {
     setShowViewModal(false);
     setSelectedNFT(null);
@@ -162,8 +167,8 @@ const GalleryScreen = () => {
         <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
           <h2><p className="glitch">Explore <span data-text="TOP FANS" className="glitch">TOP FANS</span> COLLECTIONS</p></h2>
           <br />
-          <p>Discover unique NFTs created by other artists.</p>
-          <CollectionsSlider title='' fullWidth />
+          <button onClick={() => router.push('/createTopCollection')} className={styles.submitBtn}>Create Top Fan Collection</button>
+          <CollectionsSlider title='' fullWidth topCollections={topCollections} />
         </div>
 
         <br />
@@ -195,8 +200,6 @@ const GalleryScreen = () => {
         </div>
       </div>
       <br />
-
-
 
       <Footer />
     </>

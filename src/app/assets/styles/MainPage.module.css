@@ -399,7 +399,19 @@
 }
 
 
-
+.nftSelection {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-wrap: nowrap; /* Do not wrap! */
+  gap: 10px;
+  justify-content: flex-start; /* Left-align so scroll feels natural */
+  align-items: center; /* Keep items vertically aligned */
+  overflow-x: auto; /* Enable horizontal scrolling if needed */
+  overflow-y: hidden; /* Prevent vertical scroll */
+  padding: 10px; /* Optional, makes it look nicer */
+  height: 200px; /* Example: match your .nftCard height if needed */
+}
 
 
 
