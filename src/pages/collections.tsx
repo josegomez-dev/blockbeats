@@ -10,7 +10,7 @@ import CollectionsSlider from '@/components/CollectionsSlider';
 import SignInUnautorizedModal from '@/components/SignInUnautorizedModal';
 import { useRouter } from 'next/router';
 
-const GalleryScreen = () => {
+const CollectionsScreen = () => {
 
   type NFT = {
     id: string;
@@ -61,37 +61,15 @@ const GalleryScreen = () => {
   return (
     <>
       <div className="gallery-screen">
-        <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
-          <br />
-          <br />
-          <h2><p className="glitch">My Collection</p></h2>
+        <br />
 
-          {userNFTS.length <= 0 ? (
-            <div className={styles.modalContent}>
-              <br />
-              <h2>No NFTs Found</h2>
-              <p>You haven't created any NFTs yet. <br /> Start creating your own unique NFTs today!</p>
-              <br />
-              <br />
-              <Link href="/dashboard" className={styles.submitBtn}>Create NFT</Link>
-              <br />
-              <br />
-            </div>
-          ) : (
-            <p>Here you can view all the NFTs you have created.</p>
-          )}
+        <div style={{ textAlign: "center", margin: "0 auto", padding: "25px" }}>
+          <h2><p className="glitch">Explore <span data-text="TOP FANS" className="glitch">TOP FANS</span> COLLECTIONS</p></h2>
+          <br />
+          <button onClick={() => router.push('/createTopCollection')} className={styles.submitBtn}>Create Top Fan Collection</button>
+          <CollectionsSlider title='' fullWidth topCollections={topCollections} />
         </div>
-
-        <NeonSlider
-          slides={userNFTS.map(nft => ({
-            id: nft.id,
-            img: nft.img || '/nft1.webp', // fallback image if not present
-            songName: nft.songName || '',
-            colorMap: nft.colorMap || [],
-            notesPlayed: (nft.notesPlayed || []).join(','),
-          }))}
-        />
-
+        <br />
         <br />
         <br />
 
@@ -102,4 +80,4 @@ const GalleryScreen = () => {
   );
 };
 
-export default GalleryScreen;
+export default CollectionsScreen;

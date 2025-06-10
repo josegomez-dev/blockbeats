@@ -6,11 +6,16 @@ import { useRouter } from 'next/router';
 import { useAuth } from '@/context/AuthContext';
 import styles from '@/app/assets/styles/Nav.module.css';
 import stylesMain from "@/app/assets/styles/MainPage.module.css";
-import { FaSignOutAlt, FaUserCircle, FaCog, FaBell, FaDashcube, FaHeadphones } from 'react-icons/fa';
+import { FaSignOutAlt, FaBell, FaDashcube } from 'react-icons/fa';
+import { MdDashboard } from 'react-icons/md';
+import { RiGalleryLine } from 'react-icons/ri';
+import { BiCollection } from 'react-icons/bi';
+import { FaStore, FaChalkboardTeacher } from 'react-icons/fa';
+import { GiGamepad } from 'react-icons/gi';
 import { RiGalleryView } from "react-icons/ri";
 import Avatar from 'react-avatar';
 import { useAccount, useBalance } from "@starknet-react/core";
-import { arrayUnion, doc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 import toast from 'react-hot-toast';
 
@@ -202,27 +207,32 @@ export default function Nav() {
                   <hr />
                   <Link href="/dashboard">
                     <div className={styles.dropdownItem}>
-                      <FaDashcube className={styles.icon} /> Dashboard
+                      <MdDashboard className={styles.icon} /> Dashboard
                     </div>
                   </Link>
                   <Link href="/gallery">
                     <div className={styles.dropdownItem}>
-                      <RiGalleryView className={styles.icon} /> Gallery
+                      <RiGalleryLine className={styles.icon} /> Gallery
+                    </div>
+                  </Link>
+                  <Link href="/collections">
+                    <div className={styles.dropdownItem}>
+                      <BiCollection className={styles.icon} /> Collections
                     </div>
                   </Link>
                   <Link href="/marketplace">
                     <div className={styles.dropdownItem}>
-                      <RiGalleryView className={styles.icon} /> Marketplace
+                      <FaStore className={styles.icon} /> Marketplace
                     </div>
                   </Link>
                   <Link href="/tutorials">
                     <div className={styles.dropdownItem}>
-                      <RiGalleryView className={styles.icon} /> Tutorials & Guides
+                      <FaChalkboardTeacher className={styles.icon} /> Tutorials & Guides
                     </div>
                   </Link>
                   <Link href="/minigames">
                     <div className={styles.dropdownItem}>
-                      <RiGalleryView className={styles.icon} /> Mini-Games
+                      <GiGamepad className={styles.icon} /> Mini-Games
                     </div>
                   </Link>
                   <div className={`${styles.dropdownItem} ${styles.logout}`} onClick={handleLogout}>
