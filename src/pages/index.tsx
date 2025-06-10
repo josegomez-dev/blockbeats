@@ -290,10 +290,6 @@ const LandingPage = () => {
         </div>
       </section>
 
-
-      {/* Footer */}
-      <Footer />
-
       {/* Video Modal */}
       <Modal
         open={open}
