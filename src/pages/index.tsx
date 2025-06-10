@@ -120,6 +120,7 @@ const LandingPage = () => {
       socialMediaLinks: [
         { url: 'https://www.facebook.com/ricardo.p.jimenez.5', icon: <FaFacebook className={styles.twitterIcon} /> },
         { url: 'https://www.linkedin.com/in/ricardopatino1/', icon: <FaLinkedin className={styles.discordIcon} /> },
+        { url: 'https://www.youtube.com/@rickpatinor', icon: <FaYoutube className={styles.discordIcon} /> },
       ],
       extraLinks: [],
       socialLinks: []
