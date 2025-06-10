@@ -269,6 +269,9 @@ const LandingPage = () => {
         </div>
       </section>
 
+      <br />
+      <br />
+
       
       {/* News Section */}
       <section className={styles.newsSection}>
@@ -294,6 +297,7 @@ const LandingPage = () => {
           ))}
         </div>
       </section>
+
 
       {/* Team Section */}
       <section className={styles.teamSection}>
