@@ -10,7 +10,7 @@ import { FaSignOutAlt, FaBell } from 'react-icons/fa';
 import { MdDashboard } from 'react-icons/md';
 import { RiGalleryLine } from 'react-icons/ri';
 import { BiCollection } from 'react-icons/bi';
-import { FaStore, FaChalkboardTeacher } from 'react-icons/fa';
+import { FaStore, FaChalkboardTeacher, FaCog } from 'react-icons/fa';
 import { GiGamepad } from 'react-icons/gi';
 import Avatar from 'react-avatar';
 import { useAccount, useBalance } from "@starknet-react/core";
@@ -231,7 +231,17 @@ export default function Nav() {
                   </Link>
                   <Link href="/minigames">
                     <div className={styles.dropdownItem}>
-                      <GiGamepad className={styles.icon} /> Mini-Games
+                      <GiGamepad className={styles.icon} /> MiniGames HUB
+                    </div>
+                  </Link>
+                  <Link href="/analytics" style={{ opacity: 0.2 }}>
+                    <div className={styles.dropdownItem}>
+                      <FaCog className={styles.icon} /> Analytics
+                    </div>
+                  </Link>
+                  <Link href="/settings" style={{ opacity: 0.2 }}>
+                    <div className={styles.dropdownItem}>
+                      <FaCog className={styles.icon} /> Settings
                     </div>
                   </Link>
                   <div className={`${styles.dropdownItem} ${styles.logout}`} onClick={handleLogout}>

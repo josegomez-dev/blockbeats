@@ -40,8 +40,7 @@ const DashboardLayout = () => {
 
   return (
     <>
-      <SidebarChatPanel />
-
+    
       <div className={styles.buttonsContainer}>
         <button onClick={() => showPanel('left')} className={styles.button}>
           <RxAvatar />

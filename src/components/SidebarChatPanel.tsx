@@ -5,11 +5,9 @@ import Avatar from 'react-avatar';
 import { useAuth } from '@/context/AuthContext';
 import styles from "@/app/assets/styles/MainPage.module.css";
 import Image from 'next/image';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../../firebase';
 import PixelPreview from './PixelPreview';
 
-const TABS = ['Contacts', 'NFTs', 'Tokens', 'Chats'];
+const TABS = ['Tokens', 'Chats'];
 
 const SidebarChatPanel = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,28 +31,6 @@ const SidebarChatPanel = () => {
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const [recording, setRecording] = useState(false);
   const [audioChunks, setAudioChunks] = useState<Blob[]>([]);
-  const [nftItems, setNftItems] = useState<any[]>([]);
-  const [contacts, setContacts] = useState<any[]>([]);
-
-  useEffect(() => {
-    const fetchNFTs = async () => {
-      const querySnapshot = await getDocs(collection(db, "signatures"));
-      const nfts = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setNftItems(nfts);
-      console.log("NFTs fetched:", nfts);
-    };
-    fetchNFTs();
-  }, []);
-
-  useEffect(() => {
-    const fetchContacts = async () => {
-      const querySnapshot = await getDocs(collection(db, "accounts"));
-      const contactsData = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setContacts(contactsData);
-      console.log("Contacts fetched:", contactsData);
-    };
-    fetchContacts();
-  }, []);
 
   const toggleSidebar = () => setIsOpen(!isOpen);
 
@@ -173,7 +149,8 @@ const SidebarChatPanel = () => {
         </div>
 
         <div className="tab-content fade-in">
-          {activeTab === 'Contacts' && (
+          
+          {/* {activeTab === 'Contacts' && (
             <div className="contacts-list">
               {contacts.map(c => (
                 <React.Fragment key={c.id}>
@@ -192,9 +169,9 @@ const SidebarChatPanel = () => {
                 </React.Fragment>
               ))}
             </div>
-          )}
+          )} */}
 
-          {activeTab === 'NFTs' && (
+          {/* {activeTab === 'NFTs' && (
             <div className="nft-list">
               {nftItems.map(nft => (
                 <div key={nft.id} className="nft-card">
@@ -205,11 +182,11 @@ const SidebarChatPanel = () => {
                       size={50}
                     />
                     <div className="nft-meta" style={{ fontSize: '8px', color: '#555' }}>
-                      {/* <span className={`status-badge ${nft.status}`}></span> */}
+                      <span className={`status-badge ${nft.status}`}></span>
                       Owner: {nft.createdBy.slice(0, 6)}...
                     </div>
                   </div>
-                  {/* <img src={nft.image} alt={nft.title} className="nft-avatar" /> */}
+                  <img src={nft.image} alt={nft.title} className="nft-avatar" />
                   <div className="nft-info">
                     <h3 className="nft-title">{nft.songName}</h3>
                     
@@ -221,7 +198,7 @@ const SidebarChatPanel = () => {
                 </div>
               ))}
             </div>
-          )}
+          )} */}
 
           {activeTab === 'Tokens' && (
             <div className="token-stats">
