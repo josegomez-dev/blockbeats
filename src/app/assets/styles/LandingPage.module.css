@@ -540,8 +540,8 @@
   animation: robotIntro 1.5s ease-out;
 
   position: fixed;
-  bottom: 0px;
-  right: 0px;
+  bottom: 20px;
+  right: 20px;
 
   /* animation: robotStickIn 0.8s ease forwards; */
 }
