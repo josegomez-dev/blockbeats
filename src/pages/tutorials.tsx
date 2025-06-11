@@ -78,11 +78,14 @@ const tutorials = {
 // --- List of tutorial types for selection ---
 const tutorialTypes = Object.keys(tutorials);
 
+// --- Type for tutorialType state ---
+type TutorialType = keyof typeof tutorials;
+
 const TutorialsAndGuidesScreen = () => {
   const searchParams = useSearchParams();
 
   // State to hold current tutorial type and step
-  const [tutorialType, setTutorialType] = useState<string>('wallet');
+  const [tutorialType, setTutorialType] = useState<TutorialType>('wallet');
   const [step, setStep] = useState<number>(0);
 
   const tutorialSteps = tutorials[tutorialType];
@@ -90,13 +93,12 @@ const TutorialsAndGuidesScreen = () => {
 
   // Support URL params: ?tutorial=x&step=y
   useEffect(() => {
-    const urlTutorial = searchParams.get('tutorial');
-    const urlStep = parseInt(searchParams.get('step') || '0', 10);
+    const urlTutorial = searchParams?.get('tutorial');
+    const urlStep = parseInt(searchParams?.get('step') || '0', 10);
 
-    if (urlTutorial && tutorials[urlTutorial]) {
-      setTutorialType(urlTutorial);
-      // Validate step number for that tutorial
-      const stepsLength = tutorials[urlTutorial].length;
+    if (urlTutorial && tutorials.hasOwnProperty(urlTutorial)) {
+      setTutorialType(urlTutorial as TutorialType);
+      const stepsLength = tutorials[urlTutorial as TutorialType].length;
       if (!isNaN(urlStep) && urlStep >= 0 && urlStep < stepsLength) {
         setStep(urlStep);
       } else {
@@ -109,7 +111,7 @@ const TutorialsAndGuidesScreen = () => {
   const nextStep = () => setStep((prev) => (prev + 1) % tutorialSteps.length);
   const prevStep = () => setStep((prev) => (prev - 1 + tutorialSteps.length) % tutorialSteps.length);
   const selectStep = (index: number) => setStep(index);
-  const selectTutorialType = (type: string) => {
+  const selectTutorialType = (type: TutorialType) => {
     setTutorialType(type);
     setStep(0); // Reset to first step
   };
@@ -133,7 +135,7 @@ const TutorialsAndGuidesScreen = () => {
           {tutorialTypes.map((type) => (
             <button
               key={type}
-              onClick={() => selectTutorialType(type)}
+              onClick={() => selectTutorialType(type as TutorialType)}
               style={{
                 padding: '0.5rem 1rem',
                 borderRadius: '8px',
