@@ -132,7 +132,7 @@
   right: 0;
   
  
-  color: var(--secondary-color) !important;
+  color: var(--white-color) !important;
   
   box-shadow: 0 0 5px white;
   border: 1px solid gray;
@@ -169,7 +169,7 @@
 
 .dropdownItem:hover {
   background-color: var(--secondary-color);
-  color: white;
+  color: var(--neon-color);
   transition: all 0.3s;
   transform: scale(1.15);
 }
