@@ -216,7 +216,6 @@ const LoginScreen = () => {
       <br />
       <br />
       <br />
-      <br />
 
       {authenticated ? (
         <Preloader />
@@ -227,6 +226,29 @@ const LoginScreen = () => {
         <div className={styles.banner}>
           <h2 className={styles.bannerTitle}>🎧 Join <span data-text="BLOCKBEATS" className="glitch">BLOCKBEATS</span></h2>
           
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '20px', float: 'right', marginTop: '-90px' }}>
+            <Link href={'https://braavos.app/'} target={'_blank'}>
+              <Image
+                src="/braavos.jpeg"
+                alt="braavos-logo"
+                width={35}
+                height={35}
+                style={{ filter: 'invert(1) drop-shadow(0 0 0.3rem #ffffff70)', cursor: 'pointer' }}
+              />
+            </Link>  
+            &nbsp;
+            &nbsp;
+            <Link href={'https://argent.xyz/'} target={'_blank'}>
+              <Image
+                src="/argentx.png"
+                alt="argentx-logo"
+                width={35}
+                height={35}
+                style={{ cursor: 'pointer' }}
+              />
+            </Link>  
+          </div>
+
           <>
             {walletConnection?.address ? (
               <button
@@ -279,7 +301,21 @@ const LoginScreen = () => {
       <div>
         <br />
         <br />
-        <Image src={'/starknet-logo.svg'} alt={'metamask'} width={200} height={50} style={{ filter: 'invert(1) drop-shadow(0 0 0.3rem #ffffff70)' }} />
+        <Link href={'https://www.starknet.io/'} target={'_blank'}>
+          <Image src={'/starknet-logo.svg'} alt={'metamask'} width={200} height={50} style={{ filter: 'invert(1) drop-shadow(0 0 0.3rem #ffffff70)' }} />
+        </Link>
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        <Link href={'https://www.dojocoding.io/'} target={'_blank'}>
+          <Image src={'/dojo.png'} alt={'metamask'} width={150} height={80} style={{ marginBottom: '-5px' }} />
+        </Link>
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        <Link href={'https://josegomez-dev.github.io/catarsismusical/'} target={'_blank'}>
+          <Image src={'/catarsismusical.png'} alt={'metamask'} width={80} height={80} style={{ marginBottom: '-5px' }} />
+        </Link>
         &nbsp;
         &nbsp;
         &nbsp;
