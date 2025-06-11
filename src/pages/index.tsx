@@ -388,59 +388,52 @@ const LandingPage = () => {
         </div>
       </section>
 
-
-      {/* Video Modal */}
+    {open && (
       <Modal
         open={open}
         onClose={() => setOpen(false)}
+        closeOnEsc={true}
+        closeOnOverlayClick={true}
+        showCloseIcon={false}
         center
-        classNames={{ modal: stylesMain.modal }}
-        styles={{
-          modal: {
-            width: '100%',
-            height: 'auto',
-            padding: 50,
-            backdropFilter: 'blur(50px)',
-            backgroundColor: 'rgba(0, 0, 0, 0.1)',
-          },
+        classNames={{
+          modal: open ? stylesMain.modal : stylesMain.modalClosed,
+          // overlay: stylesMain.modalOverlay,
+          // closeButton: stylesMain.closeButton,
         }}
+        styles={{ modal: { width: '100%' } }}
       >
         {selectedEmbedHtml && (
-          <>
-            <div className={stylesMain.modalContent}>
-              <h2 className={stylesMain.modalTitle}>Video Preview</h2>
-              <p className={stylesMain.modalText}>
-                Watch the video preview of this feature. Click outside to close.
-              </p>
-            </div>
-            <br />
-            <div
-              style={{
-                position: 'relative',
-                paddingBottom: '56.25%',
-                height: 0,
-                textAlign: 'center',
-              }}
-              dangerouslySetInnerHTML={{
-                __html: `
-                  <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
-                    ${selectedEmbedHtml}
-                  </div>
-                `,
-              }}
-            />
-            {selectedTitle && (
-              <div style={{ marginTop: '-50px' }}>
-                <h2 className={`${stylesMain.modalTitle} glitch`} data-text={selectedTitle}>
+          <div>
+              <div style={{ padding: '25px', textAlign: 'center' }}>
+                <span className={`${stylesMain.modalTitle} glitch`} data-text={selectedTitle} style={{ fontSize: '16px', fontWeight: 'bold' }}>
                   {selectedTitle}
-                </h2>
-                <p className={stylesMain.modalText}>{selectedDescription}</p>
+                </span>
                 <br />
+                <br />
+                <p style={{ width: '200px', margin: '0 auto', fontSize: '12px' }}>
+                  {selectedDescription}
+                </p>
               </div>
-            )}
-          </>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: `
+                    <div style="width: 100%; height: 100%;">
+                      ${selectedEmbedHtml}
+                    </div>
+                  `,
+                }}
+              />
+              <div style={{ textAlign: 'center' }}>
+                <button className={stylesMain.submitBtn} onClick={() => setOpen(false)} style={{ width: '150px' }}>
+                  Go Back
+                </button>
+              </div>
+          </div>
         )}
       </Modal>
+    )}
+      
     </div>
   );
 };
