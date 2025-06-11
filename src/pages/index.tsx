@@ -19,35 +19,21 @@ const LandingPage = () => {
     'Howdy Web3 explorer!',
     'Ready to mint some NFTs?',
     'Feel the beat!',
-    'Music meets blockchain 🎵',
-    'Let’s create magic 🚀',
+    'Music meets blockchain!',
+    'Let’s create magic',
     'Need help? I’m here!',
   ];
 
   const [randomMessage, setRandomMessage] = useState(robotMessages[0]);
-  const [isSticky, setIsSticky] = useState(false);
 
-  // Rotate messages every 4s
   useEffect(() => {
     const interval = setInterval(() => {
       setRandomMessage(
         robotMessages[Math.floor(Math.random() * robotMessages.length)]
       );
-    }, 4000);
+    }, 2000);
     return () => clearInterval(interval);
   }, []);
-
-  // Handle scroll to stick robot
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      setIsSticky(scrollY > 400); // Adjust threshold
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
 
 
   const handleOpenModal = (embedHtml: string | undefined, fallbackVideoUrl: string, title: string, description: string) => {
@@ -229,9 +215,9 @@ const LandingPage = () => {
 
 
     {/* Robot Character */}
-    <div className={`${styles.robotContainer} ${isSticky ? styles.sticky : ''}`}>
+    <div className={`${styles.robotContainer}`}>
       <img src="/avatar/phase-1.webp" alt="BlockBeats Robot" className={styles.robotImage} />
-      <div className={`${styles.robotSpeech} ${isSticky ? styles.speechHidden : ''}`}>
+      <div className={`${styles.robotSpeech}`}>
         {randomMessage}
       </div>
     </div>

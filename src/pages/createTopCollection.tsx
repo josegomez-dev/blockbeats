@@ -8,6 +8,7 @@ import { useAuth } from '@/context/AuthContext';
 import { FaCheck } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
+import Footer from '@/components/Footer';
 
 interface NFT {
   colorMap?: any[];
@@ -31,9 +32,9 @@ const CreateTopFanCollectionModal = () => {
     const fetchNFTs = async () => {
       const querySnapshot = await getDocs(collection(db, "signatures"));
       const nfts = querySnapshot.docs.map((doc) => ({ ...(doc.data() as NFT), id: doc.id })) as NFT[];
-      if (user) {
-        setNFTs(nfts.filter(item => item.createdBy === user.uid));
-      }
+      // setNFTs(nfts.filter(item => item.createdBy === user.uid));
+      setNFTs(nfts);
+     
     };
     fetchNFTs();
   }, []);
@@ -77,7 +78,8 @@ const CreateTopFanCollectionModal = () => {
   };
 
   return (
-    <div style={{ padding: '20px', width: '100%', textAlign: 'center' }}>
+    <>
+      <div style={{ padding: '20px', width: '100%', textAlign: 'center' }}>
         <br />
         <button
           className={styles.submitBtn}
@@ -181,7 +183,11 @@ const CreateTopFanCollectionModal = () => {
         <br />
         <p>Once you create a collection, it will be available in the Top Fans section.</p>
         <p>Note: You can only create one Top Fan Collection.</p>
+        <br />
+        <br />
       </div>
+      <Footer />
+    </>
   );
 };
 

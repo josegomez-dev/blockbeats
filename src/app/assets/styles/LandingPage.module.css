@@ -531,9 +531,6 @@
 
 /* Robot Container */
 .robotContainer {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
   z-index: 999;
   display: flex;
   flex-direction: column;
@@ -541,8 +538,13 @@
   transition: all 0.8s ease-in-out;
   transform-origin: center;
   animation: robotIntro 1.5s ease-out;
-}
 
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+
+  /* animation: robotStickIn 0.8s ease forwards; */
+}
 
 /* Robot Image */
 .robotImage {
@@ -552,41 +554,20 @@
   filter: drop-shadow(0 0 20px rgba(255, 0, 153, 0.7));
 }
 
-.robotImage:hover {
-  transform: scale(1.1) rotate(5deg);
-  transition: transform 0.3s ease-in-out;
-}
-
 /* Speech Bubble */
 .robotSpeech {
-  margin-top: 15px;
-    backdrop-filter: blur(50px);
-    background-color: rgba(0, 0, 0, 0.1); /* Light transparent */    
+  backdrop-filter: blur(50px);
+  background-color: rgba(0, 0, 0, 0.1); /* Light transparent */    
   color: white;
   padding: 12px 18px;
   border-radius: 16px;
-  font-size: 1rem;
+  font-size: 0.8rem;
   text-align: center;
   max-width: 220px;
   animation: fadeIn 1s ease-in-out;
   box-shadow: 0 0 10px rgba(255, 0, 153, 0.5);
   margin-top: -35px;
   z-index: 1000;
-}
-
-/* Sticky Mode */
-.robotContainer.sticky {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  top: auto;
-  transform: scale(0.5) rotate(360deg);
-  animation: robotStickIn 0.8s ease forwards;
-}
-
-.robotContainer.sticky .robotImage {
-  width: 100px;
-  animation: none;
 }
 
 .robotSpeech.speechHidden {
