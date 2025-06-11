@@ -4,7 +4,8 @@
   left: 0;
   height: 100vh;
   width: 60px;
-  background-color: #1e1e2f;
+  backdrop-filter: blur(50px);
+  background-color: rgba(0, 0, 0, 0.1); /* Light transparent */    
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -15,7 +16,7 @@
 }
 
 .sidebar.expanded {
-  width: 200px;
+  width: 235px;
 }
 
 .toggleButton {

@@ -133,18 +133,16 @@
   
  
   color: var(--secondary-color) !important;
-  backdrop-filter: blur(50px);
-  background-color: rgba(0, 0, 0, 10); /* Light transparent */    
+  
   box-shadow: 0 0 5px white;
-  border: 1px solid #ccc;
+  border: 1px solid gray;
   border-radius: 5px;
   min-width: 150px;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
   animation: fadeIn 0.2s ease-in-out;
   z-index: 1000;
 
-  backdrop-filter: blur(50px) !important;
-  background: rgba(0, 0, 0, 0.9) !important; /* Light transparent */    
+  background: rgb(0, 0, 0); /* Light transparent */    
 }
 
 .neon-color {

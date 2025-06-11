@@ -104,11 +104,15 @@ const LandingPage = () => {
       role: 'Operations Manager',
       avatar: '/team/richard.png',
       socialMediaLinks: [
-        { url: 'https://www.facebook.com/ricardo.p.jimenez.5', icon: <FaFacebook className={styles.twitterIcon} /> },
-        { url: 'https://www.linkedin.com/in/ricardopatino1/', icon: <FaLinkedin className={styles.discordIcon} /> },
-        { url: 'https://www.youtube.com/@rickpatinor', icon: <FaYoutube className={styles.discordIcon} /> },
+        { url: 'https://x.com/Ricardo15727088', icon: <FaTwitter /> },
+        { url: 'https://www.linkedin.com/in/ricardopatino1/', icon: <FaLinkedin /> },
+        { url: 't.me/RachaPatino', icon: <FaTelegram /> },
       ],
-      extraLinks: [],
+      extraLinks: [
+        { url: 'https://www.facebook.com/ricardo.p.jimenez.5', icon: <FaFacebook /> },
+        { url: 'https://www.instagram.com/racha_patino?igsh=dmIya3R5dHQxdnN0', icon: <FaInstagram /> },
+        { url: 'https://www.youtube.com/@rickpatinor', icon: <FaYoutube /> },
+      ],
       socialLinks: []
     },
     {

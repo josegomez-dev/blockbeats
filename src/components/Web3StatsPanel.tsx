@@ -1,14 +1,21 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import styles from "@/app/assets/styles/Web3StatsPanel.module.css";
 import Link from "next/link";
-import { Sparklines, SparklinesLine } from "react-sparklines";
+import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+} from "chart.js";
+
+// Register Chart.js components
+ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement);
 
 const newsItems = [
-  // {
-  //   text: "🎶 New melodic quest unlocked! Compose a 3-note loop.",
-  //   url: null,
-  // },
   {
     text: "📺 Watch the full demo presentation on YouTube!",
     url: "https://www.youtube.com/watch?v=W84Qst6bHxU&t=20s",
@@ -47,11 +54,7 @@ const newsItems = [
   },
 ];
 
-
-const tutorials = [
-  "🔐 How to Connect Wallet",
-];
-
+const tutorials = ["🔐 How to Connect Wallet"];
 
 const getRandomChange = () => {
   const change = (Math.random() * 4 - 2).toFixed(2);
@@ -59,6 +62,40 @@ const getRandomChange = () => {
     change,
     isPositive: parseFloat(change) >= 0,
   };
+};
+
+const Sparkline = ({ data, color = "green" }: { data: number[]; color?: string }) => {
+  const chartData = {
+    labels: data.map((_, i) => i),
+    datasets: [
+      {
+        data,
+        borderColor: color,
+        borderWidth: 2,
+        fill: false,
+        tension: 0.3,
+        pointRadius: 0,
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      x: { display: false },
+      y: { display: false },
+    },
+    elements: {
+      line: { borderCapStyle: 'round' as const },
+    },
+    plugins: {
+      legend: { display: false },
+      tooltip: { enabled: false },
+    },
+  };
+
+  return <Line data={chartData} options={options} />;
 };
 
 const Web3StatsPanel = () => {
@@ -73,7 +110,7 @@ const Web3StatsPanel = () => {
 
   const [sparkData, setSparkData] = useState<Record<string, number[]>>({});
 
-     // Simulate auto-updating sparkline data
+  // Simulate auto-updating sparkline data
   useEffect(() => {
     const interval = setInterval(() => {
       setSparkData((prevData) => {
@@ -88,7 +125,6 @@ const Web3StatsPanel = () => {
     }, 1000); // update every second
     return () => clearInterval(interval);
   }, [prices]);
-
 
   useEffect(() => {
     const priceInterval = setInterval(() => {
@@ -111,23 +147,22 @@ const Web3StatsPanel = () => {
 
   return (
     <div className={styles.panel}>
-      <h2 className={styles.title} style={{ color: 'white' }}>📊 Web3 Stats & News</h2>
+      <h2 className={styles.title} style={{ color: "white" }}>
+        📊 Web3 Stats & News
+      </h2>
 
       <div className={styles.section}>
-        {/* <h5>📰 News Feed</h5> */}
         <div className={styles.newsSlider}>
           {newsItems[newsIndex].url ? (
-            <>
-              <a
-                href={newsItems[newsIndex].url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.newsText}
-                style={{ color: "var(--neon-color)" }}
-              >
-                {newsItems[newsIndex].text}
-              </a>
-            </>
+            <a
+              href={newsItems[newsIndex].url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.newsText}
+              style={{ color: "var(--neon-color)" }}
+            >
+              {newsItems[newsIndex].text}
+            </a>
           ) : (
             <p className={styles.newsText}>{newsItems[newsIndex].text}</p>
           )}
@@ -142,15 +177,25 @@ const Web3StatsPanel = () => {
         </div>
       </div>
 
-       <div className={styles.section}>
+      <div className={styles.section}>
         <h5>🪙 Market Overview</h5>
-        <div style={{ maxHeight: "150px", overflowY: "auto", display: "flex", flexDirection: "row", justifyContent: "space-between", gap: "50px" }}>
+        <div
+          style={{
+            maxHeight: "150px",
+            overflowY: "auto",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            gap: "50px",
+          }}
+        >
           <ul>
             {Object.entries(prices).map(([coin, { change, isPositive }]) => (
               <li className={styles.coinsContainer} key={coin}>
                 <div className={styles.coinRow}>
                   <div>
-                    <strong>{coin}</strong>: ${(sparkData[coin]?.slice(-1)[0] || 1000).toFixed(2)}{" "}
+                    <strong>{coin}</strong>: $
+                    {(sparkData[coin]?.slice(-1)[0] || 1000).toFixed(2)}{" "}
                     <span
                       className={`${styles.coinsText} ${
                         isPositive ? styles.green : styles.red
@@ -160,62 +205,34 @@ const Web3StatsPanel = () => {
                     </span>
                   </div>
                   <div style={{ width: "120px", height: "30px" }}>
-                    <Sparklines data={sparkData[coin] || []}>
-                      <SparklinesLine color={isPositive ? "green" : "red"} style={{ strokeWidth: 3 }} />
-                    </Sparklines>
+                    <Sparkline
+                      data={sparkData[coin] || []}
+                      color={isPositive ? "green" : "red"}
+                    />
                   </div>
                 </div>
               </li>
             ))}
           </ul>
-
-          <ul>
-            {Object.entries(prices).map(([coin, { change, isPositive }]) => (
-              <li className={styles.coinsContainer} key={coin}>
-                <div className={styles.coinRow}>
-                  <div>
-                    <strong>{coin}</strong>: ${(sparkData[coin]?.slice(-1)[0] || 1000).toFixed(2)}{" "}
-                    <span
-                      className={`${styles.coinsText} ${
-                        isPositive ? styles.green : styles.red
-                      }`}
-                    >
-                      {isPositive ? "▲" : "▼"} {change}%
-                    </span>
-                  </div>
-                  <div style={{ width: "120px", height: "30px" }}>
-                    <Sparklines data={sparkData[coin] || []}>
-                      <SparklinesLine color={isPositive ? "green" : "red"} style={{ strokeWidth: 3 }} />
-                    </Sparklines>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-
         </div>
       </div>
 
       <div className={styles.section}>
         <h5>📖 Quick Tutorials</h5>
         <div className={styles.tutorialSlider}>
-          <Link
-            href="/tutorials"
-            className={styles.tutorialInner}
-            // style={{
-            //   transform: `translateY(-${tutorialIndex * 33.33}%)`,
-            //   transition: "transform 0.5s ease-in-out",
-            // }}
-          >
+          <Link href="/tutorials" className={styles.tutorialInner}>
             {tutorials.map((text, i) => (
-              <div key={i} className={`${styles.tutorialItem }`} style={{ color: 'var(--neon-color)' }}>
+              <div
+                key={i}
+                className={`${styles.tutorialItem}`}
+                style={{ color: "var(--neon-color)" }}
+              >
                 {text}
               </div>
             ))}
           </Link>
         </div>
       </div>
-
     </div>
   );
 };
