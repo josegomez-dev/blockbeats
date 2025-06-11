@@ -493,7 +493,7 @@ p {
   position: fixed;
   bottom: 20px;
   right: 25px;
-  background-color:  0 1px 3px rgba(0,0,0,0.8);;
+  background-color:  #ff0099;
   backdrop-filter: blur(100px);
   color: white;
   border: none;
@@ -780,7 +780,8 @@ p {
 }
 
 .chat-bubble.user {
-  background: #c8e6c9;
+  background: var(--secondary-color);
+  color: white;
   align-self: flex-end;
 }
 

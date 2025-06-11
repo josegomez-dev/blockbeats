@@ -100,8 +100,18 @@ const MarketplaceScreen = () => {
         <br />
         <br />
         <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
-          <h2><p className="glitch">Blockbeats <span data-text="Marketplace" className="glitch">Marketplace</span></p></h2>
+          <h2 className="glitch">Blockbeats <span data-text="Marketplace" className="glitch">Marketplace</span></h2>
           <br />
+          <p>
+            Explore and view all the NFTs created by the Blockbeats community. Click on any NFT to view its details.
+            <br />
+            <br />
+            <br />
+            <Link href="/dashboard" className={styles.submitBtn} style={{ marginTop: '10px' }}>Create Your Own NFT</Link>
+            <br />
+            <br />
+            <br />
+          </p>
         </div>
         <div className="gallery-grid">
           {nfts.map((src, index) => (
