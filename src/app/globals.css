@@ -831,7 +831,6 @@ p {
 
 
 .container {
-  min-height: 100vh;
   background: linear-gradient(to bottom, #000000, #1a1a1a, #320048);
   color: white;
   padding: 4rem 2rem;
