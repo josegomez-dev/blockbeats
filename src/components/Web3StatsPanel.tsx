@@ -54,7 +54,20 @@ const newsItems = [
   },
 ];
 
-const tutorials = ["🔐 How to Connect Wallet"];
+const getTutorialLink = (type: string, step: number) => {
+  return `/tutorials?tutorial=${type}&step=${step}`;
+};
+
+const tutorials = [
+  { label: "🌐 What is a Wallet?", type: "wallet", step: 0 },
+  { label: "🔐 How to Connect Wallet", type: "wallet", step: 1 },
+  { label: "🎨 Create with Music Drawing Machine", type: "drawing", step: 0 },
+  { label: "🎛️ Advanced Drawing Tips", type: "drawing", step: 1 },
+  { label: "🪙 Mint & Share Your NFT", type: "nft", step: 0 },
+  { label: "📢 Promote Your NFT", type: "nft", step: 1 },
+  { label: "🤝 Join the BlockBeats Community", type: "community", step: 0 },
+  { label: "📺 Follow our YouTube Channel", type: "community", step: 1 },
+];
 
 const getRandomChange = () => {
   const change = (Math.random() * 4 - 2).toFixed(2);
@@ -245,19 +258,23 @@ const Web3StatsPanel = () => {
       <div className={styles.section}>
         <h5>📖 Quick Tutorials</h5>
         <div className={styles.tutorialSlider}>
-          <Link href="/tutorials" className={styles.tutorialInner}>
-            {tutorials.map((text, i) => (
+          {tutorials.map((item, i) => (
+            <Link
+              key={i}
+              href={getTutorialLink(item.type, item.step)}
+              className={styles.tutorialInner}
+            >
               <div
-                key={i}
                 className={`${styles.tutorialItem}`}
                 style={{ color: "var(--neon-color)" }}
               >
-                {text}
+                {item.label}
               </div>
-            ))}
-          </Link>
+            </Link>
+          ))}
         </div>
       </div>
+
     </div>
   );
 };

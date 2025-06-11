@@ -10,7 +10,7 @@ interface CollectionProps {
 
 const CollectionsSlider: React.FC<CollectionProps> = ({ fullWidth, title, topCollections }) => {
   return (
-    <div style={{ padding: '25px 50px' }}>
+    <div style={{ padding: '5px 50px' }}>
       <h2 className={styles.title}>{title}</h2>
       <br />
       <div className={styles.sliderWrapper} style={{ width: fullWidth ? '100%' : '' }}>
