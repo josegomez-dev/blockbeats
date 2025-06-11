@@ -96,7 +96,7 @@ const MarketplaceScreen = () => {
         </Modal>
       )}
 
-      <div className="gallery-screen">
+      <div className="gallery-screen" style={{ padding: '35px' }}>
         <br />
         <br />
         <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>

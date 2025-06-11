@@ -6,7 +6,8 @@
     color: white;
     padding: 1rem;
     width: 100%;
-    z-index: 5000;
+    position: relative;
+    z-index: 2000;
     display: flex;
     justify-content: space-between;
     align-items: center;

@@ -9,6 +9,7 @@ import { db } from '../../firebase';
 import CollectionsSlider from '@/components/CollectionsSlider';
 import SignInUnautorizedModal from '@/components/SignInUnautorizedModal';
 import { useRouter } from 'next/router';
+import SidebarMenu from '@/components/SidebarMenu';
 
 const CollectionsScreen = () => {
 
