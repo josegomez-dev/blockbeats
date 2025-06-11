@@ -64,7 +64,7 @@ const CreateTopFanCollectionModal = () => {
     // Reset selected NFTs after creation
     setSelectedNFTS([]);
     toast.success('Top Fan Collection created successfully!');
-    router.push('/gallery'); 
+    router.push('/dashboard'); 
   };
 
   const selectNft = (nft: NFT) => {

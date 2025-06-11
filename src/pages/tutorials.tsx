@@ -49,6 +49,7 @@ const TutorialsAndGuidesScreen = () => {
     <>
       <div style={{ textAlign: 'center', padding: '3rem 1rem' }}>
         <h1 className="glitch">📖 Learn How to Use BlockBeats</h1>
+        <br />
         <p>Follow your guide and get started with Web3 music creation in just a few steps.</p>
         <br />
 
@@ -70,19 +71,19 @@ const TutorialsAndGuidesScreen = () => {
               alt="Guide Character"
               width={180}
               height={180}
-              style={{ marginBottom: '1rem' }}
+              style={{ marginBottom: '-2.5rem' }}
             />
           </div>
 
-          <h2 className="glitch">{current.title}</h2>
-          <p style={{ color: '#ccc', maxWidth: '500px', margin: '1rem auto' }}>{current.message}</p>
-          <button onClick={current.action} className={styles.submitBtn}>
+          <h4 className="glitch">{current.title}</h4>
+          <p style={{ color: '#ccc', maxWidth: '500px', margin: '10px auto', fontSize: '12px' }}>{current.message}</p>
+          <button onClick={current.action} className={styles.submitBtn} style={{ background: 'transparent', animation: 'none' }}>
             {current.button}
           </button>
 
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '2rem' }}>
-            <button onClick={prevStep} className={styles.submitBtn}>⬅️ Back</button>
-            <button onClick={nextStep} className={styles.submitBtn}>Next ➡️</button>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div onClick={prevStep}>⬅️</div>
+            <div onClick={nextStep}>➡️</div>
           </div>
         </div>
       </div>
