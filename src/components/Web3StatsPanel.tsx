@@ -146,7 +146,7 @@ const Web3StatsPanel = () => {
   }, []);
 
   return (
-    <div className={styles.panel}>
+    <div className={styles.panel} id="web3-stats-panel">
       <h2 className={styles.title} style={{ color: "white" }}>
         📊 Web3 Stats & News
       </h2>
@@ -189,6 +189,31 @@ const Web3StatsPanel = () => {
             gap: "50px",
           }}
         >
+          <ul>
+            {Object.entries(prices).map(([coin, { change, isPositive }]) => (
+              <li className={styles.coinsContainer} key={coin}>
+                <div className={styles.coinRow}>
+                  <div>
+                    <strong>{coin}</strong>: $
+                    {(sparkData[coin]?.slice(-1)[0] || 1000).toFixed(2)}{" "}
+                    <span
+                      className={`${styles.coinsText} ${
+                        isPositive ? styles.green : styles.red
+                      }`}
+                    >
+                      {isPositive ? "▲" : "▼"} {change}%
+                    </span>
+                  </div>
+                  <div style={{ width: "120px", height: "30px" }}>
+                    <Sparkline
+                      data={sparkData[coin] || []}
+                      color={isPositive ? "green" : "red"}
+                    />
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
           <ul>
             {Object.entries(prices).map(([coin, { change, isPositive }]) => (
               <li className={styles.coinsContainer} key={coin}>
