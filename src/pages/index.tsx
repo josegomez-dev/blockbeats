@@ -226,9 +226,6 @@ const LandingPage = () => {
       </div>
     </div>
 
-
-
-
       {/* Services Section */}
       <section className={styles.servicesSection}>
         Join Us

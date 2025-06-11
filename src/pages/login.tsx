@@ -116,6 +116,7 @@ const LoginScreen = () => {
             address: _address,
           }
         );
+        
         toast.success(`Wallet ${_address} connected successfully!`);
         setIsModalOpen(true);
       } else {
@@ -226,37 +227,40 @@ const LoginScreen = () => {
         <div className={styles.banner}>
           <h2 className={styles.bannerTitle}>🎧 Join <span data-text="BLOCKBEATS" className="glitch">BLOCKBEATS</span></h2>
           
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '20px', float: 'right', marginTop: '-90px' }}>
-            <Link href={'https://braavos.app/'} target={'_blank'}>
-              <Image
-                src="/braavos.jpeg"
-                alt="braavos-logo"
-                width={35}
-                height={35}
-                style={{ filter: 'invert(1) drop-shadow(0 0 0.3rem #ffffff70)', cursor: 'pointer' }}
-              />
-            </Link>  
-            &nbsp;
-            &nbsp;
-            <Link href={'https://argent.xyz/'} target={'_blank'}>
-              <Image
-                src="/argentx.png"
-                alt="argentx-logo"
-                width={35}
-                height={35}
-                style={{ cursor: 'pointer' }}
-              />
-            </Link>  
-          </div>
+          {!loading && (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '20px', float: 'right', marginTop: '-90px' }}>
+              <Link href={'https://braavos.app/'} target={'_blank'}>
+                <Image
+                  src="/braavos.jpeg"
+                  alt="braavos-logo"
+                  width={35}
+                  height={35}
+                  style={{ filter: 'invert(1) drop-shadow(0 0 0.3rem #ffffff70)', cursor: 'pointer' }}
+                />
+              </Link>  
+              &nbsp;
+              &nbsp;
+              <Link href={'https://argent.xyz/'} target={'_blank'}>
+                <Image
+                  src="/argentx.png"
+                  alt="argentx-logo"
+                  width={35}
+                  height={35}
+                  style={{ cursor: 'pointer' }}
+                />
+              </Link>  
+            </div>
+          )}
 
           <>
             {walletConnection?.address ? (
-              <button
-                className={styles.submitBtnLarge}
-                onClick={handleDisconnect}
-              >
-                Disconnect Wallet: {walletConnection.address.slice(0, 6)}...{walletConnection.address.slice(-4)}
-              </button>
+              // <button
+              //   className={styles.submitBtnLarge}
+              //   onClick={handleDisconnect}
+              // >
+              //   Disconnect Wallet: {walletConnection.address.slice(0, 6)}...{walletConnection.address.slice(-4)}
+              // </button>
+              <Preloader />
             ) : (
               <button
                 className={styles.submitBtnLarge}
