@@ -325,7 +325,7 @@ const LandingPage = () => {
       </section>
 
 
-      {/* Team Section */}
+      {/* Team Section
       <section className={styles.teamSection}>
         <h2>🎵 Meet the Team</h2>
         <div className={styles.teamGrid}>
@@ -369,10 +369,10 @@ const LandingPage = () => {
             </div>
           ))}
         </div>
-      </section>
+      </section> */}
 
       {/* Parallax + Sponsors Section */}
-      <section className={styles.parallaxSponsorsSection}>
+      {/* <section className={styles.parallaxSponsorsSection}>
         <div className={styles.parallaxOverlay}>
           <h2>🎼 Powered by our Sponsors</h2>
           <div className={styles.sponsorsSlider}>
@@ -387,7 +387,7 @@ const LandingPage = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
     {open && (
       <Modal

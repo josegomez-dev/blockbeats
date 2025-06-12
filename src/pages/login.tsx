@@ -314,18 +314,6 @@ const LoginScreen = () => {
         <Link href={'https://www.dojocoding.io/'} target={'_blank'}>
           <Image src={'/dojo.png'} alt={'metamask'} width={150} height={80} style={{ marginBottom: '-5px' }} />
         </Link>
-        &nbsp;
-        &nbsp;
-        &nbsp;
-        <Link href={'https://josegomez-dev.github.io/catarsismusical/'} target={'_blank'}>
-          <Image src={'/catarsismusical.png'} alt={'metamask'} width={80} height={80} style={{ marginBottom: '-5px' }} />
-        </Link>
-        &nbsp;
-        &nbsp;
-        &nbsp;
-        <Link href={'https://josegomez-dev.github.io/MusicalPath/'} target={'_blank'}>
-          <Image src={'/musicalpathlogo.webp'} alt={'metamask'} width={100} height={70} style={{ marginBottom: '-5px' }} />
-        </Link>
       </div>
 
       <br />
