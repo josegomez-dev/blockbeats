@@ -203,7 +203,7 @@ const LandingPage = () => {
           <h2 className={styles.typewriter} style={{fontSize: '20px'}}>The Future of Music & Art NFTs</h2>
 
           <br />
-          <span data-text="Create, share, and experience music like never before — powered by Web3." className="glitch">Create, share, and experience music like never before — powered by Web3.</span>
+          <span className="glitch">Create, share, and experience music like never before — powered by Web3.</span>
           <br />
           <button className={stylesMain.submitBtn} onClick={() => router.push('/login')}>LOGIN TO YOUR ACCOUNT</button>
           <Link target='_blank' href="https://discord.gg/hrjuWATX" className={stylesMain.registerLink}>
@@ -277,11 +277,11 @@ const LandingPage = () => {
       </section>
 
       {/* Vision & Mission Section */}
-      <section className={styles.visionMissionSection}>
-        <h2>🌟 Our Vision & Mission</h2>
+      {/* <section className={styles.visionMissionSection}>
+        <h2>🎯 Roadmap</h2>
         <div className={styles.visionMissionContent}>
           <div className={styles.visionBlock}>
-            <h3>🎯 Vision</h3>
+            <h3> Vision</h3>
             <p>
               To become the leading platform for inclusive, creative, and immersive musical experiences on the Web3 space — where music, visual art, and technology converge to empower both artists and audiences worldwide.
             </p>
@@ -293,7 +293,7 @@ const LandingPage = () => {
             </p>
           </div>
         </div>
-      </section>
+      </section> */}
 
       <br />
       <br />
