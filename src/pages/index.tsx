@@ -207,7 +207,7 @@ const LandingPage = () => {
           <span className="glitch">Create, share, and experience music like never before — powered by Web3.</span>
           <br />
           <br />
-          <button className={stylesMain.submitBtn} onClick={() => router.push('/login')}>CREATE ART</button>
+          <button className={stylesMain.submitBtn} onClick={() => router.push('/login')}>CREATE & PLAY</button>
           <Link href="/marketplace" className={stylesMain.registerLink}>
             <button style={{ animation: 'none', background: 'transparent', color: 'white' }} className={stylesMain.submitBtn}>GO TO MARKETPLACE</button>
           </Link>
