@@ -39,7 +39,7 @@ const SignInUnautorizedModal: React.FC<SignInModalProps> = ({ open, onClose, pag
         <br />
         <button
           className={styles.submitBtnLarge}
-          onClick={() => (window.location.href = '/')}
+          onClick={() => (window.location.href = '/login')}
         >
           Sign In
         </button>

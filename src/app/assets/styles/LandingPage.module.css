@@ -1,3 +1,11 @@
+
+
+@property --gradient-angle {
+  syntax: "<angle>";
+  initial-value: 90deg;
+  inherits: false;
+}
+
 .landingPage {
   display: flex;
   flex-direction: column;
@@ -468,29 +476,25 @@
   color: #fff;
   text-align: center;
   animation: fadeIn 2s ease-in-out;
-  margin: 50px 0;
 }
 
 .servicesGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
+  gap: 55px;
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .serviceItem {
-  background-color: #1f1f1f;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(255, 0, 153, 0.3);
+  /* box-shadow: 0 0 10px rgba(255, 0, 153, 0.3); */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
-  padding: 10px;
 }
 
 .serviceItem:hover {
   transform: translateY(-8px) scale(1.05);
-  box-shadow: 0 0 20px rgba(255, 0, 153, 0.6);
+  /* box-shadow: 0 0 20px rgba(255, 0, 153, 0.6); */
 }
 
 .serviceIconWrapper {
@@ -518,6 +522,53 @@
   font-size: 0.9rem;
   color: #ccc;
 }
+
+.serviceItem img {
+  border-radius: 15px;
+}
+
+.card {
+  position: relative;
+  height: auto;
+  width: 100%;
+  border-radius: 0.45rem;
+  cursor: pointer;
+  background-color: var(--clr-card);
+}
+
+.card::after,
+.card::before {
+  content: " ";
+  position: absolute;
+  z-index: -1;
+  inset: -0.5rem;
+  background: conic-gradient(
+    from var(--gradient-angle),
+    var(--clr-card),
+    var(--clr-1),
+    var(--clr-2),
+    var(--clr-3),
+    var(--clr-2),
+    var(--clr-1),
+    var(--clr-card)
+  );
+  border-radius: inherit;
+  animation: rotate 2.5s linear infinite;
+}
+
+.card::after {
+  filter: blur(3rem);
+}
+
+@keyframes rotate {
+  0% {
+    --gradient-angle: 0deg;
+  }
+  100% {
+    --gradient-angle: 360deg;
+  }
+}
+
 
 
 

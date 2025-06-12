@@ -229,12 +229,12 @@ export default function Nav() {
                       <FaChalkboardTeacher className={styles.icon} /> Tutorials & Guides
                     </div>
                   </Link>
-                  <Link href="/minigames">
+                  {/* <Link href="/minigames">
                     <div className={styles.dropdownItem}>
                       <GiGamepad className={styles.icon} /> MiniGames HUB
                     </div>
-                  </Link>
-                  <Link href="/analytics" style={{ opacity: 0.2 }}>
+                  </Link> */}
+                  {/* <Link href="/analytics" style={{ opacity: 0.2 }}>
                     <div className={styles.dropdownItem}>
                       <FaCog className={styles.icon} /> Analytics
                     </div>
@@ -243,7 +243,7 @@ export default function Nav() {
                     <div className={styles.dropdownItem}>
                       <FaCog className={styles.icon} /> Settings
                     </div>
-                  </Link>
+                  </Link> */}
                   <div className={`${styles.dropdownItem} ${styles.logout}`} onClick={handleLogout}>
                     <FaSignOutAlt className={styles.icon} /> Logout
                   </div>

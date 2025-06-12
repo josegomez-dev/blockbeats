@@ -17,9 +17,9 @@ const SidebarMenu = () => {
     { icon: <BiCollection />, label: 'Collections', href: '/collections' },
     { icon: <FaStore />, label: 'Marketplace', href: '/marketplace' },
     { icon: <FaChalkboardTeacher />, label: 'Tutorials & Guides', href: '/tutorials' },
-    { icon: <FaGamepad />, label: 'MiniGames Hub', href: '/minigames' },
-    { icon: <FaCog />, label: 'Analytics', href: '/analytics' },
-    { icon: <FaCog />, label: 'Settings', href: '/settings' },
+    // { icon: <FaGamepad />, label: 'MiniGames Hub', href: '/minigames' },
+    // { icon: <FaCog />, label: 'Analytics', href: '/analytics' },
+    // { icon: <FaCog />, label: 'Settings', href: '/settings' },
   ];
 
   return (

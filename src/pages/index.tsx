@@ -6,6 +6,7 @@ import { Modal } from 'react-responsive-modal';
 import { FaRegNewspaper, FaTwitter, FaDiscord, FaYoutube, FaFacebook, FaMedium, FaTelegram, FaLinkedin, FaInstagram, FaTiktok } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Footer from '@/components/Footer';
 
 const LandingPage = () => {
   const [open, setOpen] = useState(false);
@@ -51,31 +52,31 @@ const LandingPage = () => {
   };
 
   const services = [
-    {
-      title: 'Holographic Experiences',
-      description: 'Deliver immersive holographic live performances.',
-      icon: '/icons/1.png',
-    },
-    {
-      title: 'NFT Minting Machines',
-      description: 'Deploy interactive minting machines for luxury NFT experiences.',
-      icon: '/icons/2.png',
-    },
-    {
-      title: 'Smart Light Shows',
-      description: 'Synchronize light installations with your music NFTs.',
-      icon: '/icons/3.png',
-    },
-    {
-      title: 'Drone Performances',
-      description: 'Coordinate drone-based visual performances for your music.',
-      icon: '/icons/4.png',
-    },
+    // {
+    //   title: 'Holographic Experiences',
+    //   description: 'Deliver immersive holographic live performances.',
+    //   icon: '/icons/1.png',
+    // },
+    // {
+    //   title: 'NFT Minting Machines',
+    //   description: 'Deploy interactive minting machines for luxury NFT experiences.',
+    //   icon: '/icons/2.png',
+    // },
+    // {
+    //   title: 'Smart Light Shows',
+    //   description: 'Synchronize light installations with your music NFTs.',
+    //   icon: '/icons/3.png',
+    // },
     {
       title: 'Feel the Music',
       description: 'Innovative haptic feedback devices that allow users to feel music through vibrations.',
       icon: '/icons/5.png',
     },
+        {
+      title: 'Drone Performances',
+      description: 'Coordinate drone-based visual performances for your music.',
+      icon: '/icons/4.png',
+    }
   ];
 
   const teamMembers = [
@@ -205,9 +206,10 @@ const LandingPage = () => {
           <br />
           <span className="glitch">Create, share, and experience music like never before — powered by Web3.</span>
           <br />
-          <button className={stylesMain.submitBtn} onClick={() => router.push('/login')}>LOGIN TO YOUR ACCOUNT</button>
-          <Link target='_blank' href="https://discord.gg/hrjuWATX" className={stylesMain.registerLink}>
-            <button style={{ animation: 'none', background: 'transparent', color: 'white' }} className={stylesMain.submitBtn}>JOIN US ON DISCORD</button>
+          <br />
+          <button className={stylesMain.submitBtn} onClick={() => router.push('/login')}>CREATE ART</button>
+          <Link href="/marketplace" className={stylesMain.registerLink}>
+            <button style={{ animation: 'none', background: 'transparent', color: 'white' }} className={stylesMain.submitBtn}>GO TO MARKETPLACE</button>
           </Link>
          
           <br />
@@ -226,6 +228,8 @@ const LandingPage = () => {
       </div>
     </div>
 
+      <br />
+      <br />
       {/* Services Section */}
       <section className={styles.servicesSection}>
         Join Us
@@ -265,7 +269,7 @@ const LandingPage = () => {
         <br />
         <div className={styles.servicesGrid}>
           {services.map((service, index) => (
-            <div className={styles.serviceItem} key={index}>
+            <div className={`${styles.serviceItem} ${styles.card}`} key={index}>
               <div className={styles.serviceIconWrapper}>
                 <img src={service.icon} alt={service.title} className={styles.serviceIcon} />
               </div>
@@ -388,6 +392,8 @@ const LandingPage = () => {
           </div>
         </div>
       </section> */}
+
+      <Footer />
 
     {open && (
       <Modal
