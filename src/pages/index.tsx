@@ -62,21 +62,21 @@ const LandingPage = () => {
     //   description: 'Deploy interactive minting machines for luxury NFT experiences.',
     //   icon: '/icons/2.png',
     // },
-    // {
-    //   title: 'Smart Light Shows',
-    //   description: 'Synchronize light installations with your music NFTs.',
-    //   icon: '/icons/3.png',
-    // },
     {
       title: 'Feel the Music',
       description: 'Innovative haptic feedback devices that allow users to feel music through vibrations.',
       icon: '/icons/5.png',
     },
-        {
+    {
       title: 'Drone Performances',
       description: 'Coordinate drone-based visual performances for your music.',
       icon: '/icons/4.png',
-    }
+    },
+    {
+      title: 'Smart Light Shows',
+      description: 'Synchronize light installations with your music NFTs.',
+      icon: '/icons/3.png',
+    },
   ];
 
   const teamMembers = [
@@ -392,8 +392,6 @@ const LandingPage = () => {
           </div>
         </div>
       </section> */}
-
-      <Footer />
 
     {open && (
       <Modal
