@@ -6,12 +6,15 @@ import { Modal } from 'react-responsive-modal';
 import { FaRegNewspaper, FaTwitter, FaDiscord, FaYoutube, FaFacebook, FaMedium, FaTelegram, FaLinkedin, FaInstagram, FaTiktok } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { useAuth } from "@/context/AuthContext";
 
 const LandingPage = () => {
   const [open, setOpen] = useState(false);
   const [selectedEmbedHtml, setSelectedEmbedHtml] = useState<string | null>(null);
   const [selectedTitle, setSelectedTitle] = useState<string | null>(null);
   const [selectedDescription, setSelectedDescription] = useState<string | null>(null);
+
+  const { user } = useAuth(); // Assuming you have a useAuth hook to get the user context
 
   const router = useRouter();
 
@@ -49,6 +52,13 @@ const LandingPage = () => {
     setSelectedDescription(description);
     setOpen(true);
   };
+
+  useEffect(() => {
+    if (user && user.uid) {
+      router.push('/dashboard');
+    }
+  }
+  , [user, router]);
 
   const services = [
     // {
@@ -207,11 +217,13 @@ const LandingPage = () => {
           <br />
           <br />
           <button className={stylesMain.submitBtn} onClick={() => router.push('/login')}>🖼️ CREATE & 🎹 PLAY </button>
-          <Link href="/marketplace" className={stylesMain.registerLink}>
+          {/* <Link href="/marketplace" className={stylesMain.registerLink}>
             <button style={{ animation: 'none', background: 'transparent', color: 'white' }} className={stylesMain.submitBtn}>🏪 MARKETPLACE</button>
+          </Link> */}
+          <Link href="https://joses-organization-73.gitbook.io/blockbeats-3.0/~/changes/2/basics/markdown" target="_blank" rel="noopener noreferrer">
+            <button  style={{ animation: 'none', background: 'transparent', color: 'white' }} className={stylesMain.submitBtn}>📑 DOCS</button>
           </Link>
-          <button style={{ animation: 'none', background: 'transparent', color: 'white' }} className={stylesMain.submitBtn}>🕹️ MINIGAMES HUB</button>
-         
+
           <br />
           <img className={styles.character2} src="/avatar/phase-5.webp" style={{ width: '200px', height: 'auto', marginBottom: '-106px'  }} alt="BlockBeats Robot"  />
           <img className={styles.character3} src="/avatar/phase-4.webp" style={{ width: '200px', height: 'auto', marginBottom: '-120px'  }} alt="BlockBeats Robot"  />

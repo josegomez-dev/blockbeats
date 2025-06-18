@@ -211,12 +211,12 @@ export default function Nav() {
                   </Link>
                   <Link href="/gallery">
                     <div className={styles.dropdownItem}>
-                      <RiGalleryLine className={styles.icon} /> Gallery
+                      <RiGalleryLine className={styles.icon} /> My Gallery
                     </div>
                   </Link>
                   <Link href="/collections">
                     <div className={styles.dropdownItem}>
-                      <BiCollection className={styles.icon} /> Collections
+                      <BiCollection className={styles.icon} /> Top Collections
                     </div>
                   </Link>
                   <Link href="/marketplace">
