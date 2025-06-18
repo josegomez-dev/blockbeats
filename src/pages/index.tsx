@@ -7,6 +7,7 @@ import { FaRegNewspaper, FaTwitter, FaDiscord, FaYoutube, FaFacebook, FaMedium, 
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useAuth } from "@/context/AuthContext";
+import Image from 'next/image';
 
 const LandingPage = () => {
   const [open, setOpen] = useState(false);
@@ -290,11 +291,23 @@ const LandingPage = () => {
             </div>
           ))}
         </div>
+        <br />
+        <br />
       </section>
 
+
+      <Image
+        src="/poster.jpg"
+        alt="Collections Banner"
+        width={'800'}
+        height={'500'}
+        style={{ width: '100%', height: 'auto', marginBottom: '20px', marginTop: '20px' }}
+      />
+
+
       {/* Vision & Mission Section */}
-      {/* <section className={styles.visionMissionSection}>
-        <h2>🎯 Roadmap</h2>
+      <section className={styles.visionMissionSection}>
+        <h2>🎯 Organizational Philosophy & Ethics</h2>
         <div className={styles.visionMissionContent}>
           <div className={styles.visionBlock}>
             <h3> Vision</h3>
@@ -309,7 +322,7 @@ const LandingPage = () => {
             </p>
           </div>
         </div>
-      </section> */}
+      </section>
 
       <br />
       <br />
