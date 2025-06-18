@@ -16,6 +16,7 @@ import PixelPreview from '@/components/PixelPreview';
 import { notes } from "@/utils/constants/musicDrawingMachine";
 import { playMelody, playDrumLoop } from "@/utils/helpers/drumHelper";
 import Modal from 'react-responsive-modal';
+import Image from 'next/image';
 
 const CollectionsScreen = () => {
   type NFT = {
@@ -184,7 +185,8 @@ const CollectionsScreen = () => {
           </div>
         )}
 
-        <Modal 
+        {isModalOpen && (
+          <Modal 
           open={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           showCloseIcon={false}
@@ -231,6 +233,26 @@ const CollectionsScreen = () => {
 
           <button className={styles.submitBtn} onClick={() => setIsModalOpen(false)}>Close</button>
         </Modal>
+        )}
+
+        <br />
+        <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
+          <Image
+            src="/avatar/phase-9.webp"
+            alt="Collections Banner"
+            width={250}
+            height={300}
+            style={{ marginBottom: '20px' }}
+          />
+
+          <p>
+            Explore and view all the top fan collections created by the Blockbeats community. Click on any collection to view its details.
+            <br />
+            <br />
+            <br />
+            <Link href="/dashboard" className={styles.submitBtn} style={{ marginTop: '10px' }}>Back to Music Drawing Machine</Link>
+          </p>
+        </div>
 
         <br /><br /><br />
       </div>
