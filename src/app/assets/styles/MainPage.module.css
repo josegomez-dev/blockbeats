@@ -741,3 +741,55 @@
   margin: 10px auto;
   text-align: center;
 }
+
+
+
+.collectionDrawer {
+  background-color: rgba(25, 25, 25, 0.95);
+  padding: 30px;
+  margin: 20px auto;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 1200px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease-in-out;
+}
+
+.collectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.collectionGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.nftCard {
+  background: #111;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 10px 5px;
+  border-radius: 12px;
+  width: 150px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.nftCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+}
+
+.nftCard h4 {
+  font-size: 1rem;
+  color: #fff;
+  margin-bottom: 10px;
+  word-break: break-word;
+}

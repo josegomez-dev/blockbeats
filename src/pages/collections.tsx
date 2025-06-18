@@ -12,6 +12,8 @@ import CollectionsSlider from '@/components/CollectionsSlider';
 import SignInUnautorizedModal from '@/components/SignInUnautorizedModal';
 import { useRouter } from 'next/router';
 import PixelPreview from '@/components/PixelPreview';
+import { notes } from "@/utils/constants/musicDrawingMachine";
+import { playMelody, playDrumLoop } from "@/utils/helpers/drumHelper";
 
 const CollectionsScreen = () => {
   type NFT = {
@@ -28,6 +30,11 @@ const CollectionsScreen = () => {
   const [selectedCollection, setSelectedCollection] = React.useState<any | null>(null);
   const [collectionNFTs, setCollectionNFTs] = React.useState<NFT[]>([]);
   const [isCollectionViewOpen, setIsCollectionViewOpen] = React.useState(false);
+
+  const [isPlaying, setIsPlaying] = React.useState(false);
+  const [playingId, setPlayingId] = React.useState<string | null>(null);
+  const [stopMelodyRef, setStopMelodyRef] = React.useState<(() => void) | null>(null);
+  const [stopDrumRef, setStopDrumRef] = React.useState<(() => void) | null>(null);
 
   const { user } = useAuth();
   const router = useRouter();
@@ -69,15 +76,48 @@ const CollectionsScreen = () => {
     setIsCollectionViewOpen(true);
   };
 
-  if (!user) {
-    return (
-      <SignInUnautorizedModal 
-        open={true}
-        onClose={() => {}}
-        pageName="Gallery"
-      />
+  // if (!user) {
+  //   return (
+  //     <SignInUnautorizedModal 
+  //       open={true}
+  //       onClose={() => {}}
+  //       pageName="Gallery"
+  //     />
+  //   );
+  // }
+
+
+  const handlePlayNFT = (nft: NFT) => {
+    if (!nft.colorMap || nft.colorMap.length === 0 || (isPlaying && playingId === nft.id)) return;
+
+    // stop previous playback
+    stopMelodyRef?.();
+    stopDrumRef?.();
+
+    const melody = nft.colorMap.map(({ noteIndex, time }) => ({ noteIndex, time }));
+    const tempo = 300;
+
+    setIsPlaying(true);
+    setPlayingId(nft.id);
+
+    const stopDrum = playDrumLoop(tempo, () => {});
+    setStopDrumRef(() => stopDrum);
+
+    const stopMelody = playMelody(
+      melody,
+      tempo,
+      notes.map((n) => n[1]),
+      () => {
+        stopDrum?.();
+        setIsPlaying(false);
+        setPlayingId(null);
+        setStopMelodyRef(null);
+        setStopDrumRef(null);
+      }
     );
-  }
+
+    setStopMelodyRef(() => stopMelody);
+  };
 
   return (
     <>
@@ -85,9 +125,14 @@ const CollectionsScreen = () => {
         <br />
 
         <div style={{ textAlign: "center", margin: "0 auto", padding: "25px" }}>
-          <h2><p className="glitch">Explore <span data-text="TOP FANS" className="glitch">TOP FANS</span> COLLECTIONS</p></h2>
+          <h2><p className="glitch">Explore <span data-text="TOP" className="glitch">TOP</span> COLLECTIONS</p></h2>
           <br />
           <button onClick={() => router.push('/createTopCollection')} className={styles.submitBtn}>Create Top Fan Collection</button>
+          <br />
+          <p>
+            Here you can view all the top fan collections created by our community.  <br />
+            Each collection is a unique set of NFTs that fans have created to show their support.
+          </p>
           <CollectionsSlider title='' fullWidth topCollections={topCollections} onSelectCollection={handleViewCollection} />
         </div>
 
@@ -107,6 +152,14 @@ const CollectionsScreen = () => {
                       notesCount={nft.notesPlayed?.length || 0}
                       size={100}
                     />
+                    <button
+                      onClick={() => handlePlayNFT(nft)}
+                      disabled={isPlaying && playingId === nft.id}
+                      className={styles.submitBtn}
+                      style={{ backgroundColor: isPlaying && playingId === nft.id ? "var(--neon-color)" : "transparent" }}
+                    >
+                      {(isPlaying && playingId === nft.id) ? "🎧..." : "▶️"}
+                    </button>
                   </div>
                 ))
               ) : (

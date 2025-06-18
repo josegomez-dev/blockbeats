@@ -248,10 +248,10 @@ export default function Nav() {
                     <div className={styles.dropdownItem}>
                       <FaCog className={styles.icon} /> Settings
                     </div>
-                  </Link>
+                  </Link> */}
                   <div className={`${styles.dropdownItem} ${styles.logout}`} onClick={handleLogout}>
                     <FaSignOutAlt className={styles.icon} /> Logout
-                  </div> */}
+                  </div>
                 </div>
               )}
             </li>
