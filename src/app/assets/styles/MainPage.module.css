@@ -457,6 +457,13 @@
   margin-left: 70px;
 }
 
+@media (max-width: 700px) {
+  .desktopGrid {
+    margin-left: 0;
+  }
+}
+
+
 
 
 .leftPanel,
