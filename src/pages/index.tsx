@@ -295,16 +295,6 @@ const LandingPage = () => {
         <br />
       </section>
 
-
-      <Image
-        src="/poster.jpg"
-        alt="Collections Banner"
-        width={'800'}
-        height={'500'}
-        style={{ width: '100%', height: 'auto', marginBottom: '20px', marginTop: '20px' }}
-      />
-
-
       {/* Vision & Mission Section */}
       <section className={styles.visionMissionSection}>
         <h2>🎯 Organizational Philosophy & Ethics</h2>
