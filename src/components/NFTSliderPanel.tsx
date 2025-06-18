@@ -38,12 +38,6 @@ const NFTSliderPanel = ({ nfts, collections, loading }: { nfts: any[]; collectio
         </>
       )}
     </div>
-    
-    <div className={styles.buttonsContainerMusicBox}>
-      <button disabled className={styles.submitBtn} style={{ background: 'transparent', color: 'white', animation: 'none', opacity: '0.5' }}>🪙 Mint</button>
-      &nbsp;&nbsp;
-      <button disabled className={styles.submitBtn} style={{ background: 'transparent', color: 'white', animation: 'none', opacity: '0.5' }}>🔄 Trade</button>
-    </div>
     <CollectionsSlider topCollections={collections} title="Top Fan Collections" />
   </div>
 );

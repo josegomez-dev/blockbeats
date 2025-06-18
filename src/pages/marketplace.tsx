@@ -163,7 +163,7 @@ const [stopDrumRef, setStopDrumRef] = React.useState<(() => void) | null>(null);
         <div className="gallery-grid" style={{ marginLeft: '50px' }}>
           {nfts.map((src, index) => (
             <div className="gallery-item" key={index} onClick={() => handleViewNFT(src)}>
-              <h3>{src.songName} {index + 1}</h3>
+              <h3>{src.songName}</h3>
               <br />
               {/* <p>Description for image {index + 1}</p>                 */}
               <div className="gallery-item-overlay">

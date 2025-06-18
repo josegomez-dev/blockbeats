@@ -3,15 +3,16 @@ import styles from './../app/assets/styles/MainPage.module.css';
 import { TopCollections } from '@/types/topCollections';
 
 interface CollectionProps {
-    fullWidth?: boolean;
-    title?: string;
-    topCollections?: TopCollections[];
+  fullWidth?: boolean;
+  title?: string;
+  topCollections?: TopCollections[];
+  onSelectCollection?: (collectionId: string) => void;
 }
 
-const CollectionsSlider: React.FC<CollectionProps> = ({ fullWidth, title, topCollections }) => {
+const CollectionsSlider: React.FC<CollectionProps> = ({ fullWidth, title, topCollections, onSelectCollection }) => {
   return (
     <div style={{ padding: '5px 50px' }}>
-      <h2 className={styles.title}>{title}</h2>
+      {title && <h2 className={styles.title}>{title}</h2>}
       <br />
       <div className={styles.sliderWrapper} style={{ width: fullWidth ? '100%' : '' }}>
         <div className={styles.sliderTrack}>
@@ -19,7 +20,8 @@ const CollectionsSlider: React.FC<CollectionProps> = ({ fullWidth, title, topCol
             <div
               key={i}
               className={styles.card}
-              style={{ borderColor: item.color }}
+              style={{ borderColor: item.color, cursor: 'pointer' }}
+              onClick={() => onSelectCollection?.(item.id)}
             >
               <div className={styles.collectionCard}>
                 <h3 className={styles.collectionName}>{item.collectionName}</h3>
