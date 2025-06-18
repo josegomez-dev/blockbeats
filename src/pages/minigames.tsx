@@ -27,24 +27,28 @@ const miniGames = [
     description: 'Control a swarm of drones to draw shapes and messages in the air!',
     image: '/games/_1.png',
     key: 'drones',
+    disabled: false, 
   },
   {
     title: '🎰 Mint Machine',
     description: 'Spin the reels and mint your exclusive NFT surprise!',
     image: '/games/_2.png',
     key: 'vegas',
+    disabled: true,
   },
   {
     title: '🌆 Smart Light City',
     description: 'Light up buildings and streets in rhythmic patterns.',
     image: '/games/_3.png',
     key: 'smart',
+    disabled: true, 
   },
   {
     title: '🪐 Holographic Arena',
     description: 'Enter a 3D hologram space and experience immersive music games!',
     image: '/games/_4.png',
     key: 'holo',
+    disabled: true, 
   },
 ];
 
@@ -96,14 +100,14 @@ const MiniGamesScreen = () => {
             <div
               key={index}
               className={'card'}
-              onClick={() => handleCardClick(game.key)}
+              onClick={() => game.disabled ? null : handleCardClick(game.key)}
               style={{ cursor: 'pointer' }}
             >
               <img
                 src={game.image}
                 alt={game.title}
                 className={'image'}
-                style={{ height: 'auto' }}
+                style={{ height: 'auto', opacity: game.disabled ? 0.5 : 1, filter: game.disabled ? 'grayscale(100%)' : 'none' }}
               />
               {/* You can re-enable this block for text under each card */}
               {/* <div className={styles.content}>
