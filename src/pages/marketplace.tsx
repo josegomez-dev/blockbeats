@@ -13,6 +13,7 @@ import SignInUnautorizedModal from '@/components/SignInUnautorizedModal';
 import { useRouter } from 'next/router';
 import { playMelody, playDrumLoop } from "@/utils/helpers/drumHelper";
 import { notes } from "@/utils/constants/musicDrawingMachine";
+import Image from 'next/image';
 
 
 const MarketplaceScreen = () => {
@@ -143,6 +144,7 @@ const [stopDrumRef, setStopDrumRef] = React.useState<(() => void) | null>(null);
         </Modal>
       )}
 
+
       <div className="gallery-screen" style={{ padding: '35px' }}>
         <br />
         <br />
@@ -155,7 +157,6 @@ const [stopDrumRef, setStopDrumRef] = React.useState<(() => void) | null>(null);
             <br />
             <br />
             <Link href="/dashboard" className={styles.submitBtn} style={{ marginTop: '10px' }}>Create Musical NFT</Link>
-            <br />
             <br />
             <br />
           </p>
@@ -191,10 +192,32 @@ const [stopDrumRef, setStopDrumRef] = React.useState<(() => void) | null>(null);
               </div>
             </div>
           ))}
+          
         </div>
+        
       </div>
-      <br />
 
+        <br />
+        <hr />
+        <div style={{ backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', margin: '0 auto', textAlign: 'center' }}>
+          <br />
+          <Image
+            src="/avatar/phase-5.webp"
+            alt="Collections Banner"
+            width={300}
+            height={300}
+            style={{ marginBottom: '20px' }}
+          />
+          <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
+            <p>Explore and view all the top fan collections created by the Blockbeats community.</p>
+            <br />
+            <Link href="/dashboard" className={styles.submitBtn} style={{ marginTop: '10px' }}>Back to Music Drawing Machine</Link>
+            <br />
+            <br />
+            <br />
+            <br />
+          </div>
+        </div>
       <Footer />
     </>
   );

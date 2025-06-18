@@ -9,6 +9,7 @@ import { db } from '../../firebase';
 import CollectionsSlider from '@/components/CollectionsSlider';
 import SignInUnautorizedModal from '@/components/SignInUnautorizedModal';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 const GalleryScreen = () => {
 
@@ -64,7 +65,7 @@ const GalleryScreen = () => {
         <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
           <br />
           <br />
-          <h2><p className="glitch">My Collection</p></h2>
+          <h2><p className="glitch">My Gallery</p></h2>
 
           {userNFTS.length <= 0 ? (
             <div className={styles.modalContent}>
@@ -94,6 +95,26 @@ const GalleryScreen = () => {
 
         <br />
         <br />
+        <br />
+        <hr />
+        <div style={{ backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.1)' }}>
+          <Image
+            src="/avatar/phase-8.webp"
+            alt="Collections Banner"
+            width={250}
+            height={300}
+            style={{ marginBottom: '20px' }}
+          />
+          <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
+            <p>Explore and view all the top fan collections created by the Blockbeats community.</p>
+            <br />
+            <Link href="/dashboard" className={styles.submitBtn} style={{ marginTop: '10px' }}>Back to Music Drawing Machine</Link>
+            <br />
+            <br />
+            <br />
+            <br />
+          </div>
+        </div>
 
       </div>
 

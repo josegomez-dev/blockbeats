@@ -235,26 +235,34 @@ const CollectionsScreen = () => {
         </Modal>
         )}
 
-        <br />
-        <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
-          <Image
-            src="/avatar/phase-9.webp"
-            alt="Collections Banner"
-            width={250}
-            height={300}
-            style={{ marginBottom: '20px' }}
-          />
+        <br /> 
+        <br /> 
+        <br /> 
+        <hr /> 
+        <div style={{backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.1)'}}>
+          <br />
+          <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
+            <Image
+              src="/avatar/phase-9.webp"
+              alt="Collections Banner"
+              width={250}
+              height={300}
+              style={{ marginBottom: '20px' }}
+            />
 
-          <p>
-            Explore and view all the top fan collections created by the Blockbeats community. Click on any collection to view its details.
-            <br />
-            <br />
-            <br />
-            <Link href="/dashboard" className={styles.submitBtn} style={{ marginTop: '10px' }}>Back to Music Drawing Machine</Link>
-          </p>
+            <p>
+              Explore and view all the top fan collections created by the Blockbeats community. Click on any collection to view its details.
+              <br />
+              <br />
+              <br />
+              <Link href="/dashboard" className={styles.submitBtn} style={{ marginTop: '10px' }}>Back to Music Drawing Machine</Link>
+            </p>
+          </div>
+
+          <br />
+          <br />
+          <br />
         </div>
-
-        <br /><br /><br />
       </div>
       <Footer />
     </>
