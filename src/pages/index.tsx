@@ -220,7 +220,7 @@ const LandingPage = () => {
           {/* <Link href="/marketplace" className={stylesMain.registerLink}>
             <button style={{ animation: 'none', background: 'transparent', color: 'white' }} className={stylesMain.submitBtn}>🏪 MARKETPLACE</button>
           </Link> */}
-          <Link href="https://joses-organization-73.gitbook.io/blockbeats-3.0/~/changes/2/basics/markdown" target="_blank" rel="noopener noreferrer">
+          <Link href="https://joses-organization-73.gitbook.io/blockbeats-3.0" target="_blank" rel="noopener noreferrer">
             <button  style={{ animation: 'none', background: 'transparent', color: 'white' }} className={stylesMain.submitBtn}>📑 DOCS</button>
           </Link>
 
