@@ -18,7 +18,7 @@ const Layout = ({ children }: LayoutProps) => {
         {authenticated && (
           <>
             <SidebarMenu />
-            <SidebarChatPanel />
+            {/* <SidebarChatPanel /> */}
           </>
         )}
         <main className="p-4">
