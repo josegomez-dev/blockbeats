@@ -1,14 +1,16 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import styles from "@/app/assets/styles/MainPage.module.css";
 import PixelPreview from './PixelPreview';
+import { playMelody, playDrumLoop } from "@/utils/helpers/drumHelper";
+import { notes } from "@/utils/constants/musicDrawingMachine";
 
 interface Slide {
   id: number | string;
   songName: string;
-  colorMap: { 
+  colorMap: {
     noteIndex: number;
     time: number;
     color: string;
@@ -22,33 +24,64 @@ interface NeonSliderProps {
 
 const NeonSlider: React.FC<NeonSliderProps> = ({ slides }) => {
   const [current, setCurrent] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [stopMelodyRef, setStopMelodyRef] = useState<(() => void) | null>(null);
+  const [stopDrumRef, setStopDrumRef] = useState<(() => void) | null>(null);
+  const [playingSlideId, setPlayingSlideId] = useState<string | number | null>(null);
 
   const prevIndex = (current - 1 + slides.length) % slides.length;
   const nextIndex = (current + 1) % slides.length;
 
+  const stopPlayback = () => {
+    stopMelodyRef?.();
+    stopDrumRef?.();
+    setIsPlaying(false);
+    setStopMelodyRef(null);
+    setStopDrumRef(null);
+    setPlayingSlideId(null);
+  };
+
   const handlePrev = () => {
-    setCurrent(prev => (prev - 1 + slides.length) % slides.length);
+    if (isPlaying) stopPlayback();
+    setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
   };
 
   const handleNext = () => {
-    setCurrent(prev => (prev + 1) % slides.length);
+    if (isPlaying) stopPlayback();
+    setCurrent((prev) => (prev + 1) % slides.length);
   };
 
-  // Optional: Auto-slide every 5 seconds
-  // useEffect(() => {
-  //   const interval = setInterval(handleNext, 5000);
-  //   return () => clearInterval(interval);
-  // }, []);
+  const handlePlaySlide = (slide: Slide) => {
+    if (isPlaying && playingSlideId === slide.id) return; // already playing this one
 
-  const drawPixelArt = (slide: Slide) => {
-    // Placeholder for pixel art drawing logic
-    return <div className={styles.pixelArt}>{slide.songName}</div>;
+    stopPlayback(); // stop anything playing first
+    setIsPlaying(true);
+    setPlayingSlideId(slide.id);
+
+    const melody = slide.colorMap.map(({ noteIndex, time }) => ({ noteIndex, time }));
+    const tempo = 300;
+
+    const stopDrum = playDrumLoop(tempo, () => {});
+    setStopDrumRef(() => stopDrum);
+
+    const stopMelody = playMelody(
+      melody,
+      tempo,
+      notes.map((n) => n[1]),
+      () => {
+        stopDrum?.();
+        setIsPlaying(false);
+        setStopMelodyRef(null);
+        setStopDrumRef(null);
+        setPlayingSlideId(null);
+      }
+    );
+
+    setStopMelodyRef(() => stopMelody);
   };
 
   return (
     <div className={styles.sliderContainer}>
-      {/* 🚀 Neon Slider */}
-  
       <div className={`${styles.thumbnail} ${styles.leftThumb}`}>
         <PixelPreview
           colorMap={slides[prevIndex]?.colorMap}
@@ -72,7 +105,18 @@ const NeonSlider: React.FC<NeonSliderProps> = ({ slides }) => {
               notesCount={slide.notesPlayed?.length}
               size={100}
             />
-            <br />  
+
+            <button
+              onClick={() => handlePlaySlide(slides[current])}
+              disabled={isPlaying && playingSlideId === slide.id}
+              className={styles.submitBtn}
+              style={{ backgroundColor: isPlaying && playingSlideId === slide.id ? "var(--neon-color)" : "transparent" }}
+            >
+              {(isPlaying && playingSlideId === slide.id) ? "Playing..." : "Play"}
+            </button>
+
+            <br />
+            <br />
             <p>
               <b>Price:</b>{" "}
               <span data-text="2.1Eth" className="glitch">
@@ -80,7 +124,7 @@ const NeonSlider: React.FC<NeonSliderProps> = ({ slides }) => {
               </span>{" "}
               - <span style={{ color: "gold" }}>
                 ${Math.floor(Math.random() * 100) / 10}{"K"}
-                </span>
+              </span>
             </p>
           </div>
         ))}
@@ -95,10 +139,10 @@ const NeonSlider: React.FC<NeonSliderProps> = ({ slides }) => {
       </div>
 
       <div className={styles.sliderControls}>
-        <button onClick={handlePrev} className={styles.prevBtn}>
+        <button onClick={handlePrev} className={styles.prevBtn} disabled={isPlaying}>
           &#60;
         </button>
-        <button onClick={handleNext} className={styles.nextBtn}>
+        <button onClick={handleNext} className={styles.nextBtn} disabled={isPlaying}>
           &#62;
         </button>
       </div>

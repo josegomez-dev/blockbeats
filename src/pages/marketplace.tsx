@@ -11,6 +11,9 @@ import { Modal } from "react-responsive-modal";
 import CollectionsSlider from '@/components/CollectionsSlider';
 import SignInUnautorizedModal from '@/components/SignInUnautorizedModal';
 import { useRouter } from 'next/router';
+import { playMelody, playDrumLoop } from "@/utils/helpers/drumHelper";
+import { notes } from "@/utils/constants/musicDrawingMachine";
+
 
 const MarketplaceScreen = () => {
 
@@ -31,6 +34,12 @@ const MarketplaceScreen = () => {
 
   const { user } = useAuth();
   const router = useRouter();
+
+  const [isPlaying, setIsPlaying] = React.useState(false);
+const [playingId, setPlayingId] = React.useState<string | null>(null);
+const [stopMelodyRef, setStopMelodyRef] = React.useState<(() => void) | null>(null);
+const [stopDrumRef, setStopDrumRef] = React.useState<(() => void) | null>(null);
+
 
   useEffect(() => {
     const fetchNFTs = async () => {
@@ -57,10 +66,48 @@ const MarketplaceScreen = () => {
   };
   
   const handleCloseModal = () => {
+    stopMelodyRef?.();
+    stopDrumRef?.();
+    setIsPlaying(false);
+    setPlayingId(null);
     setShowViewModal(false);
     setSelectedNFT(null);
   };
 
+  const handlePlayNFT = (nft: NFT) => {
+  if (!nft.colorMap || nft.colorMap.length === 0) return;
+
+  // Prevent multiple playbacks
+  if (isPlaying && playingId === nft.id) return;
+
+  // Stop current playback if any
+  stopMelodyRef?.();
+  stopDrumRef?.();
+
+  setIsPlaying(true);
+  setPlayingId(nft.id);
+
+  const melody = nft.colorMap.map(({ noteIndex, time }) => ({ noteIndex, time }));
+  const tempo = 300;
+
+  const stopDrum = playDrumLoop(tempo, () => {});
+  setStopDrumRef(() => stopDrum);
+
+  const stopMelody = playMelody(
+    melody,
+    tempo,
+    notes.map((n) => n[1]),
+    () => {
+      stopDrum?.();
+      setIsPlaying(false);
+      setPlayingId(null);
+      setStopDrumRef(null);
+      setStopMelodyRef(null);
+    }
+  );
+
+  setStopMelodyRef(() => stopMelody);
+};
 
   return (
     <>
@@ -113,7 +160,7 @@ const MarketplaceScreen = () => {
             <br />
           </p>
         </div>
-        <div className="gallery-grid">
+        <div className="gallery-grid" style={{ marginLeft: '50px' }}>
           {nfts.map((src, index) => (
             <div className="gallery-item" key={index} onClick={() => handleViewNFT(src)}>
               <h3>{src.songName} {index + 1}</h3>
@@ -128,6 +175,19 @@ const MarketplaceScreen = () => {
                   {/* <img src={src} alt={`Gallery ${index}`} className="gallery-image" /> */}
                   {/* <button className={styles.submitBtn} style={{ animation: 'none', background: 'transparent' }}>View</button> */}
                   <button className={styles.submitBtn} style={{ animation: 'none' }}>View</button>
+                  <button
+                    className={styles.submitBtn}
+                    //style={{ backgroundColor: isPlaying && playingSlideId === slide.id ? "var(--neon-color)" : "transparent" }}
+                    style={{ animation: 'none', background: isPlaying && playingId === src.id ? "var(--neon-color)" : "transparent" }}
+                    disabled={isPlaying && playingId === src.id}
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent triggering the modal
+                      handlePlayNFT(src);
+                    }}
+                  >
+                    {(isPlaying && playingId === src.id) ? "Playing..." : "Play"}
+                  </button>
+
               </div>
             </div>
           ))}

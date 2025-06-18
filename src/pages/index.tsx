@@ -6,7 +6,6 @@ import { Modal } from 'react-responsive-modal';
 import { FaRegNewspaper, FaTwitter, FaDiscord, FaYoutube, FaFacebook, FaMedium, FaTelegram, FaLinkedin, FaInstagram, FaTiktok } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import Footer from '@/components/Footer';
 
 const LandingPage = () => {
   const [open, setOpen] = useState(false);
@@ -57,11 +56,6 @@ const LandingPage = () => {
     //   description: 'Deliver immersive holographic live performances.',
     //   icon: '/icons/1.png',
     // },
-    // {
-    //   title: 'NFT Minting Machines',
-    //   description: 'Deploy interactive minting machines for luxury NFT experiences.',
-    //   icon: '/icons/2.png',
-    // },
     {
       title: 'Feel the Music',
       description: 'Innovative haptic feedback devices that allow users to feel music through vibrations.',
@@ -71,6 +65,11 @@ const LandingPage = () => {
       title: 'Drone Performances',
       description: 'Coordinate drone-based visual performances for your music.',
       icon: '/icons/4.png',
+    },
+    {
+      title: 'NFT Minting Machines',
+      description: 'Deploy interactive minting machines for luxury NFT experiences.',
+      icon: '/icons/2.png',
     },
     {
       title: 'Smart Light Shows',
@@ -207,13 +206,14 @@ const LandingPage = () => {
           <span className="glitch">Create, share, and experience music like never before — powered by Web3.</span>
           <br />
           <br />
-          <button className={stylesMain.submitBtn} onClick={() => router.push('/login')}>CREATE & PLAY</button>
+          <button className={stylesMain.submitBtn} onClick={() => router.push('/login')}>🖼️ CREATE & 🎹 PLAY </button>
           <Link href="/marketplace" className={stylesMain.registerLink}>
-            <button style={{ animation: 'none', background: 'transparent', color: 'white' }} className={stylesMain.submitBtn}>GO TO MARKETPLACE</button>
+            <button style={{ animation: 'none', background: 'transparent', color: 'white' }} className={stylesMain.submitBtn}>🏪 MARKETPLACE</button>
           </Link>
+          <button style={{ animation: 'none', background: 'transparent', color: 'white' }} className={stylesMain.submitBtn}>🕹️ MINIGAMES HUB</button>
          
           <br />
-          <img className={styles.character2} src="/avatar/phase-5.webp" style={{ width: '200px', height: 'auto', marginBottom: '-120px'  }} alt="BlockBeats Robot"  />
+          <img className={styles.character2} src="/avatar/phase-5.webp" style={{ width: '200px', height: 'auto', marginBottom: '-106px'  }} alt="BlockBeats Robot"  />
           <img className={styles.character3} src="/avatar/phase-4.webp" style={{ width: '200px', height: 'auto', marginBottom: '-120px'  }} alt="BlockBeats Robot"  />
           <img className={styles.character1} src="/avatar/phase-6.webp" style={{ width: '200px', height: 'auto', marginBottom: '-120px'  }} alt="BlockBeats Robot"  />
         </div>

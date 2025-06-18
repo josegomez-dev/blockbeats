@@ -244,17 +244,18 @@ const MusicDrawingPage = () => {
   };
 
   const handleCanvasClick = (noteIndex: number, time: number) => {
-    setColorMap((prevMap) => {
-      const exists = prevMap.find((n) => n.noteIndex === noteIndex && n.time === time);
-      if (exists) {
-        return prevMap.filter((n) => !(n.noteIndex === noteIndex && n.time === time));
-      } else {
-        const color = getRandomColor();
-        return [...prevMap, { noteIndex, time, color }];
-      }
-    });
+  // Toggle note visually and in data
+  setColorMap((prevMap) => {
+    const exists = prevMap.find((n) => n.noteIndex === noteIndex && n.time === time);
+    if (exists) {
+      return prevMap.filter((n) => !(n.noteIndex === noteIndex && n.time === time));
+    } else {
+      const color = getRandomColor();
+      return [...prevMap, { noteIndex, time, color }];
+    }
+  });
 
-    setNotesPlayed((prevNotes) => {
+  setNotesPlayed((prevNotes) => {
       const exists = prevNotes.find((n) => n.noteIndex === noteIndex && n.time === time);
       if (exists) {
         return prevNotes.filter((n) => !(n.noteIndex === noteIndex && n.time === time));
@@ -262,7 +263,24 @@ const MusicDrawingPage = () => {
         return [...prevNotes, { noteIndex, time }];
       }
     });
+
+    // 🎵 Play the clicked note
+    if (ctx) {
+      ctx.resume(); // resume context if suspended
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = "sawtooth";
+      osc.frequency.setValueAtTime(notes[noteIndex][1], ctx.currentTime); // Hz
+      gain.gain.setValueAtTime(0.4, ctx.currentTime); // control volume
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25); // fade out
+
+      osc.connect(gain).connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.3);
+    }
   };
+
 
   const handleNotePlay = (noteIndex: number) => {
     const color = getRandomColor();

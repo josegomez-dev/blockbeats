@@ -2,7 +2,7 @@
 'use client';
 import React, { useState } from 'react';
 import styles from '@/app/assets/styles/SidebarMenu.module.css'; 
-import { FaHome, FaGamepad, FaStore, FaChalkboardTeacher, FaCog } from 'react-icons/fa';
+import { FaHome, FaGamepad, FaStore, FaChalkboardTeacher, FaCog, FaStoreAlt } from 'react-icons/fa';
 import { RiGalleryLine } from 'react-icons/ri';
 import { BiCollection } from 'react-icons/bi';
 import Link from 'next/link';
@@ -17,7 +17,8 @@ const SidebarMenu = () => {
     { icon: <BiCollection />, label: 'Collections', href: '/collections' },
     { icon: <FaStore />, label: 'Marketplace', href: '/marketplace' },
     { icon: <FaChalkboardTeacher />, label: 'Tutorials & Guides', href: '/tutorials' },
-    // { icon: <FaGamepad />, label: 'MiniGames Hub', href: '/minigames' },
+    { icon: <FaGamepad />, label: 'MiniGames Hub', href: '/minigames' },
+    // { icon: <FaStoreAlt />, label: 'Upgrades', href: '/minigames' },
     // { icon: <FaCog />, label: 'Analytics', href: '/analytics' },
     // { icon: <FaCog />, label: 'Settings', href: '/settings' },
   ];

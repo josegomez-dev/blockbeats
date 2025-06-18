@@ -10,7 +10,7 @@ import { FaSignOutAlt, FaBell } from 'react-icons/fa';
 import { MdDashboard } from 'react-icons/md';
 import { RiGalleryLine } from 'react-icons/ri';
 import { BiCollection } from 'react-icons/bi';
-import { FaStore, FaChalkboardTeacher, FaCog } from 'react-icons/fa';
+import { FaStore, FaChalkboardTeacher, FaCog, FaStoreAlt } from 'react-icons/fa';
 import { GiGamepad } from 'react-icons/gi';
 import Avatar from 'react-avatar';
 import { useAccount, useBalance } from "@starknet-react/core";
@@ -116,7 +116,7 @@ export default function Nav() {
           setIsAnimating(false); // Stop animation
         }
         setDisplayedValue(Math.floor(current));
-      }, 30);
+      }, 1530);
 
       return () => clearInterval(timer);
     }, [start, end, duration]);
@@ -229,24 +229,29 @@ export default function Nav() {
                       <FaChalkboardTeacher className={styles.icon} /> Tutorials & Guides
                     </div>
                   </Link>
+                  <Link href="/minigames">
+                    <div className={styles.dropdownItem}>
+                      <FaStoreAlt className={styles.icon} /> MiniGames HUB
+                    </div>
+                  </Link>
                   {/* <Link href="/minigames">
                     <div className={styles.dropdownItem}>
-                      <GiGamepad className={styles.icon} /> MiniGames HUB
+                      <GiGamepad className={styles.icon} /> Upgrades
                     </div>
-                  </Link> */}
-                  {/* <Link href="/analytics" style={{ opacity: 0.2 }}>
+                  </Link>
+                  <Link href="/analytics">
                     <div className={styles.dropdownItem}>
                       <FaCog className={styles.icon} /> Analytics
                     </div>
                   </Link>
-                  <Link href="/settings" style={{ opacity: 0.2 }}>
+                  <Link href="/settings">
                     <div className={styles.dropdownItem}>
                       <FaCog className={styles.icon} /> Settings
                     </div>
-                  </Link> */}
+                  </Link>
                   <div className={`${styles.dropdownItem} ${styles.logout}`} onClick={handleLogout}>
                     <FaSignOutAlt className={styles.icon} /> Logout
-                  </div>
+                  </div> */}
                 </div>
               )}
             </li>
