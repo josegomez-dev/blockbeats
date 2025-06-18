@@ -302,19 +302,7 @@ const LoginScreen = () => {
       </div>
       )}
       
-      <div>
-        <br />
-        <br />
-        <Link href={'https://www.starknet.io/'} target={'_blank'}>
-          <Image src={'/starknet-logo.svg'} alt={'metamask'} width={200} height={50} style={{ filter: 'invert(1) drop-shadow(0 0 0.3rem #ffffff70)' }} />
-        </Link>
-        &nbsp;
-        &nbsp;
-        &nbsp;
-        <Link href={'https://www.dojocoding.io/'} target={'_blank'}>
-          <Image src={'/dojo.png'} alt={'metamask'} width={150} height={80} style={{ marginBottom: '-5px' }} />
-        </Link>
-      </div>
+
 
       <br />
       <br />
