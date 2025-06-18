@@ -143,7 +143,7 @@ const CollectionsScreen = () => {
           <button onClick={() => router.push('/createTopCollection')} className={styles.submitBtn}>Create Top Fan Collection</button>
           <br />
           <p>
-            Here you can view all the top fan collections created by our community. <br />
+            Here you can view all the top fan collections created by our community. <br /><br />
             Each collection is a unique set of NFTs that fans have created to show their support.
           </p>
           <CollectionsSlider title='' fullWidth topCollections={topCollections} onSelectCollection={handleViewCollection} />
