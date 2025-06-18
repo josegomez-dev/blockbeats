@@ -513,6 +513,11 @@ p {
   transition: background 0.3s ease;
   animation: pulseChat 2s infinite;
 }
+
+
+.gallery-grid {
+  margin-left: 50px;
+}
 @media (max-width: 700px) {
   .floating-button {
     bottom: 100px;
@@ -520,7 +525,11 @@ p {
   #web3-stats-panel {
     padding: 0 55px;
   }
+  .gallery-grid {
+    margin-left: 0;
+  }
 }
+
 
 .sidebar-panel {
   position: fixed;

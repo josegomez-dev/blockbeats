@@ -255,7 +255,7 @@ const CollectionsScreen = () => {
               <br />
               <br />
               <br />
-              <Link href="/dashboard" className={styles.submitBtn} style={{ marginTop: '10px' }}>Back to Music Drawing Machine</Link>
+              <Link href="/dashboard" className={styles.submitBtn} style={{ marginTop: '10px' }}>Back to Dashboard</Link>
             </p>
           </div>
 

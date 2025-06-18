@@ -161,7 +161,7 @@ const [stopDrumRef, setStopDrumRef] = React.useState<(() => void) | null>(null);
             <br />
           </p>
         </div>
-        <div className="gallery-grid" style={{ marginLeft: '50px' }}>
+        <div className="gallery-grid">
           {nfts.map((src, index) => (
             <div className="gallery-item" key={index} onClick={() => handleViewNFT(src)}>
               <h3>{src.songName}</h3>
@@ -211,7 +211,8 @@ const [stopDrumRef, setStopDrumRef] = React.useState<(() => void) | null>(null);
           <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
             <p>Explore and view all the top fan collections created by the Blockbeats community.</p>
             <br />
-            <Link href="/dashboard" className={styles.submitBtn} style={{ marginTop: '10px' }}>Back to Music Drawing Machine</Link>
+            <br />
+            <Link href="/dashboard" className={styles.submitBtn} style={{ marginTop: '10px' }}>Back to Dashboard</Link>
             <br />
             <br />
             <br />

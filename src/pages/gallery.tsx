@@ -108,7 +108,8 @@ const GalleryScreen = () => {
           <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
             <p>Explore and view all the top fan collections created by the Blockbeats community.</p>
             <br />
-            <Link href="/dashboard" className={styles.submitBtn} style={{ marginTop: '10px' }}>Back to Music Drawing Machine</Link>
+            <br />
+            <Link href="/dashboard" className={styles.submitBtn} style={{ marginTop: '10px' }}>Back to Dashboard</Link>
             <br />
             <br />
             <br />
