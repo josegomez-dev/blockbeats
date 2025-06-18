@@ -165,24 +165,16 @@ const LandingPage = () => {
 
   const newsItems = [
     {
-      title: 'Holographic Live Concerts',
-      description: 'Projections and experiences for live events with holographic technology.',
-      videoUrl: 'https://www.youtube.com/watch?v=xm516bJeQOg',
-      previewImage: 'https://img.youtube.com/vi/xm516bJeQOg/maxresdefault.jpg',
-      embedYoutube:
-        '<iframe width="560" height="315" src="https://www.youtube.com/embed/xm516bJeQOg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+      title: 'Inclusive Music Experiences',
+      description: 'Developing new tools for inclusive music experiences for the visually and hearing impaired.',
+      videoUrl: 'https://www.youtube.com/watch?v=aSXn2tCq9LE',
+      previewImage: 'https://img.youtube.com/vi/aSXn2tCq9LE/maxresdefault.jpg',
     },
     {
-      title: 'Smart Light Buildings',
-      description: 'Service to create artistic light shows on buildings using musical NFTs.',
-      videoUrl: 'https://www.youtube.com/watch?v=-adNKTEbynI',
-      previewImage: 'https://img.youtube.com/vi/-adNKTEbynI/maxresdefault.jpg',
-    },
-    {
-      title: 'Vegas NFT Mint Machines',
-      description: 'Deploying Vegas-style interactive minting machines for luxury NFT experiences.',
-      videoUrl: 'https://www.youtube.com/watch?v=VmtUS50OEA8',
-      previewImage: 'https://img.youtube.com/vi/VmtUS50OEA8/maxresdefault.jpg',
+      title: '🎵 Drones for Art, Not War | BlockBeats NFT Protest Collection for Peace & Creativity',
+      description: 'Inspired by recent tragic events in Kyiv, this initiative raises awareness about the misuse of technology in war and promotes its potential for art, music, and entertainment instead. 🎨✨',
+      videoUrl: 'https://www.youtube.com/watch?v=ZKzrGB9VxBM',
+      previewImage: 'https://img.youtube.com/vi/ZKzrGB9VxBM/hqdefault.jpg',
     },
     {
       title: 'Drone NFT Shows',
@@ -197,10 +189,24 @@ const LandingPage = () => {
       previewImage: 'https://img.youtube.com/vi/JMBUPRZ3cYk/maxresdefault.jpg',
     },
     {
-      title: 'Inclusive Music Experiences',
-      description: 'Developing new tools for inclusive music experiences for the visually and hearing impaired.',
-      videoUrl: 'https://www.youtube.com/watch?v=aSXn2tCq9LE',
-      previewImage: 'https://img.youtube.com/vi/aSXn2tCq9LE/maxresdefault.jpg',
+      title: 'Smart Light Buildings',
+      description: 'Service to create artistic light shows on buildings using musical NFTs.',
+      videoUrl: 'https://www.youtube.com/watch?v=-adNKTEbynI',
+      previewImage: 'https://img.youtube.com/vi/-adNKTEbynI/maxresdefault.jpg',
+    },
+    {
+      title: 'Vegas NFT Mint Machines',
+      description: 'Deploying Vegas-style interactive minting machines for luxury NFT experiences.',
+      videoUrl: 'https://www.youtube.com/watch?v=VmtUS50OEA8',
+      previewImage: 'https://img.youtube.com/vi/VmtUS50OEA8/maxresdefault.jpg',
+    },
+    {
+      title: 'Holographic Live Concerts',
+      description: 'Projections and experiences for live events with holographic technology.',
+      videoUrl: 'https://www.youtube.com/watch?v=xm516bJeQOg',
+      previewImage: 'https://img.youtube.com/vi/xm516bJeQOg/maxresdefault.jpg',
+      embedYoutube:
+        '<iframe width="560" height="315" src="https://www.youtube.com/embed/xm516bJeQOg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
     },
   ];
 
