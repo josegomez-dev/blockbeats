@@ -301,9 +301,10 @@ const Web3StatsPanel = () => {
               <strong className="glitch">token</strong>: &nbsp;
                   <span style={{ color: 'gold' }}>${(sparkData.ETH?.slice(-1)[0] || 1000).toFixed(0)}{" "}</span>
             </p>
-            <hr />
+
             {Object.entries(prices).map(([coin, { change, isPositive }]) => (
               <li className={styles.coinsContainer} key={coin}>
+                <hr/> 
                 <div className={styles.coinRow}>
                   <div>
                     <FaCoins color="gold" /> &nbsp;
@@ -323,6 +324,7 @@ const Web3StatsPanel = () => {
                       color={isPositive ? "green" : "red"}
                     />
                   </div>
+                   
                 </div>
               </li>
             ))}

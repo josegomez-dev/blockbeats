@@ -192,8 +192,8 @@ export default function Nav() {
                     {user?.displayName || user?.email}
                   </div>
                   {user?.walletStored ? (
-                    <div className={` neon-color`} style={{ marginBottom: '10px' }}> &nbsp;&nbsp;
-                    Address:&nbsp;<span className='gold-color' style={{marginTop: '-15px' }}>{user?.walletStored.slice(0, 5)}...{user?.walletStored.slice(-4)} {data?.symbol} </span>
+                    <div style={{ marginBottom: '10px' }}> &nbsp;&nbsp;
+                    💳&nbsp;<span className='gold-color' style={{marginTop: '-15px' }}>{user?.walletStored.slice(0, 5)}...{user?.walletStored.slice(-4)} {data?.symbol} </span>
                   </div> ) : (
                     <div style={{ margin: '15px 25px', marginTop: '5px' }}>
                         <button
