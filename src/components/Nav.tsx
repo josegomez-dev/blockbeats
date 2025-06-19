@@ -30,7 +30,7 @@ export default function Nav() {
     address: "0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7",
   });
 
-  const { user, authenticated, setAuthenticated, setRole } = useAuth();
+  const { user, authenticated, setAuthenticated, setRole, logout } = useAuth();
   const router = useRouter();
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -58,7 +58,10 @@ export default function Nav() {
   const handleLogout = () => {
     setAuthenticated(false);
     setRole('user');
-    router.push('/');
+    router.push('/login');
+    logout();
+    toast.success('Logged out successfully');
+    setNotifications([]); // Clear notifications on logout
   };
 
   const toggleDropdown = () => setDropdownOpen(prev => !prev);
@@ -229,11 +232,11 @@ export default function Nav() {
                       <FaChalkboardTeacher className={styles.icon} /> Tutorials & Guides
                     </div>
                   </Link>
-                  <Link href="/minigames">
+                  {/* <Link href="/minigames">
                     <div className={styles.dropdownItem}>
                       <FaStoreAlt className={styles.icon} /> MiniGames HUB
                     </div>
-                  </Link>
+                  </Link> */}
                   {/* <Link href="/minigames">
                     <div className={styles.dropdownItem}>
                       <GiGamepad className={styles.icon} /> Upgrades

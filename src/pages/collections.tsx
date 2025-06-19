@@ -17,6 +17,7 @@ import { notes } from "@/utils/constants/musicDrawingMachine";
 import { playMelody, playDrumLoop } from "@/utils/helpers/drumHelper";
 import Modal from 'react-responsive-modal';
 import Image from 'next/image';
+import { FaArrowLeft } from 'react-icons/fa';
 
 const CollectionsScreen = () => {
   type NFT = {
@@ -135,11 +136,34 @@ const CollectionsScreen = () => {
   return (
     <>
       <div className="gallery-screen">
-        <br />
-
-        <div style={{ textAlign: "center", margin: "0 auto", padding: "25px" }}>
-          <h2><p className="glitch">Explore <span data-text="TOP" className="glitch">TOP</span> COLLECTIONS</p></h2>
+        
+        <div style={{backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.1)'}}>
           <br />
+          <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
+            <h2><p className="glitch">Explore <span data-text="TOP" className="glitch">TOP</span> COLLECTIONS</p></h2>
+            <Link href="/dashboard" className={styles.submitBtn} style={{ marginTop: '10px', position: 'absolute', right: 0 }}>
+              <FaArrowLeft style={{ margin: '0px 10px 0 0' }} />
+              Back
+            </Link>
+
+            <Image
+              src="/avatar/phase-9.webp"
+              alt="Collections Banner"
+              width={150}
+              height={200}
+              style={{ marginBottom: '20px' }}
+            />
+
+            <p>
+              Explore and view all the top fan collections created by the Blockbeats community. Click on any collection to view its details.
+              <br />
+              <br />
+            </p>
+          </div>
+        </div>
+        <hr />
+
+        <div style={{ textAlign: "center", margin: "0 auto", padding: "15px" }}>
           <button onClick={() => router.push('/createTopCollection')} className={styles.submitBtn}>Create Top Fan Collection</button>
           <br />
           <p>
@@ -235,34 +259,6 @@ const CollectionsScreen = () => {
         </Modal>
         )}
 
-        <br /> 
-        <br /> 
-        <br /> 
-        <hr /> 
-        <div style={{backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.1)'}}>
-          <br />
-          <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
-            <Image
-              src="/avatar/phase-9.webp"
-              alt="Collections Banner"
-              width={250}
-              height={300}
-              style={{ marginBottom: '20px' }}
-            />
-
-            <p>
-              Explore and view all the top fan collections created by the Blockbeats community. Click on any collection to view its details.
-              <br />
-              <br />
-              <br />
-              <Link href="/dashboard" className={styles.submitBtn} style={{ marginTop: '10px' }}>Back to Dashboard</Link>
-            </p>
-          </div>
-
-          <br />
-          <br />
-          <br />
-        </div>
       </div>
       <Footer />
     </>

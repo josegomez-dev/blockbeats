@@ -230,6 +230,9 @@ const LandingPage = () => {
           <Link href="https://joses-organization-73.gitbook.io/blockbeats-3.0" target="_blank" rel="noopener noreferrer">
             <button  style={{ animation: 'none', background: 'transparent', color: 'white' }} className={stylesMain.submitBtn}>📑 DOCS</button>
           </Link>
+          <Link href="edublockbeats" target="_blank" rel="noopener noreferrer">
+            <button  style={{ animation: 'none', background: 'transparent', color: 'white' }} className={stylesMain.submitBtn}>👩🏼‍🏫 EDU-BlockBeats</button>
+          </Link>
 
           <br />
           <img className={styles.character2} src="/avatar/phase-5.webp" style={{ width: '200px', height: 'auto', marginBottom: '-106px'  }} alt="BlockBeats Robot"  />
@@ -350,51 +353,11 @@ const LandingPage = () => {
       </section>
 
 
-      {/* Team Section
       <section className={styles.teamSection}>
-        <h2>🎵 Meet the Team</h2>
-        <div className={styles.teamGrid}>
-          {teamMembers.map((member, index) => (
-            <div className={styles.teamMember} key={index}>
-              <div className={styles.avatarWrapper}>
-                <img src={member.avatar} alt={member.name} className={styles.avatar} />
-              </div>
-              <h3>{member.name}</h3>
-              <p>{member.role}</p>
-
-              <ul className={styles.socialMediaLinks}>
-                {member.socialMediaLinks.map((link, linkIndex) => (
-                  <li key={linkIndex}>
-                    <a href={link.url} target="_blank" rel="noopener noreferrer">
-                      {link.icon}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-             
-              <ul className={styles.socialMediaLinks}>
-                {member.extraLinks.map((link, linkIndex) => (
-                  <li key={linkIndex}>
-                    <a href={link.url} target="_blank" rel="noopener noreferrer">
-                      {link.icon}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-              
-              <ul className={styles.socialMediaLinks}>
-                {member.socialLinks.map((link, linkIndex) => (
-                  <li key={linkIndex}>
-                    <a href={link.url} target="_blank" rel="noopener noreferrer">
-                      {link.icon}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </section> */}
+      
+        <h2>👥 Roadmap</h2>
+          
+      </section>
 
       {/* Parallax + Sponsors Section */}
       {/* <section className={styles.parallaxSponsorsSection}>

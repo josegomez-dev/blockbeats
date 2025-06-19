@@ -16,7 +16,7 @@ import SignInUnautorizedModal from "@/components/SignInUnautorizedModal";
 
 const DashboardLayout = () => {
 
-  const { user } = useAuth();
+  const { user, authenticated } = useAuth();
 
   const showPanel = (panel: string) => {
     const panels = ['left', 'center', 'right'];
@@ -28,7 +28,7 @@ const DashboardLayout = () => {
     });
   };
 
-  if (!user) {
+  if (!user || !authenticated) {
     return (
       <SignInUnautorizedModal 
         open={true}

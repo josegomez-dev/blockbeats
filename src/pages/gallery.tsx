@@ -10,6 +10,7 @@ import CollectionsSlider from '@/components/CollectionsSlider';
 import SignInUnautorizedModal from '@/components/SignInUnautorizedModal';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { FaArrowLeft } from 'react-icons/fa'; // Uncomment if you want to use an icon for the back button
 
 const GalleryScreen = () => {
 
@@ -62,10 +63,32 @@ const GalleryScreen = () => {
   return (
     <>
       <div className="gallery-screen">
+        <div style={{ backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.1)' }}>
+          <br />
+          <h2><p className="glitch">My Gallery</p></h2>
+          <Link href="/dashboard" className={styles.submitBtn} style={{ marginTop: '10px', position: 'absolute', right: 0 }}>
+            <FaArrowLeft style={{ margin: '0px 10px 0 0' }} />
+            Back
+          </Link>
+          <Image
+            src="/avatar/phase-8.webp"
+            alt="Collections Banner"
+            width={150}
+            height={200}
+            style={{ marginBottom: '0px' }}
+          />
+          <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
+            <p>Explore and view all the top fan collections created by the Blockbeats community.</p>
+            <br />
+          </div>
+          <hr />
+        </div>
+
+
         <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
           <br />
           <br />
-          <h2><p className="glitch">My Gallery</p></h2>
+          
 
           {userNFTS.length <= 0 ? (
             <div className={styles.modalContent}>
@@ -97,25 +120,7 @@ const GalleryScreen = () => {
         <br />
         <br />
         <hr />
-        <div style={{ backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.1)' }}>
-          <Image
-            src="/avatar/phase-8.webp"
-            alt="Collections Banner"
-            width={250}
-            height={300}
-            style={{ marginBottom: '20px' }}
-          />
-          <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
-            <p>Explore and view all the top fan collections created by the Blockbeats community.</p>
-            <br />
-            <br />
-            <Link href="/dashboard" className={styles.submitBtn} style={{ marginTop: '10px' }}>Back to Dashboard</Link>
-            <br />
-            <br />
-            <br />
-            <br />
-          </div>
-        </div>
+
 
       </div>
 
