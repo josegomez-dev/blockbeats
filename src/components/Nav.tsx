@@ -253,7 +253,15 @@ export default function Nav() {
                     </div>
                   </Link> */}
                   <hr />
-                  <div className={`${styles.dropdownItem} ${styles.logout}`} onClick={handleLogout}>
+                  <div className={`${styles.logout}`} style={{ display: 'flex', justifyContent: 'center', padding: 25, cursor: 'pointer' }} onClick={() => {
+                    // alert to confirm logout
+                    if (window.confirm('Are you sure you want to logout?')) {
+                      handleLogout();
+                      toast.success('Logged out successfully');
+                    } else {
+                      toast.error('Logout cancelled');
+                    }
+                  }}>
                     <FaSignOutAlt className={styles.icon} /> Logout
                   </div>
                 </div>
@@ -345,12 +353,12 @@ export default function Nav() {
                 <Link href="/">HOME</Link>
               )}
             </li>
-            <li className={styles.navItem}>
+            {/* <li className={styles.navItem}>
               <Link href="/blockbeats-whitepaper.pdf">DOCS</Link>
             </li>
             <li className={styles.navItem}>
               <Link href="/blockbeats-whitepaper.pdf">EDU-BLOCKBEATS</Link>
-            </li>
+            </li> */}
           </>
         )}
       </ul>
