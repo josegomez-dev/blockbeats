@@ -41,7 +41,7 @@ const MachinePage = () => {
       <MusicDrawingPage />
       <br />
       <br />
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

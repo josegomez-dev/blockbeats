@@ -98,7 +98,7 @@ const NeonSlider: React.FC<NeonSliderProps> = ({ slides }) => {
               index === current ? styles.activeSlide : styles.inactiveSlide
             }`}
           >
-            <p>{slide.songName}</p>
+            <p style={{ color: 'var(--neon-color)'}}>{slide.songName}</p>
             <br />
             <PixelPreview
               colorMap={slide.colorMap || []}

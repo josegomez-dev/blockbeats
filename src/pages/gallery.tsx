@@ -100,7 +100,7 @@ const GalleryScreen = () => {
 
       </div>
 
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

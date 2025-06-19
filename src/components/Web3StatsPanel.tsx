@@ -198,17 +198,17 @@ const Web3StatsPanel = () => {
         </div>
       </div>
 
+      <h5 style={{ textAlign: 'center'}}>
+        <Image
+          src="/logo.webp"
+          alt="BBC Logo"
+          width={30}
+          height={30}
+          style={{ verticalAlign: "middle" }}
+        />
+          ACCOUNT / MARKET OVERVIEW
+      </h5>
       <div className={styles.section}>
-        <h5 style={{ textAlign: 'center'}}>
-          <Image
-            src="/logo.webp"
-            alt="BBC Logo"
-            width={30}
-            height={30}
-            style={{ verticalAlign: "middle" }}
-          />
-           Account / Market Overview
-        </h5>
         <div
           style={{
             maxHeight: "170px",
@@ -222,16 +222,15 @@ const Web3StatsPanel = () => {
             <li className={styles.coinsContainer} style={{ width: "100%" }}>
               <div className={styles.coinRow}>
                 <p style={{ textAlign: "left" }}>
-                  🪙 &nbsp;
-                  <strong className="glitch">BBC</strong>: {user?.bbcPoints}
+                  PTS: {user?.bbcPoints} <strong className="glitch">BBC</strong>
                 </p>
                 <hr />
                 <p style={{ textAlign: "left" }}>
-                  <strong>NFTs</strong>: 4 | <strong>List</strong>: 2
+                  <strong>NFTs</strong>: 4 | <strong>LISTS</strong>: 2
                 </p>
                 <hr />
                 <p className={styles.status}>
-                  Level:{" "}
+                  LEVEL:{" "}
                   <span
                     className={`glitch`}
                     data-text={'2'}
@@ -245,7 +244,7 @@ const Web3StatsPanel = () => {
                 </p>
                 <hr />
                 <p style={{ textAlign: "left" }}>
-                  ⚡ Energy: <label> 50%</label>
+                  ⚡ ENERGY: <label> 50%</label>
 
                   <div className={stylesChar.barGroup}>
                     <div className={stylesChar.barLabel}>
@@ -262,7 +261,7 @@ const Web3StatsPanel = () => {
                   </div>
                 </p>
                 <p style={{ textAlign: "left" }}>
-                  🧠 Creativity: <label> 50%</label>
+                  🧠 CREATIVITY: <label> 50%</label>
 
                   <div className={stylesChar.barGroup}>
                     <div className={stylesChar.barLabel}>
@@ -279,7 +278,7 @@ const Web3StatsPanel = () => {
                   </div>
                 </p>
                 <p style={{ textAlign: "left" }}>
-                  📈 Experience: <label> 50%</label>
+                  📈 EXPERIENCE: <label> 50%</label>
 
                   <div className={stylesChar.barGroup}>
                     <div className={stylesChar.barLabel}>
@@ -301,8 +300,8 @@ const Web3StatsPanel = () => {
           <ul>
             <p style={{ textAlign: "left" }}>
               <FaCoins color="gold" /> &nbsp;
-              <strong className="glitch">token</strong>: $
-                  {(sparkData.ETH?.slice(-1)[0] || 1000).toFixed(0)}{" "}
+              <strong className="glitch">token</strong>: &nbsp;
+                  <span style={{ color: 'gold' }}>${(sparkData.ETH?.slice(-1)[0] || 1000).toFixed(0)}{" "}</span>
             </p>
             {Object.entries(prices).map(([coin, { change, isPositive }]) => (
               <li className={styles.coinsContainer} key={coin}>
@@ -331,9 +330,10 @@ const Web3StatsPanel = () => {
           </ul>
         </div>
       </div>
+      
+      <h5 style={{ textAlign: 'center', marginBottom: 7 }}>📖 QUICK TUTORIALS</h5>
 
       <div className={styles.section}>
-        <h5>📖 Quick Tutorials</h5>
         <div className={styles.tutorialSlider}>
           {tutorials.map((item, i) => (
             <Link

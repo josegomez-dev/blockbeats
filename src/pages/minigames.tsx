@@ -215,7 +215,7 @@ const MiniGamesScreen = () => {
         </div>
       </div>
 
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

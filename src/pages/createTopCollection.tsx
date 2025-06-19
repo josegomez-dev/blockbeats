@@ -186,7 +186,7 @@ const CreateTopFanCollectionModal = () => {
         <br />
         <br />
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

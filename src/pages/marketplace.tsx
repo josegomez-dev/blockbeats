@@ -185,7 +185,7 @@ const [stopDrumRef, setStopDrumRef] = React.useState<(() => void) | null>(null);
         
       </div>
 
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

@@ -341,7 +341,7 @@ const LandingPage = () => {
             <div
               className={styles.newsItem}
               key={index}
-              onClick={() => handleOpenModal(item.embedYoutube, item.videoUrl, item.title, item.description)}
+              onClick={() => handleOpenModal(undefined, item.videoUrl, item.title, item.description)}
               style={{ cursor: 'pointer' }}
             >
               <div className={styles.newsIconPreview} style={{ backgroundImage: `url(${item.previewImage})` }}>

@@ -229,7 +229,7 @@ const CollectionsScreen = () => {
         )}
 
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

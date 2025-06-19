@@ -357,155 +357,157 @@ const MusicDrawingPage = () => {
         />
       </div>
 
-      <div className={styles.musicBox}>
-        {/* <h3 style={{ color: frequencyStyle.color }}>BlockBeats <span data-text="NFT" className="glitch">NFT</span></h3> */}
-        <div onClick={() => setIsIAGeneratorOpen(true)} style={{ display: "inline-block", cursor: "pointer", position: "relative", zIndex: 2 }}>
-          <span style={{ position: 'absolute', left: '-50px', fontSize: '12px', top: 0, textAlign: 'left' }}>
+      <div>
+        <h3 style={{ color: frequencyStyle.color, textAlign: 'center' }}>BLOCKBEATS 3.0 <span data-text="NFT" className="glitch">NFT</span></h3>
+        <div className={styles.musicBox}>
+          <div onClick={() => setIsIAGeneratorOpen(true)} style={{ display: "inline-block", cursor: "pointer", position: "relative", zIndex: 2 }}>
+            <span style={{ position: 'absolute', left: '-50px', fontSize: '12px', top: 0, textAlign: 'left' }}>
+              <Image
+                src={`/arrow-pink.gif`}
+                alt="AI Icon"
+                width={50}
+                height={50}
+                style={{ filter: 'drop-shadow(0 0 5px #ff00ff)', transform: 'rotate(90deg)' }}
+              />
+            </span>
+            <span style={{ position: 'absolute', left: 50, fontSize: '12px', top: 8, textAlign: 'left' }}>IA Generator</span>
             <Image
-              src={`/arrow-pink.gif`}
-              alt="AI Icon"
+              src={`/logo.webp`}
+              alt="BlockBeats Logo"
               width={50}
               height={50}
-              style={{ filter: 'drop-shadow(0 0 5px #ff00ff)', transform: 'rotate(90deg)' }}
+            />  
+          </div>
+          <hr />
+
+          {/* Color overlay */}
+          <div style={{ position: "fixed", borderRadius: 8, inset: 0, background: frequencyStyle.color, mixBlendMode: "overlay", opacity: 0.15, pointerEvents: "none", zIndex: 1 }} />
+
+          {isModalOpen && (
+            <FrequencyModal
+              selected={selectedRange}
+              onSelect={setSelectedRange}
+              onSubmit={() => setIsModalOpen(false)}
             />
-          </span>
-          <span style={{ position: 'absolute', left: 50, fontSize: '12px', top: 8, textAlign: 'left' }}>IA Generator</span>
-          <Image
-            src={`/logo.webp`}
-            alt="BlockBeats Logo"
-            width={50}
-            height={50}
-          />  
-        </div>
-        <hr />
+          )}
 
-        {/* Color overlay */}
-        <div style={{ position: "fixed", borderRadius: 8, inset: 0, background: frequencyStyle.color, mixBlendMode: "overlay", opacity: 0.15, pointerEvents: "none", zIndex: 1 }} />
+          <div style={{ margin: "0 auto", width: "auto", textAlign: "center", position: "relative", zIndex: 2 }}>
 
-        {isModalOpen && (
-          <FrequencyModal
-            selected={selectedRange}
-            onSelect={setSelectedRange}
-            onSubmit={() => setIsModalOpen(false)}
-          />
-        )}
+            <Modal
+              open={isIAGeneratorOpen}
+              onClose={() => setIsIAGeneratorOpen(false)}
+              styles={{
+                modal: {
+                  width: '90%',
+                  maxWidth: '600px',
+                  margin: '0 auto',
+                  textAlign: 'center',
+                  height: 'auto',
+                  marginTop: '50px',
+                  backgroundColor: '#222',
+                  color: frequencyStyle.color,
+                  borderRadius: '8px',
+                  padding: '20px',
+                },
+                overlay: {
+                  backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                },
+              }}
+              classNames={{ modal: styles.modal }}
+            >
+              <div style={{ margin: '20px 0', color: frequencyStyle.color }}>
 
-        <div style={{ margin: "0 auto", width: "auto", textAlign: "center", position: "relative", zIndex: 2 }}>
+                <PixelPreview
+                  colorMap={notesPlayed.map(({ noteIndex, time }) => ({
+                    noteIndex,
+                    time,
+                    color: getRandomColor(),
+                  }))}
+                  notesCount={notes.length}
+                  size={240}
+                  style={{ marginTop: "10px", borderRadius: "12px" }}
+                />
+                <br />
 
-          <Modal
-            open={isIAGeneratorOpen}
-            onClose={() => setIsIAGeneratorOpen(false)}
-            styles={{
-              modal: {
-                width: '90%',
-                maxWidth: '600px',
-                margin: '0 auto',
-                textAlign: 'center',
-                height: 'auto',
-                marginTop: '50px',
-                backgroundColor: '#222',
-                color: frequencyStyle.color,
-                borderRadius: '8px',
-                padding: '20px',
-              },
-              overlay: {
-                backgroundColor: 'rgba(0, 0, 0, 0.8)',
-              },
-            }}
-            classNames={{ modal: styles.modal }}
-          >
-            <div style={{ margin: '20px 0', color: frequencyStyle.color }}>
-
-              <PixelPreview
-                colorMap={notesPlayed.map(({ noteIndex, time }) => ({
-                  noteIndex,
-                  time,
-                  color: getRandomColor(),
-                }))}
-                notesCount={notes.length}
-                size={240}
-                style={{ marginTop: "10px", borderRadius: "12px" }}
-              />
-              <br />
-
-              <label htmlFor="scaleSelect">🎼 Scale: </label>
-              <select
-                id="scaleSelect"
-                value={selectedScale}
-                onChange={(e) => setSelectedScale(e.target.value as ScaleName)}
-              >
-                {SCALE_NAMES.map((scaleKey) => (
-                  <option key={scaleKey} value={scaleKey}>
-                    {scaleDescriptions[scaleKey]}
-                  </option>
-                ))}
-              </select>
-
-                <br /><br />
-
-                <label htmlFor="firstNoteSelect">🎶 Base/Root Note: </label>
+                <label htmlFor="scaleSelect">🎼 Scale: </label>
                 <select
-                  id="firstNoteSelect"
-                  value={firstNote}
-                  onChange={(e) => setFirstNote(e.target.value)}
+                  id="scaleSelect"
+                  value={selectedScale}
+                  onChange={(e) => setSelectedScale(e.target.value as ScaleName)}
                 >
-                  {notes.map(([note]) => (
-                    <option key={note} value={note}>{note}</option>
+                  {SCALE_NAMES.map((scaleKey) => (
+                    <option key={scaleKey} value={scaleKey}>
+                      {scaleDescriptions[scaleKey]}
+                    </option>
                   ))}
                 </select>
 
-                <br /><br />
+                  <br /><br />
 
-                <label htmlFor="melodyKind">🎼 Mode: </label>
-                <select
-                  id="melodyKind"
-                  value={melodyKind}
-                  onChange={(e) => setMelodyKind(e.target.value as 'chords' | 'solo' | 'both')}
-                >
-                  <option value="chords">Chords</option>
-                  <option value="solo">Single Notes</option>
-                  <option value="both">Both</option>
-                </select>
-                  <br />
-                  <br />
+                  <label htmlFor="firstNoteSelect">🎶 Base/Root Note: </label>
+                  <select
+                    id="firstNoteSelect"
+                    value={firstNote}
+                    onChange={(e) => setFirstNote(e.target.value)}
+                  >
+                    {notes.map(([note]) => (
+                      <option key={note} value={note}>{note}</option>
+                    ))}
+                  </select>
 
-              <button onClick={loadRandomMelody} disabled={isPlayingBack} className={styles.submitBtn} style={{ marginBottom: '-10px' }}>🎧 Generate Random Song</button>
-            </div>
-          </Modal>
+                  <br /><br />
 
-          <ControlsPanel
-            isPlayingBack={isPlayingBack}
-            tempo={tempo}
-            setTempo={setTempo}
-            onPlay={playback}
-            onStop={stopPlayback}
-            onReset={resetBoard}
-            onSave={saveNFTData}
-            onOpenModal={() => setIsModalOpen(true)}
-            frequencyStyle={frequencyStyle}
-            onIAGeneration={loadRandomMelody}
-          />
-          
-          <div className={`${isPlayingBack && 'disabled'}`} style={{ position: "relative", backdropFilter: 'blur(50px)', backgroundColor: 'var(--black-color)', borderRadius: 8 }}>
+                  <label htmlFor="melodyKind">🎼 Mode: </label>
+                  <select
+                    id="melodyKind"
+                    value={melodyKind}
+                    onChange={(e) => setMelodyKind(e.target.value as 'chords' | 'solo' | 'both')}
+                  >
+                    <option value="chords">Chords</option>
+                    <option value="solo">Single Notes</option>
+                    <option value="both">Both</option>
+                  </select>
+                    <br />
+                    <br />
 
-            <PixelCanvas
-              colorMap={colorMap}
-              playingIndex={playIndex}
-              color={frequencyStyle.color}
-              onCanvasClick={handleCanvasClick}
+                <button onClick={loadRandomMelody} disabled={isPlayingBack} className={styles.submitBtn} style={{ marginBottom: '-10px' }}>🎧 Generate Random Song</button>
+              </div>
+            </Modal>
+
+            <ControlsPanel
+              isPlayingBack={isPlayingBack}
+              tempo={tempo}
+              setTempo={setTempo}
+              onPlay={playback}
+              onStop={stopPlayback}
+              onReset={resetBoard}
+              onSave={saveNFTData}
+              onOpenModal={() => setIsModalOpen(true)}
+              frequencyStyle={frequencyStyle}
+              onIAGeneration={loadRandomMelody}
             />
-          
-            <div style={{ marginTop: '-3px' }}>
-              <Piano onNotePlay={handleNotePlay} ctx={ctx} />
-            </div>
             
-            <div className={styles.melodyDataInfo} style={{ color: frequencyStyle.color, zIndex: 2, position: "relative", textAlign: "center" }}>
-              <div>
-                {/* {notesPlayed.length} notes played
-                <br /> */}
-                {/* <p>🌟 Root Note: <strong>{firstNote}</strong></p> */}
-                <label>🎵 Tempo: {tempo} BPM 🥁</label>
-                <input type="range" min={60} max={420} value={tempo} onChange={(e) => setTempo(Number(e.target.value))} />
+            <div className={`${isPlayingBack && 'disabled'}`} style={{ position: "relative", backdropFilter: 'blur(50px)', backgroundColor: 'var(--black-color)', borderRadius: 8 }}>
+
+              <PixelCanvas
+                colorMap={colorMap}
+                playingIndex={playIndex}
+                color={frequencyStyle.color}
+                onCanvasClick={handleCanvasClick}
+              />
+            
+              <div style={{ marginTop: '-3px' }}>
+                <Piano onNotePlay={handleNotePlay} ctx={ctx} />
+              </div>
+              
+              <div className={styles.melodyDataInfo} style={{ color: frequencyStyle.color, zIndex: 2, position: "relative", textAlign: "center" }}>
+                <div>
+                  {/* {notesPlayed.length} notes played
+                  <br /> */}
+                  {/* <p>🌟 Root Note: <strong>{firstNote}</strong></p> */}
+                  <label>🎵 Tempo: {tempo} BPM 🥁</label>
+                  <input type="range" min={60} max={420} value={tempo} onChange={(e) => setTempo(Number(e.target.value))} />
+                </div>
               </div>
             </div>
           </div>
