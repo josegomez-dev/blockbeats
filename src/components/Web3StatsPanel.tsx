@@ -199,7 +199,16 @@ const Web3StatsPanel = () => {
       </div>
 
       <div className={styles.section}>
-        <h5 style={{ textAlign: 'center'}}>Account / Market Overview</h5>
+        <h5 style={{ textAlign: 'center'}}>
+          <Image
+            src="/logo.webp"
+            alt="BBC Logo"
+            width={30}
+            height={30}
+            style={{ verticalAlign: "middle" }}
+          />
+           Account / Market Overview
+        </h5>
         <div
           style={{
             maxHeight: "170px",
@@ -218,13 +227,6 @@ const Web3StatsPanel = () => {
                 </p>
                 <hr />
                 <p style={{ textAlign: "left" }}>
-                  <Image
-                    src="/logo.webp"
-                    alt="BBC Logo"
-                    width={30}
-                    height={30}
-                    style={{ verticalAlign: "middle" }}
-                  />
                   <strong>NFTs</strong>: 4 | <strong>List</strong>: 2
                 </p>
                 <hr />

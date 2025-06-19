@@ -358,7 +358,7 @@ const MusicDrawingPage = () => {
       </div>
 
       <div className={styles.musicBox}>
-        <h3 style={{ color: frequencyStyle.color }}>BlockBeats <span data-text="NFT" className="glitch">NFT</span></h3>
+        {/* <h3 style={{ color: frequencyStyle.color }}>BlockBeats <span data-text="NFT" className="glitch">NFT</span></h3> */}
         <div onClick={() => setIsIAGeneratorOpen(true)} style={{ display: "inline-block", cursor: "pointer", position: "relative", zIndex: 2 }}>
           <span style={{ position: 'absolute', left: '-50px', fontSize: '12px', top: 0, textAlign: 'left' }}>
             <Image
@@ -486,7 +486,7 @@ const MusicDrawingPage = () => {
             onIAGeneration={loadRandomMelody}
           />
           
-          <div className={`${isPlayingBack && 'disabled'}`} style={{ position: "relative", backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+          <div className={`${isPlayingBack && 'disabled'}`} style={{ position: "relative", backdropFilter: 'blur(50px)', backgroundColor: 'var(--black-color)', borderRadius: 8 }}>
 
             <PixelCanvas
               colorMap={colorMap}
@@ -495,7 +495,10 @@ const MusicDrawingPage = () => {
               onCanvasClick={handleCanvasClick}
             />
           
-            <Piano onNotePlay={handleNotePlay} ctx={ctx} />
+            <div style={{ marginTop: '-3px' }}>
+              <Piano onNotePlay={handleNotePlay} ctx={ctx} />
+            </div>
+            
             <div className={styles.melodyDataInfo} style={{ color: frequencyStyle.color, zIndex: 2, position: "relative", textAlign: "center" }}>
               <div>
                 {/* {notesPlayed.length} notes played
