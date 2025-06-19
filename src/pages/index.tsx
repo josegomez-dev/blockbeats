@@ -200,14 +200,14 @@ const LandingPage = () => {
       videoUrl: 'https://www.youtube.com/watch?v=VmtUS50OEA8',
       previewImage: 'https://img.youtube.com/vi/VmtUS50OEA8/maxresdefault.jpg',
     },
-    {
-      title: 'Holographic Live Concerts',
-      description: 'Projections and experiences for live events with holographic technology.',
-      videoUrl: 'https://www.youtube.com/watch?v=xm516bJeQOg',
-      previewImage: 'https://img.youtube.com/vi/xm516bJeQOg/maxresdefault.jpg',
-      embedYoutube:
-        '<iframe width="560" height="315" src="https://www.youtube.com/embed/xm516bJeQOg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
-    },
+    // {
+    //   title: 'Holographic Live Concerts',
+    //   description: 'Projections and experiences for live events with holographic technology.',
+    //   videoUrl: 'https://www.youtube.com/watch?v=xm516bJeQOg',
+    //   previewImage: 'https://img.youtube.com/vi/xm516bJeQOg/maxresdefault.jpg',
+    //   embedYoutube:
+    //     '<iframe width="560" height="315" src="https://www.youtube.com/embed/xm516bJeQOg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    // },
   ];
 
 
@@ -231,7 +231,7 @@ const LandingPage = () => {
             <button  style={{ animation: 'none', background: 'transparent', color: 'white' }} className={stylesMain.submitBtn}>📑 DOCS</button>
           </Link>
           <Link href="edublockbeats" target="_blank" rel="noopener noreferrer">
-            <button  style={{ animation: 'none', background: 'transparent', color: 'white' }} className={stylesMain.submitBtn}>👩🏼‍🏫 EDU-BlockBeats</button>
+            <button  style={{ animation: 'none', background: 'transparent', color: 'white' }} className={stylesMain.submitBtn}>👩🏼‍🏫 EDU-BLOCKBEATS</button>
           </Link>
 
           <br />
@@ -240,6 +240,7 @@ const LandingPage = () => {
           <img className={styles.character1} src="/avatar/phase-6.webp" style={{ width: '200px', height: 'auto', marginBottom: '-120px'  }} alt="BlockBeats Robot"  />
         </div>
       </section>
+      <hr />
 
 
     {/* Robot Character */}
@@ -305,6 +306,7 @@ const LandingPage = () => {
       </section>
 
       {/* Vision & Mission Section */}
+      <hr />
       <section className={styles.visionMissionSection}>
         <h2>🎯 Organizational Philosophy & Ethics</h2>
         <div className={styles.visionMissionContent}>
@@ -322,12 +324,14 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
+      <hr />
 
       <br />
       <br />
 
       
       {/* News Section */}
+      <hr />
       <section className={styles.newsSection}>
         <h2>🚀 Commercial Projections & Opportunities</h2>
         <br />
@@ -351,13 +355,16 @@ const LandingPage = () => {
           ))}
         </div>
       </section>
+      <hr />
 
+        <br />
+        <br />
 
-      <section className={styles.teamSection}>
+      {/* <section className={styles.teamSection}>
       
         <h2>👥 Roadmap</h2>
           
-      </section>
+      </section> */}
 
       {/* Parallax + Sponsors Section */}
       {/* <section className={styles.parallaxSponsorsSection}>

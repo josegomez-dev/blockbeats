@@ -335,11 +335,23 @@ export default function Nav() {
           </>
         )}
 
-        {/* {!authenticated && (
-          <li className={styles.navItem}>
-            <Link href="/blockbeats-whitepaper.pdf">🛩️</Link>
-          </li>
-        )} */}
+        {!authenticated && (
+          <>
+            <li className={styles.navItem}>
+              {router.pathname === '/' ? (
+                <Link href="/login">LOGIN</Link>
+              ) : ( 
+                <Link href="/">HOME</Link>
+              )}
+            </li>
+            <li className={styles.navItem}>
+              <Link href="/blockbeats-whitepaper.pdf">DOCS</Link>
+            </li>
+            <li className={styles.navItem}>
+              <Link href="/blockbeats-whitepaper.pdf">EDU-BLOCKBEATS</Link>
+            </li>
+          </>
+        )}
       </ul>
     </nav>
   );

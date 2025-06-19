@@ -11,6 +11,7 @@ import SignInUnautorizedModal from '@/components/SignInUnautorizedModal';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { FaArrowLeft } from 'react-icons/fa'; // Uncomment if you want to use an icon for the back button
+import GalleryHeader from '@/components/GalleryHeader';
 
 const GalleryScreen = () => {
 
@@ -63,32 +64,9 @@ const GalleryScreen = () => {
   return (
     <>
       <div className="gallery-screen">
-        <div style={{ backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.1)' }}>
-          <br />
-          <Link href="/dashboard" style={{ marginTop: '10px', position: 'absolute', right: 15 }}>
-            <FaArrowLeft style={{ margin: '0px 10px 0 0' }} />
-          </Link>
-          <Image
-            src="/avatar/phase-8.webp"
-            alt="Collections Banner"
-            width={100}
-            height={150}
-            style={{ marginBottom: '-67px', marginTop: '-15px' }}
-          />
-          <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
-            <p>Explore My Gallery.</p>
-            <br />
-          </div>
-          <hr />
-        </div>
-
+        <GalleryHeader title="Explore My Gallery." />
 
         <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto", padding: '15px' }}>
-          <h1><p className="glitch">My Gallery</p></h1>
-          <Link href="/dashboard">
-            <button className={styles.submitBtn} style={{ animation: 'none' }}>Create Musical NFT</button>
-          </Link>
-
           {userNFTS.length <= 0 ? (
             <div className={styles.modalContent}>
               <br />

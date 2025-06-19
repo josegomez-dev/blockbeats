@@ -18,6 +18,7 @@ import { playMelody, playDrumLoop } from "@/utils/helpers/drumHelper";
 import Modal from 'react-responsive-modal';
 import Image from 'next/image';
 import { FaArrowLeft } from 'react-icons/fa';
+import GalleryHeader from '@/components/GalleryHeader';
 
 const CollectionsScreen = () => {
   type NFT = {
@@ -136,41 +137,10 @@ const CollectionsScreen = () => {
   return (
     <>
       <div className="gallery-screen">
-        
-        <div style={{backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.1)'}}>
-          <br />
-          <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
-            <Link href="/dashboard" style={{ marginTop: '10px', position: 'absolute', right: 15 }}>
-              <FaArrowLeft style={{ margin: '0px 10px 0 0' }} />
-            </Link>
-
-            <Image
-              src="/avatar/phase-9.webp"
-              alt="Collections Banner"
-              width={100}
-              height={150}
-              style={{ marginBottom: '-60px', marginTop: '-20px' }}
-            />
-
-            <p>
-              Explore Collections.
-              <br />
-              <br />
-            </p>
-          </div>
-        </div>
-        <hr />
-
-        <div style={{ padding: "15px" }}>
-          <h1><p className="glitch">Explore <span data-text="TOP" className="glitch">TOP</span> COLLECTIONS</p></h1>
-
-          <button onClick={() => router.push('/createTopCollection')} className={styles.submitBtn} style={{ animation: 'none' }}>Create Top Fan Collection</button>
-          <br />
-          <p>
-            Here you can view all the top fan collections created by our community.
-          </p>
-          <CollectionsSlider title='' fullWidth topCollections={topCollections} onSelectCollection={handleViewCollection} />
-        </div>
+        <GalleryHeader title="Explore Top Collections." />
+        <button onClick={() => router.push('/createTopCollection')} className={styles.submitBtn} style={{ animation: 'none' }}>Create Top Fan Collection</button>
+        <CollectionsSlider title='' fullWidth topCollections={topCollections} onSelectCollection={handleViewCollection} />
+        <br />
 
         {isCollectionViewOpen && selectedCollection && (
           <div className={styles.collectionDrawer}>
