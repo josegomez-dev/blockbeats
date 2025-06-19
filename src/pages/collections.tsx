@@ -139,7 +139,7 @@ const CollectionsScreen = () => {
       <div className="gallery-screen">
         <GalleryHeader title="Explore Top Collections." />
         <button onClick={() => router.push('/createTopCollection')} className={styles.submitBtn} style={{ animation: 'none' }}>Create Top Fan Collection</button>
-        <CollectionsSlider title='' fullWidth topCollections={topCollections} onSelectCollection={handleViewCollection} />
+        <CollectionsSlider title='' fullWidth topCollections={topCollections} onSelectCollection={handleViewCollection} /> 
         <br />
 
         {isCollectionViewOpen && selectedCollection && (

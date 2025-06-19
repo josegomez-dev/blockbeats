@@ -805,6 +805,8 @@ p {
   .custom-spacer {
     margin-top: 25px;
   }
+}
+@media screen and (max-width: 1120px) {
   #core-nft-slider-panel {
     display: none;
   }
