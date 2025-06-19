@@ -744,6 +744,7 @@
   backdrop-filter: blur(50px);
   border: 2px solid var(--white-color);
   width: 300px;
+  min-width: 300px;
   position: relative;
   margin: 10px auto;
   text-align: center;

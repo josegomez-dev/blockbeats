@@ -227,11 +227,11 @@ export default function Nav() {
                       <FaStore className={styles.icon} /> Marketplace
                     </div>
                   </Link>
-                  <Link href="/tutorials">
+                  {/* <Link href="/tutorials">
                     <div className={styles.dropdownItem}>
                       <FaChalkboardTeacher className={styles.icon} /> Tutorials & Guides
                     </div>
-                  </Link>
+                  </Link> */}
                   {/* <Link href="/minigames">
                     <div className={styles.dropdownItem}>
                       <FaStoreAlt className={styles.icon} /> MiniGames HUB
