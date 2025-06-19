@@ -349,11 +349,13 @@ const MusicDrawingPage = () => {
 
   return (
     <>
-      <NFTSliderPanel 
-        nfts={nfts}
-        collections={topCollections}
-        loading={loading}
-      />
+      <div id="core-nft-slider-panel">
+        <NFTSliderPanel 
+          nfts={nfts}
+          collections={topCollections}
+          loading={loading}
+        />
+      </div>
 
       <div className={styles.musicBox}>
         <h3 style={{ color: frequencyStyle.color }}>BlockBeats <span data-text="NFT" className="glitch">NFT</span></h3>

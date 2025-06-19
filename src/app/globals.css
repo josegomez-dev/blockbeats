@@ -805,6 +805,9 @@ p {
   .custom-spacer {
     margin-top: 25px;
   }
+  #core-nft-slider-panel {
+    display: none;
+  }
 }
 
 
