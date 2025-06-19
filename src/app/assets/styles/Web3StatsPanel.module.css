@@ -82,7 +82,7 @@
 .newsSlider {
   text-align: center;
   position: relative;
-  height: 55px;
+  height: 45px;
 }
 
 .newsText {
@@ -112,12 +112,11 @@
   background-color: #00ffe7;
   opacity: 1;
 }
-/* 
+
 .coinsText {
   font-size: 0.8rem;
-  color: #ccc;
   margin-top: 0.5rem;
-} */
+}
 
 .coinsContainer {
   font-size: 0.7rem;

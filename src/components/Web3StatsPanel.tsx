@@ -2,8 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import styles from "@/app/assets/styles/Web3StatsPanel.module.css";
+import stylesChar from "@/app/assets/styles/CharacterPanel.module.css";
 import Link from "next/link";
 import { Line } from "react-chartjs-2";
+import { FaCoins } from 'react-icons/fa';
 import {
   Chart as ChartJS,
   LineElement,
@@ -11,6 +13,8 @@ import {
   LinearScale,
   PointElement,
 } from "chart.js";
+import { useAuth } from "@/context/AuthContext";
+import Image from "next/image";
 
 // Register Chart.js components
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement);
@@ -28,28 +32,28 @@ const newsItems = [
     text: "🌍 Web3 Music Revolution Starts Here",
     url: "https://www.youtube.com/watch?v=6aGIqnu1UP8",
   },
+  // {
+  //   text: "🚀 The Future of Gaming & Music Is HERE 🎮🎵 | BlockBeats Holographic Arena Reveal!",
+  //   url: "https://www.youtube.com/watch?v=xm516bJeQOg",
+  // },
   {
-    text: "🚀 The Future of Gaming & Music Is HERE 🎮🎵 | BlockBeats Holographic Arena Reveal!",
-    url: "https://www.youtube.com/watch?v=xm516bJeQOg",
-  },
-  {
-    text: "🎰 Spin to WIN! The Mint Machine by BlockBeats — NFTs Meet the Thrill of Surprise! 🚀🎵",
+    text: "🎰 Spin to WIN! The Mint Machine by BlockBeats 3.0!",
     url: "https://www.youtube.com/watch?v=-adNKTEbynI",
   },
   {
-    text: "🌆 Smart Light City by BlockBeats — When Architecture Becomes Alive! 🚀🎵",
+    text: "🌆 Smart Light City by BlockBeats 3.0!",
     url: "https://www.youtube.com/watch?v=VmtUS50OEA8",
   },
   {
-    text: "🚁 BlockBeats Drone Show | Turning the Sky Into a Stage with Music, Blockchain & Light ✨🎶",
+    text: "🚁 Turning the Sky Into a Stage with Music, Blockchain & Light ✨",
     url: "https://www.youtube.com/watch?v=3SxxMuSFfEo",
   },
   {
-    text: "🚁 BlockBeats Drone Show | Turning the Sky Into a Stage with Music, Blockchain & Light ✨🎶",
-    url: "https://www.youtube.com/watch?v=JMBUPRZ3cYk",
+    text: "❤️‍🩹 Drones for Art, Not War!",
+    url: "https://www.youtube.com/watch?v=ZKzrGB9VxBM",
   },
   {
-    text: "🎙️ BlockBeats | Music for Everyone 🎶✨ – Inclusive Music Drawing & NFTs for Deaf & Blind Creators 🚀",
+    text: "🎧 BlockBeats | Music for Everyone!",
     url: "https://www.youtube.com/watch?v=aSXn2tCq9LE",
   },
 ];
@@ -114,14 +118,17 @@ const Sparkline = ({ data, color = "green" }: { data: number[]; color?: string }
 const Web3StatsPanel = () => {
   const [prices, setPrices] = useState({
     ETH: getRandomChange(),
-    MATIC: getRandomChange(),
     BTC: getRandomChange(),
+    SOL: getRandomChange(),
+    BBEATS: getRandomChange(),
   });
 
   const [newsIndex, setNewsIndex] = useState(0);
   const newsLength = newsItems.length;
 
   const [sparkData, setSparkData] = useState<Record<string, number[]>>({});
+
+  const {user} = useAuth();
 
   // Simulate auto-updating sparkline data
   useEffect(() => {
@@ -143,8 +150,9 @@ const Web3StatsPanel = () => {
     const priceInterval = setInterval(() => {
       setPrices({
         ETH: getRandomChange(),
-        MATIC: getRandomChange(),
         BTC: getRandomChange(),
+        SOL: getRandomChange(),
+        BBEATS: getRandomChange(),
       });
     }, 1500);
 
@@ -191,54 +199,121 @@ const Web3StatsPanel = () => {
       </div>
 
       <div className={styles.section}>
-        <h5>🪙 Market Overview</h5>
+        <h5 style={{ textAlign: 'center'}}>Account / Market Overview</h5>
         <div
           style={{
-            maxHeight: "150px",
+            maxHeight: "170px",
             overflowY: "auto",
             display: "flex",
             flexDirection: "row",
-            justifyContent: "space-between",
-            gap: "50px",
+            gap: "25px",
           }}
         >
           <ul>
-            {Object.entries(prices).map(([coin, { change, isPositive }]) => (
-              <li className={styles.coinsContainer} key={coin}>
-                <div className={styles.coinRow}>
-                  <div>
-                    <strong>{coin}</strong>: $
-                    {(sparkData[coin]?.slice(-1)[0] || 1000).toFixed(2)}{" "}
-                    <span
-                      className={`${styles.coinsText} ${
-                        isPositive ? styles.green : styles.red
-                      }`}
-                    >
-                      {isPositive ? "▲" : "▼"} {change}%
-                    </span>
+            <li className={styles.coinsContainer} style={{ width: "100%" }}>
+              <div className={styles.coinRow}>
+                <p style={{ textAlign: "left" }}>
+                  🪙 &nbsp;
+                  <strong className="glitch">BBC</strong>: {user?.bbcPoints}
+                </p>
+                <hr />
+                <p style={{ textAlign: "left" }}>
+                  <Image
+                    src="/logo.webp"
+                    alt="BBC Logo"
+                    width={30}
+                    height={30}
+                    style={{ verticalAlign: "middle" }}
+                  />
+                  <strong>NFTs</strong>: 4 | <strong>List</strong>: 2
+                </p>
+                <hr />
+                <p className={styles.status}>
+                  Level:{" "}
+                  <span
+                    className={`glitch`}
+                    data-text={'2'}
+                  >
+                    {2}
+                  </span>{" "}
+                  | XP:{" "}
+                  <span data-text={`${50}%`} className="glitch">
+                    {50}%
+                  </span>
+                </p>
+                <hr />
+                <p style={{ textAlign: "left" }}>
+                  ⚡ Energy: <label> 50%</label>
+
+                  <div className={stylesChar.barGroup}>
+                    <div className={stylesChar.barLabel}>
+                      {/* <label>🧠 {creativity * 5}%</label> */}
+                    </div>
+                    <div className={stylesChar.progressBar} style={{ width: `100%` }}>
+                      <div
+                        className={stylesChar.energyBar}
+                        // style={{ width: `${creativity * 5}%` }}
+                        style={{ width: `50%` }}
+                      />
+                    </div>
+                    <p className={stylesChar.barText}></p>
                   </div>
-                  <div style={{ width: "120px", height: "30px" }}>
-                    <Sparkline
-                      data={sparkData[coin] || []}
-                      color={isPositive ? "green" : "red"}
-                    />
+                </p>
+                <p style={{ textAlign: "left" }}>
+                  🧠 Creativity: <label> 50%</label>
+
+                  <div className={stylesChar.barGroup}>
+                    <div className={stylesChar.barLabel}>
+                      {/* <label>🧠 {creativity * 5}%</label> */}
+                    </div>
+                    <div className={stylesChar.progressBar} style={{ width: `100%` }}>
+                      <div
+                        className={stylesChar.creativityBar}
+                        // style={{ width: `${creativity * 5}%` }}
+                        style={{ width: `50%` }}
+                      />
+                    </div>
+                    <p className={stylesChar.barText}></p>
                   </div>
-                </div>
-              </li>
-            ))}
+                </p>
+                <p style={{ textAlign: "left" }}>
+                  📈 Experience: <label> 50%</label>
+
+                  <div className={stylesChar.barGroup}>
+                    <div className={stylesChar.barLabel}>
+                      {/* <label>🧠 {creativity * 5}%</label> */}
+                    </div>
+                    <div className={stylesChar.progressBar} style={{ width: `100%` }}>
+                      <div
+                        className={stylesChar.xpBar}
+                        // style={{ width: `${creativity * 5}%` }}
+                        style={{ width: `50%` }}
+                      />
+                    </div>
+                    <p className={stylesChar.barText}></p>
+                  </div>
+                </p>
+              </div>
+            </li>
           </ul>
           <ul>
+            <p style={{ textAlign: "left" }}>
+              <FaCoins color="gold" /> &nbsp;
+              <strong className="glitch">token</strong>: $
+                  {(sparkData.ETH?.slice(-1)[0] || 1000).toFixed(0)}{" "}
+            </p>
             {Object.entries(prices).map(([coin, { change, isPositive }]) => (
               <li className={styles.coinsContainer} key={coin}>
                 <div className={styles.coinRow}>
                   <div>
+                    <FaCoins color="gold" /> &nbsp;
                     <strong>{coin}</strong>: $
                     {(sparkData[coin]?.slice(-1)[0] || 1000).toFixed(2)}{" "}
                     <span
                       className={`${styles.coinsText} ${
                         isPositive ? styles.green : styles.red
                       }`}
-                    >
+                    > <br />
                       {isPositive ? "▲" : "▼"} {change}%
                     </span>
                   </div>
