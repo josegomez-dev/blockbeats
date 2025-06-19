@@ -3,12 +3,14 @@
 import React from 'react';
 import Link from 'next/link';
 import { FaArrowLeft } from 'react-icons/fa';
+import { on } from 'events';
 
 type GalleryHeaderProps = {
   title?: string;
+  onBackClick?: () => void;
 };
 
-const GalleryHeader: React.FC<GalleryHeaderProps> = ({ title = 'Explore My Gallery.' }) => {
+const GalleryHeader: React.FC<GalleryHeaderProps> = ({ title = 'Explore My Gallery.', onBackClick }) => {
   return (
     <>
       <div
@@ -19,9 +21,13 @@ const GalleryHeader: React.FC<GalleryHeaderProps> = ({ title = 'Explore My Galle
           padding: '20px 0',
         }}
       >
-        <Link href="/dashboard" style={{ position: 'absolute', top: 25, right: 15 }}>
-          <FaArrowLeft style={{ marginRight: 10 }} />
-        </Link>
+        {onBackClick ? (
+          <div onClick={onBackClick} style={{ position: 'absolute', top: 25, right: 15, cursor: 'pointer' }}>
+            <FaArrowLeft style={{ marginRight: 10 }} />
+          </div>) : (
+          <Link href="/dashboard" style={{ position: 'absolute', top: 25, right: 15, cursor: 'pointer' }}>
+            <FaArrowLeft style={{ marginRight: 10 }} />
+          </Link>)}
         <div style={{ textAlign: 'center', margin: '0 auto', marginBottom: '-5px' }}>
           <p style={{ fontSize: '1.25rem', fontWeight: '500' }}>{title}</p>
         </div>

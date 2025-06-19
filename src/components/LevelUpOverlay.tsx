@@ -38,7 +38,7 @@ const LevelUpOverlay: React.FC<LevelUpOverlayProps> = ({ message, onClose }) => 
 
   return (
     <div className={styles.overlay}>
-      <div data-text={message} className={`${styles.message} glitch`}>{message}</div>
+      <div className={`${styles.message} glitch`}>{message}</div>
       {confettiPieces}
     </div>
   );

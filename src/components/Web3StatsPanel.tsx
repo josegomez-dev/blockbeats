@@ -119,7 +119,6 @@ const Web3StatsPanel = () => {
   const [prices, setPrices] = useState({
     ETH: getRandomChange(),
     BTC: getRandomChange(),
-    SOL: getRandomChange(),
     BBEATS: getRandomChange(),
   });
 
@@ -151,7 +150,6 @@ const Web3StatsPanel = () => {
       setPrices({
         ETH: getRandomChange(),
         BTC: getRandomChange(),
-        SOL: getRandomChange(),
         BBEATS: getRandomChange(),
       });
     }, 1500);
@@ -303,6 +301,7 @@ const Web3StatsPanel = () => {
               <strong className="glitch">token</strong>: &nbsp;
                   <span style={{ color: 'gold' }}>${(sparkData.ETH?.slice(-1)[0] || 1000).toFixed(0)}{" "}</span>
             </p>
+            <hr />
             {Object.entries(prices).map(([coin, { change, isPositive }]) => (
               <li className={styles.coinsContainer} key={coin}>
                 <div className={styles.coinRow}>

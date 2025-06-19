@@ -15,6 +15,7 @@ import Modal from "react-responsive-modal";
 import Image from "next/image";
 import PixelPreview from "./PixelPreview";
 import { TopCollections } from "@/types/topCollections";
+import GalleryHeader from "./GalleryHeader";
 
 const AudioContext = typeof window !== "undefined" ? window.AudioContext || (window as any).webkitAudioContext : null;
 const ctx = AudioContext ? new AudioContext() : null;
@@ -358,7 +359,7 @@ const MusicDrawingPage = () => {
       </div>
 
       <div>
-        <h3 style={{ color: frequencyStyle.color, textAlign: 'center' }}>BLOCKBEATS 3.0 <span data-text="NFT" className="glitch">NFT</span></h3>
+        <h3 style={{ color: frequencyStyle.color, textAlign: 'center', marginTop: 10 }}>BLOCKBEATS 3.0 <span data-text="NFT" className="glitch">NFT</span></h3>
         <div className={styles.musicBox}>
           <div onClick={() => setIsIAGeneratorOpen(true)} style={{ display: "inline-block", cursor: "pointer", position: "relative", zIndex: 2 }}>
             <span style={{ position: 'absolute', left: '-50px', fontSize: '12px', top: 0, textAlign: 'left' }}>
@@ -396,6 +397,7 @@ const MusicDrawingPage = () => {
             <Modal
               open={isIAGeneratorOpen}
               onClose={() => setIsIAGeneratorOpen(false)}
+              showCloseIcon={false}
               styles={{
                 modal: {
                   width: '90%',
@@ -404,8 +406,8 @@ const MusicDrawingPage = () => {
                   textAlign: 'center',
                   height: 'auto',
                   marginTop: '50px',
-                  backgroundColor: '#222',
-                  color: frequencyStyle.color,
+                  backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                  backdropFilter: 'blur(50px)',
                   borderRadius: '8px',
                   padding: '20px',
                 },
@@ -415,6 +417,12 @@ const MusicDrawingPage = () => {
               }}
               classNames={{ modal: styles.modal }}
             >
+              <GalleryHeader
+                  title="AI Melody Generator"
+                  onBackClick={() => setIsIAGeneratorOpen(false)}
+              />
+              <br />  
+              <h3>🎶 AI MELODY GENERATOR</h3>
               <div style={{ margin: '20px 0', color: frequencyStyle.color }}>
 
                 <PixelPreview
@@ -424,7 +432,7 @@ const MusicDrawingPage = () => {
                     color: getRandomColor(),
                   }))}
                   notesCount={notes.length}
-                  size={240}
+                  size={140}
                   style={{ marginTop: "10px", borderRadius: "12px" }}
                 />
                 <br />
