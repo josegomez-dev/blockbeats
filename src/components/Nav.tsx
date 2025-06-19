@@ -252,6 +252,7 @@ export default function Nav() {
                       <FaCog className={styles.icon} /> Settings
                     </div>
                   </Link> */}
+                  <hr />
                   <div className={`${styles.dropdownItem} ${styles.logout}`} onClick={handleLogout}>
                     <FaSignOutAlt className={styles.icon} /> Logout
                   </div>
