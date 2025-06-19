@@ -140,22 +140,20 @@ const CollectionsScreen = () => {
         <div style={{backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.1)'}}>
           <br />
           <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
-            <h2><p className="glitch">Explore <span data-text="TOP" className="glitch">TOP</span> COLLECTIONS</p></h2>
-            <Link href="/dashboard" className={styles.submitBtn} style={{ marginTop: '10px', position: 'absolute', right: 0 }}>
+            <Link href="/dashboard" style={{ marginTop: '10px', position: 'absolute', right: 15 }}>
               <FaArrowLeft style={{ margin: '0px 10px 0 0' }} />
-              Back
             </Link>
 
             <Image
               src="/avatar/phase-9.webp"
               alt="Collections Banner"
-              width={150}
-              height={200}
-              style={{ marginBottom: '20px' }}
+              width={100}
+              height={150}
+              style={{ marginBottom: '-60px', marginTop: '-20px' }}
             />
 
             <p>
-              Explore and view all the top fan collections created by the Blockbeats community. Click on any collection to view its details.
+              Explore Collections.
               <br />
               <br />
             </p>
@@ -163,12 +161,13 @@ const CollectionsScreen = () => {
         </div>
         <hr />
 
-        <div style={{ textAlign: "center", margin: "0 auto", padding: "15px" }}>
-          <button onClick={() => router.push('/createTopCollection')} className={styles.submitBtn}>Create Top Fan Collection</button>
+        <div style={{ padding: "15px" }}>
+          <h1><p className="glitch">Explore <span data-text="TOP" className="glitch">TOP</span> COLLECTIONS</p></h1>
+
+          <button onClick={() => router.push('/createTopCollection')} className={styles.submitBtn} style={{ animation: 'none' }}>Create Top Fan Collection</button>
           <br />
           <p>
-            Here you can view all the top fan collections created by our community. <br /><br />
-            Each collection is a unique set of NFTs that fans have created to show their support.
+            Here you can view all the top fan collections created by our community.
           </p>
           <CollectionsSlider title='' fullWidth topCollections={topCollections} onSelectCollection={handleViewCollection} />
         </div>

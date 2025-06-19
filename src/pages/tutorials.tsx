@@ -4,6 +4,8 @@ import { useSearchParams } from 'next/navigation';
 import styles from '@/app/assets/styles/MainPage.module.css';
 import Footer from '@/components/Footer';
 import Image from 'next/image';
+import Link from 'next/link';
+import { FaArrowLeft } from 'react-icons/fa';
 
 // --- All Tutorials Definition ---
 const tutorials = {
@@ -118,7 +120,30 @@ const TutorialsAndGuidesScreen = () => {
 
   return (
     <>
-      <div style={{ textAlign: 'center', padding: '3rem 1rem' }}>
+
+       
+      <div style={{ textAlign: 'center', padding: '1rem' }}>
+
+         <div style={{ backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.1)' }}>
+          <br />
+          <Link href="/dashboard" style={{ marginTop: '10px', position: 'absolute', right: 15 }}>
+            <FaArrowLeft style={{ margin: '0px 10px 0 0' }} />
+          </Link>
+          <Image
+            src="/avatar/phase-2.webp"
+            alt="Collections Banner"
+            width={100}
+            height={100}
+            style={{ marginBottom: '-48px', marginTop: '-0px' }}
+          />
+          <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
+            <p>Explore Tutorials & Guides.</p>
+            <br />
+          </div>
+          <hr />
+        </div>
+        <br />
+
         <h1 className="glitch">📖 Learn How to Use BlockBeats</h1>
         <br />
         <p>Follow your guide and get started with Web3 music creation in just a few steps.</p>

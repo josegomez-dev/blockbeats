@@ -14,6 +14,7 @@ import { useRouter } from 'next/router';
 import { playMelody, playDrumLoop } from "@/utils/helpers/drumHelper";
 import { notes } from "@/utils/constants/musicDrawingMachine";
 import Image from 'next/image';
+import { FaArrowLeft } from 'react-icons/fa';
 
 
 const MarketplaceScreen = () => {
@@ -144,21 +145,33 @@ const [stopDrumRef, setStopDrumRef] = React.useState<(() => void) | null>(null);
         </Modal>
       )}
 
-
-      <div className="gallery-screen" style={{ padding: '35px' }}>
-        <br />
-        <br />
-        <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
-          <h2 className="glitch">Blockbeats Marketplace</h2>
+        <div style={{ backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', margin: '0 auto', textAlign: 'center' }}>
           <br />
+          <Link href="/dashboard" style={{ marginTop: '10px', position: 'absolute', right: 15 }}>
+            <FaArrowLeft style={{ margin: '0px 10px 0 0' }} />
+          </Link>
+          <Image
+            src="/avatar/phase-5.webp"
+            alt="Collections Banner"
+            width={100}
+            height={100}
+            style={{ marginBottom: '-35px', marginTop: '3px' }}
+          />
+          <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
+            <p>Explore Marketplace.</p>
+            <br />
+          </div>
+        </div>
+        <hr />
+
+      <div className="gallery-screen" style={{ padding: '15px' }}>
+        <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
+          <h1><p className="glitch">Marketplace</p></h1>
+          <Link href="/dashboard">
+            <button className={styles.submitBtn} style={{ animation: 'none' }}>Create Musical NFT</button>
+          </Link>
           <p>
             Explore and view all the NFTs created by the Blockbeats community. Click on any NFT to view its details.
-            <br />
-            <br />
-            <br />
-            <Link href="/dashboard" className={styles.submitBtn} style={{ marginTop: '10px' }}>Create Musical NFT</Link>
-            <br />
-            <br />
           </p>
         </div>
         <div className="gallery-grid">
@@ -197,28 +210,6 @@ const [stopDrumRef, setStopDrumRef] = React.useState<(() => void) | null>(null);
         
       </div>
 
-        <br />
-        <hr />
-        <div style={{ backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', margin: '0 auto', textAlign: 'center' }}>
-          <br />
-          <Image
-            src="/avatar/phase-5.webp"
-            alt="Collections Banner"
-            width={300}
-            height={300}
-            style={{ marginBottom: '20px' }}
-          />
-          <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
-            <p>Explore and view all the top fan collections created by the Blockbeats community.</p>
-            <br />
-            <br />
-            <Link href="/dashboard" className={styles.submitBtn} style={{ marginTop: '10px' }}>Back to Dashboard</Link>
-            <br />
-            <br />
-            <br />
-            <br />
-          </div>
-        </div>
       <Footer />
     </>
   );

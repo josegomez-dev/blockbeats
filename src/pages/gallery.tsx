@@ -65,30 +65,29 @@ const GalleryScreen = () => {
       <div className="gallery-screen">
         <div style={{ backdropFilter: 'blur(50px)', backgroundColor: 'rgba(0, 0, 0, 0.1)' }}>
           <br />
-          <h2><p className="glitch">My Gallery</p></h2>
-          <Link href="/dashboard" className={styles.submitBtn} style={{ marginTop: '10px', position: 'absolute', right: 0 }}>
+          <Link href="/dashboard" style={{ marginTop: '10px', position: 'absolute', right: 15 }}>
             <FaArrowLeft style={{ margin: '0px 10px 0 0' }} />
-            Back
           </Link>
           <Image
             src="/avatar/phase-8.webp"
             alt="Collections Banner"
-            width={150}
-            height={200}
-            style={{ marginBottom: '0px' }}
+            width={100}
+            height={150}
+            style={{ marginBottom: '-67px', marginTop: '-15px' }}
           />
           <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
-            <p>Explore and view all the top fan collections created by the Blockbeats community.</p>
+            <p>Explore My Gallery.</p>
             <br />
           </div>
           <hr />
         </div>
 
 
-        <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
-          <br />
-          <br />
-          
+        <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto", padding: '15px' }}>
+          <h1><p className="glitch">My Gallery</p></h1>
+          <Link href="/dashboard">
+            <button className={styles.submitBtn} style={{ animation: 'none' }}>Create Musical NFT</button>
+          </Link>
 
           {userNFTS.length <= 0 ? (
             <div className={styles.modalContent}>
@@ -106,20 +105,19 @@ const GalleryScreen = () => {
           )}
         </div>
 
-        <NeonSlider
-          slides={userNFTS.map(nft => ({
-            id: nft.id,
-            img: nft.img || '/nft1.webp', // fallback image if not present
-            songName: nft.songName || '',
-            colorMap: nft.colorMap || [],
-            notesPlayed: (nft.notesPlayed || []).join(','),
-          }))}
-        />
+        <div style={{ marginTop: '-60px' }}>
+          <NeonSlider
+            slides={userNFTS.map(nft => ({
+              id: nft.id,
+              img: nft.img || '/nft1.webp', // fallback image if not present
+              songName: nft.songName || '',
+              colorMap: nft.colorMap || [],
+              notesPlayed: (nft.notesPlayed || []).join(','),
+            }))}
+          />
+        </div>
 
         <br />
-        <br />
-        <br />
-        <hr />
 
 
       </div>
