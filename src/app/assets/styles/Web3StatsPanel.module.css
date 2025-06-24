@@ -75,7 +75,6 @@
 }
 
 .coinsContainer {
-  font-size: 0.7rem;
   width: 100%;
   list-style: none;
 }
@@ -88,7 +87,7 @@
 }
 
 .tokenStat {
-  font-size: 12px;
+  font-size: 14px;
   text-align: center;
 }
 
@@ -97,7 +96,7 @@
 }
 
 .tokenMeta {
-  font-size: 10px;
+  font-size: 12px;
   text-align: center;
 }
 
@@ -105,9 +104,7 @@
   font-size: 0.7rem;
   margin-top: 0.2rem;
   display: block;
-  border-bottom: 2px solid #fff;
 }
-
 .coinLabel {
   font-size: 10px;
 }

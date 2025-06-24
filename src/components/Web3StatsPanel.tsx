@@ -19,6 +19,8 @@ import Image from "next/image";
 import { BLOCKBEATS_TUTORIALS } from "@/utils/constants/tutorials";
 import { BLOCKBEATS_NEWS } from "@/utils/constants/news";
 import { CHARACTER_STATS } from "@/utils/constants/characterStats";
+import { BiCollection } from "react-icons/bi";
+import { RiGalleryLine } from "react-icons/ri";
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement);
 
@@ -130,25 +132,28 @@ const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, tota
           <ul>
             <li className={styles.coinsContainer}>
               <div className={styles.coinRow}>
+                <p className={styles.tokenMeta}><strong> <RiGalleryLine /> </strong>: <span className="glitch">{totalNFTCreations}</span> | <strong> <BiCollection /></strong>: <span className="glitch">{totalTopCollections}</span></p>
+                <hr />
                 <p className={styles.tokenStat}>PTS: {user?.bbcPoints} <strong className="glitch">BBC</strong></p>
+                <hr />
                 <p className={styles.tokenStat}><FaCoins color="gold" /> <strong>token</strong>: <span className={styles.tokenValue}>${(sparkData.ETH?.slice(-1)[0] || 1000).toFixed(0)}</span></p>
-                <hr />
-                <p className={styles.tokenMeta}><strong>NFTs</strong>: {totalNFTCreations} | <strong>LISTS</strong>: {totalTopCollections}</p>
-                <hr />
-                {CHARACTER_STATS.map(({ key, label, icon }) => (
-                  <p key={key} className={stylesChar.barWrapper}>
-                    {icon} {label}: <label>50%</label>
-                    <div className={stylesChar.barGroup}>
-                      <div className={stylesChar.progressBar}>
-                        <div className={stylesChar[`${key}Bar`]} style={{ width: "50%" }} />
-                      </div>
-                    </div>
-                  </p>
-                ))}
-                <hr />
-                <p className={styles.tokenMeta}>LEVEL: <span className="glitch">2</span> | XP: <span className="glitch">50%</span></p>
               </div>
             </li>
+          </ul>
+
+          <ul className={styles.coinsContainer} style={{ width: "180px" }}>
+            <p className={styles.tokenMeta}>LVL: <span className="glitch">2</span> | XP: <span className="glitch">50%</span></p>
+            {CHARACTER_STATS.map(({ key, label, icon }) => (
+              <div key={key} className={stylesChar.barWrapper} style={{ fontSize: 10}}>
+                <hr />
+                {icon} {label}: <label>50%</label>
+                <div className={stylesChar.barGroup}>
+                  <div className={stylesChar.progressBar}>
+                    <div className={stylesChar[`${key}Bar`]} style={{ width: "50%" }} />
+                  </div>
+                </div>
+              </div>
+            ))}
           </ul>
 
           <ul>

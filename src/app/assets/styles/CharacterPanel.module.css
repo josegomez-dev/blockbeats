@@ -175,9 +175,6 @@
   margin-bottom: 1rem;
 }
 
-.barWrapper {
-  margin-bottom: -15px;
-}
 .barLabel {
   display: flex;
   justify-content: space-between;
