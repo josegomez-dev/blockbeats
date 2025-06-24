@@ -15,63 +15,15 @@ import {
 } from "chart.js";
 import { useAuth } from "@/context/AuthContext";
 import Image from "next/image";
+import { BLOCKBEATS_TUTORIALS } from "@/utils/constants/tutorials";
+import { BLOCKBEATS_NEWS } from "@/utils/constants/news";
 
 // Register Chart.js components
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement);
 
-const newsItems = [
-  {
-    text: "📺 Watch the full demo presentation on YouTube!",
-    url: "https://www.youtube.com/watch?v=W84Qst6bHxU&t=20s",
-  },
-  {
-    text: "🏆 BlockBeats won 2nd place at the Starknet Hackathon!",
-    url: "https://www.youtube.com/watch?v=Uk9lCM9xS5Y",
-  },
-  {
-    text: "🌍 Web3 Music Revolution Starts Here",
-    url: "https://www.youtube.com/watch?v=6aGIqnu1UP8",
-  },
-  // {
-  //   text: "🚀 The Future of Gaming & Music Is HERE 🎮🎵 | BlockBeats Holographic Arena Reveal!",
-  //   url: "https://www.youtube.com/watch?v=xm516bJeQOg",
-  // },
-  {
-    text: "🎰 Spin to WIN! The Mint Machine by BlockBeats 3.0!",
-    url: "https://www.youtube.com/watch?v=-adNKTEbynI",
-  },
-  {
-    text: "🌆 Smart Light City by BlockBeats 3.0!",
-    url: "https://www.youtube.com/watch?v=VmtUS50OEA8",
-  },
-  {
-    text: "🚁 Turning the Sky Into a Stage with Music, Blockchain & Light ✨",
-    url: "https://www.youtube.com/watch?v=3SxxMuSFfEo",
-  },
-  {
-    text: "❤️‍🩹 Drones for Art, Not War!",
-    url: "https://www.youtube.com/watch?v=ZKzrGB9VxBM",
-  },
-  {
-    text: "🎧 BlockBeats | Music for Everyone!",
-    url: "https://www.youtube.com/watch?v=aSXn2tCq9LE",
-  },
-];
-
 const getTutorialLink = (type: string, step: number) => {
   return `/tutorials?tutorial=${type}&step=${step}`;
 };
-
-const tutorials = [
-  { label: "🌐 What is a Wallet?", type: "wallet", step: 0 },
-  { label: "🔐 How to Connect Wallet", type: "wallet", step: 1 },
-  { label: "🎨 Create with Music Drawing Machine", type: "drawing", step: 0 },
-  { label: "🎛️ Advanced Drawing Tips", type: "drawing", step: 1 },
-  { label: "🪙 Mint & Share Your NFT", type: "nft", step: 0 },
-  { label: "📢 Promote Your NFT", type: "nft", step: 1 },
-  { label: "🤝 Join the BlockBeats Community", type: "community", step: 0 },
-  { label: "📺 Follow our YouTube Channel", type: "community", step: 1 },
-];
 
 const getRandomChange = () => {
   const change = (Math.random() * 4 - 2).toFixed(2);
@@ -123,7 +75,7 @@ const Web3StatsPanel = () => {
   });
 
   const [newsIndex, setNewsIndex] = useState(0);
-  const newsLength = newsItems.length;
+  const newsLength = BLOCKBEATS_NEWS.length;
 
   const [sparkData, setSparkData] = useState<Record<string, number[]>>({});
 
@@ -172,21 +124,21 @@ const Web3StatsPanel = () => {
 
       <div className={styles.section}>
         <div className={styles.newsSlider}>
-          {newsItems[newsIndex].url ? (
+          {BLOCKBEATS_NEWS[newsIndex].url ? (
             <a
-              href={newsItems[newsIndex].url}
+              href={BLOCKBEATS_NEWS[newsIndex].url}
               target="_blank"
               rel="noopener noreferrer"
               className={styles.newsText}
               style={{ color: "var(--neon-color)" }}
             >
-              {newsItems[newsIndex].text}
+              {BLOCKBEATS_NEWS[newsIndex].text}
             </a>
           ) : (
-            <p className={styles.newsText}>{newsItems[newsIndex].text}</p>
+            <p className={styles.newsText}>{BLOCKBEATS_NEWS[newsIndex].text}</p>
           )}
           <div className={styles.dots}>
-            {newsItems.map((_, i) => (
+            {BLOCKBEATS_NEWS.map((_, i) => (
               <span
                 key={i}
                 className={`${styles.dot} ${i === newsIndex ? styles.active : ""}`}
@@ -219,15 +171,20 @@ const Web3StatsPanel = () => {
           <ul>
             <li className={styles.coinsContainer} style={{ width: "100%" }}>
               <div className={styles.coinRow}>
-                <p style={{ textAlign: "left" }}>
+                <p style={{ fontSize: "10px" }}>
                   PTS: {user?.bbcPoints} <strong className="glitch">BBC</strong>
                 </p>
+                <p style={{ textAlign: "left", fontSize: "10px" }}>
+                  <FaCoins color="gold" /> &nbsp;
+                  <strong className="glitch">token</strong>: &nbsp;
+                      <span style={{ color: 'gold' }}>${(sparkData.ETH?.slice(-1)[0] || 1000).toFixed(0)}{" "}</span>
+                </p>
                 <hr />
-                <p style={{ textAlign: "left" }}>
+                <p style={{ fontSize: "8px" }}>
                   <strong>NFTs</strong>: 4 | <strong>LISTS</strong>: 2
                 </p>
                 <hr />
-                <p className={styles.status}>
+                <p style={{ fontSize: "8px" }}>
                   LEVEL:{" "}
                   <span
                     className={`glitch`}
@@ -241,7 +198,7 @@ const Web3StatsPanel = () => {
                   </span>
                 </p>
                 <hr />
-                <p style={{ textAlign: "left" }}>
+                <p style={{ textAlign: "left", fontSize: "8px" }}>
                   ⚡ ENERGY: <label> 50%</label>
 
                   <div className={stylesChar.barGroup}>
@@ -258,7 +215,7 @@ const Web3StatsPanel = () => {
                     <p className={stylesChar.barText}></p>
                   </div>
                 </p>
-                <p style={{ textAlign: "left" }}>
+                <p style={{ textAlign: "left", fontSize: "8px", marginTop: "-10px" }}>
                   🧠 CREATIVITY: <label> 50%</label>
 
                   <div className={stylesChar.barGroup}>
@@ -269,13 +226,13 @@ const Web3StatsPanel = () => {
                       <div
                         className={stylesChar.creativityBar}
                         // style={{ width: `${creativity * 5}%` }}
-                        style={{ width: `50%` }}
+                        style={{ width: `50%`, fontSize: "10px" }}
                       />
                     </div>
                     <p className={stylesChar.barText}></p>
                   </div>
                 </p>
-                <p style={{ textAlign: "left" }}>
+                <p style={{ textAlign: "left", fontSize: "8px", marginTop: "-10px" }}>
                   📈 EXPERIENCE: <label> 50%</label>
 
                   <div className={stylesChar.barGroup}>
@@ -296,17 +253,11 @@ const Web3StatsPanel = () => {
             </li>
           </ul>
           <ul>
-            <p style={{ textAlign: "left" }}>
-              <FaCoins color="gold" /> &nbsp;
-              <strong className="glitch">token</strong>: &nbsp;
-                  <span style={{ color: 'gold' }}>${(sparkData.ETH?.slice(-1)[0] || 1000).toFixed(0)}{" "}</span>
-            </p>
 
             {Object.entries(prices).map(([coin, { change, isPositive }]) => (
               <li className={styles.coinsContainer} key={coin}>
-                <hr/> 
                 <div className={styles.coinRow}>
-                  <div>
+                  <div style={{ fontSize: '10px' }}>
                     <FaCoins color="gold" /> &nbsp;
                     <strong>{coin}</strong>: $
                     {(sparkData[coin]?.slice(-1)[0] || 1000).toFixed(2)}{" "}
@@ -336,7 +287,7 @@ const Web3StatsPanel = () => {
 
       <div className={styles.section}>
         <div className={styles.tutorialSlider}>
-          {tutorials.map((item, i) => (
+          {BLOCKBEATS_TUTORIALS.map((item, i) => (
             <Link
               key={i}
               href={getTutorialLink(item.type, item.step)}

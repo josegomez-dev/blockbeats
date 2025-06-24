@@ -21,21 +21,25 @@ const AudioContext = typeof window !== "undefined" ? window.AudioContext || (win
 const ctx = AudioContext ? new AudioContext() : null;
 
 const getRandomColor = () => `hsl(${Math.floor(Math.random() * 360)}, 100%, 60%)`;
+interface MusicDrawingPageProps {
+  nfts?: any[];
+  topCollections?: TopCollections[];
+}
 
-const MusicDrawingPage = () => {
+const MusicDrawingPage: React.FC<MusicDrawingPageProps> = ({ nfts = [], topCollections = [] }) => {
   const [notesPlayed, setNotesPlayed] = useState<{ noteIndex: number; time: number }[]>([]);
   const [colorMap, setColorMap] = useState<{ noteIndex: number; time: number; color: string }[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [selectedRange, setSelectedRange] = useState("Harmonic");
   const [isPlayingBack, setIsPlayingBack] = useState(false);
   const [playIndex, setPlayIndex] = useState<number | null>(null);
-  const [nfts, setNFTs] = useState<any[]>([]);
-  const [topCollections, setTopCollections] = useState<TopCollections[]>([]);
+
   const [loading, setLoading] = useState(true);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isIAGeneratorOpen, setIsIAGeneratorOpen] = useState(false);
 
   const [selectedScale, setSelectedScale] = useState<ScaleName>('minor'); // default scale
-
   const [melodyKind, setMelodyKind] = useState<'chords' | 'solo' | 'both'>('both');
   const [firstNote, setFirstNote] = useState<string>('C1'); // default
 
@@ -190,36 +194,6 @@ const MusicDrawingPage = () => {
     })));
   };
 
-
-  const fetchNFTs = async () => {
-      const querySnapshot = await getDocs(collection(db, "signatures"));
-      const nfts = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      if (user) {
-        const userNFTs = nfts.filter((item: any) => item.createdBy === user.uid);
-        setNFTs(userNFTs);
-        setLoading(false);
-        console.log("NFTs fetched:", nfts);
-      }
-    };
-
-  useEffect(() => {
-    fetchNFTs();
-  }, []);
-
-  const fetchTopCollections = async () => {
-      setLoading(true);
-
-      const querySnapshot = await getDocs(collection(db, "topCollections"));
-      const collections = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setTopCollections(collections as TopCollections[]);
-
-      setLoading(false);
-    };
-
-  useEffect(() => {
-    fetchTopCollections();
-  }, []);
-
   const saveNFTData = async () => {
     // ask for the name of the song
     const songName = prompt("Enter the name of the song:");
@@ -237,7 +211,7 @@ const MusicDrawingPage = () => {
         songName,
       });
       toast.success("Song-art saved successfully!");
-      fetchNFTs(); // Refresh the NFTs after saving
+      // fetchNFTs(); // Refresh the NFTs after saving TODO: uncomment this
     } catch (error) {
       console.error("Error saving NFT:", error);
       toast.error("Failed to save NFT");
@@ -245,41 +219,41 @@ const MusicDrawingPage = () => {
   };
 
   const handleCanvasClick = (noteIndex: number, time: number) => {
-  // Toggle note visually and in data
-  setColorMap((prevMap) => {
-    const exists = prevMap.find((n) => n.noteIndex === noteIndex && n.time === time);
-    if (exists) {
-      return prevMap.filter((n) => !(n.noteIndex === noteIndex && n.time === time));
-    } else {
-      const color = getRandomColor();
-      return [...prevMap, { noteIndex, time, color }];
-    }
-  });
-
-  setNotesPlayed((prevNotes) => {
-      const exists = prevNotes.find((n) => n.noteIndex === noteIndex && n.time === time);
+    // Toggle note visually and in data
+    setColorMap((prevMap) => {
+      const exists = prevMap.find((n) => n.noteIndex === noteIndex && n.time === time);
       if (exists) {
-        return prevNotes.filter((n) => !(n.noteIndex === noteIndex && n.time === time));
+        return prevMap.filter((n) => !(n.noteIndex === noteIndex && n.time === time));
       } else {
-        return [...prevNotes, { noteIndex, time }];
+        const color = getRandomColor();
+        return [...prevMap, { noteIndex, time, color }];
       }
     });
 
-    // 🎵 Play the clicked note
-    if (ctx) {
-      ctx.resume(); // resume context if suspended
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
+    setNotesPlayed((prevNotes) => {
+        const exists = prevNotes.find((n) => n.noteIndex === noteIndex && n.time === time);
+        if (exists) {
+          return prevNotes.filter((n) => !(n.noteIndex === noteIndex && n.time === time));
+        } else {
+          return [...prevNotes, { noteIndex, time }];
+        }
+      });
 
-      osc.type = "sawtooth";
-      osc.frequency.setValueAtTime(notes[noteIndex][1], ctx.currentTime); // Hz
-      gain.gain.setValueAtTime(0.4, ctx.currentTime); // control volume
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25); // fade out
+      // 🎵 Play the clicked note
+      if (ctx) {
+        ctx.resume(); // resume context if suspended
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
 
-      osc.connect(gain).connect(ctx.destination);
-      osc.start();
-      osc.stop(ctx.currentTime + 0.3);
-    }
+        osc.type = "sawtooth";
+        osc.frequency.setValueAtTime(notes[noteIndex][1], ctx.currentTime); // Hz
+        gain.gain.setValueAtTime(0.4, ctx.currentTime); // control volume
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25); // fade out
+
+        osc.connect(gain).connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.3);
+      }
   };
 
 
@@ -346,7 +320,6 @@ const MusicDrawingPage = () => {
 
     playbackIntervalRef.current = loop;
   };
-
 
   return (
     <>

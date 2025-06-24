@@ -1,22 +1,46 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import MusicDrawingPage from "@/components/MusicDrawingMachine";
 import CharacterPanel from "@/components/CharacterPanel";
 import Web3StatsPanel from "@/components/Web3StatsPanel";
 import styles from "@/app/assets/styles/MainPage.module.css";
-import Footer from "@/components/Footer";
 import { RxAvatar } from "react-icons/rx";
-// import { LuKeyboardMusic } from "react-icons/lu";
 import { SiWeb3Dotjs } from "react-icons/si";
 import { FaMusic } from "react-icons/fa";
-import Modal from 'react-responsive-modal';
 import { useAuth } from "@/context/AuthContext";
-import SidebarChatPanel from "@/components/SidebarChatPanel";
 import SignInUnautorizedModal from "@/components/SignInUnautorizedModal";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebase";
+import { TopCollections } from "@/types/topCollections";
 
 const DashboardLayout = () => {
-
+  const [nfts, setNFTs] = React.useState<any[]>([]);
+  const [topCollections, setTopCollections] = React.useState<TopCollections[]>([]);
   const { user, authenticated } = useAuth();
+
+  // Always call hooks unconditionally
+  useEffect(() => {
+    if (user && authenticated) {
+      fetchNFTs();
+      fetchTopCollections();
+    }
+  }, [user, authenticated]);
+
+  const fetchNFTs = async () => {
+    const querySnapshot = await getDocs(collection(db, "signatures"));
+    const nfts = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    if (user) {
+      const userNFTs = nfts.filter((item: any) => item.createdBy === user.uid);
+      setNFTs(userNFTs);
+      console.log("NFTs fetched:", nfts);
+    }
+  };
+
+  const fetchTopCollections = async () => {
+    const querySnapshot = await getDocs(collection(db, "topCollections"));
+    const collections = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    setTopCollections(collections as TopCollections[]);
+  };
 
   const showPanel = (panel: string) => {
     const panels = ['left', 'center', 'right'];
@@ -28,6 +52,7 @@ const DashboardLayout = () => {
     });
   };
 
+  // Return fallback **after** all hooks have been used
   if (!user || !authenticated) {
     return (
       <SignInUnautorizedModal 
@@ -40,7 +65,6 @@ const DashboardLayout = () => {
 
   return (
     <>
-    
       <div className={styles.buttonsContainer}>
         <button onClick={() => showPanel('left')} className={styles.button}>
           <RxAvatar />
@@ -59,17 +83,13 @@ const DashboardLayout = () => {
             <CharacterPanel />
           </div>
           <div id="core-center-panel" className={styles.centerPanel}>
-            <>
-              <MusicDrawingPage />
-            </>
+            <MusicDrawingPage nfts={nfts} topCollections={topCollections} />
           </div>
           <div id="core-right-panel" className={styles.rightPanel}>
             <Web3StatsPanel />
           </div>
         </div>
       </div>
-
-      {/* <Footer /> */}
     </>
   );
 };
