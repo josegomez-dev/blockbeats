@@ -98,7 +98,16 @@ const NeonSlider: React.FC<NeonSliderProps> = ({ slides }) => {
               index === current ? styles.activeSlide : styles.inactiveSlide
             }`}
           >
-            <p style={{ color: 'var(--neon-color)'}}>{slide.songName}</p>
+            <p className='glitch' style={{ color: 'var(--neon-color)'}}>{slide.songName}</p>
+            <p style={{ fontSize: '0.8rem' }}>
+              <b>Price:</b>{" "}
+              <span className="glitch">
+                {Math.floor(Math.random() * 100) / 10}{"Eth"}
+              </span>{" "}
+              - <span style={{ color: "gold" }}>
+                ${Math.floor(Math.random() * 100) / 10}{"K"}
+              </span>
+            </p>
             <br />
             <PixelPreview
               colorMap={slide.colorMap || []}
@@ -115,17 +124,6 @@ const NeonSlider: React.FC<NeonSliderProps> = ({ slides }) => {
               {(isPlaying && playingSlideId === slide.id) ? "Playing..." : "Play"}
             </button>
 
-            <br />
-            <br />
-            <p>
-              <b>Price:</b>{" "}
-              <span className="glitch">
-                {Math.floor(Math.random() * 100) / 10}{"Eth"}
-              </span>{" "}
-              - <span style={{ color: "gold" }}>
-                ${Math.floor(Math.random() * 100) / 10}{"K"}
-              </span>
-            </p>
           </div>
         ))}
       </div>

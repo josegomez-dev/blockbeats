@@ -9,7 +9,7 @@ import { TopCollections } from '@/types/topCollections';
 const NFTSliderPanel = ({ nfts, collections, loading }: { nfts: any[]; collections: TopCollections[] ; loading: boolean }) => (
   <div>
     <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
-      <h2><p className="glitch">All Creations</p></h2>
+      <h2>All Creations</h2>
 
       {nfts.length <= 0 ? (
         <div className={styles.modalContent}>

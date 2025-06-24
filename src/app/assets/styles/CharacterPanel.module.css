@@ -10,7 +10,6 @@
 .title {
   font-size: 1.6rem;
   margin-bottom: 1rem;
-  color: #7df9ff;
 }
 
 .avatarContainer {
@@ -119,7 +118,8 @@
   overflow: hidden;
   height: 10px;
   margin-bottom: 10px;
-  width: 60px;
+  width: 100%;
+
 }
 
 .energyBar {
@@ -171,8 +171,6 @@
   }
 }
 
-
-
 .barGroup {
   margin-bottom: 1rem;
 }
@@ -192,14 +190,11 @@
   margin-top: 4px;
 }
 
-
-
 .levelUpGif {
   width: 250px;
   position: absolute;
   height: auto;
   left: 35px;
-  animation: fadeInOut 3s ease-in-out;
 }
 
 @keyframes fadeInOut {

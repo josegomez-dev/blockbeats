@@ -8,7 +8,7 @@
 .title {
   font-size: 1rem;
   margin-bottom: 1rem;
-  color: #00ffe7;
+  color: white;
   text-align: center;
 }
 
@@ -17,6 +17,10 @@
   margin-bottom: 0.7rem;
   font-size: 0.9rem;
   color: white;
+}
+
+.subtitle img {
+  vertical-align: middle;
 }
 
 .section {
@@ -37,7 +41,7 @@
   overflow-y: auto;
   font-size: 0.6rem !important;
   margin: 0.5rem 0;
-  color: var(--neon-color);
+  color: #ccc;
 }
 
 .dots {
@@ -85,7 +89,7 @@
 
 .tokenStat {
   font-size: 12px;
-  text-align: left;
+  text-align: center;
 }
 
 .tokenValue {
@@ -94,13 +98,14 @@
 
 .tokenMeta {
   font-size: 8px;
-  text-align: left;
+  text-align: center;
 }
 
 .coinsText {
   font-size: 0.7rem;
-  margin-top: 0.1rem;
+  margin-top: 0.2rem;
   display: block;
+  border-bottom: 2px solid #fff;
 }
 
 .coinLabel {
