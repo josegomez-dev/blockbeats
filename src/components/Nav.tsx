@@ -189,11 +189,11 @@ export default function Nav() {
                   <div style={{ display: 'flex', alignItems: 'center', padding: '10px', color: 'white' }}>
                     <Avatar name={user?.email.split('@')[0]} size="30" round className="contact-avatar" />
                     &nbsp;
-                    {user?.displayName || user?.email}
+                    <span style={{ overflow: 'auto' }}>{user?.displayName || user?.email}</span>
                   </div>
                   {user?.walletStored ? (
                     <div style={{ marginBottom: '10px' }}> &nbsp;&nbsp;
-                    💳&nbsp;<span className='gold-color' style={{marginTop: '-15px' }}>{user?.walletStored.slice(0, 5)}...{user?.walletStored.slice(-4)} {data?.symbol} </span>
+                    💳&nbsp;<span className='glitch' style={{marginTop: '-15px' }}>{user?.walletStored.slice(0, 5)}...{user?.walletStored.slice(-4)} {data?.symbol} </span>
                   </div> ) : (
                     <div style={{ margin: '15px 25px', marginTop: '5px' }}>
                         <button
