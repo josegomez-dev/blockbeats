@@ -6,7 +6,12 @@ import Link from 'next/link';
 import NeonSlider from './NeonSlider';
 import { TopCollections } from '@/types/topCollections';
 
-const NFTSliderPanel = ({ nfts, collections, loading }: { nfts: any[]; collections: TopCollections[] ; loading: boolean }) => (
+interface NFTSliderPanelProps {
+  nfts: any[]; // Array of NFTs, each NFT can have any structure
+  collections: TopCollections[]; // Array of top collections, each collection follows the TopCollections
+}
+
+const NFTSliderPanel: React.FC<NFTSliderPanelProps> = ({ nfts, collections }) => (
   <div>
     <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
       <h2>All Creations</h2>
