@@ -15,7 +15,7 @@ import {
   scaleIntervals,
   ScaleName,
 } from "@/utils/constants/musicDrawingMachine";
-import { SEQUENCER, AUDIO, UI } from "@/utils/constants/musicDrawingMachineSettings";
+import { SEQUENCER, AUDIO, UI } from "@/utils/constants/musicDrawingMachine";
 
 import FrequencyModal from "./FrequencyModal";
 import PixelCanvas from "./PixelCanvas";
@@ -25,6 +25,7 @@ import ControlsPanel from "./ControlPanel";
 import GalleryHeader from "./GalleryHeader";
 
 import type { TopCollections } from "@/types/topCollections";
+import AIMelodyControls from "./AIMelodyControls";
 
 const AudioCtx = typeof window !== "undefined"
   ? window.AudioContext || (window as any).webkitAudioContext
@@ -287,49 +288,53 @@ export default function MusicDrawingPage({
       />
 
       {/* Central music-box */}
-      <section className={styles.musicBox}>
-        {/* AI generator badge */}
-        <AIHint onClick={() => setAIModalOpen(true)} />
+      <div>
+        <h3 style={{ textAlign: 'center' }}>
+          <span className="glitch">LAUNCHPAD</span>
+          &nbsp;Musical&nbsp;
+          <span className="glitch">NFTs</span></h3>
+        <section className={styles.musicBox}>
 
-        {/* Control panel */}
-        <ControlsPanel
-          isPlayingBack={isPlayingBack}
-          tempo={tempo}
-          setTempo={setTempo}
-          onPlay={playback}
-          onStop={stopPlayback}
-          onReset={() => {
-            setNotesPlayed([]);
-            setColorMap([]);
-            setPlayIndex(null);
-            stopDrums();
-          }}
-          onSave={saveNFTData}
-          onOpenModal={() => setFreqModalOpen(true)}
-          frequencyStyle={frequencyStyle}
-          onIAGeneration={loadRandomMelody}
-        />
-
-        {/* Canvas + piano */}
-        <div
-          className={isPlayingBack ? "disabled" : undefined}
-          style={{
-            position: "relative",
-            backdropFilter: "blur(50px)",
-            backgroundColor: "var(--black-color)",
-            borderRadius: 8,
-          }}
-        >
-          <PixelCanvas
-            colorMap={colorMap}
-            playingIndex={playIndex}
-            color={frequencyStyle.color}
-            onCanvasClick={handleCanvasClick}
+          {/* Control panel */}
+          <ControlsPanel
+            isPlayingBack={isPlayingBack}
+            tempo={tempo}
+            setTempo={setTempo}
+            onPlay={playback}
+            onStop={stopPlayback}
+            onReset={() => {
+              setNotesPlayed([]);
+              setColorMap([]);
+              setPlayIndex(null);
+              stopDrums();
+            }}
+            onSave={saveNFTData}
+            onOpenModal={() => setFreqModalOpen(true)}
+            frequencyStyle={frequencyStyle}
+            onIAGeneration={loadRandomMelody}
+            openIAModal={() => setAIModalOpen(true)}
           />
-          <Piano onNotePlay={handleNotePlay} ctx={ctx} />
-          <TempoSlider tempo={tempo} setTempo={setTempo} />
-        </div>
-      </section>
+
+          {/* Canvas + piano */}
+          <div
+            className={isPlayingBack ? "disabled" : undefined}
+            style={{
+              position: "relative",
+              backgroundColor: "var(--black-color)",
+              borderRadius: 8,
+              height: '330px'
+            }}
+          >
+            <PixelCanvas
+              colorMap={colorMap}
+              playingIndex={playIndex}
+              color={frequencyStyle.color}
+              onCanvasClick={handleCanvasClick}
+            />
+            <Piano onNotePlay={handleNotePlay} ctx={ctx} />
+          </div>
+        </section>
+      </div>
 
       {/* Frequency range modal */}
       {isFreqModalOpen && (
@@ -340,45 +345,55 @@ export default function MusicDrawingPage({
         />
       )}
 
-      {/* AI modal */}
-      <Modal
+       <Modal
         open={isAIModalOpen}
         onClose={() => setAIModalOpen(false)}
+        // frequencyStyle={frequencyStyle}
         showCloseIcon={false}
         styles={{
-          overlay: { backgroundColor: "rgba(0,0,0,0.8)" },
           modal: {
-            width: UI.MODAL_WIDTH,
-            maxWidth: UI.MODAL_MAX_WIDTH,
-            margin: "50px auto 0",
-            backgroundColor: "rgba(0,0,0,0.1)",
-            backdropFilter: "blur(50px)",
-            borderRadius: 8,
-            padding: 20,
-            textAlign: "center",
+            background: 'rgba(0, 0, 0, 0.8)',
+            color: '#fff',
+            borderRadius: '10px',
+            padding: '20px',
+          },
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
           },
         }}
       >
-        <GalleryHeader
-          title="AI Melody Generator"
-          onBackClick={() => setAIModalOpen(false)}
-        />
+        <button
+          onClick={() => setAIModalOpen(false)}
+          style={{
+            position: 'absolute',
+            top: 10,
+            right: 10,
+            background: 'transparent',
+            border: 'none',
+            color: '#fff',
+            cursor: 'pointer',
+            fontSize: '20px',
+          }}
+        >
+          &times;
+        </button>
 
-        {/* AI content */}
-        {/* <AIMelodyControls
-          selectedScale={selectedScale}
-          setSelectedScale={setSelectedScale}
-          firstNote={firstNote}
-          setFirstNote={setFirstNote}
-          melodyKind={melodyKind}
-          setMelodyKind={setMelodyKind}
-          loadRandomMelody={loadRandomMelody}
-          previewColorMap={notesPlayed.map(({ noteIndex, time }) => ({
-            noteIndex,
-            time,
-            color: randomColor(),
-          }))}
-        /> */}
+        <h2 style={{ color: 'var(--neon-color)', textAlign: 'center' }}>More options...</h2>
+        {/* Add your form or controls here */}
+          <AIMelodyControls
+            selectedScale={selectedScale}
+            setSelectedScale={setSelectedScale}
+            firstNote={firstNote}
+            setFirstNote={setFirstNote}
+            melodyKind={melodyKind}
+            setMelodyKind={setMelodyKind}
+            loadRandomMelody={loadRandomMelody}
+            previewColorMap={notesPlayed.map(({ noteIndex, time }) => ({
+              noteIndex,
+              time,
+              color: randomColor(),
+            }))}
+          />
       </Modal>
     </>
   );
@@ -412,64 +427,3 @@ const toggleColor = (
     ? list.filter((c) => !(c.noteIndex === noteIdx && c.time === time))
     : [...list, { noteIndex: noteIdx, time, color: randomColor() }];
 
-/* ─────────────────────── Small sub-components ────────────────────── */
-
-function TempoSlider({
-  tempo,
-  setTempo,
-}: {
-  tempo: number;
-  setTempo: (t: number) => void;
-}) {
-  return (
-    <div
-      style={{ textAlign: "center", color: "var(--neon-color)", marginTop: 4 }}
-    >
-      🎵 Tempo: {tempo} BPM
-      <input
-        type="range"
-        min={60}
-        max={420}
-        value={tempo}
-        onChange={(e) => setTempo(+e.target.value)}
-        style={{ width: "80%" }}
-      />
-    </div>
-  );
-}
-
-function AIHint({ onClick }: { onClick: () => void }) {
-  return (
-    <div
-      onClick={onClick}
-      style={{
-        cursor: "pointer",
-        position: "relative",
-        display: "inline-block",
-      }}
-    >
-      <span
-        style={{
-          position: "absolute",
-          left: -UI.ARROW_HINT_SIZE,
-          top: 0,
-          fontSize: 12,
-        }}
-      >
-        <Image
-          src="/arrow-pink.gif"
-          alt="IA arrow"
-          width={UI.ARROW_HINT_SIZE}
-          height={UI.ARROW_HINT_SIZE}
-          style={{ filter: "drop-shadow(0 0 5px #ff00ff)", rotate: "90deg" }}
-        />
-      </span>
-      <span
-        style={{ position: "absolute", left: 50, top: 8, fontSize: 12 }}
-      >
-        IA&nbsp;Generator
-      </span>
-      <Image src="/logo.webp" alt="BlockBeats" width={50} height={50} />
-    </div>
-  );
-}

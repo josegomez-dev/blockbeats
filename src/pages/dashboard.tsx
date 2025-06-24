@@ -16,6 +16,10 @@ import { TopCollections } from "@/types/topCollections";
 const DashboardLayout = () => {
   const [nfts, setNFTs] = React.useState<any[]>([]);
   const [topCollections, setTopCollections] = React.useState<TopCollections[]>([]);
+
+  const [totalNFTCreations, setTotalNFTCreations] = React.useState<number>(0);
+  const [totalTopCollections, setTotalTopCollections] = React.useState<number>(0);
+
   const { user, authenticated } = useAuth();
 
   // Always call hooks unconditionally
@@ -31,15 +35,19 @@ const DashboardLayout = () => {
     const nfts = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
     if (user) {
       const userNFTs = nfts.filter((item: any) => item.createdBy === user.uid);
-      setNFTs(userNFTs);
-      console.log("NFTs fetched:", nfts);
+      setNFTs(userNFTs);      
+      setTotalNFTCreations(userNFTs.length);
     }
   };
 
   const fetchTopCollections = async () => {
     const querySnapshot = await getDocs(collection(db, "topCollections"));
     const collections = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    setTopCollections(collections as TopCollections[]);
+    if (user) {
+      const userCollections = collections.filter((item: any) => item.createdBy === user.uid);
+      setTopCollections(userCollections as TopCollections[]);
+      setTotalTopCollections(userCollections.length);
+    }
   };
 
   const showPanel = (panel: string) => {
@@ -86,7 +94,7 @@ const DashboardLayout = () => {
             <MusicDrawingPage nfts={nfts} topCollections={topCollections} />
           </div>
           <div id="core-right-panel" className={styles.rightPanel}>
-            <Web3StatsPanel />
+            <Web3StatsPanel totalNFTCreations={totalNFTCreations} totalTopCollections={totalTopCollections} />
           </div>
         </div>
       </div>

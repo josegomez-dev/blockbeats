@@ -53,7 +53,13 @@ const Sparkline = ({ data, color = "green" }: { data: number[]; color?: string }
   return <Line data={chartData} options={options} />;
 };
 
-const Web3StatsPanel = () => {
+// Props interface
+interface Web3StatsPanelProps {
+  totalNFTCreations: number;
+  totalTopCollections: number;
+}
+
+const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, totalTopCollections }) => {
   const [prices, setPrices] = useState({ ETH: getRandomChange(), BTC: getRandomChange(), BBEATS: getRandomChange() });
   const [newsIndex, setNewsIndex] = useState(0);
   const [sparkData, setSparkData] = useState<Record<string, number[]>>({});
@@ -127,9 +133,7 @@ const Web3StatsPanel = () => {
                 <p className={styles.tokenStat}>PTS: {user?.bbcPoints} <strong className="glitch">BBC</strong></p>
                 <p className={styles.tokenStat}><FaCoins color="gold" /> <strong>token</strong>: <span className={styles.tokenValue}>${(sparkData.ETH?.slice(-1)[0] || 1000).toFixed(0)}</span></p>
                 <hr />
-                <p className={styles.tokenMeta}><strong>NFTs</strong>: 4 | <strong>LISTS</strong>: 2</p>
-                <hr />
-                <p className={styles.tokenMeta}>LEVEL: <span className="glitch">2</span> | XP: <span className="glitch">50%</span></p>
+                <p className={styles.tokenMeta}><strong>NFTs</strong>: {totalNFTCreations} | <strong>LISTS</strong>: {totalTopCollections}</p>
                 <hr />
                 {CHARACTER_STATS.map(({ key, label, icon }) => (
                   <p key={key} className={stylesChar.barWrapper}>
@@ -141,6 +145,8 @@ const Web3StatsPanel = () => {
                     </div>
                   </p>
                 ))}
+                <hr />
+                <p className={styles.tokenMeta}>LEVEL: <span className="glitch">2</span> | XP: <span className="glitch">50%</span></p>
               </div>
             </li>
           </ul>
