@@ -165,7 +165,8 @@ const Web3StatsPanel = () => {
             overflowY: "auto",
             display: "flex",
             flexDirection: "row",
-            gap: "25px",
+            justifyContent: "space-between",
+            gap: "15px",
           }}
         >
           <ul>
@@ -174,7 +175,7 @@ const Web3StatsPanel = () => {
                 <p style={{ fontSize: "10px" }}>
                   PTS: {user?.bbcPoints} <strong className="glitch">BBC</strong>
                 </p>
-                <p style={{ textAlign: "left", fontSize: "10px" }}>
+                <p style={{ textAlign: "left", fontSize: "12px" }}>
                   <FaCoins color="gold" /> &nbsp;
                   <strong className="glitch">token</strong>: &nbsp;
                       <span style={{ color: 'gold' }}>${(sparkData.ETH?.slice(-1)[0] || 1000).toFixed(0)}{" "}</span>

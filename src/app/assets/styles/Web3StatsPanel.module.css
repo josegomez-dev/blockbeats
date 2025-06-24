@@ -59,7 +59,7 @@
 }
 
 .tutorialSlider {
-  height: 6.9rem; /* 3 items x 1.5rem */
+  height: 6.2rem; /* 3 items x 1.5rem */
   overflow: hidden;
   position: relative;
   overflow-y: auto;
@@ -73,10 +73,10 @@
 .tutorialItem {
   line-height: 20px;
   color: #ccc;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   display: flex;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 .newsSlider {
