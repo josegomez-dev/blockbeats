@@ -124,24 +124,28 @@ const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, tota
       </div>
 
       <h5 className={styles.subtitle}>
-        <Image src="/logo.webp" alt="BBC Logo" width={30} height={30} /> ACCOUNT / MARKET OVERVIEW
+        <Image src="/logo.webp" alt="BBC Logo" width={30} height={30} /> DATA / MARKET OVERVIEW
       </h5>
 
       <div className={styles.section}>
         <div className={styles.coinListWrapper}>
           <ul>
+            <h3>Account</h3>
+            <hr />
             <li className={styles.coinsContainer}>
               <div className={styles.coinRow}>
                 <p className={styles.tokenMeta}><strong> <RiGalleryLine /> </strong>: <span className="glitch">{totalNFTCreations}</span> | <strong> <BiCollection /></strong>: <span className="glitch">{totalTopCollections}</span></p>
                 <hr />
                 <p className={styles.tokenStat}>PTS: {user?.bbcPoints} <strong className="glitch">BBC</strong></p>
                 <hr />
-                <p className={styles.tokenStat}><FaCoins color="gold" /> <strong>token</strong>: <span className={styles.tokenValue}>${(sparkData.ETH?.slice(-1)[0] || 1000).toFixed(0)}</span></p>
+                <p className={styles.tokenStat}><FaCoins color="gold" /> <strong>balance</strong>: <span className={styles.tokenValue}>${(0).toFixed(2)}</span></p>
               </div>
             </li>
           </ul>
 
           <ul className={styles.coinsContainer} style={{ width: "180px" }}>
+            <h3>Bot Stats</h3>
+            <hr />
             <p className={styles.tokenMeta}>LVL: <span className="glitch">2</span> | XP: <span className="glitch">50%</span></p>
             {CHARACTER_STATS.map(({ key, label, icon }) => (
               <div key={key} className={stylesChar.barWrapper} style={{ fontSize: 10}}>
@@ -157,6 +161,8 @@ const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, tota
           </ul>
 
           <ul>
+            <h3>TOKENS</h3>
+            <hr />
             {Object.entries(prices).map(([coin, { change, isPositive }]) => (
               <li className={styles.coinsContainer} key={coin}>
                 <div className={styles.coinRow}>
