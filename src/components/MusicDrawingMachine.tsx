@@ -22,18 +22,15 @@ import PixelCanvas from "./PixelCanvas";
 import Piano from "./Piano";
 import NFTSliderPanel from "./NFTSliderPanel";
 import ControlsPanel from "./ControlPanel";
-import GalleryHeader from "./GalleryHeader";
 
 import type { TopCollections } from "@/types/topCollections";
 import AIMelodyControls from "./AIMelodyControls";
+import { PICK_TWO, RANDOM, RANDOM_COLOR, TOGGLE, TOGGLE_COLOR } from "@/utils/helpers/pixelHelper";
 
 const AudioCtx = typeof window !== "undefined"
   ? window.AudioContext || (window as any).webkitAudioContext
   : null;
 const ctx = AudioCtx ? new AudioCtx() : null;
-
-const randomColor = () =>
-  `hsl(${Math.floor(Math.random() * 360)}, 100%, 60%)`;
 
 interface Props {
   nfts?: any[];
@@ -92,18 +89,18 @@ export default function MusicDrawingPage({
 
         switch (melodyKind) {
           case "chords": {
-            const [a, b] = pickTwo(scaleIdx);
+            const [a, b] = PICK_TWO(scaleIdx);
             melody.push({ noteIndex: a, time: t }, { noteIndex: b, time: t });
             break;
           }
           case "solo": {
-            melody.push({ noteIndex: random(scaleIdx), time: t });
+            melody.push({ noteIndex: RANDOM(scaleIdx), time: t });
             break;
           }
           case "both": {
-            melody.push({ noteIndex: random(scaleIdx), time: t });
+            melody.push({ noteIndex: RANDOM(scaleIdx), time: t });
             if (Math.random() < 0.25)
-              melody.push({ noteIndex: random(scaleIdx), time: t });
+              melody.push({ noteIndex: RANDOM(scaleIdx), time: t });
             break;
           }
         }
@@ -119,7 +116,7 @@ export default function MusicDrawingPage({
       melody.map(({ noteIndex, time }) => ({
         noteIndex,
         time,
-        color: randomColor(),
+        color: RANDOM_COLOR(),
       }))
     );
   };
@@ -232,8 +229,8 @@ export default function MusicDrawingPage({
   };
 
   const handleCanvasClick = (noteIdx: number, time: number) => {
-    setNotesPlayed(toggle(notesPlayed, noteIdx, time));
-    setColorMap(toggleColor(colorMap, noteIdx, time));
+    setNotesPlayed(TOGGLE(notesPlayed, noteIdx, time));
+    setColorMap(TOGGLE_COLOR(colorMap, noteIdx, time));
     triggerNote(noteIdx);
   };
 
@@ -242,7 +239,7 @@ export default function MusicDrawingPage({
     setNotesPlayed([...notesPlayed, { noteIndex: noteIdx, time: nextTime }]);
     setColorMap([
       ...colorMap,
-      { noteIndex: noteIdx, time: nextTime, color: randomColor() },
+      { noteIndex: noteIdx, time: nextTime, color: RANDOM_COLOR() },
     ]);
   };
 
@@ -279,7 +276,6 @@ export default function MusicDrawingPage({
           position: "fixed",
           inset: 0,
           borderRadius: 8,
-          // background: frequencyStyle.color,
           mixBlendMode: "overlay",
           opacity: 0.15,
           pointerEvents: "none",
@@ -293,7 +289,7 @@ export default function MusicDrawingPage({
           <span className="glitch">LAUNCHPAD</span>
           &nbsp;Musical&nbsp;
           <span className="glitch">NFTs</span></h3>
-        <section className={styles.musicBox}>
+        <section className={styles.musicBox} style={{ background: frequencyStyle.color }}>
 
           {/* Control panel */}
           <ControlsPanel
@@ -352,9 +348,9 @@ export default function MusicDrawingPage({
         showCloseIcon={false}
         styles={{
           modal: {
-            background: 'rgba(0, 0, 0, 0.8)',
+            background: 'red',
             color: '#fff',
-            borderRadius: '10px',
+            borderRadius: '0px',
             padding: '20px',
           },
           overlay: {
@@ -391,39 +387,10 @@ export default function MusicDrawingPage({
             previewColorMap={notesPlayed.map(({ noteIndex, time }) => ({
               noteIndex,
               time,
-              color: randomColor(),
+              color: RANDOM_COLOR(),
             }))}
           />
       </Modal>
     </>
   );
 }
-
-/* ────────────────────────── Helpers ───────────────────────── */
-const random = <T,>(arr: T[]) => arr[Math.floor(Math.random() * arr.length)];
-
-const pickTwo = (arr: number[]): [number, number] => {
-  const a = random(arr);
-  let b = random(arr);
-  while (b === a && arr.length > 1) b = random(arr);
-  return [a, b];
-};
-
-const toggle = (
-  list: { noteIndex: number; time: number }[],
-  noteIdx: number,
-  time: number
-) =>
-  list.some((n) => n.noteIndex === noteIdx && n.time === time)
-    ? list.filter((n) => !(n.noteIndex === noteIdx && n.time === time))
-    : [...list, { noteIndex: noteIdx, time }];
-
-const toggleColor = (
-  list: { noteIndex: number; time: number; color: string }[],
-  noteIdx: number,
-  time: number
-) =>
-  list.some((c) => c.noteIndex === noteIdx && c.time === time)
-    ? list.filter((c) => !(c.noteIndex === noteIdx && c.time === time))
-    : [...list, { noteIndex: noteIdx, time, color: randomColor() }];
-

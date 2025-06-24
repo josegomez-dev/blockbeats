@@ -1,23 +1,17 @@
 'use client';
 
-import NeonSlider from '@/components/NeonSlider';
 import React, { useEffect } from 'react';
-import Link from 'next/link';
 import { useAuth } from "@/context/AuthContext";
 import styles from "@/app/assets/styles/MainPage.module.css";
-import Footer from '@/components/Footer';
 import { collection, getDocs } from 'firebase/firestore';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 import CollectionsSlider from '@/components/CollectionsSlider';
-import SignInUnautorizedModal from '@/components/SignInUnautorizedModal';
 import { useRouter } from 'next/router';
 import PixelPreview from '@/components/PixelPreview';
 import { notes } from "@/utils/constants/musicDrawingMachine";
 import { playMelody, playDrumLoop } from "@/utils/helpers/drumHelper";
 import Modal from 'react-responsive-modal';
-import Image from 'next/image';
-import { FaArrowLeft } from 'react-icons/fa';
 import GalleryHeader from '@/components/GalleryHeader';
 
 const CollectionsScreen = () => {

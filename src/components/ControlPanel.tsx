@@ -31,7 +31,7 @@ const ControlsPanel: React.FC<Props> = ({
   onIAGeneration = () => {}, // Default to a no-op function if not provided
   openIAModal = () => {}, // Default to false if not provided
 }) => (
-  <div className={`${isPlayingBack && 'disabled'}`} style={{ position: "relative", backdropFilter: 'blur(50px)', backgroundColor: 'var(--black-color)', borderRadius: 10, margin: "0 auto", boxShadow: '0 0 20px rgba(0,0,0,0.5)' }}>
+  <div className={`${isPlayingBack && 'disabled'}`} style={{ position: "relative", backdropFilter: 'blur(50px)', backgroundColor: 'var(--black-color)', borderRadius: 6, margin: "0 auto", boxShadow: '0 0 20px rgba(0,0,0,0.5)' }}>
     <div style={{ textAlign: "center", padding: 10, margin: "0", position: "relative" }}>
       <button onClick={onIAGeneration} className={styles.launchpadBtn}>
         🤖 AI Generate

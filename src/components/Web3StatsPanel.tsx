@@ -62,7 +62,7 @@ interface Web3StatsPanelProps {
 }
 
 const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, totalTopCollections }) => {
-  const [prices, setPrices] = useState({ ETH: getRandomChange(), BTC: getRandomChange(), BBEATS: getRandomChange() });
+  const [prices, setPrices] = useState({ ETH: getRandomChange(), BBEATS: getRandomChange() });
   const [newsIndex, setNewsIndex] = useState(0);
   const [sparkData, setSparkData] = useState<Record<string, number[]>>({});
   const { user } = useAuth();
@@ -84,7 +84,7 @@ const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, tota
 
   useEffect(() => {
     const priceInterval = setInterval(() => {
-      setPrices({ ETH: getRandomChange(), BTC: getRandomChange(), BBEATS: getRandomChange() });
+      setPrices({ ETH: getRandomChange(), BBEATS: getRandomChange() });
     }, 1500);
 
     const newsInterval = setInterval(() => {
@@ -161,7 +161,7 @@ const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, tota
           </ul>
 
           <ul>
-            <h3>TOKENS</h3>
+            <h3>Tokens</h3>
             <hr />
             {Object.entries(prices).map(([coin, { change, isPositive }]) => (
               <li className={styles.coinsContainer} key={coin}>
