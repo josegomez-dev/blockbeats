@@ -86,6 +86,7 @@ const DashboardLayout = () => {
       </div>
 
       <div className={styles.dashboardContainer}>
+        <br />
         <div className={styles.desktopGrid}>
           <div id="core-left-panel" className={styles.leftPanel}>
             <CharacterPanel />

@@ -289,10 +289,11 @@ export default function MusicDrawingPage({
 
       {/* Central music-box */}
       <div>
-        <h3 style={{ textAlign: 'center' }}>
+        <h4 style={{ textAlign: 'center' }}>
           <span className="glitch">LAUNCHPAD</span>
           &nbsp;Musical&nbsp;
-          <span className="glitch">NFTs</span></h3>
+          <span className="glitch">NFTs</span>
+        </h4>
         <section className={styles.musicBox} style={{ background: frequencyStyle.color }}>
 
           {/* Control panel */}
@@ -322,7 +323,7 @@ export default function MusicDrawingPage({
               position: "relative",
               backgroundColor: "var(--black-color)",
               borderRadius: 8,
-              height: '330px'
+              height: '325px'
             }}
           >
             <PixelCanvas

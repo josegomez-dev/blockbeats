@@ -740,12 +740,12 @@
   border-radius: 8px;
   font-family: monospace;
   color: white;
-  border: 2px dotted var(--white-color);
+  border: 2px solid var(--white-color);
   width: 300px;
   min-width: 300px;
   position: relative;
   text-align: center;
-  height: 508px;
+  height: 502px;
 }
 
 
