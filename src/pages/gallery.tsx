@@ -3,14 +3,9 @@ import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { useAuth } from "@/context/AuthContext";
 import styles from "@/app/assets/styles/MainPage.module.css";
-import Footer from '@/components/Footer';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
-import CollectionsSlider from '@/components/CollectionsSlider';
 import SignInUnautorizedModal from '@/components/SignInUnautorizedModal';
-import { useRouter } from 'next/router';
-import Image from 'next/image';
-import { FaArrowLeft } from 'react-icons/fa'; // Uncomment if you want to use an icon for the back button
 import GalleryHeader from '@/components/GalleryHeader';
 
 const GalleryScreen = () => {
@@ -26,10 +21,8 @@ const GalleryScreen = () => {
   };
 
   const [userNFTS, setUserNFTS] = React.useState<NFT[]>([]);
-  const [topCollections, setTopCollections] = React.useState<any[]>([]); // Adjust type as needed
-
+  
   const { user } = useAuth();
-  const router = useRouter();
 
   useEffect(() => {
     const fetchNFTs = async () => {
@@ -40,16 +33,7 @@ const GalleryScreen = () => {
       }
     };
     fetchNFTs();
-  }, []);
-
-  useEffect(() => {
-    const fetchTopCollections = async () => {
-      const querySnapshot = await getDocs(collection(db, "topCollections"));
-      const topCollections = querySnapshot.docs.map((doc) => ({ ...(doc.data() as any), id: doc.id }));
-      setTopCollections(topCollections);
-    };
-    fetchTopCollections();
-  }, []);
+  }, [user]);
 
   if (!user) {
     return (
@@ -99,8 +83,6 @@ const GalleryScreen = () => {
 
 
       </div>
-
-      {/* <Footer /> */}
     </>
   );
 };

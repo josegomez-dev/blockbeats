@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
-import Image from "next/image";
+import { useRef, useState, useCallback } from "react";
 import Modal from "react-responsive-modal";
 import toast from "react-hot-toast";
 import { addDoc, collection } from "firebase/firestore";
@@ -15,7 +14,7 @@ import {
   scaleIntervals,
   ScaleName,
 } from "@/utils/constants/musicDrawingMachine";
-import { SEQUENCER, AUDIO, UI } from "@/utils/constants/musicDrawingMachine";
+import { SEQUENCER, AUDIO } from "@/utils/constants/musicDrawingMachine";
 
 import FrequencyModal from "./FrequencyModal";
 import PixelCanvas from "./PixelCanvas";
@@ -26,6 +25,8 @@ import ControlsPanel from "./ControlPanel";
 import type { TopCollections } from "@/types/topCollections";
 import AIMelodyControls from "./AIMelodyControls";
 import { PICK_TWO, RANDOM, RANDOM_COLOR, TOGGLE, TOGGLE_COLOR } from "@/utils/helpers/pixelHelper";
+
+import { v4 as uuidv4 } from "uuid";
 
 const AudioCtx = typeof window !== "undefined"
   ? window.AudioContext || (window as any).webkitAudioContext
@@ -250,12 +251,15 @@ export default function MusicDrawingPage({
 
     try {
       await addDoc(collection(db, "signatures"), {
+        songName,
         notesPlayed,
         colorMap,
         frequencyRange: selectedRange,
+        color: frequencyStyle.color, // Save the color based on frequency
+        tempo,                       // Save the current tempo
         createdAt: new Date(),
         createdBy: user?.uid,
-        songName,
+        id: uuidv4(), // Unique ID
       });
       toast.success("Song-art saved!");
     } catch (err) {
@@ -348,9 +352,9 @@ export default function MusicDrawingPage({
         showCloseIcon={false}
         styles={{
           modal: {
-            background: 'red',
+            background: 'rgba(0, 0, 0, 0.8)',
             color: '#fff',
-            borderRadius: '0px',
+            borderRadius: '10px',
             padding: '20px',
           },
           overlay: {

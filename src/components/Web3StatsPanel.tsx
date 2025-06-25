@@ -134,6 +134,8 @@ const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, tota
             <hr />
             <li className={styles.coinsContainer}>
               <div className={styles.coinRow}>
+                <p className={styles.tokenMeta}>lvl: <span className="glitch">2</span> | XP: <span className="glitch">50</span></p>
+                <hr />
                 <p className={styles.tokenMeta}><strong> <RiGalleryLine /> </strong>: <span className="glitch">{totalNFTCreations}</span> | <strong> <BiCollection /></strong>: <span className="glitch">{totalTopCollections}</span></p>
                 <hr />
                 <p className={styles.tokenStat}>PTS: {user?.bbcPoints} <strong className="glitch">BBC</strong></p>
@@ -145,8 +147,6 @@ const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, tota
 
           <ul className={styles.coinsContainer} style={{ width: "180px" }}>
             <h3>Bot Stats</h3>
-            <hr />
-            <p className={styles.tokenMeta}>LVL: <span className="glitch">2</span> | XP: <span className="glitch">50%</span></p>
             {CHARACTER_STATS.map(({ key, label, icon }) => (
               <div key={key} className={stylesChar.barWrapper} style={{ fontSize: 10}}>
                 <hr />

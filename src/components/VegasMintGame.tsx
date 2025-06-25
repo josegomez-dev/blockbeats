@@ -2,22 +2,8 @@
 import React, { useState } from 'react';
 import styles from './../app/assets/styles/VegasMintGame.module.css';
 import stylesMain from './../app/assets/styles/MainPage.module.css';
-import Image from 'next/image';
 import PixelPreview from './PixelPreview';
-
-interface Pixel {
-  noteIndex: number;
-  time: number;
-  color: string;
-}
-
-interface NFTData {
-  id: string;
-  title: string;
-  author: string;
-  image: string;
-  colorMap: Pixel[];
-}
+import { NFTData } from '@/types/nftTypes';
 
 interface VegasMintGameProps {
   onClose: () => void;
@@ -28,7 +14,6 @@ const VegasMintGame: React.FC<VegasMintGameProps> = ({ onClose, nfts }) => {
   const [spinning, setSpinning] = useState(false);
   const [result, setResult] = useState<NFTData[]>([nfts[0], nfts[1], nfts[2]]);
   const [isAnimating, setIsAnimating] = useState(false);
-
 
   const playSound = () => {
     const audio = new Audio('/sounds/spin.mp3');
@@ -58,13 +43,18 @@ const VegasMintGame: React.FC<VegasMintGameProps> = ({ onClose, nfts }) => {
           {result.map((nft, i) => (
             <div key={i} className={`${styles.slot} ${spinning ? styles.spinning : ''} ${isAnimating ? styles.animating : ''}`}>
               <PixelPreview
-                colorMap={nft.colorMap}
+                colorMap={Object.entries(nft.colorMap).map(([noteIndex, color]) => ({
+                  noteIndex: Number(noteIndex),
+                  time: 0,
+                  color,
+                }))}
                 notesCount={12}
                 size={50}
                 style={{ marginTop: '0.5rem' }}
               />
-              <p className={styles.nftTitle}>{nft.title}</p>
-              <span className={styles.nftAuthor}>by {nft.author.slice(0, 6)}...</span>
+              <p className={styles.nftTitle}>{nft.songName}</p>
+              {/* Replace 'author' with an existing property, e.g., 'creator' */}
+              <span className={styles.nftAuthor}>by {nft.createdBy ? nft.createdBy.slice(0, 6) : 'Unknown'}...</span>
             </div>
           ))}
         </div>
