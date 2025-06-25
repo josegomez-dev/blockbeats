@@ -23,3 +23,14 @@ export const EMPTY_NFT: NFTData = {
     id: '',
     metadata: {},
 };
+
+export type NFT = {
+    id: string;
+    createdBy?: string;
+    songName?: string;
+    colorMap?: any[];
+    notesPlayed?: any[];
+    createdAt?: string; // or Date, depending on your data structure
+    tempo?: number; // default tempo or use nft.tempo if available
+    color?: string; // background or frequency color
+};

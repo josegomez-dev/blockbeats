@@ -149,56 +149,6 @@ const SidebarChatPanel = () => {
         </div>
 
         <div className="tab-content fade-in">
-          
-          {/* {activeTab === 'Contacts' && (
-            <div className="contacts-list">
-              {contacts.map(c => (
-                <React.Fragment key={c.id}>
-                  <div className={`contact-card ${!c.isFriend ? 'pending' : ''}`} style={{ width: !c.isFriend ? '200px' : 'auto' }}>
-                    <Avatar name={c.email.split('@')[0]} size="30" round className="contact-avatar" />
-                    <span style={{ width: '100px', overflow: 'auto' }}>{c.email.split('@')[0]}</span>
-                    {c.isOnline ? (
-                      <span className="status-badge online"></span>
-                    ) : (
-                      <span className="status-badge offline" style={{ animation: 'none' }}></span>
-                    )}
-                  </div>
-                  {!c.isFriend && (
-                    <button className='invite-button' onClick={() => toast.success(`Invite sent to ${c.name}`)}>Invite</button>
-                  )}
-                </React.Fragment>
-              ))}
-            </div>
-          )} */}
-
-          {/* {activeTab === 'NFTs' && (
-            <div className="nft-list">
-              {nftItems.map(nft => (
-                <div key={nft.id} className="nft-card">
-                  <div style={{ padding: '5px 10px ', margin: '0 auto' }}>
-                    <PixelPreview
-                      colorMap={nft?.colorMap}
-                      notesCount={nft?.notesPlayed.length}
-                      size={50}
-                    />
-                    <div className="nft-meta" style={{ fontSize: '8px', color: '#555' }}>
-                      <span className={`status-badge ${nft.status}`}></span>
-                      Owner: {nft.createdBy.slice(0, 6)}...
-                    </div>
-                  </div>
-                  <img src={nft.image} alt={nft.title} className="nft-avatar" />
-                  <div className="nft-info">
-                    <h3 className="nft-title">{nft.songName}</h3>
-                    
-                    <div className="nft-actions">
-                      <button className={styles.submitBtn}>View</button>
-                      <button className={styles.submitBtn}>Buy</button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )} */}
 
           {activeTab === 'Tokens' && (
             <div className="token-stats">

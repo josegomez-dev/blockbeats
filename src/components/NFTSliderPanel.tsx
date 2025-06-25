@@ -37,6 +37,10 @@ const NFTSliderPanel: React.FC<NFTSliderPanelProps> = ({ nfts, collections }) =>
                 songName: nft.songName || '',
                 colorMap: nft.colorMap || [],
                 notesPlayed: (nft.notesPlayed || []).join(','),
+                createdBy: nft.createdBy || '',
+                createdAt: new Date().toISOString(), // or use nft.createdAt if available
+                tempo: nft.tempo, // default tempo or use nft.tempo if available
+                color: nft.color || '#000000', // default background color if not present
               }))}
             />
           </div>

@@ -6,20 +6,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import VegasMintGame from '@/components/VegasMintGame';
 import DronesShowGame from '@/components/DronesShowGame';
-import SmartLightGame from '@/components/SmartLightGame';
-import HolographicArenaGame from '@/components/HolographicArenaGame';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
-
-type NFT = {
-  id: string;
-  createdBy?: string;
-  songName?: string;
-  colorMap?: any[];
-  notesPlayed?: any[];
-  img?: string;
-  // add other properties as needed
-};
+import { NFT } from '@/types/nftTypes';
 
 const miniGames = [
   {
@@ -35,21 +24,7 @@ const miniGames = [
     image: '/games/_2.png',
     key: 'vegas',
     disabled: true,
-  },
-  {
-    title: '🌆 Smart Light City',
-    description: 'Light up buildings and streets in rhythmic patterns.',
-    image: '/games/_3.png',
-    key: 'smart',
-    disabled: true, 
-  },
-  {
-    title: '🪐 Holographic Arena',
-    description: 'Enter a 3D hologram space and experience immersive music games!',
-    image: '/games/_4.png',
-    key: 'holo',
-    disabled: true, 
-  },
+  }
 ];
 
 const MiniGamesScreen = () => {
@@ -129,18 +104,25 @@ const MiniGamesScreen = () => {
           </div>
         )}
 
-        {showVegasGame && (
+        {/* {showVegasGame && (
           <VegasMintGame
             onClose={() => setShowVegasGame(false)}
             nfts={nfts.map(nft => ({
               id: nft.id,
               title: nft.songName || 'Untitled',
               author: nft.createdBy || 'Unknown',
-              image: '/nft1.webp',
               colorMap: nft.colorMap ?? [],
+              songName: nft.songName || 'Untitled',
+              notesPlayed: nft.notesPlayed ?? [],
+              frequencyRange: (nft as any).frequencyRange ?? [0, 0],
+              color: (nft as any).color ?? '#FFFFFF',
+              createdBy: nft.createdBy || 'Unknown',
+              tempo: (nft as any).tempo ?? 120,
+              createdAt: (nft as any).createdAt ?? new Date().toISOString(),
             }))}
           />
-        )}
+        )} */}
+        
         {showDronesGame && (
           <DronesShowGame
             onClose={() => setShowDronesGame(false)}
@@ -152,27 +134,8 @@ const MiniGamesScreen = () => {
             }))}
           />
         )}
-        {showSmartLightGame && (
-          <SmartLightGame
-            onClose={() => setShowSmartLightGame(false)}
-            nfts={nfts.map(nft => ({
-              title: nft.songName || 'Untitled',
-              author: nft.createdBy || 'Unknown',
-              colorMap: nft.colorMap ?? [],
-            }))}
-          />
-        )}
+  
         <>
-          {showHoloGame && (
-            <HolographicArenaGame
-              onClose={() => setShowHoloGame(false)}
-              nft={nfts.map(nft => ({
-                title: nft.songName || 'Untitled',
-                author: nft.createdBy || 'Unknown',
-                colorMap: nft.colorMap ?? [],
-              }))}
-            />
-          )}
         
           {showSmartLightGame && (
             <div className={'fullscreen'}>

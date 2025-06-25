@@ -13,16 +13,9 @@ import { notes } from "@/utils/constants/musicDrawingMachine";
 import { playMelody, playDrumLoop } from "@/utils/helpers/drumHelper";
 import Modal from 'react-responsive-modal';
 import GalleryHeader from '@/components/GalleryHeader';
+import { NFT } from '@/types/nftTypes';
 
 const CollectionsScreen = () => {
-  type NFT = {
-    id: string;
-    createdBy?: string;
-    songName?: string;
-    colorMap?: any[];
-    notesPlayed?: any[];
-    collectionId?: string;
-  };
 
   const [userNFTS, setUserNFTS] = React.useState<NFT[]>([]);
   const [topCollections, setTopCollections] = React.useState<any[]>([]);
@@ -98,7 +91,7 @@ const CollectionsScreen = () => {
     stopDrumRef?.();
 
     const melody = nft.colorMap.map(({ noteIndex, time }) => ({ noteIndex, time }));
-    const tempo = 300;
+    const tempo = nft.tempo || 300;
 
     setIsPlaying(true);
     setPlayingId(nft.id);
@@ -141,8 +134,8 @@ const CollectionsScreen = () => {
             <div className={styles.collectionHeader}>
               <h3>{selectedCollection.collectionName || "Unnamed Collection"}</h3>
               <div>
-                <button onClick={() => setIsModalOpen(true)} className={styles.submitBtn}>Manage NFTs</button>
-                <button onClick={() => setIsCollectionViewOpen(false)} className={styles.submitBtn}>Close</button>
+                <button onClick={() => setIsModalOpen(true)} className={styles.submitBtn} style={{ animation: 'none' }}>Manage NFTs</button>
+                <button onClick={() => setIsCollectionViewOpen(false)} className={styles.submitBtn} style={{ animation: 'none' }}>Close</button>
               </div>
             </div>
             <div className={styles.collectionGrid}>
@@ -154,12 +147,13 @@ const CollectionsScreen = () => {
                       colorMap={nft.colorMap || []}
                       notesCount={nft.notesPlayed?.length || 0}
                       size={100}
+                      backgroundColor={nft.color || '#000'}
                     />
                     <button
                       onClick={() => handlePlayNFT(nft)}
                       disabled={isPlaying && playingId === nft.id}
                       className={styles.submitBtn}
-                      style={{ backgroundColor: isPlaying && playingId === nft.id ? "var(--neon-color)" : "transparent" }}
+                      style={{ backgroundColor: isPlaying && playingId === nft.id ? "var(--neon-color)" : "transparent", animation: 'none' }}
                     >
                       {(isPlaying && playingId === nft.id) ? "🎧..." : "▶️"}
                     </button>
@@ -174,52 +168,52 @@ const CollectionsScreen = () => {
 
         {isModalOpen && (
           <Modal 
-          open={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          showCloseIcon={false}
-          center
-          classNames={{ modal: isModalOpen ? styles.modal : styles.modalClosed }}
-          styles={ { modal: { display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '20px' } } }
-        >
-          <h3>Select NFTs for Collection</h3>
-          <div className={'gallery-grid'} style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
-            {userNFTS.map((nft) => (
-              <div key={nft.id} className={styles.nftCard}>
-                <h4>{nft.songName}</h4>
-                <PixelPreview
-                  colorMap={nft.colorMap || []}
-                  notesCount={nft.notesPlayed?.length || 0}
-                  size={80}
-                />
-                <button
-                  className={styles.submitBtn}
-                  onClick={() => toggleNFTSelection(nft.id)}
-                  style={{ backgroundColor: selectedForCollection.includes(nft.id) ? '#0af' : '#222' }}
-                >
-                  {selectedForCollection.includes(nft.id) ? '✓' : 'Add'}
-                </button>
-                <button
-                  className={styles.submitBtn}
-                  onClick={() => handlePlayNFT(nft)}
-                  disabled={isPlaying && playingId === nft.id}
-                  style={{ backgroundColor: isPlaying && playingId === nft.id ? "var(--neon-color)" : "transparent" }}
-                >
-                  {(isPlaying && playingId === nft.id) ? "🎧..." : "▶️"}
-                </button>
-              </div>
-            ))}
-            
-          </div>
-
-          <button
-            className={styles.submitBtn}
-            onClick={saveSelection}
+            open={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            showCloseIcon={false}
+            center
+            classNames={{ modal: styles.modal }}
+            styles={{ modal: { backgroundColor: 'rgba(0, 0, 0, 0.8)', height: 'auto' } }}
           >
-            Save Selection
-          </button>
+            <h3>Select NFTs for Collection</h3>
+            <div className={'gallery-grid'} style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+              {userNFTS.map((nft) => (
+                <div key={nft.id} className={`${styles.nftCard} gallery-item`}>
+                  <h4>{nft.songName}</h4>
+                  <PixelPreview
+                    colorMap={nft.colorMap || []}
+                    notesCount={nft.notesPlayed?.length || 0}
+                    size={80}
+                  />
+                  <button
+                    className={styles.submitBtn}
+                    onClick={() => toggleNFTSelection(nft.id)}
+                    style={{ backgroundColor: selectedForCollection.includes(nft.id) ? '#0af' : '#222' }}
+                  >
+                    {selectedForCollection.includes(nft.id) ? '✓' : 'Add'}
+                  </button>
+                  <button
+                    className={styles.submitBtn}
+                    onClick={() => handlePlayNFT(nft)}
+                    disabled={isPlaying && playingId === nft.id}
+                    style={{ backgroundColor: isPlaying && playingId === nft.id ? "var(--neon-color)" : "transparent" }}
+                  >
+                    {(isPlaying && playingId === nft.id) ? "🎧..." : "▶️"}
+                  </button>
+                </div>
+              ))}
+              
+            </div>
 
-          <button className={styles.submitBtn} onClick={() => setIsModalOpen(false)}>Close</button>
-        </Modal>
+            <button
+              className={styles.submitBtn}
+              onClick={saveSelection}
+            >
+              Save Selection
+            </button>
+
+            <button className={styles.submitBtn} onClick={() => setIsModalOpen(false)}>Close</button>
+          </Modal>
         )}
 
       </div>

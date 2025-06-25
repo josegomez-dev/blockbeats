@@ -12,16 +12,17 @@ interface PixelPreviewProps {
   notesCount: number;
   size?: number;
   style?: React.CSSProperties;
+  backgroundColor?: string;
 }
 
-const PixelPreview: React.FC<PixelPreviewProps> = ({ colorMap, notesCount, size = 100, style }) => {
+const PixelPreview: React.FC<PixelPreviewProps> = ({ colorMap, notesCount, size = 100, style, backgroundColor }) => {
   return (
     <div
       style={{
         width: `${size}px`,
         height: `${size}px`,
         margin: "0 auto",
-        backgroundColor: colorMap ? colorMap[0]?.color || "black" : 'red',
+        backgroundColor: backgroundColor || "black",
         border: "1px solid gray",
         borderRadius: "10px",
         boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",

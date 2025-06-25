@@ -16,6 +16,8 @@ interface Slide {
     color: string;
   }[];
   notesPlayed: string;
+  tempo?: number;
+  color?: string; // background or frequency color
 }
 
 interface NeonSliderProps {
@@ -52,15 +54,15 @@ const NeonSlider: React.FC<NeonSliderProps> = ({ slides }) => {
   };
 
   const handlePlaySlide = (slide: Slide) => {
-    if (isPlaying && playingSlideId === slide.id) return; // already playing this one
+    if (isPlaying && playingSlideId === slide.id) return;
 
-    stopPlayback(); // stop anything playing first
+    stopPlayback();
     setIsPlaying(true);
     setPlayingSlideId(slide.id);
 
     const melody = slide.colorMap.map(({ noteIndex, time }) => ({ noteIndex, time }));
-    const tempo = 300;
-
+    const tempo = slide.tempo || 300;
+    
     const stopDrum = playDrumLoop(tempo, () => {});
     setStopDrumRef(() => stopDrum);
 
@@ -80,6 +82,7 @@ const NeonSlider: React.FC<NeonSliderProps> = ({ slides }) => {
     setStopMelodyRef(() => stopMelody);
   };
 
+
   return (
     <div className={styles.sliderContainer}>
       <div className={`${styles.thumbnail} ${styles.leftThumb}`}>
@@ -87,6 +90,7 @@ const NeonSlider: React.FC<NeonSliderProps> = ({ slides }) => {
           colorMap={slides[prevIndex]?.colorMap}
           notesCount={slides[prevIndex]?.notesPlayed?.length}
           size={60}
+          backgroundColor={slides[prevIndex]?.color}
         />
       </div>
 
@@ -113,6 +117,7 @@ const NeonSlider: React.FC<NeonSliderProps> = ({ slides }) => {
               colorMap={slide.colorMap || []}
               notesCount={slide.notesPlayed?.length}
               size={100}
+              backgroundColor={slide.color}
             />
 
             <button
@@ -133,6 +138,7 @@ const NeonSlider: React.FC<NeonSliderProps> = ({ slides }) => {
           colorMap={slides[nextIndex]?.colorMap}
           notesCount={slides[nextIndex]?.notesPlayed?.length}
           size={60}
+          backgroundColor={slides[nextIndex]?.color}
         />
       </div>
 

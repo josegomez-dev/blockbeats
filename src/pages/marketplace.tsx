@@ -16,19 +16,10 @@ import { notes } from "@/utils/constants/musicDrawingMachine";
 import Image from 'next/image';
 import { FaArrowLeft } from 'react-icons/fa';
 import GalleryHeader from '@/components/GalleryHeader';
+import { NFT } from '@/types/nftTypes';
 
 
 const MarketplaceScreen = () => {
-
-  type NFT = {
-    id: string;
-    createdBy?: string;
-    songName?: string;
-    colorMap?: any[];
-    notesPlayed?: any[];
-    img?: string;
-    // add other properties as needed
-  };
 
   const [nfts, setNFTs] = React.useState<NFT[]>([]);
 
@@ -91,7 +82,7 @@ const [stopDrumRef, setStopDrumRef] = React.useState<(() => void) | null>(null);
   setPlayingId(nft.id);
 
   const melody = nft.colorMap.map(({ noteIndex, time }) => ({ noteIndex, time }));
-  const tempo = 300;
+  const tempo = nft.tempo || 300;
 
   const stopDrum = playDrumLoop(tempo, () => {});
   setStopDrumRef(() => stopDrum);
@@ -133,6 +124,7 @@ const [stopDrumRef, setStopDrumRef] = React.useState<(() => void) | null>(null);
                 colorMap={selectedNFT.colorMap || []}
                 notesCount={selectedNFT.notesPlayed ? selectedNFT.notesPlayed.length : 0}
                 size={200}
+                backgroundColor={selectedNFT.color || '#000'}
               />
               <br />
               <p>
@@ -160,6 +152,7 @@ const [stopDrumRef, setStopDrumRef] = React.useState<(() => void) | null>(null);
                     colorMap={src.colorMap || []}
                     notesCount={src.notesPlayed ? src.notesPlayed.length : 0}
                     size={100}
+                    backgroundColor={src.color || '#000'}
                   />
                   {/* <img src={src} alt={`Gallery ${index}`} className="gallery-image" /> */}
                   {/* <button className={styles.submitBtn} style={{ animation: 'none', background: 'transparent' }}>View</button> */}

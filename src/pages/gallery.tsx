@@ -7,18 +7,9 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
 import SignInUnautorizedModal from '@/components/SignInUnautorizedModal';
 import GalleryHeader from '@/components/GalleryHeader';
+import { NFT } from '@/types/nftTypes';
 
 const GalleryScreen = () => {
-
-  type NFT = {
-    id: string;
-    createdBy?: string;
-    songName?: string;
-    colorMap?: any[];
-    notesPlayed?: any[];
-    img?: string;
-    // add other properties as needed
-  };
 
   const [userNFTS, setUserNFTS] = React.useState<NFT[]>([]);
   
@@ -71,10 +62,13 @@ const GalleryScreen = () => {
           <NeonSlider
             slides={userNFTS.map(nft => ({
               id: nft.id,
-              img: nft.img || '/nft1.webp', // fallback image if not present
               songName: nft.songName || '',
               colorMap: nft.colorMap || [],
               notesPlayed: (nft.notesPlayed || []).join(','),
+              createdBy: nft.createdBy || '',
+              createdAt: new Date().toISOString(), // or use nft.createdAt if available
+              tempo: nft.tempo, // default tempo or use nft.tempo if available
+              color: nft.color
             }))}
           />
         </div>
