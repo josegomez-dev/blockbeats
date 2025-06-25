@@ -94,17 +94,16 @@ const DronesShowGame: React.FC<DronesShowGameProps> = ({
         </div>
 
         <div className={styles.meta}>
-          <h3>{title}</h3>
-          <p>by {author}</p>
+          <h3 className='glitch'>{title}</h3>
+          <br />
+          {/* <p>by {author}</p> */}
         </div>
         <div className={styles.controls}>
           <button onClick={prevArtwork}>⬅️ Prev</button>
           <button onClick={handleReset} disabled={animating}>🔄 Reset</button>
+          <button className={styles.exitButton} onClick={onClose}>❌ Exit</button>
           <button onClick={nextArtwork}>➡️ Next</button>
         </div>
-
-<br />
-        <button className={styles.exitButton} onClick={onClose}>❌ Exit</button>
       </div>
     </div>
   );

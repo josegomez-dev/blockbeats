@@ -23,7 +23,7 @@ const miniGames = [
     description: 'Spin the reels and mint your exclusive NFT surprise!',
     image: '/games/_2.png',
     key: 'vegas',
-    disabled: true,
+    disabled: false,
   }
 ];
 
@@ -104,14 +104,22 @@ const MiniGamesScreen = () => {
           </div>
         )}
 
-        {/* {showVegasGame && (
+        {showVegasGame && (
           <VegasMintGame
             onClose={() => setShowVegasGame(false)}
             nfts={nfts.map(nft => ({
               id: nft.id,
               title: nft.songName || 'Untitled',
               author: nft.createdBy || 'Unknown',
-              colorMap: nft.colorMap ?? [],
+              colorMap: Array.isArray(nft.colorMap)
+                ? Object.fromEntries(
+                    (nft.colorMap as any[]).map((entry, idx) =>
+                      typeof entry === 'object' && entry !== null
+                        ? [entry.key ?? String(idx), entry.value ?? '']
+                        : [String(idx), String(entry)]
+                    )
+                  )
+                : (nft.colorMap as unknown as Record<string, string>) ?? {},
               songName: nft.songName || 'Untitled',
               notesPlayed: nft.notesPlayed ?? [],
               frequencyRange: (nft as any).frequencyRange ?? [0, 0],
@@ -121,7 +129,7 @@ const MiniGamesScreen = () => {
               createdAt: (nft as any).createdAt ?? new Date().toISOString(),
             }))}
           />
-        )} */}
+        )}
         
         {showDronesGame && (
           <DronesShowGame

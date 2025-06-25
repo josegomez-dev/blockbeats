@@ -85,6 +85,10 @@
   justify-content: center;
   gap: 1rem;
   flex-wrap: wrap;
+  position: absolute;
+  bottom: 120px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .controls button,
