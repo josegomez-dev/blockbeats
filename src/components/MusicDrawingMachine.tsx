@@ -262,6 +262,7 @@ export default function MusicDrawingPage({
         id: uuidv4(), // Unique ID
       });
       toast.success("Song-art saved!");
+      window.location.reload();
     } catch (err) {
       console.error(err);
       toast.error("Failed to save NFT");

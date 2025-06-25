@@ -11,7 +11,7 @@ interface CollectionProps {
 
 const CollectionsSlider: React.FC<CollectionProps> = ({ fullWidth, title, topCollections, onSelectCollection }) => {
   return (
-    <div style={{ padding: fullWidth ? '15px 85px' : '' }}>
+    <div style={{ padding: fullWidth ? '15px 85px' : '', textAlign: 'left' }}>
       <hr />
       {title && <h2 style={{ marginTop: '10px', marginBottom: '-15px' }}>{title}</h2>}
       <br />

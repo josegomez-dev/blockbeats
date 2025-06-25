@@ -1,7 +1,7 @@
 // components/Key.tsx
 'use client';
 
-import { KeyType } from '@/utils/constants/musicDrawingMachine';
+import { AUDIO, KeyType } from '@/utils/constants/musicDrawingMachine';
 import React, { useRef } from 'react';
 
 interface KeyProps {
@@ -19,7 +19,7 @@ const Key: React.FC<KeyProps> = ({ note, frequency, type, onPlay, ctx }) => {
     if (ctx && !oscRef.current) {
       const osc = ctx.createOscillator();
       osc.frequency.value = frequency;
-      osc.type = 'sawtooth';
+      osc.type = AUDIO.OSC_TYPE as OscillatorType;
       osc.connect(ctx.destination);
       osc.start();
       oscRef.current = osc;

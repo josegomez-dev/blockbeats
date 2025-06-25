@@ -1,175 +1,217 @@
-// CharacterPanel.tsx (Improved with constants)
-"use client";
+// CharacterPanel.tsx
+'use client';
 
-import React, { useState, useEffect } from "react";
-import styles from "@/app/assets/styles/CharacterPanel.module.css";
-import stylesMain from "@/app/assets/styles/MainPage.module.css";
-import toast from "react-hot-toast";
-import LevelUpOverlay from "./LevelUpOverlay";
-import { arrayUnion, doc, updateDoc } from "firebase/firestore";
-import { db } from "../../firebase";
+import React, { useEffect, useReducer, useRef, useState } from 'react';
+import toast from 'react-hot-toast';
+import { doc, arrayUnion, updateDoc } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
+import LevelUpOverlay from './LevelUpOverlay';
+import styles from '@/app/assets/styles/CharacterPanel.module.css';
+import stylesMain from '@/app/assets/styles/MainPage.module.css';
+import { db } from '../../firebase';
 import { useAuth } from '../context/AuthContext';
-import { CHARACTER_ANIMATION_DELAY, CHARACTER_LEVELUP_DURATION, XP_INTERVAL } from "@/utils/constants/gameSettings";
+import {
+  CHARACTER_ANIMATION_DELAY,
+  CHARACTER_LEVELUP_DURATION,
+} from '@/utils/constants/gameSettings';
+import { CHARACTER_STATS } from '@/utils/constants/characterStats';
 
-const CharacterPanel = () => {
-  const [energy, setEnergy] = useState(83);
-  const [xp, setXP] = useState(67);
-  const [level, setLevel] = useState(2);
-  const [creativity, setCreativity] = useState(12);
-  const [animateLevel, setAnimateLevel] = useState(false);
-  const [showOverlay, setShowOverlay] = useState(false);
-  const [messageOverlay, setMessageOverlay] = useState("");
-  const [showGif, setShowGif] = useState(false);
+type StatState = {
+  energy: number;
+  creativity: number;
+  xp: number;
+  level: number;
+};
+const initialState: StatState = {
+  energy: 0,
+  creativity: 0,
+  xp: 0,
+  level: 0,
+};
+
+const CharacterPanel: React.FC = () => {
+  const [{ energy, creativity, xp, level }] = useReducer(
+    (state: StatState, action: Partial<StatState>) => ({
+      ...state,
+      ...action,
+    }),
+    initialState
+  );
 
   const { user, updateCoinsInFirestore } = useAuth();
+  const [overlayMsg, setOverlayMsg] = useState<string | null>(null);
+  const [animateLevel, setAnimateLevel] = useState(false);
+  const [showGif, setShowGif] = useState(false);
+  const [phaseIndex, setPhaseIndex] = useState(1); // NEW
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setEnergy((prev) => (prev < 100 ? prev + 1 : 60));
-      setXP((prev) => {
-        const nextXP = prev + 5;
+  const canClaim = useRef<boolean>(true);
+  const MAX_PHASE = 9;
+  const MIN_PHASE = 0;
 
-        if (nextXP >= 100) {
-          setLevel((lvl) => {
-            const newLevel = lvl >= 10 ? 1 : lvl + 1;
+  const sfx = useRef({
+    levelUp1: new Audio('/sounds/level-up.mp3'),
+    levelUp2: new Audio('/sounds/level-up-2.mp3'),
+    coins: new Audio('/sounds/coins.mp3'),
+  });
 
-            setAnimateLevel(true);
-            setShowOverlay(true);
-            setMessageOverlay(`🎉 Level up! You've reached level ${lvl + 1}!`);
-            toast.success(`🔥 Evolución completada: Nivel ${newLevel}`);
-            playLevelUp2Sound();
-            updateUserNotifications(newLevel);
-            setShowGif(true);
+  const handleLevelUp = async (newLevel: number) => {
+    setAnimateLevel(true);
+    setShowGif(true);
+    setOverlayMsg(`🎉 Level up! You reached level ${newLevel}!`);
+    toast.success(`🔥 Evolución completada: Nivel ${newLevel}`);
+    sfx.current.levelUp2.play();
 
-            setTimeout(() => {
-              updateCoinsInFirestore(100, `100 Coins Claimed on level ${level}!`);
-              playCoinsSound();
-              setShowOverlay(false);
-              playLevelUp2Sound();
-              playLevelUpSound();
-            }, CHARACTER_ANIMATION_DELAY);
+    await pushNotificationToUser(newLevel);
 
-            setTimeout(() => {
-              setAnimateLevel(false);
-              setShowGif(false);
-            }, CHARACTER_ANIMATION_DELAY + CHARACTER_LEVELUP_DURATION);
+    setTimeout(async () => {
+      sfx.current.coins.play();
+      await updateCoinsInFirestore(100, `100 Coins claimed on level ${newLevel}!`);
+      triggerCoinAnimation();
+    }, CHARACTER_ANIMATION_DELAY);
 
-            return newLevel;
-          });
-          return 0;
-        }
+    setTimeout(() => {
+      setAnimateLevel(false);
+      setShowGif(false);
+      setOverlayMsg(null);
+    }, CHARACTER_ANIMATION_DELAY + CHARACTER_LEVELUP_DURATION);
+  };
 
-        return nextXP;
-      });
-
-      setCreativity((prev) => (prev < 20 ? prev + 1 : 8));
-    }, XP_INTERVAL);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  const updateUserNotifications = (newLevel: number) => {
-    if (user) {
-      const userRef = doc(db, "accounts", user.id);
-      const notificationId = uuidv4();
-      const notificationMessage = `🎉 Level up! You've reached level ${newLevel}! -- You're getting 100 BBC Coins Reward!`;
+  const pushNotificationToUser = async (newLevel: number) => {
+    if (!user) return;
+    try {
+      const userRef = doc(db, 'accounts', user.id);
       const notification = {
-        id: notificationId,
-        text: notificationMessage,
+        id: uuidv4(),
+        text: `🎉 Level up! You've reached level ${newLevel}! — 100 BBC Coins awarded.`,
         visited: false,
       };
-      updateDoc(userRef, {
-        notifications: arrayUnion(notification),
-      }).catch((error) => console.error("Error adding notification: ", error));
+      await updateDoc(userRef, { notifications: arrayUnion(notification) });
+    } catch (e) {
+      console.error('Error adding notification:', e);
     }
   };
 
   const triggerCoinAnimation = () => {
-    const container = document.createElement("div");
-    container.className = styles["coin-animation-container"];
+    const container = document.createElement('div');
+    container.className = styles['coin-animation-container'];
     document.body.appendChild(container);
 
-    for (let i = 0; i < 20; i++) {
-      const coin = document.createElement("div");
+    [...Array(20)].forEach(() => {
+      const coin = document.createElement('div');
       coin.className = styles.coin;
       coin.style.left = `${window.innerWidth / 2 + (Math.random() - 0.5) * 100}px`;
       coin.style.top = `${window.innerHeight / 2 + (Math.random() - 0.5) * 100}px`;
       container.appendChild(coin);
-
       setTimeout(() => coin.remove(), 1500);
-    }
+    });
 
     setTimeout(() => container.remove(), 1600);
   };
 
-  const playLevelUpSound = () => new Audio("/sounds/level-up.mp3").play();
-  const playLevelUp2Sound = () => new Audio("/sounds/level-up-2.mp3").play();
-  const playCoinsSound = () => new Audio("/sounds/coins.mp3").play();
+  const handleClaim = async () => {
+    if (!canClaim.current) return;
+    canClaim.current = false;
 
-  const handleRevenue = () => {
-    setMessageOverlay("💰 100BBC Coins Claimed!");
-    setShowOverlay(true);
+    setOverlayMsg('💰 100 BBC Coins Claimed!');
+    sfx.current.levelUp1.play();
     triggerCoinAnimation();
-    playLevelUp2Sound();
-    setTimeout(() => {
-      setShowOverlay(false);
-      setMessageOverlay("");
-      playCoinsSound();
-      updateCoinsInFirestore(100, `100 Coins Claimed on level ${level}!`);
+
+    setTimeout(async () => {
+      await updateCoinsInFirestore(100, `Manual claim at level ${level}`);
+      sfx.current.coins.play();
+      setOverlayMsg(null);
+      canClaim.current = true;
     }, CHARACTER_ANIMATION_DELAY);
   };
 
-  const phase = Math.min(Math.floor(level / 2) + 1, 10);
-  const avatarSrc = `/avatar/phase-${phase}.webp`;
+  const avatarSrc = `/avatar/phase-${phaseIndex}.webp`;
+  const creativityLabelPct = creativity * 5;
+
+  const STAT_VALUES: Record<string, number> = {
+    energy: 100,
+    creativity: 100,
+    experience: 100,
+  };
+
+  const changePhase = (dir: 'prev' | 'next') => {
+    handleLevelUp(phaseIndex + (dir === 'next' ? 1 : -1));
+    setPhaseIndex((prev) =>
+      dir === 'next' ? Math.min(prev + 1, MAX_PHASE) : Math.max(prev - 1, MIN_PHASE)
+    );
+  };
 
   return (
     <div className={styles.panel}>
-      {showOverlay && (
-        <LevelUpOverlay message={messageOverlay} onClose={() => setShowOverlay(false)} />
-      )}
+      {overlayMsg && <LevelUpOverlay message={overlayMsg} onClose={() => setOverlayMsg(null)} />}
 
-      <br />
       <p className={styles.description}>
-        This is your personal music bot! <br />
+        This is your personal music bot!<br />
         <strong>Level up</strong> by completing quests and earning XP!
       </p>
 
       <div className={styles.avatarContainer}>
-        <img src={avatarSrc} alt="Character" className={`${styles.avatar} ${animateLevel ? styles.avatarEvolve : ""}`} />
-        {showGif && <img src="/evolve.gif" alt="Level Up Animation" className={styles.levelUpGif} />}
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginBottom: '8px' }}>
+          <button onClick={() => changePhase('prev')} disabled={phaseIndex === MIN_PHASE + 1} style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>
+            ⬅️
+          </button>
+          <button onClick={() => changePhase('next')} disabled={phaseIndex === MAX_PHASE} style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>
+            ➡️
+          </button>
+        </div>
+
+        <img
+          src={avatarSrc}
+          alt="Character"
+          className={`${styles.avatar} ${animateLevel ? styles.avatarEvolve : ''}`}
+        />
+        {showGif && <img src="/evolve.gif" alt="evolving" className={styles.levelUpGif} />}
         <p className={styles.status}>
-          Level: <span className={`glitch ${animateLevel ? styles.levelUp : ""}`} data-text={level}>{level}</span> |
-          XP: <span data-text={`${xp}%`} className="glitch">{xp}%</span>
+          Level:{' '}
+          <span className={`glitch ${animateLevel ? styles.levelUp : ''}`} data-text={level}>
+            {phaseIndex}
+          </span>{' '}
+          | XP:{' '}
+          <span data-text={`${xp}%`} className="glitch">
+            {xp}%
+          </span>
         </p>
       </div>
 
       <div className={styles.bars}>
-        <div className={styles.barGroup}>
-          <div className={styles.barLabel}><label>⚡ {energy}%</label></div>
-          <div className={styles.progressBar}><div className={styles.energyBar} style={{ width: `${energy}%` }} /></div>
-          <p className={styles.barText}>Energy</p>
-        </div>
-
-        <div className={styles.barGroup}>
-          <div className={styles.barLabel}><label>🧠 {creativity * 5}%</label></div>
-          <div className={styles.progressBar}><div className={styles.creativityBar} style={{ width: `${creativity * 5}%` }} /></div>
-          <p className={styles.barText}>Creativity</p>
-        </div>
-
-        <div className={styles.barGroup}>
-          <div className={styles.barLabel}><label>📈 {xp}%</label></div>
-          <div className={styles.progressBar}><div className={styles.xpBar} style={{ width: `${xp}%` }} /></div>
-          <p className={styles.barText}>Experience</p>
-        </div>
+        {CHARACTER_STATS.map(({ key, label, icon }) => (
+          <div key={key} className={styles.barGroup}>
+            <div className={styles.barLabel}>
+              <label>
+                {icon} {STAT_VALUES[key]}%
+              </label>
+            </div>
+            <div className={styles.progressBar}>
+              <div
+                className={styles[`${key}Bar`]}
+                style={{ width: `${STAT_VALUES[key]}%` }}
+              />
+            </div>
+            <p className={styles.barText}>{label}</p>
+          </div>
+        ))}
       </div>
 
-      <p className={styles.description}><strong>Boost your creativity</strong> with special items and rewards!</p>
+      <p className={styles.description}>
+        <strong>Boost your creativity</strong> with special items and rewards!
+      </p>
 
-      <div style={{ display: "flex", justifyContent: "space-between", gap: "5px" }}>
-        <button onClick={handleRevenue} className={stylesMain.submitBtn} style={{ fontSize: "0.6rem" }}>🪙 Claim Coins</button>
-        <button disabled className={stylesMain.submitBtn} style={{ backgroundColor: "transparent", opacity: 0.5, animation: 'none', fontSize: "0.6rem" }}>🚀 Boosts</button>
-      </div>
+      {/* <div style={{ display: 'flex', justifyContent: 'space-between', gap: '5px' }}>
+        <button onClick={handleClaim} className={stylesMain.submitBtn} style={{ fontSize: '0.6rem' }}>
+          🪙 Claim Coins
+        </button>
+        <button
+          disabled
+          className={stylesMain.submitBtn}
+          style={{ backgroundColor: 'transparent', opacity: 0.5, animation: 'none', fontSize: '0.6rem' }}
+        >
+          🚀 Boosts
+        </button>
+      </div> */}
     </div>
   );
 };

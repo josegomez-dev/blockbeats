@@ -1,3 +1,5 @@
+import { AUDIO } from "../constants/musicDrawingMachine";
+
 // utils/soundUtils.ts
 const AudioContextGlobal = typeof window !== "undefined" ? window.AudioContext || (window as any).webkitAudioContext : null;
 export const ctx = AudioContextGlobal ? new AudioContextGlobal() : null;
@@ -6,7 +8,7 @@ export const playNote = (noteFreq: number, duration: number = 0.2) => {
   if (!ctx) return;
   const osc = ctx.createOscillator();
   osc.frequency.value = noteFreq;
-  osc.type = "sawtooth";
+  osc.type = AUDIO.OSC_TYPE as OscillatorType;
   osc.connect(ctx.destination);
   osc.start();
   osc.stop(ctx.currentTime + duration);
