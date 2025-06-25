@@ -1,7 +1,7 @@
 /** Global settings for the Music-Drawing Machine */
 export const AUDIO = {
-  OSC_TYPE: 'square',
-  NOTE_LENGTH: 0.3,          // seconds
+  OSC_TYPE: 'sawtooth', // 'sine', 'square', 'sawtooth', 'triangle'
+  NOTE_LENGTH: 0.2,          // seconds
   DRUM_LENGTH: 0.2,          // seconds
   DRUM_VOLUME: 0.5,
 };
@@ -17,7 +17,6 @@ export const UI = {
   MODAL_MAX_WIDTH: '600px',
   ARROW_HINT_SIZE: 50,
 };
-
 
 export const notes: [string, number, string][] = [
   ["C1", 130.81, "kwhite"], ["CM1", 138.59, "kblack"],

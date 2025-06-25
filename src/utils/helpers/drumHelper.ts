@@ -4,7 +4,10 @@ import { AUDIO } from "../constants/musicDrawingMachine";
 const AudioContextGlobal = typeof window !== "undefined" ? window.AudioContext || (window as any).webkitAudioContext : null;
 export const ctx = AudioContextGlobal ? new AudioContextGlobal() : null;
 
-export const playNote = (noteFreq: number, duration: number = 0.2) => {
+export const playNote = (
+  noteFreq: number,
+  duration: number = AUDIO.NOTE_LENGTH
+) => {
   if (!ctx) return;
   const osc = ctx.createOscillator();
   osc.frequency.value = noteFreq;

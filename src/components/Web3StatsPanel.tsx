@@ -134,7 +134,7 @@ const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, tota
             <hr />
             <li className={styles.coinsContainer}>
               <div className={styles.coinRow}>
-                <p className={styles.tokenMeta}>lvl: <span className="glitch">2</span> | XP: <span className="glitch">50</span></p>
+                <p className={styles.tokenMeta}>lvl: <span className="glitch">2</span> | XP: <span className="glitch">0%</span></p>
                 <hr />
                 <p className={styles.tokenMeta}><strong> <RiGalleryLine /> </strong>: <span className="glitch">{totalNFTCreations}</span> | <strong> <BiCollection /></strong>: <span className="glitch">{totalTopCollections}</span></p>
                 <hr />

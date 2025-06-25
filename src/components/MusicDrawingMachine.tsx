@@ -221,7 +221,7 @@ export default function MusicDrawingPage({
     gain.gain.setValueAtTime(0.4, ctx.currentTime);
     gain.gain.exponentialRampToValueAtTime(
       0.001,
-      ctx.currentTime + AUDIO.NOTE_LENGTH
+      ctx.currentTime + AUDIO.NOTE_LENGTH +1
     );
 
     osc.connect(gain).connect(ctx.destination);

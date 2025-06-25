@@ -22,8 +22,15 @@ const Key: React.FC<KeyProps> = ({ note, frequency, type, onPlay, ctx }) => {
       osc.type = AUDIO.OSC_TYPE as OscillatorType;
       osc.connect(ctx.destination);
       osc.start();
+      osc.stop(ctx.currentTime + AUDIO.NOTE_LENGTH); // Stop after duration
+
       oscRef.current = osc;
       onPlay();
+
+      // Clear the reference after note ends
+      setTimeout(() => {
+        oscRef.current = null;
+      }, AUDIO.NOTE_LENGTH * 1000); // convert seconds to ms
     }
   };
 
