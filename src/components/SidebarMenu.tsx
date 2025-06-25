@@ -13,14 +13,8 @@ const SidebarMenu = () => {
 
   const menuItems = [
     { icon: <FaHome />, label: 'Dashboard', href: '/dashboard' },
-    { icon: <RiGalleryLine />, label: 'My Gallery', href: '/gallery' },
     { icon: <BiCollection />, label: 'Top Collections', href: '/collections' },
     { icon: <FaStore />, label: 'Marketplace', href: '/marketplace' },
-    // { icon: <FaChalkboardTeacher />, label: 'Tutorials & Guides', href: '/tutorials' },
-    // { icon: <FaGamepad />, label: 'MiniGames Hub', href: '/minigames' },
-    // { icon: <FaStoreAlt />, label: 'Upgrades', href: '/minigames' },
-    // { icon: <FaCog />, label: 'Analytics', href: '/analytics' },
-    // { icon: <FaCog />, label: 'Settings', href: '/settings' },
   ];
 
   return (

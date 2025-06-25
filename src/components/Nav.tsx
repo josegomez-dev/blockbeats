@@ -8,10 +8,8 @@ import styles from '@/app/assets/styles/Nav.module.css';
 import stylesMain from "@/app/assets/styles/MainPage.module.css";
 import { FaSignOutAlt, FaBell } from 'react-icons/fa';
 import { MdDashboard } from 'react-icons/md';
-import { RiGalleryLine } from 'react-icons/ri';
 import { BiCollection } from 'react-icons/bi';
-import { FaStore, FaChalkboardTeacher, FaCog, FaStoreAlt } from 'react-icons/fa';
-import { GiGamepad } from 'react-icons/gi';
+import { FaStore } from 'react-icons/fa';
 import Avatar from 'react-avatar';
 import { useAccount, useBalance } from "@starknet-react/core";
 import { doc, updateDoc } from 'firebase/firestore';
@@ -210,11 +208,6 @@ export default function Nav() {
                   <Link href="/dashboard">
                     <div className={styles.dropdownItem}>
                       <MdDashboard className={styles.icon} /> Dashboard
-                    </div>
-                  </Link>
-                  <Link href="/gallery">
-                    <div className={styles.dropdownItem}>
-                      <RiGalleryLine className={styles.icon} /> My Gallery
                     </div>
                   </Link>
                   <Link href="/collections">
