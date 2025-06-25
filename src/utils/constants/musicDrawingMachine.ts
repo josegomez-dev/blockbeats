@@ -1,7 +1,7 @@
 /** Global settings for the Music-Drawing Machine */
 export const AUDIO = {
   OSC_TYPE: 'sawtooth', // 'sine', 'square', 'sawtooth', 'triangle'
-  NOTE_LENGTH: 0.2,          // seconds
+  NOTE_LENGTH: 1,          // seconds
   DRUM_LENGTH: 0.2,          // seconds
   DRUM_VOLUME: 0.5,
 };
@@ -98,7 +98,6 @@ export const scaleIntervals: Record<ScaleName, number[]> = {
   minor: [0, 2, 3, 5, 7, 8, 10],       // same as aeolian
   pentatonic: [0, 2, 4, 7, 9],         // same as majorPentatonic
 };
-
 
 export const scaleDescriptions: Record<ScaleName, string> = {
   ionian: "Major scale",

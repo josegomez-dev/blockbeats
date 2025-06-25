@@ -1,54 +1,26 @@
-// components/Key.tsx
 'use client';
 
-import { AUDIO, KeyType } from '@/utils/constants/musicDrawingMachine';
-import React, { useRef } from 'react';
+import React from 'react';
+import { playNote } from '@/utils/helpers/drumHelper';
+import { KeyType } from '@/utils/constants/musicDrawingMachine';
 
 interface KeyProps {
   note: string;
   frequency: number;
   type: KeyType;
   onPlay: () => void;
-  ctx: AudioContext | null;
 }
 
-const Key: React.FC<KeyProps> = ({ note, frequency, type, onPlay, ctx }) => {
-  const oscRef = useRef<OscillatorNode | null>(null);
-
-  const play = () => {
-    if (ctx && !oscRef.current) {
-      const osc = ctx.createOscillator();
-      osc.frequency.value = frequency;
-      osc.type = AUDIO.OSC_TYPE as OscillatorType;
-      osc.connect(ctx.destination);
-      osc.start();
-      osc.stop(ctx.currentTime + AUDIO.NOTE_LENGTH); // Stop after duration
-
-      oscRef.current = osc;
-      onPlay();
-
-      // Clear the reference after note ends
-      setTimeout(() => {
-        oscRef.current = null;
-      }, AUDIO.NOTE_LENGTH * 1000); // convert seconds to ms
-    }
-  };
-
-  const stop = () => {
-    if (oscRef.current) {
-      oscRef.current.stop();
-      oscRef.current.disconnect();
-      oscRef.current = null;
-    }
+const Key: React.FC<KeyProps> = ({ note, frequency, type, onPlay }) => {
+  const handlePlay = () => {
+    playNote(frequency);
+    onPlay();
   };
 
   return (
     <div
-      onMouseDown={play}
-      onMouseUp={stop}
-      onMouseOut={stop}
-      onTouchStart={play}
-      onTouchEnd={stop}
+      onMouseDown={handlePlay}
+      onTouchStart={handlePlay}
       style={{
         background: type === 'kblack' ? 'black' : 'white',
         width: type === 'kwhite' ? '40px' : '23px',

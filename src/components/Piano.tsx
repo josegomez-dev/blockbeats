@@ -7,7 +7,6 @@ import { KeyType, notes } from './../utils/constants/musicDrawingMachine'; // Up
 
 interface PianoProps {
   onNotePlay: (noteIndex: number) => void;
-  ctx: AudioContext | null;
 }
 
 const Piano: React.FC<PianoProps> = ({ onNotePlay, ctx }) => {
@@ -20,7 +19,6 @@ const Piano: React.FC<PianoProps> = ({ onNotePlay, ctx }) => {
           frequency={freq}
           type={type as KeyType}
           onPlay={() => onNotePlay(i)}
-          ctx={ctx}
         />
       ))}
     </div>
