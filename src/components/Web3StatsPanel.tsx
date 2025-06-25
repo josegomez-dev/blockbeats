@@ -153,7 +153,7 @@ const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, tota
                 {icon} {label}: <label>50%</label>
                 <div className={stylesChar.barGroup}>
                   <div className={stylesChar.progressBar}>
-                    <div className={stylesChar[`${key}Bar`]} style={{ width: "50%" }} />
+                    <div className={stylesChar[`${key}Bar`]} style={{ width: "100%" }} />
                   </div>
                 </div>
               </div>

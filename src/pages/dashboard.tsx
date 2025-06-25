@@ -98,6 +98,7 @@ const DashboardLayout = () => {
             <Web3StatsPanel totalNFTCreations={totalNFTCreations} totalTopCollections={totalTopCollections} />
           </div>
         </div>
+        <br />
       </div>
     </>
   );
