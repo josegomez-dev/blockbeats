@@ -250,7 +250,6 @@ export default function Nav() {
                     // alert to confirm logout
                     if (window.confirm('Are you sure you want to logout?')) {
                       handleLogout();
-                      toast.success('Logged out successfully');
                     } else {
                       toast.error('Logout cancelled');
                     }

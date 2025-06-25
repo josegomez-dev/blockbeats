@@ -176,12 +176,12 @@ const LandingPage = () => {
       videoUrl: 'https://www.youtube.com/watch?v=ZKzrGB9VxBM',
       previewImage: 'https://img.youtube.com/vi/ZKzrGB9VxBM/hqdefault.jpg',
     },
-    {
-      title: 'Drone NFT Shows',
-      description: 'Sky-based drone shows synchronised with music and visual NFT art.',
-      videoUrl: 'https://www.youtube.com/watch?v=3SxxMuSFfEo',
-      previewImage: 'https://img.youtube.com/vi/3SxxMuSFfEo/hqdefault.jpg',
-    },
+    // {
+    //   title: 'Drone NFT Shows',
+    //   description: 'Sky-based drone shows synchronised with music and visual NFT art.',
+    //   videoUrl: 'https://www.youtube.com/watch?v=3SxxMuSFfEo',
+    //   previewImage: 'https://img.youtube.com/vi/3SxxMuSFfEo/hqdefault.jpg',
+    // },
     {
       title: 'Feel the Music',
       description: 'Innovative haptic feedback devices that allow users to feel music through vibrations.',
@@ -224,15 +224,12 @@ const LandingPage = () => {
           <br />
           <br />
           <button className={stylesMain.submitBtn} onClick={() => router.push('/login')}>🖼️ CREATE & 🎹 PLAY </button>
-          {/* <Link href="/marketplace" className={stylesMain.registerLink}>
-            <button style={{ animation: 'none', background: 'transparent', color: 'white' }} className={stylesMain.submitBtn}>🏪 MARKETPLACE</button>
-          </Link> */}
           <Link href="https://joses-organization-73.gitbook.io/blockbeats-3.0" target="_blank" rel="noopener noreferrer">
             <button  style={{ animation: 'none', background: 'transparent', color: 'white' }} className={stylesMain.submitBtn}>📑 DOCS</button>
           </Link>
-          <Link href="edublockbeats" target="_blank" rel="noopener noreferrer">
+          {/* <Link href="edublockbeats" target="_blank" rel="noopener noreferrer">
             <button  style={{ animation: 'none', background: 'transparent', color: 'white' }} className={stylesMain.submitBtn}>👩🏼‍🏫 EDU-BLOCKBEATS</button>
-          </Link>
+          </Link> */}
 
           <br />
           <img className={styles.character2} src="/avatar/phase-5.webp" style={{ width: '200px', height: 'auto', marginBottom: '-106px'  }} alt="BlockBeats Robot"  />
@@ -326,16 +323,12 @@ const LandingPage = () => {
       </section>
       <hr />
 
-      <br />
-      <br />
 
       
       {/* News Section */}
       <hr />
       <section className={styles.newsSection}>
         <h2>🚀 Commercial Projections & Opportunities</h2>
-        <br />
-        <br />
         <div className={styles.newsGrid}>
           {newsItems.map((item, index) => (
             <div
@@ -355,34 +348,7 @@ const LandingPage = () => {
           ))}
         </div>
       </section>
-      <hr />
 
-        <br />
-        <br />
-
-      {/* <section className={styles.teamSection}>
-      
-        <h2>👥 Roadmap</h2>
-          
-      </section> */}
-
-      {/* Parallax + Sponsors Section */}
-      {/* <section className={styles.parallaxSponsorsSection}>
-        <div className={styles.parallaxOverlay}>
-          <h2>🎼 Powered by our Sponsors</h2>
-          <div className={styles.sponsorsSlider}>
-            <div className={styles.sliderTrack}>
-              {sponsors.map((sponsor, index) => (
-                <div className={styles.slide} key={index}>
-                  <a href={sponsor.url} target="_blank" rel="noopener noreferrer">
-                    <img src={sponsor.image} alt={`Sponsor ${index + 1}`} />
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section> */}
 
     {open && (
       <Modal
