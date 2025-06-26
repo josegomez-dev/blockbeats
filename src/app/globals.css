@@ -950,3 +950,30 @@ p {
 
 
 
+.test-bg {
+  background-image: url('/collections-bg.png');
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 325px;  
+
+  box-shadow: inset 0 -1px 0 white;
+}
+.test-creations-bg {
+  background-image: url('/gallery-bg.png');
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 325px;
+  
+  box-shadow: inset 0 -1px 0 white;
+}
+.test-marketplace-bg {
+  background-image: url('/marketplace-bg.png');
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 325px;
+
+  box-shadow: inset 0 -1px 0 white;
+}

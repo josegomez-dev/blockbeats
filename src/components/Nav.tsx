@@ -55,6 +55,20 @@ export default function Nav() {
 
   const unreadCount = notifications.filter((n) => !n.visited).length;
 
+  useEffect(() => {
+    const handleRouteChange = () => {
+      setDropdownOpen(false);
+      setNotifOpen(false);
+    };
+
+    router.events.on('routeChangeStart', handleRouteChange);
+
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChange);
+    };
+  }, [router]);
+
+
   const handleLogout = () => {
     setAuthenticated(false);
     setRole('user');
@@ -220,7 +234,7 @@ export default function Nav() {
                   </Link>
                   <Link href="/creations">
                     <div className={styles.dropdownItem}>
-                      <RiGalleryLine className={styles.icon} /> My Creations
+                      <RiGalleryLine className={styles.icon} /> My Gallery
                     </div>
                   </Link>
                   <Link href="/collections">
@@ -261,11 +275,7 @@ export default function Nav() {
                   <hr />
                   <div className={`${styles.logout}`} style={{ display: 'flex', justifyContent: 'center', padding: 25, cursor: 'pointer' }} onClick={() => {
                     // alert to confirm logout
-                    if (window.confirm('Are you sure you want to logout?')) {
-                      handleLogout();
-                    } else {
-                      toast.error('Logout cancelled');
-                    }
+                    handleLogout();
                   }}>
                     <FaSignOutAlt className={styles.icon} /> Logout
                   </div>

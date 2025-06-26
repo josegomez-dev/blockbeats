@@ -20,9 +20,9 @@ const CollectionsScreen = () => {
 
   const [userNFTS, setUserNFTS] = React.useState<NFT[]>([]);
   const [topCollections, setTopCollections] = React.useState<any[]>([]);
-  const [selectedCollection, setSelectedCollection] = React.useState<any | null>(null);
+  const [selectedCollection, setSelectedCollection] = React.useState<any | null>();
   const [collectionNFTs, setCollectionNFTs] = React.useState<NFT[]>([]);
-  const [isCollectionViewOpen, setIsCollectionViewOpen] = React.useState(false);
+  const [isCollectionViewOpen, setIsCollectionViewOpen] = React.useState(true);
 
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [selectedForCollection, setSelectedForCollection] = React.useState<string[]>([]);
@@ -40,6 +40,13 @@ const CollectionsScreen = () => {
       const querySnapshot = await getDocs(collection(db, "signatures"));
       const nfts = querySnapshot.docs.map((doc) => ({ ...(doc.data() as NFT), id: doc.id })) as NFT[];
       setUserNFTS(nfts);
+      if (nfts.length > 0) {
+        const firstCollection = nfts[0].id;
+        const filteredNFTs = nfts.filter(nft => nft.id === firstCollection);
+        setSelectedCollection({ id: firstCollection, collectionName: "My Collection" });
+        setCollectionNFTs(filteredNFTs);
+        setSelectedForCollection(filteredNFTs.map(nft => nft.id));
+      }
     };
     fetchNFTs();
   }, [user]);
@@ -126,23 +133,22 @@ const CollectionsScreen = () => {
     <>
       <div className="gallery-screen">
         <GalleryHeader title="Explore Top Collections." />
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+        <div className='test-bg'>
 
-            <Image
-                src="/collections-bg.png"
-                alt="Creations Banner"
-                width={1200}
-                height={500}
-              style={{ width: "100%", height: "auto", objectFit: "cover", borderBottom: "1px solid #fff", margin: "0 auto", display: "block" }}
-            />
+            <br />
+            <br />
+            <br />
             <br />
 
             <div className="bannerContainer" style={{ textAlign: "center", margin: "0 auto" }}>
-              <h2>BlockBeats <span className='glitch'>Top Collections</span></h2>
+              <h2><span className='glitch'>Top Collections</span></h2>
               <p>Trade and explore unique NFTs created by our community.</p>
             </div>
 
+            <br />
             <button onClick={() => router.push('/createTopCollection')} className={styles.submitBtn} style={{ animation: 'none' }}>Create Top Collection</button>
+        </div>
+
             <CollectionsSlider 
               id="myCollections"
               title="My Collections" 
@@ -157,7 +163,7 @@ const CollectionsScreen = () => {
               onSelectCollection={handleViewCollection} 
             /> 
 
-            {isCollectionViewOpen && selectedCollection && (
+           {isCollectionViewOpen && selectedCollection && (
               <div className={styles.collectionDrawer} style={{ backgroundColor: selectedCollection.collectionColor || '#000' }}>
                 <div className={styles.collectionHeader}>
                   <h4 className='glitch'>{selectedCollection.collectionName || "Unnamed Collection"}</h4>
@@ -202,56 +208,59 @@ const CollectionsScreen = () => {
                 onClose={() => setIsModalOpen(false)}
                 showCloseIcon={false}
                 center
-                classNames={{ modal: styles.modal }}
-                styles={{ modal: { backgroundColor: 'rgba(0, 0, 0, 0.8)', height: 'auto' } }}
+                        classNames={{
+                          modal: styles.modal,
+                          // overlay: stylesMain.modalOverlay,
+                          // closeButton: stylesMain.closeButton,
+                        }}
+                        styles={{ modal: { width: '100%', background: 'black' } }}
               >
-                <h3>Select NFTs for Collection</h3>
-                <div className={'gallery-grid'} style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
-                  {userNFTS.map((nft) => (
-                    <div key={nft.id} className={`${styles.nftCard} gallery-item`}>
-                      <h4>{nft.songName}</h4>
-                      <PixelPreview
-                        colorMap={nft.colorMap || []}
-                        notesCount={nft.notesPlayed?.length || 0}
-                        size={80}
-                      />
-                      <button
-                        className={styles.submitBtn}
-                        onClick={() => toggleNFTSelection(nft.id)}
-                        style={{ backgroundColor: selectedForCollection.includes(nft.id) ? '#0af' : '#222' }}
-                      >
-                        {selectedForCollection.includes(nft.id) ? '✓' : 'Add'}
-                      </button>
-                      <button
-                        className={styles.submitBtn}
-                        onClick={() => handlePlayNFT(nft)}
-                        disabled={isPlaying && playingId === nft.id}
-                        style={{ backgroundColor: isPlaying && playingId === nft.id ? "var(--neon-color)" : "transparent" }}
-                      >
-                        {(isPlaying && playingId === nft.id) ? "🎧..." : "▶️"}
-                      </button>
-                    </div>
-                  ))}
-                </div>
-                
-                <button
-                  className={styles.submitBtn}
-                  onClick={saveSelection}
-                >
-                  Save Selection
-                </button>
+                <div className={styles.modalContent} style={{ textAlign: 'center' }}>
+                        <br />
+                        <br />
+                  <button
+                    className={styles.submitBtn}
+                    onClick={saveSelection}
+                  >
+                    Save Selection
+                  </button>
 
-                <button className={styles.submitBtn} onClick={() => setIsModalOpen(false)}>Close</button>
+                  <button className={styles.submitBtn} onClick={() => setIsModalOpen(false)}>Close</button>
+
+                  <div className={'gallery-grid'} style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+                    {userNFTS.map((nft) => (
+                      <div key={nft.id} className={`${styles.nftCard} gallery-item`}>
+                        <h4>{nft.songName}</h4>
+                        <PixelPreview
+                          colorMap={nft.colorMap || []}
+                          notesCount={nft.notesPlayed?.length || 0}
+                          size={80}
+                        />
+                        <button
+                          className={styles.submitBtn}
+                          onClick={() => toggleNFTSelection(nft.id)}
+                          style={{ backgroundColor: selectedForCollection.includes(nft.id) ? '#0af' : '#222', color: 'white' }}
+                        >
+                          {selectedForCollection.includes(nft.id) ? '✓' : 'Add'}
+                        </button>
+                        <button
+                          className={styles.submitBtn}
+                          onClick={() => handlePlayNFT(nft)}
+                          disabled={isPlaying && playingId === nft.id}
+                          style={{ backgroundColor: isPlaying && playingId === nft.id ? "var(--neon-color)" : "transparent" }}
+                        >
+                          {(isPlaying && playingId === nft.id) ? "🎧..." : "▶️"}
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                
+                </div>
               </Modal>
             )}
 
-            <div className={styles.footer} style={{ textAlign: 'center', padding: '25px' }}>
-              <br />
-              <p>Explore and enjoy the top fan collections!</p>
-            </div>
-            <br />
 
-        </div>
+
 
       </div>
     </>
