@@ -172,8 +172,8 @@ export default function MusicDrawingPage({ nfts = [], topCollections = [] }: Pro
   };
 
   return (
-    <>
-      <NFTSliderPanel nfts={nfts} collections={topCollections} />
+    <div style={{ position: 'relative', padding: '20px', margin: '0 auto' }}>
+      {/* <NFTSliderPanel nfts={nfts} collections={topCollections} /> */}
 
       <div style={{
         position: "fixed",
@@ -290,6 +290,6 @@ export default function MusicDrawingPage({ nfts = [], topCollections = [] }: Pro
           }))}
         />
       </Modal>
-    </>
+    </div>
   );
 }

@@ -815,14 +815,17 @@ p {
 }
 
 
+
+.container-collections {
+  margin-left: 80px; 
+}
 @media screen and (max-width: 700px) {
   .custom-spacer {
     margin-top: 25px;
   }
-}
-@media screen and (max-width: 1120px) {
-  #core-nft-slider-panel {
-    display: none;
+
+  .container-collections {
+    margin-left: 0px; 
   }
 }
 

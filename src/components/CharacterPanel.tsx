@@ -231,6 +231,26 @@ const CharacterPanel: React.FC = () => {
         <strong>Level up</strong> by completing quests and earning XP!
       </p>
 
+
+      <div className={styles.bars}>
+        {CHARACTER_STATS.map(({ key, label, icon }) => (
+          <div key={key} className={styles.barGroup}>
+            <div className={styles.barLabel}>
+              <label>
+                {icon} {Math.floor(STAT_VALUES[key])}%
+              </label>
+            </div>
+            <div className={styles.progressBar}>
+              <div
+                className={styles[`${key}Bar`]}
+                style={{ width: `${Math.min(100, STAT_VALUES[key])}%` }}
+              />
+            </div>
+            <p className={styles.barText}>{label}</p>
+          </div>
+        ))}
+      </div>
+      
       <div className={styles.avatarContainer}>
         {/* <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginBottom: '8px' }}>
           <button onClick={() => changePhase('prev')} disabled={phaseIndex === MIN_PHASE + 1} style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>
@@ -257,25 +277,6 @@ const CharacterPanel: React.FC = () => {
             {Math.floor(xp)}%
           </span>
         </p>
-      </div>
-
-      <div className={styles.bars}>
-        {CHARACTER_STATS.map(({ key, label, icon }) => (
-          <div key={key} className={styles.barGroup}>
-            <div className={styles.barLabel}>
-              <label>
-                {icon} {Math.floor(STAT_VALUES[key])}%
-              </label>
-            </div>
-            <div className={styles.progressBar}>
-              <div
-                className={styles[`${key}Bar`]}
-                style={{ width: `${Math.min(100, STAT_VALUES[key])}%` }}
-              />
-            </div>
-            <p className={styles.barText}>{label}</p>
-          </div>
-        ))}
       </div>
 
       <p className={styles.description}>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { use, useEffect } from 'react';
 import { useAuth } from "@/context/AuthContext";
 import styles from "@/app/assets/styles/MainPage.module.css";
 import { collection, getDocs } from 'firebase/firestore';
@@ -9,19 +9,29 @@ import GalleryHeader from '@/components/GalleryHeader';
 import { NFT } from '@/types/nftTypes';
 import NeonSlider from '@/components/NeonSlider';
 import Image from 'next/image';
+import NFTSliderPanel from '@/components/NFTSliderPanel';
 
 const CollectionsScreen = () => {
     const [userNFTS, setUserNFTS] = React.useState<NFT[]>([]);
+    const [nfts, setNfts] = React.useState<NFT[]>([]);
+    const [topCollections, setTopCollections] = React.useState<any[]>([]); //
     const { user } = useAuth();
 
     useEffect(() => {
+        const fetchTopColletions = async () => {
+            const querySnapshot = await getDocs(collection(db, "topCollections"));
+            const collections = querySnapshot.docs.map((doc) => ({ ...(doc.data() as any), id: doc.id })) as any[];
+            setTopCollections(collections.slice(0, 10));
+        };
         const fetchNFTs = async () => {
             const querySnapshot = await getDocs(collection(db, "signatures"));
             const nfts = querySnapshot.docs.map((doc) => ({ ...(doc.data() as NFT), id: doc.id })) as NFT[];
             // Filter NFTs created by the current user
+            setNfts(nfts);
             setUserNFTS(nfts.filter(item => item.createdBy === user?.uid));
         };
         fetchNFTs();
+        fetchTopColletions();
     }, [user]);
 
     return (
@@ -39,24 +49,42 @@ const CollectionsScreen = () => {
                 <br />
 
                 <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
-                    <h2>BlockBeats <span className='glitch'>Creations</span></h2>                 
+                    <h2>My Creations</h2>
                     <p>Here you can view all the NFTs you have created.</p>
-                    <div style={{ marginTop: '-50px', width: '100%' }}>
-                        <NeonSlider
-                            slides={userNFTS.map(nft => ({
-                                id: nft.id,
-                                songName: nft.songName || '',
-                                colorMap: nft.colorMap || [],
-                                notesPlayed: nft.notesPlayed || [],
-                                createdBy: nft.createdBy || '',
-                                createdAt: new Date().toISOString(), // or use nft.createdAt if available
-                                tempo: nft.tempo, // default tempo or use nft.tempo if available
-                                color: nft.color || '#000000', // default background color if not present
-                            }))}
-                        />
+                    <div style={{ width: '100%', marginTop: '-50px' }}>
+                        {userNFTS.length > 0 ? (
+                            <NeonSlider
+                                slides={userNFTS.map(nft => ({
+                                    id: nft.id,
+                                    songName: nft.songName || '',
+                                    colorMap: nft.colorMap || [],
+                                    notesPlayed: nft.notesPlayed || [],
+                                    createdBy: nft.createdBy || '',
+                                    createdAt: new Date().toISOString(), // or use nft.createdAt if available
+                                    tempo: nft.tempo, // default tempo or use nft.tempo if available
+                                    color: nft.color || '#000000', // default background color if not present
+                                }))}/> 
+                            ) : (
+                            <div className={styles.modalContent}>
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <h2>No NFTs Found</h2>
+                                <p>You haven't created any NFTs yet. <br /> Start creating your own unique NFTs today!</p>
+                                <br />
+                                <br />
+                                <a href="/dashboard" className={styles.submitBtn}>Create NFT</a>
+                                <br />
+                                <br />
+                                <br />
+                            </div>
+                        )}
+                        <hr />
                     </div>
                 </div>
-
+                <br />
+                <NFTSliderPanel nfts={nfts.filter(item => item.createdBy !== user?.uid)} collections={topCollections} />
                 
                 <div className={styles.footer} style={{ textAlign: 'center', padding: '25px' }}>
                     <p>Explore the top collections created by our community.</p>

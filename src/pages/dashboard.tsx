@@ -15,6 +15,7 @@ import { TopCollections } from "@/types/topCollections";
 import VegasMintGame from "@/components/VegasMintGame";
 import Image from "next/image";
 import NeonSlider from "@/components/NeonSlider";
+import NFTSliderPanel from "@/components/NFTSliderPanel";
 
 const DashboardLayout = () => {
   const [nfts, setNFTs] = React.useState<any[]>([]);
@@ -182,32 +183,8 @@ const DashboardLayout = () => {
               </div>
             </div>
             <br />
-
-            {/* <hr />
-            <p style={{ padding: '20px 70px' }}>
-              <span className="glitch">EDU-BlockBeats</span> School-based workshops bring music, coding, and Web3 to kids using group challenges with real drawing machines and MIDI keyboards — fun, safe, and future-focused.
-            </p>
-            <Image
-              src="/edu.png"
-              alt="BlockBeats EDU"
-              width={500}
-              height={500}
-              style={{ width: '100%', height: 'auto', objectFit: 'cover', maxWidth: '500px', margin: '0 auto', display: 'block' }}
-            />
-            <br />
-            <hr />
-            <br /> */}
-            {/* <hr />
-            <p style={{ padding: '20px 70px' }}>
-              <span className="glitch">BlockBeats NEWS</span> empowers anyone to trade music and visual creativity through an interactive platform that connects art and real-world experiences.
-            </p>
-            <hr />
-            <br />
-            <hr />
-            <p style={{ padding: '20px 70px' }}>
-              <span className="glitch">BlockBeats EDU</span> empowers anyone to trade music and visual creativity through an interactive platform that connects art and real-world experiences.
-            </p>
-            <hr /> */}
+            {/* <NFTSliderPanel nfts={nfts} collections={topCollections} /> */}
+            
             <br />
           </div>
         </>  
