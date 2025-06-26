@@ -77,7 +77,7 @@ const CreateTopFanCollectionModal = () => {
         <p>Here you can create your own unique Top Fan Collection.</p>
         <p>Choose a name for your collection and add a description.</p>
         <br />
-        <form>
+        <form onSubmit={createTopCollection}>
           <p>Choose a color for your collection:</p>
           <input
             type="color"
@@ -110,7 +110,7 @@ const CreateTopFanCollectionModal = () => {
           <button
             className={styles.submitBtn}
             style={{ width: '200px', animation: 'none' }}
-            onClick={(e) => createTopCollection(e)}
+            type="submit"
           >
             Create Collection
           </button>
