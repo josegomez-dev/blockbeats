@@ -23,7 +23,13 @@ const CollectionsSlider: React.FC<CollectionProps> = ({ fullWidth, title, topCol
               key={i}
               className={styles.card}
               style={{ borderColor: item.color, cursor: 'pointer', backgroundColor: item.collectionColor  }}
-              onClick={() => onSelectCollection?.(item.id)}
+              onClick={() => {
+                if (onSelectCollection) {
+                  onSelectCollection(item.id);
+                } else {
+                  window.location.href = `/collections`;
+                }                
+              }}
             >
               <div className={styles.collectionCard}>
                 <br />
