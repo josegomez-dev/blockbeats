@@ -235,7 +235,7 @@ export default function Nav() {
                   </Link>
                   <Link href="/tutorials">
                     <div className={styles.dropdownItem}>
-                      <FaChalkboardTeacher className={styles.icon} /> Tutorials & Guides
+                      <FaChalkboardTeacher className={styles.icon} /> Quick Tutorials
                     </div>
                   </Link>
                   {/* <Link href="/minigames">

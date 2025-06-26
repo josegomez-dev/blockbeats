@@ -171,31 +171,31 @@ const LandingPage = () => {
       previewImage: 'https://img.youtube.com/vi/aSXn2tCq9LE/maxresdefault.jpg',
     },
     {
-      title: '🎵 Drones for Art, Not War | BlockBeats NFT Protest Collection for Peace & Creativity',
-      description: 'Inspired by recent tragic events in Kyiv, this initiative raises awareness about the misuse of technology in war and promotes its potential for art, music, and entertainment instead. 🎨✨',
+      title: '🎵 Drones for Art, Not War | BlockBeats NFT Protest Collection for Peace',
+      description: 'Inspired by recent tragic events in Kyiv. 🎨✨',
       videoUrl: 'https://www.youtube.com/watch?v=ZKzrGB9VxBM',
       previewImage: 'https://img.youtube.com/vi/ZKzrGB9VxBM/hqdefault.jpg',
     },
+    {
+      title: 'Drone NFT Shows',
+      description: 'Sky-based drone shows synchronised with music and visual NFT art.',
+      videoUrl: 'https://www.youtube.com/watch?v=3SxxMuSFfEo',
+      previewImage: 'https://img.youtube.com/vi/3SxxMuSFfEo/hqdefault.jpg',
+    },
     // {
-    //   title: 'Drone NFT Shows',
-    //   description: 'Sky-based drone shows synchronised with music and visual NFT art.',
-    //   videoUrl: 'https://www.youtube.com/watch?v=3SxxMuSFfEo',
-    //   previewImage: 'https://img.youtube.com/vi/3SxxMuSFfEo/hqdefault.jpg',
+    //   title: 'Feel the Music',
+    //   description: 'Innovative haptic feedback devices that allow users to feel music through vibrations.',
+    //   videoUrl: 'https://www.youtube.com/watch?v=JMBUPRZ3cYk',
+    //   previewImage: 'https://img.youtube.com/vi/JMBUPRZ3cYk/maxresdefault.jpg',
+    // },
+    // {
+    //   title: 'Smart Light Buildings',
+    //   description: 'Service to create artistic light shows on buildings using musical NFTs.',
+    //   videoUrl: 'https://www.youtube.com/watch?v=-adNKTEbynI',
+    //   previewImage: 'https://img.youtube.com/vi/-adNKTEbynI/maxresdefault.jpg',
     // },
     {
-      title: 'Feel the Music',
-      description: 'Innovative haptic feedback devices that allow users to feel music through vibrations.',
-      videoUrl: 'https://www.youtube.com/watch?v=JMBUPRZ3cYk',
-      previewImage: 'https://img.youtube.com/vi/JMBUPRZ3cYk/maxresdefault.jpg',
-    },
-    {
-      title: 'Smart Light Buildings',
-      description: 'Service to create artistic light shows on buildings using musical NFTs.',
-      videoUrl: 'https://www.youtube.com/watch?v=-adNKTEbynI',
-      previewImage: 'https://img.youtube.com/vi/-adNKTEbynI/maxresdefault.jpg',
-    },
-    {
-      title: 'Vegas NFT Mint Machines',
+      title: 'NFT Mint Machines',
       description: 'Deploying Vegas-style interactive minting machines for luxury NFT experiences.',
       videoUrl: 'https://www.youtube.com/watch?v=VmtUS50OEA8',
       previewImage: 'https://img.youtube.com/vi/VmtUS50OEA8/maxresdefault.jpg',
@@ -218,7 +218,6 @@ const LandingPage = () => {
         <div className={styles.heroContent}>
           <h1>🎧 BlockBeats </h1>
           <h2 className={styles.typewriter} style={{fontSize: '20px'}}>The Future of Music & Art NFTs</h2>
-
           <br />
           <span className="glitch">Create, share, and experience music like never before — powered by Web3.</span>
           <br />
@@ -227,6 +226,40 @@ const LandingPage = () => {
           <Link href="https://joses-organization-73.gitbook.io/blockbeats-3.0" target="_blank" rel="noopener noreferrer">
             <button  style={{ animation: 'none', background: 'transparent', color: 'white' }} className={stylesMain.submitBtn}>📑 DOCS</button>
           </Link>
+
+          <ul className={styles.socialMediaLinks}>
+            <li>
+              <a href="https://x.com/blockbeats3pt0" target="_blank" rel="noopener noreferrer">
+                <FaTwitter className={styles.twitterIcon} />
+              </a>
+            </li>
+            <li>
+              <a href="https://discord.gg/hrjuWATX" target="_blank" rel="noopener noreferrer">
+                <FaDiscord className={styles.discordIcon} />
+              </a>
+            </li>
+            <li>
+              <a href="https://www.youtube.com/@BlockBeats3.0" target="_blank" rel="noopener noreferrer">
+                <FaYoutube className={styles.youtubeIcon} />
+              </a>
+            </li>
+            <li>
+              <a href="https://www.facebook.com/profile.php?id=61576616834732" target="_blank" rel="noopener noreferrer">
+                <FaFacebook className={styles.facebookIcon} />
+              </a>
+            </li>
+            <li>
+              <a href="https://medium.com/@blockbeatscr" target="_blank" rel="noopener noreferrer">
+                <FaMedium className={styles.mediumIcon} />
+              </a>
+            </li>
+            <li>
+              <a href="https://t.me/block_beats_bot/blockbeats" target="_blank" rel="noopener noreferrer">
+                <FaTelegram className={styles.telegramIcon} />
+              </a>
+            </li>
+          </ul>
+
           {/* <Link href="edublockbeats" target="_blank" rel="noopener noreferrer">
             <button  style={{ animation: 'none', background: 'transparent', color: 'white' }} className={stylesMain.submitBtn}>👩🏼‍🏫 EDU-BLOCKBEATS</button>
           </Link> */}
@@ -248,48 +281,41 @@ const LandingPage = () => {
       </div>
     </div>
 
-      <br />
-      <br />
-      {/* Services Section */}
-      <section className={styles.servicesSection}>
-        Join Us
-        <ul className={styles.socialMediaLinks}>
-          <li>
-            <a href="https://x.com/blockbeats3pt0" target="_blank" rel="noopener noreferrer">
-              <FaTwitter className={styles.twitterIcon} />
-            </a>
-          </li>
-          <li>
-            <a href="https://discord.gg/hrjuWATX" target="_blank" rel="noopener noreferrer">
-              <FaDiscord className={styles.discordIcon} />
-            </a>
-          </li>
-          <li>
-            <a href="https://www.youtube.com/@BlockBeats3.0" target="_blank" rel="noopener noreferrer">
-              <FaYoutube className={styles.youtubeIcon} />
-            </a>
-          </li>
-          <li>
-            <a href="https://www.facebook.com/profile.php?id=61576616834732" target="_blank" rel="noopener noreferrer">
-              <FaFacebook className={styles.facebookIcon} />
-            </a>
-          </li>
-          <li>
-            <a href="https://medium.com/@blockbeatscr" target="_blank" rel="noopener noreferrer">
-              <FaMedium className={styles.mediumIcon} />
-            </a>
-          </li>
-          <li>
-            <a href="https://t.me/block_beats_bot/blockbeats" target="_blank" rel="noopener noreferrer">
-              <FaTelegram className={styles.telegramIcon} />
-            </a>
-          </li>
-        </ul>
+
+      {/* Vision & Mission Section */}
+      <section className={styles.visionMissionSection}>
+        <h2>
+            <Image
+              src="/logo.webp"
+              alt="BlockBeats Logo"
+              width={80}
+              height={80}
+              style={{ verticalAlign: 'middle' }}
+            />
+           <span className='glitch'>BlockBeats</span> CORE</h2>
+        <div className={styles.visionMissionContent}>
+          <div className={styles.visionBlock}>
+            <h3>🎯 Vision</h3>
+            <p>
+              To become the leading platform for inclusive, creative, and immersive musical experiences on the Web3 space — where music, visual art, and technology converge to empower both artists and audiences worldwide.
+            </p>
+          </div>
+          <div className={styles.missionBlock}>
+            <h3>🚀 Mission</h3>
+            <p>
+              BlockBeats is committed to democratizing access to music creation and NFT monetization, fostering innovation in audiovisual expression, and enabling new forms of interaction through cutting-edge technologies.
+            </p>
+          </div>
+        </div>
+
         <br />
         <br />
+        <br />
+        <h2>🌀 Key FEATURES</h2>
+        
         <div className={styles.servicesGrid}>
           {services.map((service, index) => (
-            <div className={`${styles.serviceItem} ${styles.card}`} key={index}>
+            <div className={`${styles.serviceItem}`} key={index}>
               <div className={styles.serviceIconWrapper}>
                 <img src={service.icon} alt={service.title} className={styles.serviceIcon} />
               </div>
@@ -298,37 +324,57 @@ const LandingPage = () => {
             </div>
           ))}
         </div>
-        <br />
-        <br />
       </section>
 
-      {/* Vision & Mission Section */}
-      <hr />
-      <section className={styles.visionMissionSection}>
-        <h2>🎯 Organizational Philosophy & Ethics</h2>
-        <div className={styles.visionMissionContent}>
-          <div className={styles.visionBlock}>
-            <h3> Vision</h3>
-            <p>
-              To become the leading platform for inclusive, creative, and immersive musical experiences on the Web3 space — where music, visual art, and technology converge to empower both artists and audiences worldwide.
-            </p>
-          </div>
-          <div className={styles.missionBlock}>
-            <h3>🚀 Mission</h3>
-            <p>
-              BlockBeats is committed to democratizing access to music creation and NFT monetization, fostering innovation in audiovisual expression, and enabling new forms of interaction through cutting-edge technologies such as blockchain, holography, smart light systems, and drone-based performances.
-            </p>
+<hr />
+
+<section className={styles.keyFeaturesSection}>
+  
+      <div className={styles.featureGrid}>
+        {/* Left Column: Text & Buttons */}
+        <div className={styles.featureText}>
+          <h2 className="glitch">UpComing Events...</h2>
+          <h3>EDU BlockBeats & Real Robot to MIDI Keyboard and touch screen.</h3>
+          <p>
+            BlockBeats is committed to <strong>democratizing access</strong> to music creation and NFT monetization,
+            fostering innovation in audiovisual expression, and enabling new forms of interaction through cutting-edge technologies such as:
+          </p>
+          <ul className={styles.featureList}>
+            <li>🎵 Blockchain-based Music Drawing Machine for schools</li>
+            <li>🤖 Interactive real robot connected to MIDI keyboard and touch screen</li>
+            {/* <li>🚀 Drone shows for Premium Top Collections in real-world events</li> */}
+            {/* <li>🌈 Smart light systems and holographic projections for immersive experiences</li> */}
+          </ul>
+          <div className={styles.featureActions}>
+            <button className={styles.ctaButton}>🚸 Launch EDU BlockBeats</button>
+            <button className={styles.ctaButton}>🌌 Discover Drone Shows</button>
           </div>
         </div>
-      </section>
-      <hr />
 
+        {/* Right Column: Image */}
+        <div className={styles.featureImage}>
+          <Image
+            src="/edu.png"
+            alt="EDU BlockBeats"
+            width={500}
+            height={500}
+            style={{
+              width: '100%',
+              height: 'auto',
+              objectFit: 'cover',
+              borderRadius: '1rem',
+              boxShadow: '0 0 25px rgba(255,255,255,0.2)',
+            }}
+          />
+        </div>
+      </div>
+    </section>
 
       
       {/* News Section */}
       <hr />
       <section className={styles.newsSection}>
-        <h2>🚀 Commercial Projections & Opportunities</h2>
+        <h2><span className='glitch'>🌎 BlockBeats NEWS</span></h2>
         <div className={styles.newsGrid}>
           {newsItems.map((item, index) => (
             <div
@@ -348,7 +394,7 @@ const LandingPage = () => {
           ))}
         </div>
       </section>
-
+    
 
     {open && (
       <Modal

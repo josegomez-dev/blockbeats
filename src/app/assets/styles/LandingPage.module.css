@@ -212,7 +212,7 @@
 .visionMissionSection h2 {
   font-size: 2.2rem;
   margin-bottom: 40px;
-  color: #ff0099;
+  color: var(--white-color);
 }
 
 .visionMissionContent {
@@ -236,21 +236,22 @@
   background-color: #1f1f1f;
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 0 10px rgba(255, 0, 153, 0.3);
+  box-shadow: 0 0 10px rgba(0, 238, 255, 0.5);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .visionBlock:hover,
 .missionBlock:hover {
   transform: translateY(-5px);
-  box-shadow: 0 0 15px rgba(255, 0, 153, 0.6);
+    box-shadow: 0 0 10px rgba(0, 238, 255, 1);
+
 }
 
 .visionBlock h3,
 .missionBlock h3 {
   font-size: 1.5rem;
   margin-bottom: 15px;
-  color: #ff0099;
+  color: var(--white-color);
 }
 
 .visionBlock p,
@@ -276,7 +277,7 @@
 
 .newsIconPreview:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 15px rgba(255, 0, 153, 0.5);
+  box-shadow: 0 0 10px rgba(0, 238, 255, 0.5);
 }
 
 .newsIconReact {
@@ -329,15 +330,15 @@
 .servicesGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 55px;
+  gap: 35px;
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .serviceItem {
-  /* box-shadow: 0 0 10px rgba(255, 0, 153, 0.3); */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
+  width: 100%;
 }
 
 .serviceItem:hover {
@@ -375,38 +376,6 @@
   border-radius: 15px;
 }
 
-.card {
-  position: relative;
-  height: auto;
-  width: 100%;
-  border-radius: 0.45rem;
-  cursor: pointer;
-  background-color: var(--clr-card);
-}
-
-.card::after,
-.card::before {
-  content: " ";
-  position: absolute;
-  z-index: -1;
-  inset: -0.5rem;
-  background: conic-gradient(
-    from var(--gradient-angle),
-    var(--clr-card),
-    var(--clr-1),
-    var(--clr-2),
-    var(--clr-3),
-    var(--clr-2),
-    var(--clr-1),
-    var(--clr-card)
-  );
-  border-radius: inherit;
-  animation: rotate 2.5s linear infinite;
-}
-
-.card::after {
-  filter: blur(3rem);
-}
 
 @keyframes rotate {
   0% {
@@ -629,4 +598,87 @@
     transform: scale(1);
     opacity: 0.8;
   }
+}
+
+
+
+
+.keyFeaturesSection {
+  padding: 60px 20px;
+  background: radial-gradient(ellipse at center, #1a1a2e 0%, #0f0f1a 100%);
+  color: #fff;
+}
+
+.featureGrid {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.featureText {
+  flex: 1;
+  min-width: 300px;
+  max-width: 600px;
+}
+
+.featureImage {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.featureText h2 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  color: var(--neon-color, #90f7ec);
+}
+
+.featureText h3 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.featureText p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.featureList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 30px 0;
+}
+
+.featureList li {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  position: relative;
+}
+
+.featureActions {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.ctaButton {
+  padding: 12px 20px;
+  background: var(--neon-color, #90f7ec);
+  color: #000;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.ctaButton:hover {
+  background: #ffffff;
 }
