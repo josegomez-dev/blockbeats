@@ -126,7 +126,10 @@ const CollectionsScreen = () => {
       <div className="gallery-screen">
         <GalleryHeader title="Explore Top Collections." />
         <button onClick={() => router.push('/createTopCollection')} className={styles.submitBtn} style={{ animation: 'none' }}>Create Top Collection</button>
-        <CollectionsSlider title="Top Fan Collections" fullWidth topCollections={topCollections} onSelectCollection={handleViewCollection} /> 
+        <CollectionsSlider title="My Collections" fullWidth topCollections={topCollections.filter(item => item.createdBy === user?.uid)} onSelectCollection={handleViewCollection} /> 
+        <br/>
+        <hr/>  
+        <CollectionsSlider title="Top Fan Collections" fullWidth topCollections={topCollections.filter(item => item.createdBy !== user?.uid)} onSelectCollection={handleViewCollection} /> 
 
         {isCollectionViewOpen && selectedCollection && (
           <div className={styles.collectionDrawer} style={{ backgroundColor: selectedCollection.collectionColor || '#000' }}>
