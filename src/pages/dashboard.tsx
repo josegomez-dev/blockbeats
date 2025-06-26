@@ -25,7 +25,7 @@ const DashboardLayout = () => {
 
   const [showVegasGame, setShowVegasGame] = React.useState(false);
   const [showRewards, setShowRewards] = useState(true);
-  const [secondsLeft, setSecondsLeft] = useState(60);
+  const [secondsLeft, setSecondsLeft] = useState(30);
 
   const { user, authenticated } = useAuth();
 
@@ -108,12 +108,17 @@ const DashboardLayout = () => {
           </button>
           <br />
           <br />
+          <button style={{ margin: '0 auto', animation: 'none' }} className={styles.submitBtn} onClick={() => setShowRewards(false)}>
+            Continuar
+          </button>
+          <br />
+          <br />
           <Image
             src="/avatar/phase-6.webp"
             alt="Coin"
             width={300}
             height={300}
-            style={{ display: 'block', margin: '0 auto', marginTop: '10px' }}
+            style={{ display: 'block', margin: '0 auto', marginTop: '10px', animation: 'fadeIn 1s ease-in-out' }}
           />
           <br />
           <p style={{ fontSize: '1.2rem', position: 'relative', top: '-80px', marginBottom: '-50px' }}>
@@ -122,21 +127,15 @@ const DashboardLayout = () => {
             <b style={{ color: 'white' }}>Tip:</b> Complete quests to earn more rewards!
           </p>
 
-          <hr />
-          <div style={{ marginTop: '-50px' }}>
-            <NeonSlider
-              slides={nfts.map(nft => ({
-                id: nft.id,
-                songName: nft.songName || '',
-                colorMap: nft.colorMap || [],
-                notesPlayed: (nft.notesPlayed || []).join(','),
-                createdBy: nft.createdBy || '',
-                createdAt: new Date().toISOString(), // or use nft.createdAt if available
-                tempo: nft.tempo, // default tempo or use nft.tempo if available
-                color: nft.color || '#000000', // default background color if not present
-              }))}
-            />
-          </div>
+          <button
+            style={{ margin: '0 auto', animation: 'none', background: 'var(--neon-color)' }}
+            className={styles.submitBtn}
+            onClick={() => setShowRewards(false)}
+          >
+            Close Rewards
+          </button>
+          <br />
+          <br />
         </div>
       )}
 

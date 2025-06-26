@@ -139,17 +139,17 @@ const NeonSlider: React.FC<NeonSliderProps> = ({ slides }) => {
                 onClick={() => handlePlaySlide(slides[current])}
                 disabled={isPlaying && playingSlideId === slide.id}
                 className={styles.submitBtn}
-                style={{ backgroundColor: isPlaying && playingSlideId === slide.id ? "var(--neon-color)" : "transparent", color: 'white',animation: !isPlaying ? "none" : "" }}
+                style={{ backgroundColor: isPlaying ? "var(--neon-color)" : "transparent", color: 'white',animation: !isPlaying ? "none" : "" }}
               >
-                {(isPlaying && playingSlideId === slide.id) ? "Playing..." : "🧬 Play"}
+                {(isPlaying && playingSlideId === slide.id) ? "🔊" : "▶️ Play"}
               </button>
               <button
                 onClick={() => setShowDronesGame(true)}
                 disabled={isPlaying && playingSlideId === slide.id}
                 className={styles.submitBtn}
-                style={{ backgroundColor: isPlaying && playingSlideId === slide.id ? "var(--neon-color)" : "", animation: !isPlaying ? "none" : "" }}
+                style={{ backgroundColor: isPlaying && playingSlideId === slide.id ? "var(--neon-color)" : "", animation: "none" }}
               >
-                🚁 DRONE View
+                🚁 View
               </button>
 
             </div>

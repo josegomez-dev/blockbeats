@@ -9,19 +9,15 @@ import { FaCheck } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import Footer from '@/components/Footer';
-
-interface NFT {
-  colorMap?: any[];
-  notesPlayed?: any[];
-  songName?: string;
-  createdBy?: string;
-  id?: string;
-}
+import GalleryHeader from '@/components/GalleryHeader';
+import { NFT } from '@/types/nftTypes';
 
 const CreateTopFanCollectionModal = () => {
 
   const [collectionName, setCollectionName] = React.useState('');
   const [collectionDescription, setCollectionDescription] = React.useState('');
+  const [selectedColor, setSelectedColor] = React.useState('var(--secondary-color)'); // Default color
+
   const [nfts, setNFTs] = React.useState<NFT[]>([]);
   const [selectedNFTS, setSelectedNFTS] = React.useState<NFT[]>([]);
 
@@ -39,32 +35,28 @@ const CreateTopFanCollectionModal = () => {
     fetchNFTs();
   }, []);
 
-  const createTopCollection = async () => {
+  const createTopCollection = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (selectedNFTS.length === 0) {
-      alert('Please select at least one NFT to create a collection.');
-      return;
+      toast.error('Please select at least one NFT to create a collection.');
+    } else {
+      // create item to add to collections collection of firebase using TopCollections type
+      const collectionData = {
+        createdBy: user?.uid,
+        collectionName: collectionName || 'My Top Fan Collection',
+        collectionDescription: collectionDescription || 'This is my unique Top Fan Collection.',
+        collectionColor: selectedColor || 'var(--secondary-color)',
+        nfts: selectedNFTS.map(nft => nft.id),
+        createdAt: new Date().toISOString(),
+      };
+
+      await addDoc(collection(db, "topCollections"), collectionData);
+
+      // Reset selected NFTs after creation
+      setSelectedNFTS([]);
+      toast.success('Top Fan Collection created successfully!');
+      router.push('/collections'); 
     }
-
-    if (selectedNFTS.length > 5) {
-      alert('You can only select up to 5 NFTs for your collection.');
-      return;
-    }
-
-    // create item to add to collections collection of firebase using TopCollections type
-    const collectionData = {
-      createdBy: user?.uid,
-      collectionName: collectionName || 'My Top Fan Collection',
-      collectionDescription: collectionDescription || 'This is my unique Top Fan Collection.',
-      nfts: selectedNFTS.map(nft => nft.id),
-      createdAt: new Date().toISOString(),
-    };
-
-    await addDoc(collection(db, "topCollections"), collectionData);
-
-    // Reset selected NFTs after creation
-    setSelectedNFTS([]);
-    toast.success('Top Fan Collection created successfully!');
-    router.push('/dashboard'); 
   };
 
   const selectNft = (nft: NFT) => {
@@ -79,25 +71,27 @@ const CreateTopFanCollectionModal = () => {
 
   return (
     <>
-      <div style={{ padding: '20px', width: '100%', textAlign: 'center' }}>
-        <br />
-        <button
-          className={styles.submitBtn}
-          style={{ width: '200px', animation: 'none', marginBottom: '20px' }}
-          onClick={() => router.back()}
-        >
-          Back to Gallery
-        </button>
-        <br />
-        <h2>Create Top Fan Collection</h2>
+      <div style={{ width: '100%', textAlign: 'center' }}>
+        <GalleryHeader title='Create Top Fan Collection' />
         <br />
         <p>Here you can create your own unique Top Fan Collection.</p>
         <p>Choose a name for your collection and add a description.</p>
         <br />
-        <form style={{ width: '100%', textAlign: 'center' }}>
+        <form>
+          <p>Choose a color for your collection:</p>
+          <input
+            type="color"
+            className={styles.emailInput}
+            style={{ width: '100%' }}
+            value={selectedColor}
+            onChange={(e) => setSelectedColor(e.target.value)}
+          />
+          <br />
+          <br />
+          <p>Collection Name:</p>
           <input
             type="text"
-            placeholder="Collection Name"
+            placeholder="Add a name for your collection"
             className={styles.emailInput}
             style={{ width: '100%' }}
             value={collectionName}
@@ -105,86 +99,89 @@ const CreateTopFanCollectionModal = () => {
           />
           <br />
           <br />
+          <p>Collection Description:</p>
           <textarea
-            placeholder="Collection Description"
+            placeholder="Add a description for your collection"
             className={styles.emailInput}
             value={collectionDescription}
             onChange={(e) => setCollectionDescription(e.target.value)}
           />
           <br />
+          <button
+            className={styles.submitBtn}
+            style={{ width: '200px', animation: 'none' }}
+            onClick={(e) => createTopCollection(e)}
+          >
+            Create Collection
+          </button>
         </form>
-
-        <br />
-        <p>Choose NFTs you want to add to your collection.</p>
-        <div style={{ width: '100%', margin: '0 auto' }} className={styles.nftSelection}>
-          {nfts.length > 0 ? (
-            nfts.map((nft, index) => (
-              <div key={index} className={styles.nftCard}>
-                <div
-                  style={{
-                    padding: '10px',
-                    margin: '0 auto'
-                  }}
-                >
-                  <button
-                    onClick={() => selectNft(nft)}
+        <hr />
+        
+        <div style={{ backgroundColor: selectedColor }}>
+          <br />
+          <h2 className='glitch'>{collectionName}</h2>
+          <p>{collectionDescription}</p>
+          <br />
+          <p style={{ color: 'var(--neon-color)', fontSize: 12 }}>Choose <span className='glitch'>NFTs</span> you want to add to your collection.</p>
+          <div style={{ width: '100%', margin: '0 auto' }} className={styles.nftSelection}>
+            {nfts.length > 0 ? (
+              nfts.map((nft, index) => (
+                <div key={index} className={styles.nftCard}>
+                  <div
                     style={{
-                      width: '40px',
-                      borderRadius: 4,
-                      background: selectedNFTS.some(item => item.id === nft.id)
-                        ? 'var(--neon-color)'
-                        : 'transparent',
-                      color: selectedNFTS.some(item => item.id === nft.id)
-                        ? 'var(--secondary-color)'
-                        : 'var(--neon-color)',
-                      fontSize: '0.8rem',
-                      cursor: 'pointer',
+                      padding: '10px',
+                      margin: '0 auto'
                     }}
                   >
-                    {selectedNFTS.some(item => item.id === nft.id) ? (
-                      <FaCheck />
-                    ) : (
-                      <span style={{ color: 'var(--neon-color)' }}>+</span>
-                    )}
-                  </button>
+                    <button
+                      onClick={() => selectNft(nft)}
+                      style={{
+                        width: '40px',
+                        borderRadius: 4,
+                        background: selectedNFTS.some(item => item.id === nft.id)
+                          ? 'var(--neon-color)'
+                          : 'transparent',
+                        color: selectedNFTS.some(item => item.id === nft.id)
+                          ? 'var(--secondary-color)'
+                          : 'var(--neon-color)',
+                        fontSize: '0.8rem',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      {selectedNFTS.some(item => item.id === nft.id) ? (
+                        <FaCheck />
+                      ) : (
+                        <span style={{ color: 'var(--neon-color)' }}>+</span>
+                      )}
+                    </button>
+                  </div>
+                  <PixelPreview
+                    colorMap={nft.colorMap || []}
+                    notesCount={nft.notesPlayed ? nft.notesPlayed.length : 0}
+                    size={100}
+                    backgroundColor={nft.color || '#000000'}
+                  />
+                  <h6
+                    style={{
+                      textAlign: 'center',
+                      overflowX: 'auto',
+                      width: '80%',
+                      margin: '0 auto',
+                    }}
+                  >
+                    {nft.songName || 'Untitled'}
+                  </h6>
                 </div>
-                <PixelPreview
-                  colorMap={nft.colorMap || []}
-                  notesCount={nft.notesPlayed ? nft.notesPlayed.length : 0}
-                  size={100}
-                />
-                <h6
-                  style={{
-                    textAlign: 'center',
-                    overflowX: 'auto',
-                    width: '80%',
-                    margin: '0 auto',
-                  }}
-                >
-                  {nft.songName || 'Untitled'}
-                </h6>
-              </div>
-            ))
-          ) : (
-            <p>No NFTs available to create a collection.</p>
-          )}
+              ))
+            ) : (
+              <p>No NFTs available to create a collection.</p>
+            )}
+          </div>
+          
+          <br />
+          <p style={{ color: 'var(--neon-color)' }}>Once you create a collection, it will be available in the <span className='glitch'>Top Fan Collections</span>.</p>
+          <br />
         </div>
-
-        <br />
-        <button
-          className={styles.submitBtn}
-          style={{ width: '200px', animation: 'none' }}
-          onClick={createTopCollection}
-        >
-          Create Collection
-        </button>
-        
-        <br />
-        <br />
-        <p>Once you create a collection, it will be available in the Top Fans section.</p>
-        <p>Note: You can only create one Top Fan Collection.</p>
-        <br />
-        <br />
       </div>
       {/* <Footer /> */}
     </>

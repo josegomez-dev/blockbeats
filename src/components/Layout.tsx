@@ -24,7 +24,7 @@ const Layout = ({ children }: LayoutProps) => {
         <main className="p-4">
             {authenticated && <div className='custom-nav-spacer' />}
             {children}
-            <Footer />
+            {authenticated && <Footer />}
         </main>
       </>  
   )

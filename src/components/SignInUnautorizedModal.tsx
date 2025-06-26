@@ -18,7 +18,7 @@ const SignInUnautorizedModal: React.FC<SignInModalProps> = ({ open, onClose, pag
       onClose={onClose}
       center
       classNames={{ modal: styles.modal }}
-      styles={{ modal: { width: '100%', height: 'auto', background: 'transparent', padding: 50 } }}
+      styles={{ modal: { width: '100%', height: 'auto', background: 'black', padding: 50 } }}
       closeOnEsc={false}
       closeOnOverlayClick={false}
       showCloseIcon={false}
@@ -26,11 +26,6 @@ const SignInUnautorizedModal: React.FC<SignInModalProps> = ({ open, onClose, pag
       closeIcon={<span className={styles.closeIcon}>×</span>}
     >
       <div className={styles.modalContent}>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
         <h2 className={styles.modalTitle}>Please Sign In</h2>
         <br />
         <p className={styles.modalText}>

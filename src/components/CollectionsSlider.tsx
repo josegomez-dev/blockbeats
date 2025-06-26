@@ -7,12 +7,12 @@ interface CollectionProps {
   title?: string;
   topCollections?: TopCollections[];
   onSelectCollection?: (collectionId: string) => void;
+  customSize?: boolean;
 }
 
-const CollectionsSlider: React.FC<CollectionProps> = ({ fullWidth, title, topCollections, onSelectCollection }) => {
+const CollectionsSlider: React.FC<CollectionProps> = ({ fullWidth, title, topCollections, onSelectCollection, customSize }) => {
   return (
-    <div style={{ padding: fullWidth ? '15px 85px' : '', textAlign: 'left' }}>
-      <hr />
+    <div id='collectionSlider' style={{ textAlign: 'left', width: customSize ? '450px' : '100%', marginLeft: customSize ? '-15px' : '80px' }}>
       {title && <h2 style={{ marginTop: '10px', marginBottom: '-15px' }}>{title}</h2>}
       <br />
       <div className={styles.sliderWrapper} style={{ width: fullWidth ? '100%' : 'auto' }}>
@@ -21,7 +21,7 @@ const CollectionsSlider: React.FC<CollectionProps> = ({ fullWidth, title, topCol
             <div
               key={i}
               className={styles.card}
-              style={{ borderColor: item.color, cursor: 'pointer' }}
+              style={{ borderColor: item.color, cursor: 'pointer', backgroundColor: item.collectionColor  }}
               onClick={() => onSelectCollection?.(item.id)}
             >
               <div className={styles.collectionCard}>

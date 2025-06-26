@@ -518,11 +518,18 @@ p {
 .gallery-grid {
   margin-left: 50px;
 }
+#collectionSlider {
+  margin-left: 80px;
+}
+
 @media (max-width: 700px) {
   .floating-button {
     bottom: 100px;
   }
   .gallery-grid {
+    margin-left: 0;
+  }
+  #collectionSlider {
     margin-left: 0;
   }
 }

@@ -125,16 +125,17 @@ const CollectionsScreen = () => {
     <>
       <div className="gallery-screen">
         <GalleryHeader title="Explore Top Collections." />
-        <button onClick={() => router.push('/createTopCollection')} className={styles.submitBtn} style={{ animation: 'none' }}>Create Top Fan Collection</button>
+        <button onClick={() => router.push('/createTopCollection')} className={styles.submitBtn} style={{ animation: 'none' }}>Create Top Collection</button>
         <CollectionsSlider title="Top Fan Collections" fullWidth topCollections={topCollections} onSelectCollection={handleViewCollection} /> 
-        <br />
 
         {isCollectionViewOpen && selectedCollection && (
-          <div className={styles.collectionDrawer}>
+          <div className={styles.collectionDrawer} style={{ backgroundColor: selectedCollection.collectionColor || '#000' }}>
             <div className={styles.collectionHeader}>
-              <h3>{selectedCollection.collectionName || "Unnamed Collection"}</h3>
+              <h4 className='glitch'>{selectedCollection.collectionName || "Unnamed Collection"}</h4>
+              <br />
+              {/* <p>{selectedCollection.collectionDescription}</p> */}
               <div>
-                <button onClick={() => setIsModalOpen(true)} className={styles.submitBtn} style={{ animation: 'none' }}>Manage NFTs</button>
+                <button onClick={() => setIsModalOpen(true)} className={styles.submitBtn} style={{ animation: 'none' }}>Manage</button>
                 <button onClick={() => setIsCollectionViewOpen(false)} className={styles.submitBtn} style={{ animation: 'none' }}>Close</button>
               </div>
             </div>
@@ -202,9 +203,8 @@ const CollectionsScreen = () => {
                   </button>
                 </div>
               ))}
-              
             </div>
-
+            
             <button
               className={styles.submitBtn}
               onClick={saveSelection}
@@ -215,9 +215,30 @@ const CollectionsScreen = () => {
             <button className={styles.submitBtn} onClick={() => setIsModalOpen(false)}>Close</button>
           </Modal>
         )}
+        <br/>  
+        <hr />
+        <br />
+        <h2>Top <span className='glitch'>GAMMING</span> Collection</h2>
+        <p>Explore the most popular gaming collections created by our community.</p>
+        <CollectionsSlider fullWidth topCollections={topCollections} onSelectCollection={handleViewCollection} /> 
+        <br />
+        <hr />
+
+        <hr />
+        <br />
+        <h2>Top <span className='glitch'>ROCK n' ROLL</span> Collection</h2>
+        <p>Explore the most popular rock n' roll collections created by our community.</p>
+        <CollectionsSlider fullWidth topCollections={topCollections} onSelectCollection={handleViewCollection} /> 
+        <br />
+        <hr />
+
+        <div className={styles.footer}>
+          <br />
+          <p>Explore and enjoy the top fan collections!</p>
+        </div>
+        <br />
 
       </div>
-      {/* <Footer /> */}
     </>
   );
 };

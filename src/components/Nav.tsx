@@ -212,11 +212,6 @@ export default function Nav() {
                       <MdDashboard className={styles.icon} /> Dashboard
                     </div>
                   </Link>
-                  <Link href="/gallery">
-                    <div className={styles.dropdownItem}>
-                      <RiGalleryLine className={styles.icon} /> My Gallery
-                    </div>
-                  </Link>
                   <Link href="/collections">
                     <div className={styles.dropdownItem}>
                       <BiCollection className={styles.icon} /> Top Collections

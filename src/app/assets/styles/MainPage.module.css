@@ -410,7 +410,9 @@
   overflow-x: auto; /* Enable horizontal scrolling if needed */
   overflow-y: hidden; /* Prevent vertical scroll */
   padding: 10px; /* Optional, makes it look nicer */
-  height: 200px; /* Example: match your .nftCard height if needed */
+  height: 250px; /* Example: match your .nftCard height if needed */
+  margin: 50px 0;
+
 }
 
 
@@ -779,8 +781,10 @@
 }
 
 .nftCard {
-  background: #111;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  color: #fff;
   padding: 10px 5px;
   border-radius: 12px;
   width: 150px;
