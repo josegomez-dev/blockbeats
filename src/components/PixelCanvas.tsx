@@ -81,25 +81,31 @@ const PixelCanvas: React.FC<PixelCanvasProps> = ({
     onCanvasClick(noteIndex, time);
   };
 
-  return (
+return (
+  <div
+    style={{
+      maxHeight: '400px', // visible area
+      borderRadius: 8,
+    }}
+  >
     <canvas
       ref={canvasRef}
       onClick={handleClick}
       width={cols * cellSize}
-      height={rows * cellSize}
+      height={'430%'} // 50% of the height
       style={{
-        margin: '0 auto',
         background: color,
-        overflow: 'auto',
         width: '100%',
-        height: 'auto',
-        borderRadius: 8,
-        display: 'block',
+        height:  155,
         cursor: 'pointer',
+        overflow: 'none',
+        display: 'block',
       }}
       id="pixel-canvas"
     />
-  );
+  </div>
+);
+
 };
 
 export default PixelCanvas;

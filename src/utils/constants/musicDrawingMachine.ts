@@ -18,14 +18,35 @@ export const UI = {
   ARROW_HINT_SIZE: 50,
 };
 
-export const notes: [string, number, string][] = [
-  ["C1", 130.81, "kwhite"], ["CM1", 138.59, "kblack"],
-  ["D1", 146.83, "kwhite"], ["DM1", 155.56, "kblack"],
-  ["E1", 164.81, "kwhite"], ["F1", 174.61, "kwhite"],
-  ["FM1", 185.0, "kblack"], ["G1", 196.0, "kwhite"],
-  ["GM1", 207.65, "kblack"], ["A1", 220.0, "kwhite"],
-  ["AM1", 233.08, "kblack"], ["B1", 246.94, "kwhite"],
+// utils/constants/musicDrawingMachine.ts
+
+export const notes: [string, number, string][] = [];
+
+const noteNames = [
+  ["C", "kwhite"],
+  ["CM", "kblack"], // C#
+  ["D", "kwhite"],
+  ["DM", "kblack"], // D#
+  ["E", "kwhite"],
+  ["F", "kwhite"],
+  ["FM", "kblack"], // F#
+  ["G", "kwhite"],
+  ["GM", "kblack"], // G#
+  ["A", "kwhite"],
+  ["AM", "kblack"], // A#
+  ["B", "kwhite"],
 ];
+
+for (let octave = 3; octave <= 4; octave++) {
+  noteNames.forEach(([name, type], index) => {
+    // Calculate frequency using A4 = 440Hz as base
+    const semitoneIndex = (octave - 4) * 12 + index - 9; // A4 is the reference
+    const freq = 440 * Math.pow(2, semitoneIndex / 12);
+
+    notes.push([`${name}${octave}`, parseFloat(freq.toFixed(2)), type]);
+  });
+}
+
 
 export const frequencyRanges = [
   { name: "Mono", min: 0, max: 800, color: "gray" },
