@@ -216,7 +216,7 @@ const LandingPage = () => {
       {/* Hero Section */}
       <section className={styles.hero}>
         <div className={styles.heroContent}>
-          <h1>🎧 BlockBeats </h1>
+          <h1>🤖 Welcome... </h1>
           <h2 className={styles.typewriter} style={{fontSize: '20px'}}>The Future of Music & Art NFTs</h2>
           <br />
           <span className="glitch">Create, share, and experience music like never before — powered by Web3.</span>
@@ -292,7 +292,8 @@ const LandingPage = () => {
               height={80}
               style={{ verticalAlign: 'middle' }}
             />
-           <span className='glitch'>BlockBeats</span> CORE</h2>
+            About &nbsp;
+           <span className='glitch'>BlockBeats 3.0</span> LAUNCHPAD</h2>
         <div className={styles.visionMissionContent}>
           <div className={styles.visionBlock}>
             <h3>🎯 Vision</h3>
@@ -303,7 +304,7 @@ const LandingPage = () => {
           <div className={styles.missionBlock}>
             <h3>🚀 Mission</h3>
             <p>
-              BlockBeats is committed to democratizing access to music creation and NFT monetization, fostering innovation in audiovisual expression, and enabling new forms of interaction through cutting-edge technologies.
+              <span style={{ color: 'var(--neon-color)'}}>BlockBeats 3.0</span> is committed to democratizing access to music creation and NFT monetization, fostering innovation in audiovisual expression, and enabling new forms of interaction through cutting-edge technologies.
             </p>
           </div>
         </div>
