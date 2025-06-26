@@ -126,10 +126,19 @@ const CollectionsScreen = () => {
       <div className="gallery-screen">
         <GalleryHeader title="Explore Top Collections." />
         <button onClick={() => router.push('/createTopCollection')} className={styles.submitBtn} style={{ animation: 'none' }}>Create Top Collection</button>
-        <CollectionsSlider title="My Collections" fullWidth topCollections={topCollections.filter(item => item.createdBy === user?.uid)} onSelectCollection={handleViewCollection} /> 
-        <br/>
-        <hr/>  
-        <CollectionsSlider title="Top Fan Collections" fullWidth topCollections={topCollections.filter(item => item.createdBy !== user?.uid)} onSelectCollection={handleViewCollection} /> 
+        <CollectionsSlider 
+          id="myCollections"
+          title="My Collections" 
+          fullWidth 
+          topCollections={topCollections.filter(item => item.createdBy === user?.uid)} 
+          onSelectCollection={handleViewCollection} 
+        /> 
+        <CollectionsSlider 
+          id="topFanCollections"
+          title="Top Fan Collections" 
+          fullWidth topCollections={topCollections.filter(item => item.createdBy !== user?.uid)} 
+          onSelectCollection={handleViewCollection} 
+        /> 
 
         {isCollectionViewOpen && selectedCollection && (
           <div className={styles.collectionDrawer} style={{ backgroundColor: selectedCollection.collectionColor || '#000' }}>
@@ -236,7 +245,7 @@ const CollectionsScreen = () => {
         <br />
         <hr /> */}
 
-        <div className={styles.footer}>
+        <div className={styles.footer} style={{ textAlign: 'center', padding: '25px' }}>
           <br />
           <p>Explore and enjoy the top fan collections!</p>
         </div>

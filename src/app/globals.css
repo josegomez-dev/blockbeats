@@ -518,7 +518,10 @@ p {
 .gallery-grid {
   margin-left: 50px;
 }
-#collectionSlider {
+#myCollections {
+  margin-left: 80px;
+}
+#topFanCollections {
   margin-left: 80px;
 }
 
@@ -529,8 +532,12 @@ p {
   .gallery-grid {
     margin-left: 0;
   }
-  #collectionSlider {
-    margin-left: 0;
+  
+  #myCollections {
+    margin-left: 0px;
+  }
+  #topFanCollections {
+    margin-left: 0px;
   }
 }
 
