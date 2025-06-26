@@ -156,7 +156,7 @@ const MarketplaceScreen = () => {
                     size={100}
                     backgroundColor={src.color || '#000'}
                   />
-                  <button className={styles.submitBtn} style={{ animation: 'none' }}>View</button>
+                  {/* <button className={styles.submitBtn} style={{ animation: 'none' }}>View</button> */}
                   <button
                     className={styles.submitBtn}
                     style={{ marginBottom: '10px', animation: 'none', backgroundColor: isPlaying && src.songName === selectedNFT?.songName ? "var(--neon-color)" : "transparent", color: isPlaying && src.songName === selectedNFT?.songName ? "white" : "var(--neon-color)" }}

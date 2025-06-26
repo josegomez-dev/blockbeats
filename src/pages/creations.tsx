@@ -83,8 +83,7 @@ const CollectionsScreen = () => {
                         <hr />
                     </div>
                 </div>
-                <br />
-                <NFTSliderPanel nfts={nfts.filter(item => item.createdBy !== user?.uid)} collections={topCollections} />
+                {/* <NFTSliderPanel nfts={nfts.filter(item => item.createdBy !== user?.uid)} collections={topCollections} /> */}
                 
                 <div className={styles.footer} style={{ textAlign: 'center', padding: '25px' }}>
                     <p>Explore the top collections created by our community.</p>

@@ -12,7 +12,7 @@ interface NFTSliderPanelProps {
 }
 
 const NFTSliderPanel: React.FC<NFTSliderPanelProps> = ({ nfts, collections }) => (
-  <div>
+  <div id='core-nft-slider-panel'>
     <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
       <h2><span className='glitch'>BlockBeats</span> Creations DOME</h2>
 
@@ -47,7 +47,7 @@ const NFTSliderPanel: React.FC<NFTSliderPanelProps> = ({ nfts, collections }) =>
         </>
       )}
     </div>
-    {/* <CollectionsSlider id='collectionSliderDashboard' topCollections={collections} title="Top Fan Collections" /> */}
+    <CollectionsSlider id='collectionSliderDashboard' topCollections={collections} title="Top Fan Collections" />
   </div>
 );
 

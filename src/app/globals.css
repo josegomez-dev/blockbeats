@@ -814,18 +814,19 @@ p {
   align-self: flex-end;
 }
 
-
-
-.container-collections {
-  margin-left: 80px; 
+#core-nft-slider-panel {
+  max-width: 400px;
+  margin-right: 25px;
 }
+
 @media screen and (max-width: 700px) {
   .custom-spacer {
     margin-top: 25px;
   }
-
-  .container-collections {
-    margin-left: 0px; 
+}
+@media screen and (max-width: 1120px) {
+  #core-nft-slider-panel {
+    display: none;
   }
 }
 
