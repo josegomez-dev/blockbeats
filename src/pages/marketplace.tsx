@@ -8,6 +8,10 @@ import { Modal } from "react-responsive-modal";
 import SignInUnautorizedModal from '@/components/SignInUnautorizedModal';
 import GalleryHeader from '@/components/GalleryHeader';
 import { NFT } from '@/types/nftTypes';
+import Image from 'next/image';
+import { playMelody, playDrumLoop } from "@/utils/helpers/drumHelper";
+import { notes } from "@/utils/constants/musicDrawingMachine"; // for frequency mapping
+
 
 const MarketplaceScreen = () => {
 
@@ -15,6 +19,10 @@ const MarketplaceScreen = () => {
 
   const [showViewModal, setShowViewModal] = React.useState(false);
   const [selectedNFT, setSelectedNFT] = React.useState<NFT | null>(null);
+
+  const [isPlaying, setIsPlaying] = React.useState(false);
+  const [stopMelodyRef, setStopMelodyRef] = React.useState<(() => void) | null>(null);
+  const [stopDrumRef, setStopDrumRef] = React.useState<(() => void) | null>(null);
 
   const { user } = useAuth();
 
@@ -26,6 +34,36 @@ const MarketplaceScreen = () => {
     };
     fetchNFTs();
   }, []);
+
+  const handlePlayNFT = (nft: NFT) => {
+    if (isPlaying && selectedNFT?.id === nft.id) return;
+
+    stopMelodyRef?.();
+    stopDrumRef?.();
+
+    setIsPlaying(true);
+
+    const melody = (nft.colorMap ?? []).map(({ noteIndex, time }) => ({ noteIndex, time }));
+    const tempo = nft.tempo || 300;
+
+    const stopDrum = playDrumLoop(tempo, () => {});
+    setStopDrumRef(() => stopDrum);
+
+    const stopMelody = playMelody(
+      melody,
+      tempo,
+      notes.map(n => n[1]),
+      () => {
+        stopDrum?.();
+        setIsPlaying(false);
+        setStopDrumRef(null);
+        setStopMelodyRef(null);
+      }
+    );
+
+    setStopMelodyRef(() => stopMelody);
+  };
+
 
   if (!user) {
     return (
@@ -51,6 +89,19 @@ const MarketplaceScreen = () => {
     <>
       <GalleryHeader title="Explore the Marketplace" />
 
+      <Image
+          src="/marketplace-bg.png"
+          alt="Creations Banner"
+          width={1200}
+          height={500}
+          style={{ width: "100%", height: "auto", objectFit: "cover", borderBottom: "1px solid #fff" }}
+      />
+
+      <div className="bannerContainer" style={{ textAlign: "center", margin: "0 auto" }}>
+        <h2>BlockBeats <span className='glitch'>Marketplace</span></h2>
+        <p>Trade and explore unique NFTs created by our community.</p>
+      </div>
+      
      {selectedNFT && (
         <Modal
           open={showViewModal}
@@ -106,6 +157,14 @@ const MarketplaceScreen = () => {
                     backgroundColor={src.color || '#000'}
                   />
                   <button className={styles.submitBtn} style={{ animation: 'none' }}>View</button>
+                  <button
+                    className={styles.submitBtn}
+                    style={{ marginBottom: '10px', animation: 'none', backgroundColor: isPlaying && src.songName === selectedNFT?.songName ? "var(--neon-color)" : "transparent", color: isPlaying && src.songName === selectedNFT?.songName ? "white" : "var(--neon-color)" }}
+                    onClick={() => handlePlayNFT(src)}
+                  >
+                    {isPlaying && src.songName === selectedNFT?.songName ? "Playing..." : "▶ Play NFT"}
+                  </button>
+
               </div>
             </div>
           ))}          

@@ -18,14 +18,14 @@ const GalleryHeader: React.FC<GalleryHeaderProps> = ({ title = 'Explore My Galle
           backdropFilter: 'blur(50px)',
           backgroundColor: 'rgba(0, 0, 0, 0.1)',
           position: 'relative',
-          padding: '40px 0 20px',
+          padding: '25px 0 20px',
         }}
       >
         {onBackClick ? (
-          <div onClick={onBackClick} style={{ position: 'absolute', top: 25, right: 15, cursor: 'pointer' }}>
+          <div onClick={onBackClick} style={{ position: 'absolute', top: 30, right: 15, cursor: 'pointer' }}>
             <FaArrowLeft style={{ marginRight: 10 }} />
           </div>) : (
-          <Link href="/dashboard" style={{ position: 'absolute', top: 25, right: 15, cursor: 'pointer' }}>
+          <Link href="/dashboard" style={{ position: 'absolute', top: 30, right: 15, cursor: 'pointer' }}>
             <FaArrowLeft style={{ marginRight: 10 }} />
           </Link>)}
         <div style={{ textAlign: 'center', margin: '0 auto', marginBottom: '-5px' }}>

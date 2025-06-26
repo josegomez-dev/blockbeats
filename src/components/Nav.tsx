@@ -126,7 +126,7 @@ export default function Nav() {
 
     return (
       <span className={isAnimating ? "pulse-animation" : ""}>
-        {displayedValue}
+        {displayedValue} <span className="glitch">BBC</span>
     </span>
     );
   };
@@ -167,9 +167,8 @@ export default function Nav() {
         {authenticated && (
           <>
             {/* 👤 User Menu */}
-            <li className={styles.navItem}>
+            <li id='personal-pts-balance-nav' className={styles.navItem}>
               <AnimatedBalance start={user?.bbcPoints || 0} end={getCoinsToAdd} />&nbsp;
-              <span className="glitch">BBC</span>
             </li>
             <li className={`${styles.navItem} ${styles.dropdown}`} ref={dropdownRef}>
               <button className={styles.avatarButton} onClick={toggleDropdown}>
@@ -191,11 +190,18 @@ export default function Nav() {
                     &nbsp;
                     <span style={{ overflow: 'auto' }}>{user?.displayName || user?.email}</span>
                   </div>
+                  
+                  <hr />
+                  <div style={{ display: 'flex', alignItems: 'center', padding: '10px', color: 'white' }}>
+                    Points Balance:&nbsp;<AnimatedBalance start={user?.bbcPoints || 0} end={getCoinsToAdd} />&nbsp;
+                  </div>
+                  <hr />
+
                   {user?.walletStored ? (
-                    <div style={{ marginBottom: '10px' }}> &nbsp;&nbsp;
+                    <div> &nbsp;&nbsp;
                     💳&nbsp;<span className='glitch' style={{marginTop: '-15px' }}>{user?.walletStored.slice(0, 5)}...{user?.walletStored.slice(-4)} {data?.symbol} </span>
                   </div> ) : (
-                    <div style={{ margin: '15px 25px', marginTop: '5px' }}>
+                    <div style={{ margin: '15px 25px', marginTop: '15px' }}>
                         <button
                           className={stylesMain.submitBtnLarge}
                           // onClick={readWalletAddress}
@@ -222,14 +228,14 @@ export default function Nav() {
                       <BiCollection className={styles.icon} /> Top Collections
                     </div>
                   </Link>
-                  <Link href="/tutorials">
-                    <div className={styles.dropdownItem}>
-                      <FaChalkboardTeacher className={styles.icon} /> Tutorials & Guides
-                    </div>
-                  </Link>
                   <Link href="/marketplace">
                     <div className={styles.dropdownItem}>
                       <FaStore className={styles.icon} /> Marketplace
+                    </div>
+                  </Link>
+                  <Link href="/tutorials">
+                    <div className={styles.dropdownItem}>
+                      <FaChalkboardTeacher className={styles.icon} /> Tutorials & Guides
                     </div>
                   </Link>
                   {/* <Link href="/minigames">
@@ -257,7 +263,6 @@ export default function Nav() {
                     // alert to confirm logout
                     if (window.confirm('Are you sure you want to logout?')) {
                       handleLogout();
-                      toast.success('Logged out successfully');
                     } else {
                       toast.error('Logout cancelled');
                     }

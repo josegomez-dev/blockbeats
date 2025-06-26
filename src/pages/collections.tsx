@@ -14,6 +14,7 @@ import { playMelody, playDrumLoop } from "@/utils/helpers/drumHelper";
 import Modal from 'react-responsive-modal';
 import GalleryHeader from '@/components/GalleryHeader';
 import { NFT } from '@/types/nftTypes';
+import Image from 'next/image';
 
 const CollectionsScreen = () => {
 
@@ -125,6 +126,21 @@ const CollectionsScreen = () => {
     <>
       <div className="gallery-screen">
         <GalleryHeader title="Explore Top Collections." />
+
+
+        <Image
+            src="/collections-bg.png"
+            alt="Creations Banner"
+            width={1200}
+            height={500}
+            style={{ width: "100%", height: "auto", objectFit: "cover", borderBottom: "1px solid #fff" }}
+        />
+  
+        <div className="bannerContainer" style={{ textAlign: "center", margin: "0 auto" }}>
+          <h2>BlockBeats <span className='glitch'>Top Collections</span></h2>
+          <p>Trade and explore unique NFTs created by our community.</p>
+        </div>
+
         <button onClick={() => router.push('/createTopCollection')} className={styles.submitBtn} style={{ animation: 'none' }}>Create Top Collection</button>
         <CollectionsSlider 
           id="myCollections"

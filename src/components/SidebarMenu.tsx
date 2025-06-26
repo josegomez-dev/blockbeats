@@ -15,8 +15,8 @@ const SidebarMenu = () => {
     { icon: <FaHome />, label: 'Dashboard', href: '/dashboard' },
     { icon: <RiGalleryLine />, label: 'My Creations', href: '/creations' },
     { icon: <BiCollection />, label: 'Top Collections', href: '/collections' },
-    { icon: <FaChalkboardTeacher />, label: 'Tutorials & Guides', href: '/tutorials' },
     { icon: <FaStore />, label: 'Marketplace', href: '/marketplace' },
+    { icon: <FaChalkboardTeacher />, label: 'Tutorials & Guides', href: '/tutorials' },
   ];
 
   return (

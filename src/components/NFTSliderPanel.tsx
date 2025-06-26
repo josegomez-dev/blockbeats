@@ -29,7 +29,7 @@ const NFTSliderPanel: React.FC<NFTSliderPanelProps> = ({ nfts, collections }) =>
         </div>
       ) : (
         <>
-          <p>Here you can view all the NFTs you have created.</p>
+          <p>Here you can view all the NFTs & Top Fan Collections created by users.</p>
           <div style={{ marginTop: '-50px', width: '100%' }}>
             <NeonSlider
               slides={nfts.map(nft => ({

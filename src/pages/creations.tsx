@@ -8,6 +8,7 @@ import { db } from '../../firebase';
 import GalleryHeader from '@/components/GalleryHeader';
 import { NFT } from '@/types/nftTypes';
 import NeonSlider from '@/components/NeonSlider';
+import Image from 'next/image';
 
 const CollectionsScreen = () => {
     const [userNFTS, setUserNFTS] = React.useState<NFT[]>([]);
@@ -28,8 +29,16 @@ const CollectionsScreen = () => {
         <div className="gallery-screen">
             <GalleryHeader title="My Creations" />
 
+            <Image
+                src="/gallery-bg.png"
+                alt="Creations Banner"
+                width={1200}
+                height={500}
+                style={{ width: "100%", height: "auto", objectFit: "cover", borderBottom: "1px solid #fff" }}
+            />
+
             <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
-                <h2>All Creations</h2>                 
+                <h2>BlockBeats <span className='glitch'>Creations</span></h2>                 
                 <p>Here you can view all the NFTs you have created.</p>
                 <div style={{ marginTop: '-50px', width: '100%' }}>
                     <NeonSlider
