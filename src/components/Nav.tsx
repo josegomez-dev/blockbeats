@@ -212,6 +212,11 @@ export default function Nav() {
                       <MdDashboard className={styles.icon} /> Dashboard
                     </div>
                   </Link>
+                  <Link href="/creations">
+                    <div className={styles.dropdownItem}>
+                      <BiCollection className={styles.icon} /> My Creations
+                    </div>
+                  </Link>
                   <Link href="/collections">
                     <div className={styles.dropdownItem}>
                       <BiCollection className={styles.icon} /> Top Collections

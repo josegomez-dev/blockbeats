@@ -86,7 +86,7 @@
   gap: 1rem;
   flex-wrap: wrap;
   position: absolute;
-  bottom: 120px;
+  bottom: 150px;
   left: 50%;
   transform: translateX(-50%);
 }

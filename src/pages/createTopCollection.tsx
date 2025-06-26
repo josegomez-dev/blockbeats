@@ -16,7 +16,7 @@ const CreateTopFanCollectionModal = () => {
 
   const [collectionName, setCollectionName] = React.useState('');
   const [collectionDescription, setCollectionDescription] = React.useState('');
-  const [selectedColor, setSelectedColor] = React.useState('var(--secondary-color)'); // Default color
+  const [selectedColor, setSelectedColor] = React.useState('var(--black-color)'); // Default color
 
   const [nfts, setNFTs] = React.useState<NFT[]>([]);
   const [selectedNFTS, setSelectedNFTS] = React.useState<NFT[]>([]);

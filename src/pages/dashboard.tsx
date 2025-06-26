@@ -30,12 +30,23 @@ const DashboardLayout = () => {
   const { user, authenticated } = useAuth();
 
   useEffect(() => {
+    const lastClaim = localStorage.getItem("lastRewardClaimDate");
+    const today = new Date().toISOString().split("T")[0];
+
+    if (lastClaim === today) {
+      setShowRewards(false);
+    }
+  }, []);
+
+  useEffect(() => {
     if (!showRewards) return;
 
     const interval = setInterval(() => {
       setSecondsLeft(prev => {
         if (prev <= 1) {
           clearInterval(interval);
+          const today = new Date().toISOString().split("T")[0];
+          localStorage.setItem("lastRewardClaimDate", today);
           setShowRewards(false);
           return 0;
         }
@@ -45,6 +56,7 @@ const DashboardLayout = () => {
 
     return () => clearInterval(interval);
   }, [showRewards]);
+
 
   // Always call hooks unconditionally
   useEffect(() => {
@@ -108,10 +120,6 @@ const DashboardLayout = () => {
           </button>
           <br />
           <br />
-          <button style={{ margin: '0 auto', animation: 'none' }} className={styles.submitBtn} onClick={() => setShowRewards(false)}>
-            Continuar
-          </button>
-          <br />
           <br />
           <Image
             src="/avatar/phase-6.webp"
@@ -173,20 +181,17 @@ const DashboardLayout = () => {
 
        {showVegasGame && (
           <VegasMintGame
-            onClose={() => setShowVegasGame(false)}
+            onClose={() => {
+              const today = new Date().toISOString().split("T")[0];
+              localStorage.setItem("lastRewardClaimDate", today);
+              setShowRewards(false);
+              setShowVegasGame(false)
+            }}
             nfts={nfts.map(nft => ({
               id: nft.id,
               title: nft.songName || 'Untitled',
               author: nft.createdBy || 'Unknown',
-              colorMap: Array.isArray(nft.colorMap)
-                ? Object.fromEntries(
-                    (nft.colorMap as any[]).map((entry, idx) =>
-                      typeof entry === 'object' && entry !== null
-                        ? [entry.key ?? String(idx), entry.value ?? '']
-                        : [String(idx), String(entry)]
-                    )
-                  )
-                : (nft.colorMap as unknown as Record<string, string>) ?? {},
+              colorMap: nft.colorMap ?? [],
               songName: nft.songName || 'Untitled',
               notesPlayed: nft.notesPlayed ?? [],
               frequencyRange: (nft as any).frequencyRange ?? [0, 0],

@@ -228,23 +228,6 @@ const CollectionsScreen = () => {
           </Modal>
         )}
 
-        {/* <br/>  
-        <hr />
-        <br />
-        <h2>Top <span className='glitch'>GAMMING</span> Collection</h2>
-        <p>Explore the most popular gaming collections created by our community.</p>
-        <CollectionsSlider fullWidth topCollections={topCollections} onSelectCollection={handleViewCollection} /> 
-        <br />
-        <hr /> */}
-
-        {/* <hr />
-        <br />
-        <h2>Top <span className='glitch'>ROCK n' ROLL</span> Collection</h2>
-        <p>Explore the most popular rock n' roll collections created by our community.</p>
-        <CollectionsSlider fullWidth topCollections={topCollections} onSelectCollection={handleViewCollection} /> 
-        <br />
-        <hr /> */}
-
         <div className={styles.footer} style={{ textAlign: 'center', padding: '25px' }}>
           <br />
           <p>Explore and enjoy the top fan collections!</p>
