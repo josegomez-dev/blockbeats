@@ -50,6 +50,7 @@ export default function MusicDrawingPage({ nfts = [], topCollections = [] }: Pro
   const [playIndex, setPlayIndex] = useState<number | null>(null);
   const [isFreqModalOpen, setFreqModalOpen] = useState(false);
   const [isAIModalOpen, setAIModalOpen] = useState(false);
+  const [isDrumEnabled, setIsDrumEnabled] = useState(true);
 
   const stopMelodyRef = useRef<(() => void) | null>(null);
   const stopDrumRef = useRef<(() => void) | null>(null);
@@ -117,16 +118,19 @@ export default function MusicDrawingPage({ nfts = [], topCollections = [] }: Pro
     const melodyData = notesPlayed.map(({ noteIndex, time }) => ({ noteIndex, time }));
     const freqMap = notes.map((n) => n[1]);
 
-    stopDrumRef.current = playDrumLoop(tempo, () => {
-      stopDrumRef.current = null;
-    });
+    if (isDrumEnabled) {
+      stopDrumRef.current = playDrumLoop(tempo, () => {
+        stopDrumRef.current = null;
+      });
+    }
 
     stopMelodyRef.current = playMelody(melodyData, tempo, freqMap, () => {
-      stopDrumRef.current?.();
+      stopDrumRef.current?.(); // Still stop drums when melody ends
       setIsPlayingBack(false);
       setPlayIndex(null);
     });
   };
+
 
   const handleCanvasClick = (noteIdx: number, time: number) => {
     setNotesPlayed(TOGGLE(notesPlayed, noteIdx, time));
@@ -205,6 +209,8 @@ export default function MusicDrawingPage({ nfts = [], topCollections = [] }: Pro
             frequencyStyle={frequencyStyle}
             onIAGeneration={loadRandomMelody}
             openIAModal={() => setAIModalOpen(true)}
+            isDrumEnabled={isDrumEnabled}
+            setIsDrumEnabled={setIsDrumEnabled}
           />
 
           <div
