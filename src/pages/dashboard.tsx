@@ -164,13 +164,6 @@ const DashboardLayout = () => {
 
           <div className={styles.dashboardContainer}>
             <br />
-            <hr />
-            <p style={{ padding: '20px 70px' }}>
-              <span className="glitch">BlockBeats 3.0</span> empowers anyone to trade music and visual creativity through an interactive platform that connects art and real-world experiences.
-            </p>
-            <hr />
-
-            <br />
             <div className={styles.desktopGrid}>
               <div id="core-left-panel" className={styles.leftPanel}>
                 <CharacterPanel />
@@ -182,9 +175,14 @@ const DashboardLayout = () => {
                 <Web3StatsPanel totalNFTCreations={totalNFTCreations} totalTopCollections={totalTopCollections} />
               </div>
             </div>
-            <br />
             {/* <NFTSliderPanel nfts={nfts} collections={topCollections} /> */}
-            
+            <br />
+            <hr />
+            <p style={{ padding: '20px 70px' }}>
+              <span className="glitch">BlockBeats 3.0</span> empowers anyone to trade music and visual creativity through an interactive platform that connects art and real-world experiences.
+            </p>
+            <hr />
+            <br />
             <br />
           </div>
         </>  

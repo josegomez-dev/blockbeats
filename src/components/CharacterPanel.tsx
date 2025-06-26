@@ -226,6 +226,7 @@ const CharacterPanel: React.FC = () => {
     <div className={styles.panel}>
       {overlayMsg && <LevelUpOverlay message={overlayMsg} onClose={() => setOverlayMsg(null)} />}
 
+      <h2> <span className='glitch'>BEATO</span> </h2>
       <p className={styles.description}>
         This is your personal music bot!<br />
         <strong>Level up</strong> by completing quests and earning XP!
@@ -250,7 +251,7 @@ const CharacterPanel: React.FC = () => {
           </div>
         ))}
       </div>
-      
+
       <div className={styles.avatarContainer}>
         {/* <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginBottom: '8px' }}>
           <button onClick={() => changePhase('prev')} disabled={phaseIndex === MIN_PHASE + 1} style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>
