@@ -26,7 +26,7 @@ type StatState = {
 };
 
 const MAX_LEVEL = 10;
-const MAX_PHASE = 9;
+const MAX_PHASE = 6;
 const MIN_PHASE = 0;
 const LEVEL_XP_THRESHOLD = 100;
 
@@ -253,14 +253,14 @@ const CharacterPanel: React.FC = () => {
       </div>
 
       <div className={styles.avatarContainer}>
-        {/* <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginBottom: '8px' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginBottom: '8px' }}>
           <button onClick={() => changePhase('prev')} disabled={phaseIndex === MIN_PHASE + 1} style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>
             ⬅️
           </button>
           <button onClick={() => changePhase('next')} disabled={phaseIndex === MAX_PHASE} style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>
             ➡️
           </button>
-        </div> */}
+        </div>
 
         <img
           src={avatarSrc}

@@ -44,7 +44,7 @@ export default function MusicDrawingPage({ nfts = [], topCollections = [] }: Pro
   const [selectedRange, setSelectedRange] = useState('Harmonic');
   const [selectedScale, setSelectedScale] = useState<ScaleName>('minor');
   const [melodyKind, setMelodyKind] = useState<'chords' | 'solo' | 'both'>('both');
-  const [firstNote, setFirstNote] = useState('C1');
+  const [firstNote, setFirstNote] = useState(notes[0][0]); // safe starting note
   const [tempo, setTempo] = useState(SEQUENCER.DEFAULT_TEMPO);
   const [isPlayingBack, setIsPlayingBack] = useState(false);
   const [playIndex, setPlayIndex] = useState<number | null>(null);
@@ -63,7 +63,10 @@ export default function MusicDrawingPage({ nfts = [], topCollections = [] }: Pro
     const intervals = scaleIntervals[selectedScale];
     if (baseIdx === -1 || !intervals) return melody;
 
-    const scaleIdx = intervals.map((i) => (baseIdx + i) % notes.length);
+    const scaleIdx = intervals
+      .map((i) => baseIdx + i)
+      .filter((idx) => idx < notes.length); // ✅ Prevent overflow
+
     const usedTimes = new Set<number>();
 
     for (let t = 0; t < SEQUENCER.STEPS; t++) {
@@ -87,6 +90,7 @@ export default function MusicDrawingPage({ nfts = [], topCollections = [] }: Pro
 
     return melody;
   }, [firstNote, selectedScale, melodyKind]);
+
 
   const loadRandomMelody = () => {
     const melody = generateRandomMelody();
