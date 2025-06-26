@@ -107,7 +107,6 @@ const MarketplaceScreen = () => {
           open={showViewModal}
           onClose={() => handleCloseModal()}
           center
-          classNames={{ modal: styles.modal }}
           styles={{ modal: { backgroundColor: 'rgba(0, 0, 0, 0.8)', height: 'auto' } }}
           showCloseIcon={false}
         >
