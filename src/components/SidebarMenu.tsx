@@ -13,9 +13,10 @@ const SidebarMenu = () => {
 
   const menuItems = [
     { icon: <FaHome />, label: 'Dashboard', href: '/dashboard' },
-    { icon: <BiCollection />, label: 'My Creations', href: '/creations' },
+    { icon: <RiGalleryLine />, label: 'My Creations', href: '/creations' },
     { icon: <BiCollection />, label: 'Top Collections', href: '/collections' },
-    // { icon: <FaStore />, label: 'Marketplace', href: '/marketplace' },
+    { icon: <FaChalkboardTeacher />, label: 'Tutorials & Guides', href: '/tutorials' },
+    { icon: <FaStore />, label: 'Marketplace', href: '/marketplace' },
   ];
 
   return (

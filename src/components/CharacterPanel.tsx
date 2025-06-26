@@ -1,4 +1,3 @@
-// CharacterPanel.tsx
 'use client';
 
 import React, { useEffect, useReducer, useRef, useState } from 'react';
@@ -16,43 +15,124 @@ import {
 } from '@/utils/constants/gameSettings';
 import { CHARACTER_STATS } from '@/utils/constants/characterStats';
 
+// ────────────────────────────────────────────────────────────────────────────────
+// TYPES & REDUCER
+// ────────────────────────────────────────────────────────────────────────────────
 type StatState = {
   energy: number;
   creativity: number;
   xp: number;
   level: number;
 };
+
+const MAX_LEVEL = 10;
+const MAX_PHASE = 9;
+const MIN_PHASE = 0;
+const LEVEL_XP_THRESHOLD = 100;
+
 const initialState: StatState = {
   energy: 0,
   creativity: 0,
   xp: 0,
-  level: 0,
+  level: 1,
 };
 
+type Action =
+  | { type: 'INCREMENT_STATS'; payload: Partial<StatState> }
+  | { type: 'LEVEL_UP' }
+  | { type: 'RESET' };
+
+const reducer = (state: StatState, action: Action): StatState => {
+  switch (action.type) {
+    case 'INCREMENT_STATS': {
+      const newXP = state.xp + (action.payload.xp || 0);
+      const newLevel = newXP >= LEVEL_XP_THRESHOLD && state.level < MAX_LEVEL
+        ? state.level + 1
+        : state.level;
+      return {
+        ...state,
+        energy: Math.min(100, state.energy + (action.payload.energy || 0)),
+        creativity: Math.min(100, state.creativity + (action.payload.creativity || 0)),
+        xp: newXP >= LEVEL_XP_THRESHOLD ? 0 : newXP,
+        level: newLevel,
+      };
+    }
+    case 'LEVEL_UP':
+      return { ...state, level: Math.min(state.level + 1, MAX_LEVEL), xp: 0 };
+    case 'RESET':
+      return initialState;
+    default:
+      return state;
+  }
+};
+
+const getTodayDateString = () => {
+  const today = new Date();
+  return today.toISOString().split('T')[0]; // format: "2025-06-25"
+};
+
+const getClaimKey = (userId: string) => `lastClaimDate_${userId}`;
+
+// ────────────────────────────────────────────────────────────────────────────────
+// COMPONENT
+// ────────────────────────────────────────────────────────────────────────────────
 const CharacterPanel: React.FC = () => {
-  const [{ energy, creativity, xp, level }] = useReducer(
-    (state: StatState, action: Partial<StatState>) => ({
-      ...state,
-      ...action,
-    }),
-    initialState
-  );
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { energy, creativity, xp, level } = state;
 
   const { user, updateCoinsInFirestore } = useAuth();
   const [overlayMsg, setOverlayMsg] = useState<string | null>(null);
   const [animateLevel, setAnimateLevel] = useState(false);
   const [showGif, setShowGif] = useState(false);
-  const [phaseIndex, setPhaseIndex] = useState(1); // NEW
+  const [phaseIndex, setPhaseIndex] = useState(1);
 
   const canClaim = useRef<boolean>(true);
-  const MAX_PHASE = 9;
-  const MIN_PHASE = 0;
+  const prevLevel = useRef(level);
+
+  const [hasClaimedToday, setHasClaimedToday] = useState(false);
+
+  useEffect(() => {
+    if (!user?.id) return;
+
+    const lastClaim = localStorage.getItem(getClaimKey(user.id));
+    if (lastClaim === getTodayDateString()) {
+      setHasClaimedToday(true);
+      canClaim.current = false;
+    }
+  }, [user]);
+
 
   const sfx = useRef({
     levelUp1: new Audio('/sounds/level-up.mp3'),
     levelUp2: new Audio('/sounds/level-up-2.mp3'),
     coins: new Audio('/sounds/coins.mp3'),
   });
+
+  // Auto increase stats
+  useEffect(() => {
+    const interval = setInterval(() => {
+      dispatch({
+        type: 'INCREMENT_STATS',
+        payload: {
+          energy: Math.random() * 3,
+          creativity: Math.random() * 2,
+          xp: Math.random() * 5,
+        },
+      });
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Detect level up
+  useEffect(() => {
+    if (level > prevLevel.current) {
+      prevLevel.current = level;
+      if (level <= MAX_PHASE) {
+        handleLevelUp(level);
+        setPhaseIndex(level);
+      }
+    }
+  }, [level]);
 
   const handleLevelUp = async (newLevel: number) => {
     setAnimateLevel(true);
@@ -109,8 +189,11 @@ const CharacterPanel: React.FC = () => {
   };
 
   const handleClaim = async () => {
-    if (!canClaim.current) return;
+    if (!canClaim.current || hasClaimedToday || !user) return;
+
     canClaim.current = false;
+    setHasClaimedToday(true);
+    localStorage.setItem(getClaimKey(user.id), getTodayDateString());
 
     setOverlayMsg('💰 100 BBC Coins Claimed!');
     sfx.current.levelUp1.play();
@@ -120,24 +203,23 @@ const CharacterPanel: React.FC = () => {
       await updateCoinsInFirestore(100, `Manual claim at level ${level}`);
       sfx.current.coins.play();
       setOverlayMsg(null);
-      canClaim.current = true;
     }, CHARACTER_ANIMATION_DELAY);
   };
 
   const avatarSrc = `/avatar/phase-${phaseIndex}.webp`;
-  const creativityLabelPct = creativity * 5;
-
-  const STAT_VALUES: Record<string, number> = {
-    energy: 100,
-    creativity: 100,
-    experience: 100,
-  };
 
   const changePhase = (dir: 'prev' | 'next') => {
-    handleLevelUp(phaseIndex + (dir === 'next' ? 1 : -1));
-    setPhaseIndex((prev) =>
-      dir === 'next' ? Math.min(prev + 1, MAX_PHASE) : Math.max(prev - 1, MIN_PHASE)
-    );
+    const newIndex = dir === 'next'
+      ? Math.min(phaseIndex + 1, MAX_PHASE)
+      : Math.max(phaseIndex - 1, MIN_PHASE);
+    setPhaseIndex(newIndex);
+    handleLevelUp(newIndex);
+  };
+
+  const STAT_VALUES: Record<string, number> = {
+    energy: energy,
+    creativity: creativity,
+    experience: xp,
   };
 
   return (
@@ -150,14 +232,14 @@ const CharacterPanel: React.FC = () => {
       </p>
 
       <div className={styles.avatarContainer}>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginBottom: '8px' }}>
+        {/* <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginBottom: '8px' }}>
           <button onClick={() => changePhase('prev')} disabled={phaseIndex === MIN_PHASE + 1} style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>
             ⬅️
           </button>
           <button onClick={() => changePhase('next')} disabled={phaseIndex === MAX_PHASE} style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>
             ➡️
           </button>
-        </div>
+        </div> */}
 
         <img
           src={avatarSrc}
@@ -171,8 +253,8 @@ const CharacterPanel: React.FC = () => {
             {phaseIndex}
           </span>{' '}
           | XP:{' '}
-          <span data-text={`${xp}%`} className="glitch">
-            {xp}%
+          <span data-text={`${Math.floor(xp)}%`} className="glitch">
+            {Math.floor(xp)}%
           </span>
         </p>
       </div>
@@ -182,13 +264,13 @@ const CharacterPanel: React.FC = () => {
           <div key={key} className={styles.barGroup}>
             <div className={styles.barLabel}>
               <label>
-                {icon} {STAT_VALUES[key]}%
+                {icon} {Math.floor(STAT_VALUES[key])}%
               </label>
             </div>
             <div className={styles.progressBar}>
               <div
                 className={styles[`${key}Bar`]}
-                style={{ width: `${STAT_VALUES[key]}%` }}
+                style={{ width: `${Math.min(100, STAT_VALUES[key])}%` }}
               />
             </div>
             <p className={styles.barText}>{label}</p>
@@ -200,18 +282,24 @@ const CharacterPanel: React.FC = () => {
         <strong>Boost your creativity</strong> with special items and rewards!
       </p>
 
-      {/* <div style={{ display: 'flex', justifyContent: 'space-between', gap: '5px' }}>
-        <button onClick={handleClaim} className={stylesMain.submitBtn} style={{ fontSize: '0.6rem' }}>
-          🪙 Claim Coins
-        </button>
+      <div style={{ display: 'flex', justifyContent: 'space-between', gap: '5px' }}>
         <button
+          onClick={handleClaim}
+          className={stylesMain.submitBtn}
+          style={{ fontSize: '0.6rem', opacity: hasClaimedToday ? 0.5 : 1, animation: hasClaimedToday ? 'none' : '' }}
+          disabled={hasClaimedToday}
+        >
+          {hasClaimedToday ? '✅ Already Claimed Today' : '🪙 Claim Coins'}
+        </button>
+
+        {/* <button
           disabled
           className={stylesMain.submitBtn}
           style={{ backgroundColor: 'transparent', opacity: 0.5, animation: 'none', fontSize: '0.6rem' }}
         >
           🚀 Boosts
-        </button>
-      </div> */}
+        </button> */}
+      </div>
     </div>
   );
 };

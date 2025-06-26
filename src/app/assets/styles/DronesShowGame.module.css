@@ -94,15 +94,16 @@
 .controls button,
 .exitButton {
   padding: 0.5rem 1.2rem;
-  background: #222;
+  background: transparent;
   color: white;
-  border: 1px solid #999;
+  border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: 0.5s all;
 }
 
 .controls button:hover,
 .exitButton:hover {
-  background: #333;
+  background: var(--neon-color);
+  transform: scale(1.15);
 }

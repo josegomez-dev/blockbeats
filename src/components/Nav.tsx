@@ -214,7 +214,7 @@ export default function Nav() {
                   </Link>
                   <Link href="/creations">
                     <div className={styles.dropdownItem}>
-                      <BiCollection className={styles.icon} /> My Creations
+                      <RiGalleryLine className={styles.icon} /> My Creations
                     </div>
                   </Link>
                   <Link href="/collections">
@@ -222,16 +222,16 @@ export default function Nav() {
                       <BiCollection className={styles.icon} /> Top Collections
                     </div>
                   </Link>
-                  {/* <Link href="/marketplace">
-                    <div className={styles.dropdownItem}>
-                      <FaStore className={styles.icon} /> Marketplace
-                    </div>
-                  </Link> */}
-                  {/* <Link href="/tutorials">
+                  <Link href="/tutorials">
                     <div className={styles.dropdownItem}>
                       <FaChalkboardTeacher className={styles.icon} /> Tutorials & Guides
                     </div>
-                  </Link> */}
+                  </Link>
+                  <Link href="/marketplace">
+                    <div className={styles.dropdownItem}>
+                      <FaStore className={styles.icon} /> Marketplace
+                    </div>
+                  </Link>
                   {/* <Link href="/minigames">
                     <div className={styles.dropdownItem}>
                       <FaStoreAlt className={styles.icon} /> MiniGames HUB

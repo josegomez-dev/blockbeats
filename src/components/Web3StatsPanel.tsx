@@ -67,6 +67,27 @@ const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, tota
   const [sparkData, setSparkData] = useState<Record<string, number[]>>({});
   const { user } = useAuth();
 
+  const [botStats, setBotStats] = useState<Record<string, number>>({
+    energy: 0,
+    creativity: 0,
+    experience: 0,
+  });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBotStats(prev => {
+        const updated: Record<string, number> = { ...prev };
+        Object.keys(prev).forEach(key => {
+          const delta = Math.random() * 5 - 2; // vary between -2% and +3%
+          updated[key] = Math.max(0, Math.min(100, prev[key] + delta));
+        });
+        return updated;
+      });
+    }, 3000); // every 3 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setSparkData((prevData) => {
@@ -130,15 +151,14 @@ const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, tota
       <div className={styles.section}>
         <div className={styles.coinListWrapper}>
           <ul>
-            <h3>Account</h3>
+            <h4>Account</h4>
             <hr />
             <li className={styles.coinsContainer}>
               <div className={styles.coinRow}>
-                <p className={styles.tokenMeta}>lvl: <span className="glitch">2</span> | XP: <span className="glitch">0%</span></p>
-                <hr />
+                {/* <p className={styles.tokenMeta}>lvl: <span className="glitch">0</span></p>
+                <p> XP: <span className="glitch">0%</span></p> */}
+                {/* <hr /> */}
                 <p className={styles.tokenMeta}><strong> <RiGalleryLine /> </strong>: <span className="glitch">{totalNFTCreations}</span> | <strong> <BiCollection /></strong>: <span className="glitch">{totalTopCollections}</span></p>
-                <hr />
-                <p className={styles.tokenStat}>PTS: {user?.bbcPoints} <strong className="glitch">BBC</strong></p>
                 <hr />
                 <p className={styles.tokenStat}><FaCoins color="gold" /> <strong>balance</strong>: <span className={styles.tokenValue}>${(0).toFixed(2)}</span></p>
               </div>
@@ -146,22 +166,25 @@ const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, tota
           </ul>
 
           <ul className={styles.coinsContainer} style={{ width: "180px" }}>
-            <h3>Bot Stats</h3>
-            {CHARACTER_STATS.map(({ key, label, icon }) => (
-              <div key={key} className={stylesChar.barWrapper} style={{ fontSize: 10}}>
-                <hr />
-                {icon} {label}: <label>50%</label>
-                <div className={stylesChar.barGroup}>
-                  <div className={stylesChar.progressBar}>
-                    <div className={stylesChar[`${key}Bar`]} style={{ width: "100%" }} />
+            <h4>Bot Stats</h4>
+            {CHARACTER_STATS.map(({ key, label, icon }) => {
+              const value = Math.floor(botStats[key] ?? 0);
+              return (
+                <div key={key} className={stylesChar.barWrapper} style={{ fontSize: 10 }}>
+                  <hr />
+                  {icon} {label}: <label>{value}%</label>
+                  <div className={stylesChar.barGroup}>
+                    <div className={stylesChar.progressBar}>
+                      <div className={stylesChar[`${key}Bar`]} style={{ width: `${value}%` }} />
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </ul>
 
           <ul>
-            <h3>Tokens</h3>
+            <h4>Tokens</h4>
             <hr />
             {Object.entries(prices).map(([coin, { change, isPositive }]) => (
               <li className={styles.coinsContainer} key={coin}>
