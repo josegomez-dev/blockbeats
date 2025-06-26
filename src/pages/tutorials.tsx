@@ -225,7 +225,6 @@ const TutorialsAndGuidesScreen = () => {
       <br />
       <br />
 
-      {/* <Footer /> */}
     </>
   );
 };
