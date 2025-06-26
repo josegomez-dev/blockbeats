@@ -215,22 +215,23 @@ const CollectionsScreen = () => {
             <button className={styles.submitBtn} onClick={() => setIsModalOpen(false)}>Close</button>
           </Modal>
         )}
-        <br/>  
+
+        {/* <br/>  
         <hr />
         <br />
         <h2>Top <span className='glitch'>GAMMING</span> Collection</h2>
         <p>Explore the most popular gaming collections created by our community.</p>
         <CollectionsSlider fullWidth topCollections={topCollections} onSelectCollection={handleViewCollection} /> 
         <br />
-        <hr />
+        <hr /> */}
 
-        <hr />
+        {/* <hr />
         <br />
         <h2>Top <span className='glitch'>ROCK n' ROLL</span> Collection</h2>
         <p>Explore the most popular rock n' roll collections created by our community.</p>
         <CollectionsSlider fullWidth topCollections={topCollections} onSelectCollection={handleViewCollection} /> 
         <br />
-        <hr />
+        <hr /> */}
 
         <div className={styles.footer}>
           <br />

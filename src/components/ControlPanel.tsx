@@ -62,42 +62,17 @@ const ControlsPanel: React.FC<Props> = ({
 
     <br />
 
-    <div style={{ 
-      display: "flex", 
-      justifyContent: "space-between", 
-      alignItems: "center", 
-      flexDirection: "row", 
-      padding: 10,
-      width: "100%" // optional: ensures it takes full container width
-    }}>
-      <div style={{ 
-        textAlign: "center", 
-        color: "var(--neon-color)", 
-        fontSize: 12, 
-        flex: 1,
-        paddingRight: 10
-      }}>
-
-      </div>
-      <div style={{ 
-        textAlign: "center", 
-        color: "var(--neon-color)", 
-        fontSize: 12, 
-        flex: 1,
-        paddingLeft: 10
-      }}>
-        🎵 Tempo: {tempo} BPM
-        <input
-          type="range"
-          min={60}
-          max={420}
-          value={tempo}
-          onChange={(e) => setTempo(+e.target.value)}
-          style={{ width: "100%", cursor: "pointer", marginBottom: 10 }}
-        />
-      </div>
+    <div style={{ textAlign: "center", color: "var(--neon-color)", fontSize: 12 }}>
+      🎵 Tempo: {tempo} BPM
+      <input
+        type="range"
+        min={60}
+        max={420}
+        value={tempo}
+        onChange={(e) => setTempo(+e.target.value)}
+        style={{ width: "80%", cursor: "pointer", marginBottom: 10 }}
+      />
     </div>
-
 
   </div>
 );

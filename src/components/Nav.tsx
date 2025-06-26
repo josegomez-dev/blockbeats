@@ -217,11 +217,11 @@ export default function Nav() {
                       <BiCollection className={styles.icon} /> Top Collections
                     </div>
                   </Link>
-                  <Link href="/marketplace">
+                  {/* <Link href="/marketplace">
                     <div className={styles.dropdownItem}>
                       <FaStore className={styles.icon} /> Marketplace
                     </div>
-                  </Link>
+                  </Link> */}
                   {/* <Link href="/tutorials">
                     <div className={styles.dropdownItem}>
                       <FaChalkboardTeacher className={styles.icon} /> Tutorials & Guides
