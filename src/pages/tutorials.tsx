@@ -129,16 +129,11 @@ const TutorialsAndGuidesScreen = () => {
         <br />
         <br />
         <br />
-        <br />
-        <h1 className="glitch">📖 Learn How to Use BlockBeats</h1>
-        <br />
+        <h1><span className='glitch'>How to Use BlockBeats</span></h1>
         <p>Follow your guide and get started with Web3 music creation in just a few steps.</p>
         <br />
-        <br />
         <button onClick={() => router.push('/dashboard')} className={styles.submitBtn} style={{ animation: 'none' }}>Create New Musical NFT</button>                    
-        <br />
       </div>
-      <br />
       <br />
 
       <div style={{ textAlign: 'center' }}>
@@ -233,7 +228,6 @@ const TutorialsAndGuidesScreen = () => {
         </div>
     </div>
 
-      <br />
       <br />
 
     </>

@@ -42,10 +42,8 @@ const CollectionsScreen = () => {
                     <br />
                     <br />
                     <br />
-                    <br />
-                    <h2><span className='glitch'>My Gallery</span></h2>
+                    <h1><span className='glitch'>My Gallery</span></h1>
                     <p>Here you can view all the NFTs you have created.</p>
-                    <br />
                     <br />
                     <button onClick={() => router.push('/dashboard')} className={styles.submitBtn} style={{ animation: 'none' }}>Create New Musical NFT</button>                    
                     <br />

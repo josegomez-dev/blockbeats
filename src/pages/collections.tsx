@@ -138,10 +138,9 @@ const CollectionsScreen = () => {
             <br />
             <br />
             <br />
-            <br />
 
             <div className="bannerContainer" style={{ textAlign: "center", margin: "0 auto" }}>
-              <h2><span className='glitch'>Top Collections</span></h2>
+              <h1><span className='glitch'>Top Collections</span></h1>
               <p>Trade and explore unique NFTs created by our community.</p>
             </div>
 

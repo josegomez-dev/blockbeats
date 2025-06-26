@@ -93,9 +93,8 @@ const MarketplaceScreen = () => {
         <br />
         <br />
         <br />
-        <br />
         <div className="bannerContainer" style={{ textAlign: "center", margin: "0 auto" }}>
-          <h2><span className='glitch'>Marketplace</span></h2>
+          <h1><span className='glitch'>Marketplace</span></h1>
           <p>Trade and explore unique NFTs created by our community.</p>
           <br />
           <button onClick={() => window.location.href = '/createNFT'} className={styles.submitBtn} style={{ animation: 'none' }}>Create New NFT</button>
