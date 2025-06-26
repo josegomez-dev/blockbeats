@@ -76,16 +76,6 @@ const NeonSlider: React.FC<NeonSliderProps> = ({ slides }) => {
 
   return (
     <>
-      {/* Game full-screen overlays */}
-      {showDronesGame && (
-        <div className={'fullscreen'}>
-          <div className={'placeholder'}>
-            <h2>🚁 Drones Show - Coming Soon</h2>
-            <button onClick={() => setShowDronesGame(false)}>Exit</button>
-          </div>
-          {/* <DronesGame onClose={() => setShowDronesGame(false)} /> */}
-        </div>
-      )}
 
       {showDronesGame && (
         <DronesShowGame

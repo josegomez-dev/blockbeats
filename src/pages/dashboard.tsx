@@ -179,10 +179,9 @@ const DashboardLayout = () => {
             <br />
             <hr />
             <p style={{ padding: '20px 70px' }}>
-              <span className="glitch">BlockBeats 3.0</span> empowers anyone to trade music and visual creativity through an interactive platform that connects art and real-world experiences.
+              <span className="glitch">BlockBeats 3.0</span> <span>empowers anyone to trade music and visual creativity through an interactive platform that connects art and real-world experiences.</span>
             </p>
             <hr />
-            <br />
             <br />
           </div>
         </>  

@@ -152,7 +152,6 @@ const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, tota
         <div className={styles.coinListWrapper}>
           <ul>
             <h4 style={{ textAlign: 'center' }}>MyAccount</h4>
-            <br />
 
             <hr />
             <li className={styles.coinsContainer}>

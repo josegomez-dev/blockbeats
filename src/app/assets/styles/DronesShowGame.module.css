@@ -80,15 +80,10 @@
 }
 
 .controls {
-  margin-top: 1rem;
   display: flex;
   justify-content: center;
   gap: 1rem;
-  flex-wrap: wrap;
-  position: absolute;
-  bottom: 150px;
-  left: 50%;
-  transform: translateX(-50%);
+  margin-top: 1rem;
 }
 
 .controls button,

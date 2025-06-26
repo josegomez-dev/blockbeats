@@ -65,9 +65,10 @@ const DronesShowGame: React.FC<DronesShowGameProps> = ({
   return (
     <div className={styles.overlay}>
       <div className={styles.sky}>
-        <h2 className={styles.title}>🚁 Drones Show</h2>
-        <p className={styles.subtitle}>Watch drones draw pixel NFT art in the sky!</p>
-
+        <div className={styles.meta}>
+          <h3 className='glitch'>{title}</h3>
+          {/* <p>by {author}</p> */}
+        </div>
         <div className={styles.droneGridWrapper}>
           <div
             className={styles.droneGrid}
@@ -93,11 +94,8 @@ const DronesShowGame: React.FC<DronesShowGameProps> = ({
           </div>
         </div>
 
-        <div className={styles.meta}>
-          <h3 className='glitch'>{title}</h3>
-          <br />
-          {/* <p>by {author}</p> */}
-        </div>
+        <p className={styles.subtitle}>🚁 Watch drones draw pixel NFT art in the sky!</p>
+
         <div className={styles.controls}>
           <button onClick={prevArtwork}>⬅️ Prev</button>
           <button onClick={handleReset} disabled={animating}>🔄 Reset</button>
