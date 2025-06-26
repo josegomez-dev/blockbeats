@@ -57,9 +57,9 @@ const DashboardLayout = () => {
   const fetchNFTs = async () => {
     const querySnapshot = await getDocs(collection(db, "signatures"));
     const nfts = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    setNFTs(nfts);      
     if (user) {
       const userNFTs = nfts.filter((item: any) => item.createdBy === user.uid);
-      setNFTs(userNFTs);      
       setTotalNFTCreations(userNFTs.length);
     }
   };

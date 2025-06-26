@@ -13,8 +13,8 @@ interface CollectionProps {
 const CollectionsSlider: React.FC<CollectionProps> = ({ fullWidth, title, topCollections, onSelectCollection, customSize }) => {
   return (
     <div id='collectionSlider' style={{ textAlign: 'left', width: customSize ? '450px' : '100%', marginLeft: customSize ? '-15px' : '80px' }}>
-      {title && <h2 style={{ marginTop: '10px', marginBottom: '-15px' }}>{title}</h2>}
-      <br />
+      {title && <h2 style={{ marginTop: '10px' }}>{title}</h2>}
+      {customSize && (<hr/>)}
       <div className={styles.sliderWrapper} style={{ width: fullWidth ? '100%' : 'auto' }}>
         <div className={styles.sliderTrack}>
           {topCollections && topCollections.map((item, i) => (
