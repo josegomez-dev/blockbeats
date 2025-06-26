@@ -8,14 +8,14 @@ import { db } from '../../firebase';
 import GalleryHeader from '@/components/GalleryHeader';
 import { NFT } from '@/types/nftTypes';
 import NeonSlider from '@/components/NeonSlider';
-import Image from 'next/image';
-import NFTSliderPanel from '@/components/NFTSliderPanel';
+import { useRouter } from 'next/router';
 
 const CollectionsScreen = () => {
     const [userNFTS, setUserNFTS] = React.useState<NFT[]>([]);
     const [nfts, setNfts] = React.useState<NFT[]>([]);
     const [topCollections, setTopCollections] = React.useState<any[]>([]); //
     const { user } = useAuth();
+    const router = useRouter();
 
     useEffect(() => {
         const fetchTopColletions = async () => {
@@ -47,7 +47,7 @@ const CollectionsScreen = () => {
                     <p>Here you can view all the NFTs you have created.</p>
                     <br />
                     <br />
-                    <a href="/dashboard" className={styles.submitBtn}>Create New NFT</a>
+                    <button onClick={() => router.push('/dashboard')} className={styles.submitBtn} style={{ animation: 'none' }}>Create New Musical NFT</button>                    
                     <br />
                 </div>
             </div>

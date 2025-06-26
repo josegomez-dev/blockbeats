@@ -7,6 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FaArrowLeft } from 'react-icons/fa';
 import GalleryHeader from '@/components/GalleryHeader';
+import { useRouter } from 'next/router';
 
 // --- All Tutorials Definition ---
 const tutorials = {
@@ -87,6 +88,7 @@ type TutorialType = keyof typeof tutorials;
 const TutorialsAndGuidesScreen = () => {
   const searchParams = useSearchParams();
 
+  const router = useRouter();
   // State to hold current tutorial type and step
   const [tutorialType, setTutorialType] = useState<TutorialType>('wallet');
   const [step, setStep] = useState<number>(0);
@@ -121,19 +123,27 @@ const TutorialsAndGuidesScreen = () => {
 
   return (
     <>
+      <GalleryHeader title="Tutorials & Guides" />       
 
-       
-      <div style={{ textAlign: 'center' }}>
-
-        <GalleryHeader title="Tutorials & Guides" />
-
+      <div className='test-tutorials-bg' style={{ textAlign: 'center' }}>
+        <br />
+        <br />
+        <br />
         <br />
         <h1 className="glitch">📖 Learn How to Use BlockBeats</h1>
         <br />
         <p>Follow your guide and get started with Web3 music creation in just a few steps.</p>
         <br />
+        <br />
+        <button onClick={() => router.push('/dashboard')} className={styles.submitBtn} style={{ animation: 'none' }}>Create New Musical NFT</button>                    
+        <br />
+      </div>
+      <br />
+      <br />
 
-        {/* Tutorial Type Selector */}
+      <div style={{ textAlign: 'center' }}>
+
+          {/* Tutorial Type Selector */}
         <div style={{
           display: 'flex',
           justifyContent: 'center',
@@ -221,7 +231,8 @@ const TutorialsAndGuidesScreen = () => {
             <div onClick={nextStep} style={{ cursor: 'pointer' }}>➡️</div>
           </div>
         </div>
-      </div>
+    </div>
+
       <br />
       <br />
 
