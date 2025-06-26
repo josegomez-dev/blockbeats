@@ -25,45 +25,46 @@ const CollectionsScreen = () => {
     }, [user]);
 
     return (
-        <>
-        <div className="gallery-screen">
+        <div className='gallery-screen'>
             <GalleryHeader title="My Creations" />
+            <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
 
-            <Image
-                src="/gallery-bg.png"
-                alt="Creations Banner"
-                width={1200}
-                height={500}
-                style={{ width: "100%", height: "auto", objectFit: "cover", borderBottom: "1px solid #fff" }}
-            />
+                <Image
+                    src="/gallery-bg.png"
+                    alt="Creations Banner"
+                    width={1200}
+                    height={500}
+            style={{ width: "100%", height: "auto", objectFit: "cover", borderBottom: "1px solid #fff", display: "block" }}
+                />
+                <br />
 
-            <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
-                <h2>BlockBeats <span className='glitch'>Creations</span></h2>                 
-                <p>Here you can view all the NFTs you have created.</p>
-                <div style={{ marginTop: '-50px', width: '100%' }}>
-                    <NeonSlider
-                        slides={userNFTS.map(nft => ({
-                            id: nft.id,
-                            songName: nft.songName || '',
-                            colorMap: nft.colorMap || [],
-                            notesPlayed: nft.notesPlayed || [],
-                            createdBy: nft.createdBy || '',
-                            createdAt: new Date().toISOString(), // or use nft.createdAt if available
-                            tempo: nft.tempo, // default tempo or use nft.tempo if available
-                            color: nft.color || '#000000', // default background color if not present
-                        }))}
-                    />
+                <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
+                    <h2>BlockBeats <span className='glitch'>Creations</span></h2>                 
+                    <p>Here you can view all the NFTs you have created.</p>
+                    <div style={{ marginTop: '-50px', width: '100%' }}>
+                        <NeonSlider
+                            slides={userNFTS.map(nft => ({
+                                id: nft.id,
+                                songName: nft.songName || '',
+                                colorMap: nft.colorMap || [],
+                                notesPlayed: nft.notesPlayed || [],
+                                createdBy: nft.createdBy || '',
+                                createdAt: new Date().toISOString(), // or use nft.createdAt if available
+                                tempo: nft.tempo, // default tempo or use nft.tempo if available
+                                color: nft.color || '#000000', // default background color if not present
+                            }))}
+                        />
+                    </div>
                 </div>
-            </div>
 
-            
-            <div className={styles.footer} style={{ textAlign: 'center', padding: '25px' }}>
-                <p>Explore the top collections created by our community.</p>
-                <p>Start creating your own unique NFTs today!</p>
-            </div>
+                
+                <div className={styles.footer} style={{ textAlign: 'center', padding: '25px' }}>
+                    <p>Explore the top collections created by our community.</p>
+                    <p>Start creating your own unique NFTs today!</p>
+                </div>
 
+            </div>
         </div>
-        </>
     );
 };
 

@@ -149,7 +149,7 @@ const NeonSlider: React.FC<NeonSliderProps> = ({ slides }) => {
                 className={styles.submitBtn}
                 style={{ backgroundColor: isPlaying && playingSlideId === slide.id ? "var(--neon-color)" : "", animation: "none" }}
               >
-                🚁 View
+                🚁 Sky View
               </button>
 
             </div>

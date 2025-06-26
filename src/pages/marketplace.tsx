@@ -86,17 +86,18 @@ const MarketplaceScreen = () => {
   };
 
   return (
-    <>
+    <div className="gallery-screen">
       <GalleryHeader title="Explore the Marketplace" />
-
+      
+    <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
       <Image
           src="/marketplace-bg.png"
           alt="Creations Banner"
           width={1200}
           height={500}
-          style={{ width: "100%", height: "auto", objectFit: "cover", borderBottom: "1px solid #fff" }}
+          style={{ width: "100%", height: "auto", objectFit: "cover", borderBottom: "1px solid #fff", maxWidth: "900px", margin: "0 auto", display: "block" }}
       />
-
+<br />
       <div className="bannerContainer" style={{ textAlign: "center", margin: "0 auto" }}>
         <h2>BlockBeats <span className='glitch'>Marketplace</span></h2>
         <p>Trade and explore unique NFTs created by our community.</p>
@@ -169,7 +170,9 @@ const MarketplaceScreen = () => {
           ))}          
         </div>
       </div>
-    </>
+    </div>
+
+    </div>
   );
 };
 

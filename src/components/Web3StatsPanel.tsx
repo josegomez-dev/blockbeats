@@ -120,7 +120,7 @@ const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, tota
 
   return (
     <div className={styles.panel} id="web3-stats-panel">
-      <h2 className={styles.title}>📊 Web3 Stats & News</h2>
+      <h2 className={styles.title}>📊 <span className="glitch">BlockBeats News</span></h2>
 
       <div className={styles.section}>
         <div className={styles.newsSlider}>
@@ -151,7 +151,9 @@ const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, tota
       <div className={styles.section}>
         <div className={styles.coinListWrapper}>
           <ul>
-            <h4>Account</h4>
+            <h4 style={{ textAlign: 'center' }}>MyAccount</h4>
+            <br />
+
             <hr />
             <li className={styles.coinsContainer}>
               <div className={styles.coinRow}>
@@ -166,7 +168,7 @@ const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, tota
           </ul>
 
           <ul className={styles.coinsContainer} style={{ width: "180px" }}>
-            <h4>Bot Stats</h4>
+            <h4 style={{ textAlign: 'center' }}>BotStats</h4>
             {CHARACTER_STATS.map(({ key, label, icon }) => {
               const value = Math.floor(botStats[key] ?? 0);
               return (
@@ -184,8 +186,9 @@ const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, tota
           </ul>
 
           <ul>
-            <h4>Tokens</h4>
+            <h4 style={{ textAlign: 'center' }}>Tokens</h4>
             <hr />
+            <br />
             {Object.entries(prices).map(([coin, { change, isPositive }]) => (
               <li className={styles.coinsContainer} key={coin}>
                 <div className={styles.coinRow}>
