@@ -67,9 +67,9 @@ const DashboardLayout = () => {
   const fetchTopCollections = async () => {
     const querySnapshot = await getDocs(collection(db, "topCollections"));
     const collections = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    setTopCollections(collections as TopCollections[]);
     if (user) {
       const userCollections = collections.filter((item: any) => item.createdBy === user.uid);
-      setTopCollections(userCollections as TopCollections[]);
       setTotalTopCollections(userCollections.length);
     }
   };
