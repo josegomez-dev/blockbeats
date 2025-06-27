@@ -97,7 +97,7 @@ const MarketplaceScreen = () => {
           <h1><span className='glitch'>Marketplace</span></h1>
           <p>Trade and explore unique NFTs created by our community.</p>
           <br />
-          <button onClick={() => window.location.href = '/createNFT'} className={styles.submitBtn} style={{ animation: 'none' }}>Create New NFT</button>
+          <button onClick={() => window.location.href = '/dashboard'} className={styles.submitBtn} style={{ animation: 'none' }}>Create New NFT</button>
         </div>
       
       </div>

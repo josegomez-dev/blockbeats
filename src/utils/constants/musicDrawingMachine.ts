@@ -149,3 +149,7 @@ export const scaleDescriptions: Record<ScaleName,string> = {
   minor:'Aeolian (natural minor)',
   pentatonic:'Major pentatonic',
 };
+
+export const midiNoteToFrequency = (note: number) => {
+  return 440 * Math.pow(2, (note - 69) / 12); // A4 = MIDI 69 = 440Hz
+};
