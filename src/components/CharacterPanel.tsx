@@ -253,7 +253,7 @@ const CharacterPanel: React.FC = () => {
       </div>
 
       <div className={styles.avatarContainer}>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginBottom: '8px' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginBottom: '8px', position: 'absolute', zIndex: 100, right: 0 }}>
           <button onClick={() => changePhase('prev')} disabled={phaseIndex === MIN_PHASE + 1} style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>
             ⬅️
           </button>
