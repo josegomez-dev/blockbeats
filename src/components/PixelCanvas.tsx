@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
-import { notes } from './../utils/constants/musicDrawingMachine'; // make sure you import notes properly from your project
+import { notes } from './../utils/constants/musicDrawingMachine';
 
 interface ColorMapItem {
   noteIndex: number;
@@ -23,9 +23,9 @@ const PixelCanvas: React.FC<PixelCanvasProps> = ({
   onCanvasClick,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const rows = notes.length;
-  const cols = 24;
-  const cellSize = 18;
+  const rows = notes.length;     // now 24
+  const cols = 24;               // time steps
+  const cellSize = 20;           // more space
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -53,8 +53,10 @@ const PixelCanvas: React.FC<PixelCanvasProps> = ({
 
     // Fill colored notes
     for (const { noteIndex, time, color } of colorMap) {
-      ctx.fillStyle = color;
-      ctx.fillRect(time * cellSize, noteIndex * cellSize, cellSize, cellSize);
+      if (noteIndex >= 0 && noteIndex < rows && time >= 0 && time < cols) {
+        ctx.fillStyle = color;
+        ctx.fillRect(time * cellSize, noteIndex * cellSize, cellSize, cellSize);
+      }
     }
 
     // Highlight playing column
@@ -62,7 +64,7 @@ const PixelCanvas: React.FC<PixelCanvasProps> = ({
       ctx.fillStyle = 'rgba(255,255,255,0.2)';
       ctx.fillRect(playingIndex * cellSize, 0, cellSize, rows * cellSize);
     }
-  }, [colorMap, playingIndex]);
+  }, [colorMap, playingIndex, cellSize]);
 
   const handleClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
@@ -81,31 +83,30 @@ const PixelCanvas: React.FC<PixelCanvasProps> = ({
     onCanvasClick(noteIndex, time);
   };
 
-return (
-  <div
-    style={{
-      maxHeight: '400px', // visible area
-      borderRadius: 8,
-    }}
-  >
-    <canvas
-      ref={canvasRef}
-      onClick={handleClick}
-      width={cols * cellSize}
-      height={'430%'} // 50% of the height
+  return (
+    <div
       style={{
-        background: color,
-        width: '100%',
-        height:  155,
-        cursor: 'pointer',
-        overflow: 'none',
-        display: 'block',
+        borderRadius: 8,
+        overflow: 'auto', // scroll if needed
+        maxHeight: rows * cellSize + 20,
       }}
-      id="pixel-canvas"
-    />
-  </div>
-);
-
+    >
+      <canvas
+        ref={canvasRef}
+        onClick={handleClick}
+        width={cols * cellSize}
+        height={rows * cellSize}
+        style={{
+          background: color,
+          width: '100%',
+          height: rows * cellSize - 287, // ensures visibility
+          cursor: 'pointer',
+          display: 'block',
+        }}
+        id="pixel-canvas"
+      />
+    </div>
+  );
 };
 
 export default PixelCanvas;

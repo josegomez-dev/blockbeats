@@ -22,10 +22,12 @@ export const useMidiInput = ({
     navigator.requestMIDIAccess({ sysex: false })
       .then((midiAccess) => {
         const handleMIDIMessage = (event: MIDIMessageEvent) => {
-          const [command, note, velocity] = event.data;
-          if (command === 144 && velocity > 0) {
-            console.log(`🎹 MIDI Note ON: ${note}, Velocity: ${velocity}`);
-            onMidiNote(note);
+          if (event.data) {
+            const [command, note, velocity] = Array.from(event.data);
+            if (command === 144 && velocity > 0) {
+              console.log(`🎹 MIDI Note ON: ${note}, Velocity: ${velocity}`);
+              onMidiNote(note);
+            }
           }
         };
 
