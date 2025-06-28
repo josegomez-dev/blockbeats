@@ -48,14 +48,14 @@ export const useMidiInput = ({
         };
 
         // Initial device bindings
-        for (const input of midiAccess.inputs.values()) {
+        Array.from(midiAccess.inputs.values()).forEach((input) => {
           bindInput(input);
-        }
+        });
 
         // Handle device connections/disconnections
         midiAccess.onstatechange = (event) => {
           const port = event.port;
-          if (port.type === 'input') {
+          if (port && port.type === 'input') {
             if (port.state === 'connected') {
               bindInput(port as MIDIInput);
             } else if (port.state === 'disconnected') {
