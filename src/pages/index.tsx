@@ -222,7 +222,7 @@ const LandingPage = () => {
           <span className="glitch">Create, share, and experience music like never before — powered by Web3.</span>
           <br />
           <br />
-          <button className={stylesMain.submitBtn} onClick={() => router.push('/login')}>🖼️ CREATE & 🎹 PLAY </button>
+          <button className={stylesMain.submitBtn} onClick={() => window.location.replace('/login')}>🖼️ CREATE & 🎹 PLAY </button>
           <Link href="https://joses-organization-73.gitbook.io/blockbeats-3.0" target="_blank" rel="noopener noreferrer">
             <button  style={{ animation: 'none', background: 'transparent', color: 'white' }} className={stylesMain.submitBtn}>📑 DOCS</button>
           </Link>
