@@ -24,6 +24,12 @@ export const UI = {
   ARROW_HINT_SIZE: 50,
 };
 
+// utils/constants/musicDrawingMachine.ts (or a new file)
+export const keyMap = [
+  'A', 'W', 'S', 'E', 'D', 'F', 'T', 'G', 'Y', 'H', 'U', 'J',
+  'K', 'O', 'L', 'P', ';', "'", 'Z', 'X', 'C', 'V', 'B', 'N'
+];
+
 // ────────────────────────────────────────────────────────────────────────────────
 // NOTE TABLE  (C3-B4 → 24 keys, 2 full octaves)
 // ────────────────────────────────────────────────────────────────────────────────

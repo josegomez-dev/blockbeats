@@ -20,7 +20,9 @@ const Layout = ({ children }: LayoutProps) => {
         <Nav />
         {authenticated && (
           <>
-            <SidebarMenu />
+            {location.pathname !== '/studio' && (
+              <SidebarMenu />
+            )}
             {/* <SidebarChatPanel /> */}
           </>
         )}

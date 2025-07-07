@@ -270,6 +270,7 @@ export default function MusicDrawingPage({ nfts = [], topCollections = [] }: Pro
               playingIndex={playIndex}
               color={frequencyStyle.color}
               onCanvasClick={handleCanvasClick}
+              customHeight
             />
             <Piano onNotePlay={handleNotePlay} />
           </div>

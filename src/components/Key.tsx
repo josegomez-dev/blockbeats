@@ -9,9 +9,10 @@ interface KeyProps {
   frequency: number;
   type: KeyType;
   onPlay: () => void;
+  keyboardKey?: string;
 }
 
-const Key: React.FC<KeyProps> = ({ note, frequency, type, onPlay }) => {
+const Key: React.FC<KeyProps> = ({ note, frequency, type, onPlay, keyboardKey }) => {
   const handlePlay = () => {
     playNote(frequency);
     onPlay();
@@ -36,7 +37,24 @@ const Key: React.FC<KeyProps> = ({ note, frequency, type, onPlay }) => {
         cursor: 'pointer',
       }}
       title={note}
-    />
+    >
+      {keyboardKey && (
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '5px',
+            right: '5px',
+            fontSize: '12px',
+            color: type === 'kblack' ? 'white' : 'black',
+            opacity: 0.4,
+            pointerEvents: 'none',
+          }}
+        >
+          {keyboardKey}
+        </div>
+      )}
+    </div>
+
   );
 };
 
