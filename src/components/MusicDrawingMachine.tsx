@@ -36,9 +36,10 @@ import type { TopCollections } from '@/types/topCollections';
 interface Props {
   nfts?: any[];
   topCollections?: TopCollections[];
+  simple?: boolean; // For simplified version without NFT slider
 }
 
-export default function MusicDrawingPage({ nfts = [], topCollections = [] }: Props) {
+export default function MusicDrawingPage({ nfts = [], topCollections = [], simple }: Props) {
   const { user } = useAuth();
 
   const [notesPlayed, setNotesPlayed] = useState<{ noteIndex: number; time: number }[]>([]);
@@ -211,7 +212,9 @@ export default function MusicDrawingPage({ nfts = [], topCollections = [] }: Pro
 
   return (
     <>
-      <NFTSliderPanel nfts={nfts} collections={topCollections} />
+      {!simple && (
+        <NFTSliderPanel nfts={nfts} collections={topCollections} />
+      )}
 
       <div style={{
         position: "fixed",
@@ -224,11 +227,13 @@ export default function MusicDrawingPage({ nfts = [], topCollections = [] }: Pro
       }} />
 
       <div>
-        <h4 style={{ textAlign: 'center' }}>
-          <span className="glitch">LAUNCHPAD</span>&nbsp;Musical&nbsp;
-          <span className="glitch">NFTs</span>
-        </h4>
+        {!simple && (
+          <h2 style={{ textAlign: 'center' }}>
+          <span className="glitch box">LAUNCHPAD</span>
+        </h2>
+        )}
 
+        <br />
           <div style={{ textAlign: 'center' }}>
             🎹 MIDI Device: <span style={{ color: midiConnected ? 'limegreen' : 'gray' }}>
               {midiConnected ? midiDeviceName : 'No device connected'}

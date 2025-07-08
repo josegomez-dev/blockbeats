@@ -99,7 +99,7 @@ const NeonSlider: React.FC<NeonSliderProps> = ({ slides }) => {
           />
         </div>
 
-        <div className={styles.slider}>
+        <div className={`${styles.slider}`}>
           {slides.map((slide, index) => (
             <div
               key={slide.id}

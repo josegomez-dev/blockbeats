@@ -15,6 +15,7 @@ import Modal from 'react-responsive-modal';
 import GalleryHeader from '@/components/GalleryHeader';
 import { NFT } from '@/types/nftTypes';
 import Image from 'next/image';
+import Footer from '@/components/Footer';
 
 const CollectionsScreen = () => {
 
@@ -157,7 +158,7 @@ const CollectionsScreen = () => {
             /> 
             <CollectionsSlider 
               id="topFanCollections"
-              title="Top Fan Collections" 
+              // title="Top Fan Collections" 
               fullWidth topCollections={topCollections.filter(item => item.createdBy !== user?.uid)} 
               onSelectCollection={handleViewCollection} 
             /> 
@@ -259,6 +260,7 @@ const CollectionsScreen = () => {
             )}
 
 
+          <Footer />
 
 
       </div>

@@ -1,0 +1,173 @@
+.storeContainer {
+  height: 100vh;
+  width: 100%;
+  background: radial-gradient(circle at center, #0f0f2a 0%, #070713 100%);
+  color: white;
+  padding: 0 2rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  margin-left: 80px;
+  width: 95%;
+}
+
+@media (max-width: 768px) {
+  .storeContainer {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.storeContent {
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
+  margin-top: 2rem;
+}
+
+/* Left Panel */
+.infoPanel {
+  width: 25%;
+  background: rgba(30, 30, 60, 0.5);
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+/* Center Avatar */
+.avatarCenter {
+    position: flex;
+    flex-direction: column;
+}
+.avatarImage {
+  max-height: 400px;
+  z-index: 2;
+}
+
+/* Right Panel */
+.upgradePanel {
+  width: 25%;
+  background: rgba(30, 30, 60, 0.5);
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.itemList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.itemCard,
+.itemCardLocked {
+  background: #202045;
+  padding: 0.5rem;
+  border-radius: 8px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.itemCard:hover {
+  background: #2a2a60;
+  transform: scale(1.03);
+}
+
+.itemCard img,
+.itemCardLocked img {
+  width: 100%;
+  border-radius: 5px;
+}
+
+@keyframes rotate {
+  0% { transform: rotate(0); }
+  100% { transform: rotate(360deg); }
+}
+
+
+
+
+
+
+
+.carouselContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.carouselArrow {
+  font-size: 1.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.carouselArrow:hover {
+  transform: scale(1.2);
+}
+
+
+.tabSelector {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+  gap: 10px;
+}
+
+.tabButton {
+  background: transparent;
+  color: white;
+  border: 2px solid #ccc;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 12px;
+  font-weight: bold;
+  transition: 0.2s ease;
+}
+
+.tabButton:hover {
+  border-color: #00f0ff;
+  color: #00f0ff;
+}
+
+.activeTab {
+  background: linear-gradient(45deg, #00f0ff, #a855f7);
+  color: #000;
+  border-color: transparent;
+}
+
+.musicMachineContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.musicMachineImage {
+  width: 150px;
+  margin-bottom: 10px;
+}
+
+.musicMachineDescription {
+  color: #ccc;
+  text-align: center;
+  max-width: 200px;
+  font-style: italic;
+}
+
+
+
+.characterPanelWrapper {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  padding-top: 10px;
+}

@@ -120,9 +120,15 @@ const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, tota
 
   return (
     <div className={styles.panel} id="web3-stats-panel">
-      <h2 className={styles.title}>📊 <span className="glitch">BlockBeats News</span></h2>
+      <h2 className="glitch box">📊  BB News</h2>
+      <br />
+      
+      <h5 className={styles.subtitle}>
+        <Image src="/logo.webp" alt="BBC Logo" width={30} height={30} /> LATEST <span className="glitch">BlockBeats</span> NEWS
+      </h5>
 
-      <div className={styles.section}>
+
+      <div className={"box"}>
         <div className={styles.newsSlider}>
           {BLOCKBEATS_NEWS[newsIndex].url ? (
             <a
@@ -143,13 +149,14 @@ const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, tota
           </div>
         </div>
       </div>
+      <br />
 
       <h5 className={styles.subtitle}>
         <Image src="/logo.webp" alt="BBC Logo" width={30} height={30} /> DATA / MARKET OVERVIEW
       </h5>
 
-      <div className={styles.section}>
-        <div className={styles.coinListWrapper}>
+      <div>
+        <div className={`${styles.coinListWrapper} box`}>
           <ul>
             <h4 style={{ textAlign: 'center' }}>MyAccount</h4>
 
@@ -173,7 +180,7 @@ const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, tota
               return (
                 <div key={key} className={stylesChar.barWrapper} style={{ fontSize: 10 }}>
                   <hr />
-                  {icon} {label}: <label>{value}%</label>
+                  {icon}: <label>{value}%</label>
                   <div className={stylesChar.barGroup}>
                     <div className={stylesChar.progressBar}>
                       <div className={stylesChar[`${key}Bar`]} style={{ width: `${value}%` }} />
@@ -187,7 +194,6 @@ const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, tota
           <ul>
             <h4 style={{ textAlign: 'center' }}>Tokens</h4>
             <hr />
-            <br />
             {Object.entries(prices).map(([coin, { change, isPositive }]) => (
               <li className={styles.coinsContainer} key={coin}>
                 <div className={styles.coinRow}>
@@ -206,9 +212,11 @@ const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, tota
         </div>
       </div>
 
+      <br />
+
       <h5 className={styles.subtitle}>📖 QUICK TUTORIALS</h5>
-      <div className={styles.section}>
-        <div className={styles.tutorialSlider}>
+      <div className={`box`}>
+        <div className={`${styles.tutorialSlider}`}>
           {BLOCKBEATS_TUTORIALS.map((item, i) => (
             <Link key={i} href={getTutorialLink(item.type, item.step)} className={styles.tutorialInner}>
               <div className={styles.tutorialItem}>{item.label}</div>

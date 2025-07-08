@@ -142,8 +142,9 @@ const MarketplaceScreen = () => {
                   overflow: "hidden",           // hides the overflow
                   textOverflow: "ellipsis",     // adds the "..." at the end
                   fontSize: "16px",             // or whatever size you want
-                  maxWidth: "100%",             // ensure it doesn't overflow container
                   marginBottom: "10px",         // space between title and image
+                  maxWidth: "150px",            // limit width to prevent overflow
+                  overflowX: "auto"
                 }}
               >
                 {src.songName}

@@ -14,6 +14,7 @@ import {
   CHARACTER_LEVELUP_DURATION,
 } from '@/utils/constants/gameSettings';
 import { CHARACTER_STATS } from '@/utils/constants/characterStats';
+import { useRouter } from 'next/router';
 
 // ────────────────────────────────────────────────────────────────────────────────
 // TYPES & REDUCER
@@ -89,6 +90,8 @@ const CharacterPanel: React.FC = () => {
   const canClaim = useRef<boolean>(true);
   const prevLevel = useRef(level);
 
+  const router = useRouter();
+
   const [hasClaimedToday, setHasClaimedToday] = useState(false);
 
   useEffect(() => {
@@ -102,11 +105,18 @@ const CharacterPanel: React.FC = () => {
   }, [user]);
 
 
-  const sfx = useRef({
-    levelUp1: new Audio('/sounds/level-up.mp3'),
-    levelUp2: new Audio('/sounds/level-up-2.mp3'),
-    coins: new Audio('/sounds/coins.mp3'),
-  });
+  const sfx = useRef<{ [key: string]: HTMLAudioElement }>({});
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      sfx.current = {
+        levelUp1: new Audio('/sounds/level-up.mp3'),
+        levelUp2: new Audio('/sounds/level-up-2.mp3'),
+        coins: new Audio('/sounds/coins.mp3'),
+      };
+    }
+  }, []);
+
 
   // Auto increase stats
   useEffect(() => {
@@ -226,14 +236,15 @@ const CharacterPanel: React.FC = () => {
     <div className={styles.panel}>
       {overlayMsg && <LevelUpOverlay message={overlayMsg} onClose={() => setOverlayMsg(null)} />}
 
-      <h2> <span className='glitch'>BEATO</span> </h2>
+      <h2> <span className='glitch box'>BEATO</span> </h2>
+      <br />
       <p className={styles.description}>
         This is your personal music bot!<br />
         <strong>Level up</strong> by completing quests and earning XP!
       </p>
 
 
-      <div className={styles.bars}>
+      <div className={`${styles.bars}`}>
         {CHARACTER_STATS.map(({ key, label, icon }) => (
           <div key={key} className={styles.barGroup}>
             <div className={styles.barLabel}>
@@ -266,6 +277,8 @@ const CharacterPanel: React.FC = () => {
           src={avatarSrc}
           alt="Character"
           className={`${styles.avatar} ${animateLevel ? styles.avatarEvolve : ''}`}
+          onClick={() => router.push('/store')}
+          style={{ cursor: 'pointer' }}
         />
         {showGif && <img src="/evolve.gif" alt="evolving" className={styles.levelUpGif} />}
         <p className={styles.status}>

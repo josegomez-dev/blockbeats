@@ -347,8 +347,8 @@ const LandingPage = () => {
             {/* <li>🌈 Smart light systems and holographic projections for immersive experiences</li> */}
           </ul>
           <div className={styles.featureActions}>
-            <button className={styles.ctaButton}>🚸 Launch EDU BlockBeats</button>
-            <button className={styles.ctaButton}>🌌 Discover Drone Shows</button>
+            {/* <button className={styles.ctaButton}>🚸 Launch Tutorials & Quick Guides</button> */}
+            <button onClick={() => location.replace('https://joses-organization-73.gitbook.io/blockbeats-3.0/edu-blockbeats-3.0')} className={styles.ctaButton}>🚸 Check EDU BlockBeats DOCS</button>
           </div>
         </div>
 

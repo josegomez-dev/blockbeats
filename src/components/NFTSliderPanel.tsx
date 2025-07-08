@@ -14,8 +14,8 @@ interface NFTSliderPanelProps {
 const NFTSliderPanel: React.FC<NFTSliderPanelProps> = ({ nfts, collections }) => (
   <div id='core-nft-slider-panel'>
     <div className={styles.bannerContainer} style={{ textAlign: "center", margin: "0 auto" }}>
-      <h2><span className='glitch'>NFTs CREATIONS</span></h2>
-
+      <h2><span className='glitch box'>NFTs CREATIONS</span></h2>
+<br />
       {nfts.length <= 0 ? (
         <div className={styles.modalContent}>
           <br />

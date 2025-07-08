@@ -31,12 +31,12 @@ const DashboardLayout = () => {
   const { user, authenticated } = useAuth();
 
   useEffect(() => {
-    const lastClaim = localStorage.getItem("lastRewardClaimDate");
-    const today = new Date().toISOString().split("T")[0];
+    // const lastClaim = localStorage.getItem("lastRewardClaimDate");
+    // const today = new Date().toISOString().split("T")[0];
 
-    if (lastClaim === today) {
-      setShowRewards(false);
-    }
+    // if (lastClaim === today) {
+    //   setShowRewards(false);
+    // }
   }, []);
 
   useEffect(() => {
@@ -110,14 +110,23 @@ const DashboardLayout = () => {
 // could you help me to add a counter that disapear in 1 min 
         
   return (
-    <>
+    <div style={{ background: 'radial-gradient(circle at center, #0f0f2a 0%, #070713 100%)', marginBottom: '-10px' }}>
       {showRewards && (
         <div style={{ textAlign: 'center', width: '100%', margin: '10px auto' }}>
           <br />
           <h1 className={`title ${styles.glitch}`}>BlockBeats </h1>
-          <button style={{ margin: '0 auto', background: 'white' }} className={styles.submitBtn} onClick={() => setShowVegasGame(true)}>
+          <button style={{ margin: '0 auto', background: 'var(--neon-color)' }} className={styles.submitBtn} onClick={() => setShowVegasGame(true)}>
             ⏳ Claim <span style={{ color: 'gold' }}>100 <span className="glitch">BBC</span></span>&nbsp;
             <span style={{ color: 'red' }}>{secondsLeft}s left</span>
+          </button>
+          <br />
+          <br />
+          <button
+            style={{ margin: '0 auto', animation: 'none', background: 'transparent' }}
+            className={styles.submitBtn}
+            onClick={() => setShowRewards(false)}
+          >
+            Close Rewards
           </button>
           <br />
           <br />
@@ -135,15 +144,6 @@ const DashboardLayout = () => {
             <br />
             <b style={{ color: 'white' }}>Tip:</b> Complete quests to earn more rewards!
           </p>
-
-          <button
-            style={{ margin: '0 auto', animation: 'none', background: 'var(--neon-color)' }}
-            className={styles.submitBtn}
-            onClick={() => setShowRewards(false)}
-          >
-            Close Rewards
-          </button>
-          <br />
           <br />
         </div>
       )}
@@ -210,7 +210,7 @@ const DashboardLayout = () => {
             }))}
           />
         )}
-    </>
+    </div>
   );
 };
 
