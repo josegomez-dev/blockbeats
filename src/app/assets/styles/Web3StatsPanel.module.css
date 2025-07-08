@@ -123,10 +123,11 @@
 }
 
 .tutorialSlider {
-  height: 4rem;
+  height: 5.6rem;
   overflow: hidden;
   position: relative;
   overflow-y: auto;
+  width: 100%;
 }
 
 .tutorialInner {
