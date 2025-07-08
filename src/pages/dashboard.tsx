@@ -31,12 +31,12 @@ const DashboardLayout = () => {
   const { user, authenticated } = useAuth();
 
   useEffect(() => {
-    // const lastClaim = localStorage.getItem("lastRewardClaimDate");
-    // const today = new Date().toISOString().split("T")[0];
+    const lastClaim = localStorage.getItem("lastRewardClaimDate");
+    const today = new Date().toISOString().split("T")[0];
 
-    // if (lastClaim === today) {
-    //   setShowRewards(false);
-    // }
+    if (lastClaim === today) {
+      setShowRewards(false);
+    }
   }, []);
 
   useEffect(() => {

@@ -120,6 +120,7 @@ const StoreScreen = () => {
             </div>
             ) : (
             <div className={styles.musicMachineContainer}>
+                <h2 className='glitch box'>Lauchpad</h2>
                 <MusicDrawingPage simple />
             </div>
             )}

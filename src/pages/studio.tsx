@@ -57,10 +57,14 @@ export default function MusicStudioPage() {
   const [isFreqModalOpen, setFreqModalOpen] = useState(false);
   const [isAIModalOpen, setAIModalOpen] = useState(false);
   const [isDrumEnabled, setIsDrumEnabled] = useState(true);
-  const [stepLength, setStepLength] = useState(24); // 🎵 Custom time steps
+  const [stepLength, setStepLength] = useState(24);
 
   const stopMelodyRef = useRef<(() => void) | null>(null);
   const stopDrumRef = useRef<(() => void) | null>(null);
+
+  const chordBuffer = useRef<number[]>([]);
+  const chordTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [nextTimeStep, setNextTimeStep] = useState(0);
 
   const [midiConnected, setMidiConnected] = useState(false);
   const [midiDeviceName, setMidiDeviceName] = useState<string | null>(null);
@@ -69,7 +73,8 @@ export default function MusicStudioPage() {
 
   useMidiInput({
     onMidiNote: (midiNote) => {
-      playNote(midiNoteToFrequency(midiNote));
+      const noteIdx = notes.findIndex(([note]) => midiNoteToFrequency(midiNote) === note[1]);
+      if (noteIdx >= 0) handleNotePlay(noteIdx);
     },
     onDeviceConnect: (deviceName) => {
       setMidiConnected(true);
@@ -88,12 +93,30 @@ export default function MusicStudioPage() {
   };
 
   const handleNotePlay = (noteIdx: number) => {
-    const nextTime = notesPlayed.length % stepLength;
-    setNotesPlayed([...notesPlayed, { noteIndex: noteIdx, time: nextTime }]);
-    setColorMap([
-      ...colorMap,
-      { noteIndex: noteIdx, time: nextTime, color: RANDOM_COLOR() },
-    ]);
+    playNote(notes[noteIdx][1]);
+    chordBuffer.current.push(noteIdx);
+
+    if (chordTimeoutRef.current) clearTimeout(chordTimeoutRef.current);
+
+    chordTimeoutRef.current = setTimeout(() => {
+      const time = nextTimeStep;
+      setNextTimeStep((prev) => (prev + 1) % stepLength);
+
+      const chordNotes = chordBuffer.current.map((noteIndex) => ({
+        noteIndex,
+        time,
+      }));
+      const chordColors = chordBuffer.current.map((noteIndex) => ({
+        noteIndex,
+        time,
+        color: RANDOM_COLOR(),
+      }));
+
+      setNotesPlayed((prev) => [...prev, ...chordNotes]);
+      setColorMap((prev) => [...prev, ...chordColors]);
+
+      chordBuffer.current = [];
+    }, 300);
   };
 
   const saveNFTData = async () => {
@@ -126,45 +149,43 @@ export default function MusicStudioPage() {
     setPlayIndex(null);
   }, []);
 
-const playback = () => {
-  if (!notesPlayed.length) return toast('Nothing to play!');
-  setIsPlayingBack(true);
+  const playback = () => {
+    if (!notesPlayed.length) return toast('Nothing to play!');
+    setIsPlayingBack(true);
 
-  const freqMap = notes.map((n) => n[1]);
+    const freqMap = notes.map((n) => n[1]);
 
-  let currentStep = 0;
-  const interval = (60 / tempo) * 1000; // ms per step
+    let currentStep = 0;
+    const interval = (60 / tempo) * 1000;
 
-  if (isDrumEnabled) {
-    stopDrumRef.current = playDrumLoop(tempo, () => {
-      stopDrumRef.current = null;
-    }, stepLength); // 👈 Pass dynamic step length!
-  }
-
-  const intervalId = setInterval(() => {
-    setPlayIndex(currentStep);
-
-    const notesAtStep = notesPlayed.filter(n => n.time === currentStep);
-    notesAtStep.forEach(({ noteIndex }) => {
-      playNote(freqMap[noteIndex]);
-    });
-
-    currentStep++;
-    if (currentStep >= stepLength) {
-      clearInterval(intervalId);
-      stopDrumRef.current?.();
-      setIsPlayingBack(false);
-      setPlayIndex(null);
+    if (isDrumEnabled) {
+      stopDrumRef.current = playDrumLoop(tempo, () => {
+        stopDrumRef.current = null;
+      }, stepLength);
     }
-  }, interval);
 
-  stopMelodyRef.current = () => {
-    clearInterval(intervalId);
-    setPlayIndex(null);
-    setIsPlayingBack(false);
+    const intervalId = setInterval(() => {
+      setPlayIndex(currentStep);
+      const notesAtStep = notesPlayed.filter(n => n.time === currentStep);
+      notesAtStep.forEach(({ noteIndex }) => {
+        playNote(freqMap[noteIndex]);
+      });
+
+      currentStep++;
+      if (currentStep >= stepLength) {
+        clearInterval(intervalId);
+        stopDrumRef.current?.();
+        setIsPlayingBack(false);
+        setPlayIndex(null);
+      }
+    }, interval);
+
+    stopMelodyRef.current = () => {
+      clearInterval(intervalId);
+      setPlayIndex(null);
+      setIsPlayingBack(false);
+    };
   };
-};
-
 
   return (
     <>
@@ -191,11 +212,10 @@ const playback = () => {
               /> 
           </div>
 
-
           <div className={styles.actions}>
             <button onClick={playback}>▶️ Play</button>
             <button onClick={stopPlayback}>⏹ Stop</button>
-            <button onClick={() => { setNotesPlayed([]); setColorMap([]); stopPlayback(); }}>🧹 Reset</button>
+            <button onClick={() => { setNotesPlayed([]); setColorMap([]); setNextTimeStep(0); stopPlayback(); }}>🧹 Reset</button>
             <button onClick={saveNFTData}>💾 Save</button>
             <button onClick={() => setFreqModalOpen(true)}>🎨 Frequency</button>
           </div>
@@ -207,14 +227,12 @@ const playback = () => {
             playingIndex={playIndex}
             color={frequencyStyle.color}
             onCanvasClick={handleCanvasClick}
-            cols={stepLength} // 👈 new prop!
+            cols={stepLength}
           />
         </main>
 
-
         <footer className={styles.bottomBar}>
           <Piano onNotePlay={handleNotePlay} />
-          {/* 🎛️ Future: Oscillator knobs, waveform selector, FX toggles */}
         </footer>
       </div>
 
@@ -225,7 +243,6 @@ const playback = () => {
           onSubmit={() => setFreqModalOpen(false)}
         />
       )}
-
     </>
   );
 }

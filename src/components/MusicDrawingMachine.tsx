@@ -36,7 +36,7 @@ import type { TopCollections } from '@/types/topCollections';
 interface Props {
   nfts?: any[];
   topCollections?: TopCollections[];
-  simple?: boolean; // For simplified version without NFT slider
+  simple?: boolean;
 }
 
 export default function MusicDrawingPage({ nfts = [], topCollections = [], simple }: Props) {
@@ -47,20 +47,22 @@ export default function MusicDrawingPage({ nfts = [], topCollections = [], simpl
   const [selectedRange, setSelectedRange] = useState('Harmonic');
   const [selectedScale, setSelectedScale] = useState<ScaleName>('minor');
   const [melodyKind, setMelodyKind] = useState<'chords' | 'solo' | 'both'>('both');
-  const [firstNote, setFirstNote] = useState(notes[0][0]); // safe starting note
+  const [firstNote, setFirstNote] = useState(notes[0][0]);
   const [tempo, setTempo] = useState(SEQUENCER.DEFAULT_TEMPO);
   const [isPlayingBack, setIsPlayingBack] = useState(false);
   const [playIndex, setPlayIndex] = useState<number | null>(null);
   const [isFreqModalOpen, setFreqModalOpen] = useState(false);
   const [isAIModalOpen, setAIModalOpen] = useState(false);
   const [isDrumEnabled, setIsDrumEnabled] = useState(true);
-
-  const stopMelodyRef = useRef<(() => void) | null>(null);
-  const stopDrumRef = useRef<(() => void) | null>(null);
-
   const [midiDeviceName, setMidiDeviceName] = useState<string | null>(null);
   const [midiConnected, setMidiConnected] = useState(false);
+  const [nextTimeStep, setNextTimeStep] = useState(0);
 
+
+  const chordBuffer = useRef<number[]>([]);
+  const chordTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const stopMelodyRef = useRef<(() => void) | null>(null);
+  const stopDrumRef = useRef<(() => void) | null>(null);
 
   const frequencyStyle = frequencyRanges.find((r) => r.name === selectedRange)!;
 
@@ -70,7 +72,6 @@ export default function MusicDrawingPage({ nfts = [], topCollections = [], simpl
     const intervals = scaleIntervals[selectedScale];
     if (baseIdx === -1 || !intervals) return melody;
 
-    // Include 2 octaves
     const scaleIdx: number[] = [];
     for (let octave = 0; octave < 2; octave++) {
       intervals.forEach((i) => {
@@ -107,12 +108,13 @@ export default function MusicDrawingPage({ nfts = [], topCollections = [], simpl
     return melody;
   }, [firstNote, selectedScale, melodyKind]);
 
-
   useMidiInput({
     onMidiNote: (midiNote) => {
-        playNote(midiNoteToFrequency(midiNote));
+      const noteIdx = notes.findIndex(([note]) => midiNoteToFrequency(midiNote) === Number(note[1]));
+      if (noteIdx >= 0) {
+        handleNotePlay(noteIdx);
+      }
     },
-
     onDeviceConnect: (deviceName) => {
       setMidiConnected(true);
       setMidiDeviceName(deviceName);
@@ -122,7 +124,6 @@ export default function MusicDrawingPage({ nfts = [], topCollections = [], simpl
       setMidiDeviceName(null);
     }
   });
-
 
   const loadRandomMelody = () => {
     const melody = generateRandomMelody();
@@ -151,9 +152,7 @@ export default function MusicDrawingPage({ nfts = [], topCollections = [], simpl
     if (!notesPlayed.length) return toast('Nothing to play!');
     setIsPlayingBack(true);
 
-    // 🛠️ Ensure it's sorted by time
     const melodyData = [...notesPlayed].sort((a, b) => a.time - b.time);
-
     const freqMap = notes.map((n) => n[1]);
 
     if (isDrumEnabled) {
@@ -169,8 +168,6 @@ export default function MusicDrawingPage({ nfts = [], topCollections = [], simpl
     });
   };
 
-
-
   const handleCanvasClick = (noteIdx: number, time: number) => {
     setNotesPlayed(TOGGLE(notesPlayed, noteIdx, time));
     setColorMap(TOGGLE_COLOR(colorMap, noteIdx, time));
@@ -178,13 +175,32 @@ export default function MusicDrawingPage({ nfts = [], topCollections = [], simpl
   };
 
   const handleNotePlay = (noteIdx: number) => {
-    const nextTime = notesPlayed.length % SEQUENCER.STEPS;
-    setNotesPlayed([...notesPlayed, { noteIndex: noteIdx, time: nextTime }]);
-    setColorMap([
-      ...colorMap,
-      { noteIndex: noteIdx, time: nextTime, color: RANDOM_COLOR() },
-    ]);
+    triggerNote(noteIdx);
+    chordBuffer.current.push(noteIdx);
+
+    if (chordTimeoutRef.current) clearTimeout(chordTimeoutRef.current);
+
+    chordTimeoutRef.current = setTimeout(() => {
+      const time = nextTimeStep;
+      setNextTimeStep((prev) => (prev + 1) % SEQUENCER.STEPS);
+
+      const chordNotes = chordBuffer.current.map((noteIndex) => ({
+        noteIndex,
+        time,
+      }));
+      const chordColors = chordBuffer.current.map((noteIndex) => ({
+        noteIndex,
+        time,
+        color: RANDOM_COLOR(),
+      }));
+
+      setNotesPlayed((prev) => [...prev, ...chordNotes]);
+      setColorMap((prev) => [...prev, ...chordColors]);
+
+      chordBuffer.current = [];
+    }, 300);
   };
+
 
   const saveNFTData = async () => {
     const songName = prompt('📝 Name your NFT:');
@@ -212,9 +228,7 @@ export default function MusicDrawingPage({ nfts = [], topCollections = [], simpl
 
   return (
     <>
-      {!simple && (
-        <NFTSliderPanel nfts={nfts} collections={topCollections} />
-      )}
+      {!simple && <NFTSliderPanel nfts={nfts} collections={topCollections} />}
 
       <div style={{
         position: "fixed",
@@ -229,17 +243,18 @@ export default function MusicDrawingPage({ nfts = [], topCollections = [], simpl
       <div>
         {!simple && (
           <h2 style={{ textAlign: 'center' }}>
-          <span className="glitch box">LAUNCHPAD</span>
-        </h2>
+            <span className="glitch box">LAUNCHPAD</span>
+          </h2>
         )}
 
         <br />
-          <div style={{ textAlign: 'center' }}>
-            🎹 MIDI Device: <span style={{ color: midiConnected ? 'limegreen' : 'gray' }}>
-              {midiConnected ? midiDeviceName : 'No device connected'}
-            </span>
-          </div>
-        <section className={styles.musicBox} style={{ background: frequencyStyle.color }}>
+        <div style={{ textAlign: 'center' }}>
+          🎹 MIDI Device: <span style={{ color: midiConnected ? 'limegreen' : 'gray' }}>
+            {midiConnected ? midiDeviceName : 'No device connected'}
+          </span>
+        </div>
+
+        <section className={styles.musicBox}>
           <ControlsPanel
             isPlayingBack={isPlayingBack}
             tempo={tempo}
@@ -261,8 +276,7 @@ export default function MusicDrawingPage({ nfts = [], topCollections = [], simpl
             setIsDrumEnabled={setIsDrumEnabled}
           />
 
-          <div
-            className={isPlayingBack ? "disabled" : undefined}
+          <div className={isPlayingBack ? "disabled" : undefined}
             style={{
               position: "relative",
               backgroundColor: "var(--black-color)",
@@ -279,7 +293,6 @@ export default function MusicDrawingPage({ nfts = [], topCollections = [], simpl
             />
             <Piano onNotePlay={handleNotePlay} />
           </div>
-
         </section>
       </div>
 

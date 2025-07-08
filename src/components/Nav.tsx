@@ -229,49 +229,39 @@ export default function Nav() {
                   <hr />
                   <Link href="/dashboard">
                     <div className={styles.dropdownItem}>
-                      <MdDashboard className={styles.icon} /> Dashboard
+                      <MdDashboard className={styles.icon} /> DASHBOARD
                     </div>
                   </Link>
                   <Link href="/creations">
                     <div className={styles.dropdownItem}>
-                      <RiGalleryLine className={styles.icon} /> My Gallery
+                      <RiGalleryLine className={styles.icon} /> MY GALLERY
                     </div>
                   </Link>
                   <Link href="/collections">
                     <div className={styles.dropdownItem}>
-                      <BiCollection className={styles.icon} /> Top Collections
+                      <BiCollection className={styles.icon} /> TOP COLLECTIONS
                     </div>
                   </Link>
                   <Link href="/marketplace">
                     <div className={styles.dropdownItem}>
-                      <FaStore className={styles.icon} /> Marketplace
+                      <FaStore className={styles.icon} /> MARKETPLACE
+                    </div>
+                  </Link>
+                  <Link href="/store">
+                    <div className={styles.dropdownItem}>
+                      <FaStore className={styles.icon} /> UPGRADES STORE
+                    </div>
+                  </Link>
+                  <Link href="/studio">
+                    <div className={styles.dropdownItem}>
+                      <FaStore className={styles.icon} /> MUSIC STUDIO
                     </div>
                   </Link>
                   <Link href="/tutorials">
                     <div className={styles.dropdownItem}>
-                      <FaChalkboardTeacher className={styles.icon} /> Quick Tutorials
+                      <FaChalkboardTeacher className={styles.icon} /> QUICK TUTORIALS
                     </div>
                   </Link>
-                  {/* <Link href="/minigames">
-                    <div className={styles.dropdownItem}>
-                      <FaStoreAlt className={styles.icon} /> MiniGames HUB
-                    </div>
-                  </Link> */}
-                  {/* <Link href="/minigames">
-                    <div className={styles.dropdownItem}>
-                      <GiGamepad className={styles.icon} /> Upgrades
-                    </div>
-                  </Link>
-                  <Link href="/analytics">
-                    <div className={styles.dropdownItem}>
-                      <FaCog className={styles.icon} /> Analytics
-                    </div>
-                  </Link>
-                  <Link href="/settings">
-                    <div className={styles.dropdownItem}>
-                      <FaCog className={styles.icon} /> Settings
-                    </div>
-                  </Link> */}
                   <hr />
                   <div className={`${styles.logout}`} style={{ display: 'flex', justifyContent: 'center', padding: 25, cursor: 'pointer' }} onClick={() => {
                     // alert to confirm logout

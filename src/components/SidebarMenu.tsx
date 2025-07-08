@@ -29,6 +29,8 @@ const SidebarMenu = () => {
     { icon: <RiGalleryLine />, label: 'My Gallery', href: '/creations' },
     { icon: <BiCollection />, label: 'Top Collections', href: '/collections' },
     { icon: <FaStore />, label: 'Marketplace', href: '/marketplace' },
+    { icon: <FaStore />, label: 'Store', href: '/store' },
+    { icon: <FaStore />, label: 'Music Studio', href: '/studio' },
     { icon: <FaChalkboardTeacher />, label: 'Quick Tutorials', href: '/tutorials' },
   ];
 

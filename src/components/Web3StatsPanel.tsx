@@ -152,7 +152,7 @@ const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, tota
       <br />
 
       <h5 className={styles.subtitle}>
-        <Image src="/logo.webp" alt="BBC Logo" width={30} height={30} /> DATA / MARKET OVERVIEW
+        <Image src="/logo.webp" alt="BBC Logo" width={30} height={30} /> <span className="glitch">DATA / MARKET</span> OVERVIEW
       </h5>
 
       <div>
@@ -214,7 +214,7 @@ const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, tota
 
       <br />
 
-      <h5 className={styles.subtitle}>📖 QUICK TUTORIALS</h5>
+      <h5 className={styles.subtitle}>📖 QUICK <span className="glitch">TUTORIALS</span></h5>
       <div className={`box`}>
         <div className={`${styles.tutorialSlider}`}>
           {BLOCKBEATS_TUTORIALS.map((item, i) => (
