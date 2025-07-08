@@ -73,7 +73,7 @@ export default function MusicStudioPage() {
 
   useMidiInput({
     onMidiNote: (midiNote) => {
-      const noteIdx = notes.findIndex(([note]) => midiNoteToFrequency(midiNote) === note[1]);
+      const noteIdx = notes.findIndex(([note]) => midiNoteToFrequency(midiNote) === Number(note[1]));
       if (noteIdx >= 0) handleNotePlay(noteIdx);
     },
     onDeviceConnect: (deviceName) => {
