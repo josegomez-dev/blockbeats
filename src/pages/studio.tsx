@@ -57,7 +57,7 @@ export default function MusicStudioPage() {
   const [isFreqModalOpen, setFreqModalOpen] = useState(false);
   const [isAIModalOpen, setAIModalOpen] = useState(false);
   const [isDrumEnabled, setIsDrumEnabled] = useState(true);
-  const [stepLength, setStepLength] = useState(24);
+  const [stepLength, setStepLength] = useState(80);
 
   const stopMelodyRef = useRef<(() => void) | null>(null);
   const stopDrumRef = useRef<(() => void) | null>(null);

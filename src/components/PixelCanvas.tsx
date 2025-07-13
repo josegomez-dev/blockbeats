@@ -96,17 +96,18 @@ const PixelCanvas: React.FC<PixelCanvasProps> = ({
     if (!canvas) return;
 
     const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.width / rect.width;
-    const scaleY = canvas.height / rect.height;
+    const dpr = window.devicePixelRatio || 1;
 
-    const x = (e.clientX - rect.left) * scaleX;
-    const y = (e.clientY - rect.top) * scaleY;
+    // Get mouse position adjusted to device pixel ratio
+    const x = (e.clientX - rect.left) * dpr;
+    const y = (e.clientY - rect.top) * dpr;
 
-    const time = Math.floor(x / (cellSize * scaleX));
-    const noteIndex = Math.floor(y / (cellSize * scaleY));
+    const time = Math.floor(x / (cellSize * dpr));
+    const noteIndex = Math.floor(y / (cellSize * dpr));
 
     onCanvasClick(noteIndex, time);
   };
+
 
   return (
     <div
@@ -120,7 +121,7 @@ const PixelCanvas: React.FC<PixelCanvasProps> = ({
     >
       <canvas
         ref={canvasRef}
-        onClick={handleClick}
+        onClick={customHeight ? undefined : handleClick}
         style={{
           background: color,
           width: cols * cellSize,

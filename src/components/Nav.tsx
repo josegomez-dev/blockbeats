@@ -284,7 +284,7 @@ export default function Nav() {
               {notifOpen && (
                 <div className={styles.notificationDropdown}>
                   {notifications.length === 0 ? (
-                    <div className={styles.dropdownItem}>No notifications</div>
+                    <div style={{ padding: 35 }}>No notifications</div>
                   ) : (
                     notifications.map((n, index) => (
                      <>

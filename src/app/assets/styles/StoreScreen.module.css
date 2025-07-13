@@ -65,7 +65,9 @@
 
 .itemCard,
 .itemCardLocked {
-  background: #202045;
+        backdrop-filter: blur(50px);
+    background-color: rgba(0, 0, 0, 0.1); /* Light transparent */    
+
   padding: 0.5rem;
   border-radius: 8px;
   text-align: center;
