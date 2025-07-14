@@ -176,8 +176,7 @@ export default function MusicDrawingPage({ nfts = [], topCollections = [], simpl
     setColorMap(updatedColors);
     triggerNote(noteIdx);
 
-    // ✅ Auto-advance to the next step
-    setNextTimeStep(noteIdx + 1);
+    setNextTimeStep(time + 1);
   };
 
   const handleNotePlay = (noteIdx: number) => {
