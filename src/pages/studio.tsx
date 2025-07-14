@@ -57,7 +57,7 @@ export default function MusicStudioPage() {
   const [isFreqModalOpen, setFreqModalOpen] = useState(false);
   const [isAIModalOpen, setAIModalOpen] = useState(false);
   const [isDrumEnabled, setIsDrumEnabled] = useState(true);
-  const [stepLength, setStepLength] = useState(80);
+  const [stepLength, setStepLength] = useState(100);
 
   const stopMelodyRef = useRef<(() => void) | null>(null);
   const stopDrumRef = useRef<(() => void) | null>(null);
@@ -87,9 +87,14 @@ export default function MusicStudioPage() {
   });
 
   const handleCanvasClick = (noteIdx: number, time: number) => {
-    setNotesPlayed(TOGGLE(notesPlayed, noteIdx, time));
-    setColorMap(TOGGLE_COLOR(colorMap, noteIdx, time));
+    const updatedNotes = TOGGLE(notesPlayed, noteIdx, time);
+    const updatedColors = TOGGLE_COLOR(colorMap, noteIdx, time);
+
+    setNotesPlayed(updatedNotes);
+    setColorMap(updatedColors);
     playNote(notes[noteIdx][1]);
+
+    setNextTimeStep(time + 1);
   };
 
   const handleNotePlay = (noteIdx: number) => {
@@ -187,6 +192,14 @@ export default function MusicStudioPage() {
     };
   };
 
+  const handleReset = () => {
+    setNotesPlayed([]);
+    setColorMap([]);
+    setPlayIndex(null);
+    stopPlayback();
+    setNextTimeStep(0);
+  }
+
   return (
     <>
       <div className={styles.fullScreenStudio}>
@@ -215,7 +228,7 @@ export default function MusicStudioPage() {
           <div className={styles.actions}>
             <button onClick={playback}>▶️ Play</button>
             <button onClick={stopPlayback}>⏹ Stop</button>
-            <button onClick={() => { setNotesPlayed([]); setColorMap([]); setNextTimeStep(0); stopPlayback(); }}>🧹 Reset</button>
+            <button onClick={handleReset}>🧹 Reset</button>
             <button onClick={saveNFTData}>💾 Save</button>
             <button onClick={() => setFreqModalOpen(true)}>🎨 Frequency</button>
           </div>
@@ -228,6 +241,7 @@ export default function MusicStudioPage() {
             color={frequencyStyle.color}
             onCanvasClick={handleCanvasClick}
             cols={stepLength}
+            fullscreen={true}
           />
         </main>
 

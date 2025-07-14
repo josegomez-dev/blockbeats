@@ -47,6 +47,8 @@ const NFTSliderPanel: React.FC<NFTSliderPanelProps> = ({ nfts, collections }) =>
         </>
       )}
     </div>
+    <hr />
+    <br />
     <CollectionsSlider id='collectionSliderDashboard' topCollections={collections} title="Top Fan Collections" />
   </div>
 );

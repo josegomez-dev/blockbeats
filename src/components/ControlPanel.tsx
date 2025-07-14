@@ -48,17 +48,19 @@ const ControlsPanel: React.FC<Props> = ({
         </button>
 
         <button onClick={onIAGeneration} className={styles.launchpadBtn}>
-          🤖 AI Generate
+          🤖 Generate Progression
         </button>
-        <button onClick={openIAModal} className='glitch' style={{ position: 'absolute', fontSize: 12, right: '10px', top: 14, background: 'transparent', border: "none", cursor: 'pointer' }}>More...</button>
+        <button onClick={openIAModal} className='glitch' style={{ position: 'absolute', fontSize: 12, right: '10px', top: 14, background: 'transparent', border: "none", cursor: 'pointer' }}>
+          ...
+        </button>
       </div>
-      
-      <div style={{ background: "#111", padding: 10, margin: "0", position: "relative" }}>
+      <hr />
+      {/* <div style={{ background: "#111", padding: 10, margin: "0", position: "relative" }}>
         <span style={{ padding: "4px 8px", background: frequencyStyle.color, color: "#000", borderRadius: 4 }}>{frequencyStyle.name}</span>
         <button onClick={onOpenModal} style={{ marginLeft: 25, animation: 'none', background: 'transparent', border: 'none', cursor: 'pointer' }}>🎚 Edit Range</button>
-      </div>
+      </div> */}
 
-      <div style={{ textAlign: "center", marginBottom: '-15px', marginTop: '10px' }}>
+      <div style={{ textAlign: "center", marginBottom: '-15px' }}>
         {!isPlayingBack ? (
           <button onClick={onPlay} className={styles.launchpadBtn}>▶️ Play</button>
         ) : (
@@ -72,7 +74,7 @@ const ControlsPanel: React.FC<Props> = ({
 
       <br />
 
-      <div style={{ textAlign: "center", color: "var(--neon-color)", fontSize: 12 }}>
+      {/* <div style={{ textAlign: "center", color: "var(--neon-color)", fontSize: 12 }}>
         🎵 Tempo: {tempo} BPM
         <input
           type="range"
@@ -82,7 +84,7 @@ const ControlsPanel: React.FC<Props> = ({
           onChange={(e) => setTempo(+e.target.value)}
           style={{ width: "80%", cursor: "pointer", marginBottom: 10 }}
         />
-      </div>
+      </div> */}
 
     </div>
   )

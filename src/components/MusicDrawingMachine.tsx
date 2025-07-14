@@ -57,8 +57,8 @@ export default function MusicDrawingPage({ nfts = [], topCollections = [], simpl
   const [midiDeviceName, setMidiDeviceName] = useState<string | null>(null);
   const [midiConnected, setMidiConnected] = useState(false);
   const [nextTimeStep, setNextTimeStep] = useState(0);
-
-
+  
+  const lastTouchRef = useRef<number>(0);
   const chordBuffer = useRef<number[]>([]);
   const chordTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const stopMelodyRef = useRef<(() => void) | null>(null);
@@ -169,12 +169,22 @@ export default function MusicDrawingPage({ nfts = [], topCollections = [], simpl
   };
 
   const handleCanvasClick = (noteIdx: number, time: number) => {
-    setNotesPlayed(TOGGLE(notesPlayed, noteIdx, time));
-    setColorMap(TOGGLE_COLOR(colorMap, noteIdx, time));
+    const updatedNotes = TOGGLE(notesPlayed, noteIdx, time);
+    const updatedColors = TOGGLE_COLOR(colorMap, noteIdx, time);
+
+    setNotesPlayed(updatedNotes);
+    setColorMap(updatedColors);
     triggerNote(noteIdx);
+
+    // ✅ Auto-advance to the next step
+    setNextTimeStep(noteIdx + 1);
   };
 
   const handleNotePlay = (noteIdx: number) => {
+    const now = Date.now();
+    if (now - lastTouchRef.current < 200) return; // skip duplicates
+    lastTouchRef.current = now;
+
     triggerNote(noteIdx);
     chordBuffer.current.push(noteIdx);
 
@@ -226,6 +236,14 @@ export default function MusicDrawingPage({ nfts = [], topCollections = [], simpl
     }
   };
 
+  const handleReset = () => {
+      setNotesPlayed([]);
+      setColorMap([]);
+      setPlayIndex(null);
+      stopPlayback();
+      setNextTimeStep(0);
+  }
+
   return (
     <>
       {!simple && <NFTSliderPanel nfts={nfts} collections={topCollections} />}
@@ -248,7 +266,7 @@ export default function MusicDrawingPage({ nfts = [], topCollections = [], simpl
         )}
 
         <br />
-        <div style={{ textAlign: 'center' }}>
+        <div style={{ textAlign: 'center', fontSize: '12px' }}>
           🎹 MIDI Device: <span style={{ color: midiConnected ? 'limegreen' : 'gray' }}>
             {midiConnected ? midiDeviceName : 'No device connected'}
           </span>
@@ -261,12 +279,7 @@ export default function MusicDrawingPage({ nfts = [], topCollections = [], simpl
             setTempo={setTempo}
             onPlay={playback}
             onStop={stopPlayback}
-            onReset={() => {
-              setNotesPlayed([]);
-              setColorMap([]);
-              setPlayIndex(null);
-              stopPlayback();
-            }}
+            onReset={handleReset}
             onSave={saveNFTData}
             onOpenModal={() => setFreqModalOpen(true)}
             frequencyStyle={frequencyStyle}
@@ -289,7 +302,6 @@ export default function MusicDrawingPage({ nfts = [], topCollections = [], simpl
               playingIndex={playIndex}
               color={frequencyStyle.color}
               onCanvasClick={handleCanvasClick}
-              customHeight
             />
             <Piano onNotePlay={handleNotePlay} />
           </div>

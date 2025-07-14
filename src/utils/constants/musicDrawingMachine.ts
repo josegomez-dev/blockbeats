@@ -13,7 +13,7 @@ export const AUDIO = {
 /** Sequencer/grid settings (24 rows × 48 columns) */
 export const SEQUENCER = {
   STEPS: 24,                 // ← now 24 horizontal time steps
-  DEFAULT_TEMPO: 299,
+  DEFAULT_TEMPO: 240,
   DRUM_PATTERN_REPEAT: 48,
 };
 

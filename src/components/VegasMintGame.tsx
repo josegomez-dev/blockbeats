@@ -102,7 +102,9 @@ const VegasMintGame: React.FC<VegasMintGameProps> = ({ onClose, nfts }) => {
   }, [cooldown, canSpin, spinning, gameOver]);
 
   const claimRewards = async () => {
+    new Audio('/sounds/coins.mp3').play();
     await updateCoinsInFirestore(100, `100 Coins Earned!`);
+    onClose();
   };
 
   return (

@@ -15,6 +15,7 @@ const CollectionsSlider: React.FC<CollectionProps> = ({ fullWidth, title, topCol
   return (
     <div id={id} style={{ textAlign: 'left', width: customSize ? '450px' : '100%', marginLeft: customSize ? '-15px' : '' }}>
       {title && <h3 className='glitch box' style={{ marginTop: '10px' }}>{title}</h3>}
+      <br />
       {customSize && (<hr/>)}
       <div className={`${styles.sliderWrapper}`} style={{ width: fullWidth ? '100%' : 'auto' }}>
         <div className={styles.sliderTrack}>
