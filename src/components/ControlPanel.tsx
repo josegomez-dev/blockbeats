@@ -74,7 +74,7 @@ const ControlsPanel: React.FC<Props> = ({
 
       <br />
 
-      {/* <div style={{ textAlign: "center", color: "var(--neon-color)", fontSize: 12 }}>
+      <div style={{ textAlign: "center", color: "var(--neon-color)", fontSize: 12 }}>
         🎵 Tempo: {tempo} BPM
         <input
           type="range"
@@ -84,7 +84,7 @@ const ControlsPanel: React.FC<Props> = ({
           onChange={(e) => setTempo(+e.target.value)}
           style={{ width: "80%", cursor: "pointer", marginBottom: 10 }}
         />
-      </div> */}
+      </div>
 
     </div>
   )

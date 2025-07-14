@@ -747,7 +747,7 @@
   min-width: 300px;
   position: relative;
   text-align: center;
-  height: 512px;
+  height: auto;
   margin: 0 auto;
 }
 

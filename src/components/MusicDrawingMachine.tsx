@@ -44,7 +44,7 @@ export default function MusicDrawingPage({ nfts = [], topCollections = [], simpl
 
   const [notesPlayed, setNotesPlayed] = useState<{ noteIndex: number; time: number }[]>([]);
   const [colorMap, setColorMap] = useState<{ noteIndex: number; time: number; color: string }[]>([]);
-  const [selectedRange, setSelectedRange] = useState('Harmonic');
+  const [selectedRange, setSelectedRange] = useState('Mono');
   const [selectedScale, setSelectedScale] = useState<ScaleName>('minor');
   const [melodyKind, setMelodyKind] = useState<'chords' | 'solo' | 'both'>('both');
   const [firstNote, setFirstNote] = useState(notes[0][0]);
