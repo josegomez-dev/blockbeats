@@ -129,6 +129,8 @@ const TutorialsAndGuidesScreen = () => {
         <br />
         <br />
         <br />
+        <br />
+        <br />
         <h1><span className='glitch'>How to Use BlockBeats</span></h1>
         <p>Follow your guide and get started with Web3 music creation in just a few steps.</p>
         <br />

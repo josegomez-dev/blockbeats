@@ -131,10 +131,6 @@
   top: 50px;
   right: 0;
   width: 250px;
-  
- 
-  color: var(--white-color) !important;
-  
   box-shadow: 0 0 5px white;
   border: 1px solid gray;
   border-radius: 5px;
@@ -227,12 +223,6 @@
   border-radius: 5px;
 }
 
-.unread {
-  font-weight: bold;
-  background-color: #f0f8ff;
-  opacity: 0.8;
-  color: red !important;
-}
 .clearButton {
   background: none;
   border: none;

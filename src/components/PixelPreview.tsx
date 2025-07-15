@@ -1,4 +1,3 @@
-// components/PixelPreview.tsx
 import React from "react";
 
 type Pixel = {
@@ -9,45 +8,66 @@ type Pixel = {
 
 interface PixelPreviewProps {
   colorMap: Pixel[];
-  notesCount: number;
   size?: number;
   style?: React.CSSProperties;
   backgroundColor?: string;
 }
 
-const PixelPreview: React.FC<PixelPreviewProps> = ({ colorMap, notesCount, size = 100, style, backgroundColor }) => {
+const PixelPreview: React.FC<PixelPreviewProps> = ({
+  colorMap,
+  size = 100,
+  style,
+  backgroundColor,
+}) => {
+  if (!colorMap || colorMap.length === 0) return null;
+
+  const maxTime = Math.max(...colorMap.map(p => p.time));
+  const minNote = Math.min(...colorMap.map(p => p.noteIndex));
+  const maxNote = Math.max(...colorMap.map(p => p.noteIndex));
+  const noteRange = maxNote - minNote + 1;
+
+  const rows = noteRange <= 12 ? 12 : 24;
+  const cols = maxTime + 1;
+  const scaleX = cols > rows ? rows / cols : 1;
+
   return (
     <div
       style={{
         width: `${size}px`,
         height: `${size}px`,
         margin: "0 auto",
-        backgroundColor: backgroundColor || "black",
-        border: "1px solid gray",
-        borderRadius: "10px",
-        boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
-        gridGap: "1px",
-        gridAutoFlow: "column",
-        gridAutoColumns: "1fr",
-        gridAutoRows: "1fr",
-        display: "grid",
-        gridTemplateRows: `repeat(12, 1fr)`,
+        backgroundColor: backgroundColor || "#000",
+        border: "1px solid #333",
+        borderRadius: "12px",
+        boxShadow: "0 0 12px rgba(0, 255, 255, 0.3)",
         overflow: "hidden",
+        position: "relative",
         ...style,
       }}
     >
-      {colorMap && colorMap.map(({ noteIndex, time, color }, i) => (
-        <div
-          key={i}
-          style={{
-            gridColumn: time + 1,
-            gridRow: noteIndex + 1,
-            backgroundColor: color,
-            width: "100%",
-            height: "100%",
-          }}
-        />
-      ))}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: `repeat(${cols}, 1fr)`,
+          gridTemplateRows: `repeat(${rows}, 1fr)`,
+          transform: `scaleX(${scaleX})`,
+          transformOrigin: "left center",
+          width: "100%",
+          height: "100%",
+        }}
+      >
+        {colorMap.map(({ noteIndex, time, color }, i) => (
+          <div
+            key={i}
+            className="pixel-note"
+            style={{
+              gridColumn: time + 1,
+              gridRow: noteIndex - minNote + 1,
+              backgroundColor: color,
+            }}
+          />
+        ))}
+      </div>
     </div>
   );
 };

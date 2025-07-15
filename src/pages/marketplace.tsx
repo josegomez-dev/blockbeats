@@ -8,7 +8,6 @@ import { Modal } from "react-responsive-modal";
 import SignInUnautorizedModal from '@/components/SignInUnautorizedModal';
 import GalleryHeader from '@/components/GalleryHeader';
 import { NFT } from '@/types/nftTypes';
-import Image from 'next/image';
 import { playMelody, playDrumLoop } from "@/utils/helpers/drumHelper";
 import { notes } from "@/utils/constants/musicDrawingMachine"; // for frequency mapping
 
@@ -81,6 +80,11 @@ const MarketplaceScreen = () => {
   };
   
   const handleCloseModal = () => {
+    stopMelodyRef?.();
+    stopDrumRef?.();
+    setStopMelodyRef(null);
+    setStopDrumRef(null);
+    setIsPlaying(false);
     setShowViewModal(false);
     setSelectedNFT(null);
   };
@@ -90,6 +94,8 @@ const MarketplaceScreen = () => {
       <GalleryHeader title="Explore the Marketplace" />
         
       <div className='test-marketplace-bg'>
+        <br />
+        <br />
         <br />
         <br />
         <br />
@@ -115,7 +121,6 @@ const MarketplaceScreen = () => {
               <h3>{selectedNFT.songName || 'Untitled'}</h3>
               <PixelPreview
                 colorMap={selectedNFT.colorMap || []}
-                notesCount={selectedNFT.notesPlayed ? selectedNFT.notesPlayed.length : 0}
                 size={200}
                 backgroundColor={selectedNFT.color || '#000'}
               />
@@ -152,11 +157,9 @@ const MarketplaceScreen = () => {
               <div className="gallery-item-overlay">
                   <PixelPreview
                     colorMap={src.colorMap || []}
-                    notesCount={src.notesPlayed ? src.notesPlayed.length : 0}
                     size={100}
                     backgroundColor={src.color || '#000'}
                   />
-                  {/* <button className={styles.submitBtn} style={{ animation: 'none' }}>View</button> */}
                   <button
                     className={styles.submitBtn}
                     style={{ marginBottom: '10px', animation: 'none', backgroundColor: isPlaying && src.songName === selectedNFT?.songName ? "var(--neon-color)" : "transparent", color: isPlaying && src.songName === selectedNFT?.songName ? "white" : "var(--neon-color)" }}

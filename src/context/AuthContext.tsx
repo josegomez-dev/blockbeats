@@ -17,7 +17,7 @@ import { EMPTY_USER, User } from "@/types/userTypes";
 import emailjs from 'emailjs-com';
 import toast from 'react-hot-toast';
 import { v4 as uuidv4 } from 'uuid';
-import { NOTIFICATIONS } from "@/constants/notifications";
+import { NOTIFICATIONS } from "@/utils/constants/notifications";
 import router from "next/router";
 
 

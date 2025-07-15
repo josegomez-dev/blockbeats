@@ -211,20 +211,6 @@ a {
   100% { transform: rotate(360deg); }
 }
 
-.text-error {
-  color: red;
-}
-#closeButton {
-  color: red !important;
-  background-color: red !important;
-}
-.disabled {
-  pointer-events: none;
-  opacity: 0.5 !important;
-  animation: none !important;
-}
-
-
 #root {
   width: 100px;
   height: 100px;
@@ -274,153 +260,6 @@ p {
   border-radius: 5px;
   white-space: nowrap;
 }
-
-
-
-
-.wrap {
-  position: relative;
-}
-
-.wallet {
-  position: relative;
-  width: 80px;
-  height: 80px;
-}
-
-.icon {
-  z-index: 2;
-  position: relative;
-}
-
-.coin {
-  width: 20px;
-  height: 20px;
-  background: gold;
-  border-radius: 50%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 10px;
-}
-
-.coin--animated {
-  animation: moveCoin 0.6s forwards;
-  animation-delay: var(--coin-delay);
-}
-
-@keyframes moveCoin {
-  0% {
-    transform: translate(-50%, -50%) scale(0.8);
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    transform: translate(var(--coin-to-x), var(--coin-to-y)) scale(1);
-    opacity: 0;
-  }
-}
-
-
-.wrap {
-  display: flex;
-  justify-content: center;
-  margin-top: 25px;
-}
-
-.wallet {
-  width: 64px;
-  height: 64px;
-  position: relative;
-}
-
-.icon {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  color: #fff;
-  position: relative;
-  z-index: 101;
-}
-
-.coin {
-  position: absolute;
-  top: var(--coin-from-x, 24px);
-  left: var(--coin-from-y, 24px);
-  z-index: 100;
-  opacity: 0;
-}
-
-.coin::after {
-  content: "$";
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 12px;
-  height: 12px;
-  font-size: 10px;
-  color: rgb(237, 196, 107);
-  background: rgb(227, 162, 23);
-  border: 2px solid rgb(237, 196, 107);
-  border-radius: 50%;
-  opacity: 0;
-}
-
-.coin--animated,
-.coin--animated::after {
-  animation-delay: var(--coin-delay, 0s);
-  animation-duration: var(--coin-duration, 1.5s);
-  animation-direction: normal;
-  animation-fill-mode: both;
-  animation-play-state: running;
-  animation-iteration-count: infinite;
-}
-
-.coin--animated {
-  animation-name: coin-x-axis;
-  animation-timing-function: ease-in;
-}
-
-.coin--animated::after {
-  animation-name: coin-y-axis-and-flip;
-  animation-timing-function: ease-out;
-}
-
-@keyframes coin-x-axis {
-  30% {
-    opacity: 1;
-  }
-  70% {
-    opacity: 1;
-  }
-  to {
-    left: calc(var(--coin-to-x) * 1.5);
-  }
-}
-
-@keyframes coin-y-axis-and-flip {
-  30% {
-    opacity: 1;
-  }
-  70% {
-    opacity: 1;
-  }
-  to {
-    transform: translateY(calc(var(--coin-to-y) * 1.5)) rotate3d(1, 1, 1, 1080deg);
-  }
-}
-
-
-
-
-
-
 
 
 @property --angle {
@@ -493,8 +332,6 @@ p {
   transform: scale(1.05);
 }
 
-
-
 .floating-button {
   position: fixed;
   bottom: 20px;
@@ -508,7 +345,7 @@ p {
   height: 60px;
   font-size: 24px;
   cursor: pointer;
-  z-index: 1000;
+  z-index: 100;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   transition: background 0.3s ease;
   animation: pulseChat 2s infinite;
@@ -937,8 +774,6 @@ p {
   100% { text-shadow: 0 0 white; }
 }
 
-
-
 .test-bg {
   background-image: url('/collections-bg.png');
   background-size: cover;
@@ -976,6 +811,20 @@ p {
   box-shadow: inset 0 -1px 0 white;
 }
 
+.avatar-launchpad {
+  transition: transform 0.4s ease;
+
+  display: block;
+  margin: 0 auto;
+  margin-top: 10px;
+  width: 100%;
+  height: auto;
+  max-width: 650px;
+}
+
+.avatar-launchpad:hover {
+  transform: scale(1.05);
+}
 
 .box {
   display: flex;
@@ -1005,3 +854,82 @@ p {
   initial-value: 0deg;
   inherits: false;
 }
+
+
+.pixel-note {
+  border-radius: 3px;
+  width: 100%;
+  height: 100%;
+  animation: pulseGlow 2s ease-in-out infinite alternate;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.15);
+  transition: transform 0.3s ease;
+}
+
+@keyframes pulseGlow {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 3px rgba(255, 255, 255, 0.15);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.2);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 3px rgba(255, 255, 255, 0.1);
+    opacity: 0.7;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.coin-animation-container {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.coin {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-image: url('/coin.svg');
+  background-size: cover;
+  animation: floatUp 1.5s ease-out forwards;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-150px) scale(0.5);
+    opacity: 0;
+  }
+}
+
+
+
+
+
+

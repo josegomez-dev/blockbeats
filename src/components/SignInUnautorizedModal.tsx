@@ -18,7 +18,7 @@ const SignInUnautorizedModal: React.FC<SignInModalProps> = ({ open, onClose, pag
       onClose={onClose}
       center
       classNames={{ modal: styles.modal }}
-      styles={{ modal: { width: '100%', height: 'auto', background: 'black', padding: 50 } }}
+      styles={{ modal: { width: '100%', height: 'auto', background: 'black', padding: 50, borderRadius: '12px' } }}
       closeOnEsc={false}
       closeOnOverlayClick={false}
       showCloseIcon={false}

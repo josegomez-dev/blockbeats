@@ -17,7 +17,8 @@ const GalleryHeader: React.FC<GalleryHeaderProps> = ({ title = 'Explore My Galle
         style={{
           backdropFilter: 'blur(50px)',
           backgroundColor: 'rgba(0, 0, 0, 0.1)',
-          position: 'relative',
+          position: 'fixed',
+          width: '100%',
           padding: '25px 0 20px',
         }}
       >

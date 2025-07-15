@@ -3,7 +3,6 @@
 
 import React, { useEffect, useState } from "react";
 import styles from "@/app/assets/styles/Web3StatsPanel.module.css";
-import stylesChar from "@/app/assets/styles/CharacterPanel.module.css";
 import Link from "next/link";
 import { Line } from "react-chartjs-2";
 import { FaCoins } from 'react-icons/fa';
@@ -18,7 +17,6 @@ import { useAuth } from "@/context/AuthContext";
 import Image from "next/image";
 import { BLOCKBEATS_TUTORIALS } from "@/utils/constants/tutorials";
 import { BLOCKBEATS_NEWS } from "@/utils/constants/news";
-import { CHARACTER_STATS } from "@/utils/constants/characterStats";
 import { BiCollection } from "react-icons/bi";
 import { RiGalleryLine } from "react-icons/ri";
 
@@ -67,27 +65,6 @@ const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, tota
   const [sparkData, setSparkData] = useState<Record<string, number[]>>({});
   const { user } = useAuth();
 
-  const [botStats, setBotStats] = useState<Record<string, number>>({
-    energy: 0,
-    creativity: 0,
-    experience: 0,
-  });
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setBotStats(prev => {
-        const updated: Record<string, number> = { ...prev };
-        Object.keys(prev).forEach(key => {
-          const delta = Math.random() * 5 - 2; // vary between -2% and +3%
-          updated[key] = Math.max(0, Math.min(100, prev[key] + delta));
-        });
-        return updated;
-      });
-    }, 3000); // every 3 seconds
-
-    return () => clearInterval(interval);
-  }, []);
-
   useEffect(() => {
     const interval = setInterval(() => {
       setSparkData((prevData) => {
@@ -120,75 +97,34 @@ const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, tota
 
   return (
     <div className={styles.panel} id="web3-stats-panel">
-      <h2 className="glitch box">📊  BB News</h2>
-      <br />
       
-      <h5 className={styles.subtitle}>
-        <Image src="/logo.webp" alt="BBC Logo" width={30} height={30} /> LATEST <span className="glitch">BlockBeats</span> NEWS
-      </h5>
-
-
-      <div className={"box"}>
-        <div className={styles.newsSlider}>
-          {BLOCKBEATS_NEWS[newsIndex].url ? (
-            <a
-              href={BLOCKBEATS_NEWS[newsIndex].url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.newsText}
-            >
-              {BLOCKBEATS_NEWS[newsIndex].text}
-            </a>
-          ) : (
-            <p className={styles.newsText}>{BLOCKBEATS_NEWS[newsIndex].text}</p>
-          )}
-          <div className={styles.dots}>
-            {BLOCKBEATS_NEWS.map((_, i) => (
-              <span key={i} className={`${styles.dot} ${i === newsIndex ? styles.active : ""}`} />
-            ))}
-          </div>
-        </div>
-      </div>
+      <h2>
+        <span className='glitch box'>Stats Panel</span>
+      </h2>
       <br />
 
       <h5 className={styles.subtitle}>
-        <Image src="/logo.webp" alt="BBC Logo" width={30} height={30} /> <span className="glitch">DATA / MARKET</span> OVERVIEW
+        🤖 <span className="glitch">ACCOUNT / MARKET</span> OVERVIEW
       </h5>
 
       <div>
         <div className={`${styles.coinListWrapper} box`}>
           <ul>
             <h4 style={{ textAlign: 'center' }}>MyAccount</h4>
-
             <hr />
             <li className={styles.coinsContainer}>
               <div className={styles.coinRow}>
-                {/* <p className={styles.tokenMeta}>lvl: <span className="glitch">0</span></p>
-                <p> XP: <span className="glitch">0%</span></p> */}
-                {/* <hr /> */}
                 <p className={styles.tokenMeta}><strong> <RiGalleryLine /> </strong>: <span className="glitch">{totalNFTCreations}</span> | <strong> <BiCollection /></strong>: <span className="glitch">{totalTopCollections}</span></p>
                 <hr />
-                <p className={styles.tokenStat}><FaCoins color="gold" /> <strong>balance</strong>: <span className={styles.tokenValue}>${(0).toFixed(2)}</span></p>
+                <p className={styles.tokenStat}>
+                  <span className={styles.tokenValue}>
+                    {user?.bbcPoints}
+                  </span>&nbsp;
+                  <strong className="glitch">BBC</strong>
+                </p>
+                <p className={styles.tokenStat}><FaCoins color="gold" /> <strong>Total</strong>: <span className={styles.tokenValue}>${(0).toFixed(2)}</span></p>
               </div>
             </li>
-          </ul>
-
-          <ul className={styles.coinsContainer} style={{ width: "180px" }}>
-            <h4 style={{ textAlign: 'center' }}>BotStats</h4>
-            {CHARACTER_STATS.map(({ key, label, icon }) => {
-              const value = Math.floor(botStats[key] ?? 0);
-              return (
-                <div key={key} className={stylesChar.barWrapper} style={{ fontSize: 10 }}>
-                  <hr />
-                  {icon}: <label>{value}%</label>
-                  <div className={stylesChar.barGroup}>
-                    <div className={stylesChar.progressBar}>
-                      <div className={stylesChar[`${key}Bar`]} style={{ width: `${value}%` }} />
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
           </ul>
 
           <ul>
@@ -209,6 +145,34 @@ const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, tota
               </li>
             ))}
           </ul>
+        </div>
+      </div>
+
+      <br />
+
+      <h5 className={styles.subtitle}>
+         🎥 LATEST <span className="glitch">BLOCKBEATS</span> NEWS
+      </h5>
+
+      <div className={"box"}>
+        <div className={styles.newsSlider}>
+          {BLOCKBEATS_NEWS[newsIndex].url ? (
+            <a
+              href={BLOCKBEATS_NEWS[newsIndex].url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.newsText}
+            >
+              {BLOCKBEATS_NEWS[newsIndex].text}
+            </a>
+          ) : (
+            <p className={styles.newsText}>{BLOCKBEATS_NEWS[newsIndex].text}</p>
+          )}
+          <div className={styles.dots}>
+            {BLOCKBEATS_NEWS.map((_, i) => (
+              <span key={i} className={`${styles.dot} ${i === newsIndex ? styles.active : ""}`} />
+            ))}
+          </div>
         </div>
       </div>
 

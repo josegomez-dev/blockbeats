@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import styles from '@/app/assets/styles/SidebarMenu.module.css'; 
-import { FaHome, FaGamepad, FaStore, FaChalkboardTeacher } from 'react-icons/fa';
+import { FaHome, FaGamepad, FaStore, FaChalkboardTeacher, FaMusic } from 'react-icons/fa';
 import { RiGalleryLine } from 'react-icons/ri';
 import { BiCollection } from 'react-icons/bi';
 import Link from 'next/link';
@@ -26,11 +26,8 @@ const SidebarMenu = () => {
 
   const menuItems = [
     { icon: <FaHome />, label: 'Dashboard', href: '/dashboard' },
-    { icon: <RiGalleryLine />, label: 'My Gallery', href: '/creations' },
-    { icon: <BiCollection />, label: 'Top Collections', href: '/collections' },
+    { icon: <FaMusic />, label: 'Musical Studio', href: '/studio' },
     { icon: <FaStore />, label: 'Marketplace', href: '/marketplace' },
-    { icon: <FaStore />, label: 'Store', href: '/store' },
-    { icon: <FaStore />, label: 'Music Studio', href: '/studio' },
     { icon: <FaChalkboardTeacher />, label: 'Quick Tutorials', href: '/tutorials' },
   ];
 

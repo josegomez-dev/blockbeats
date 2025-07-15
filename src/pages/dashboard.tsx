@@ -1,63 +1,42 @@
-"use client";
 import React, { useEffect, useState } from "react";
 import CharacterPanel from "@/components/CharacterPanel";
 import Web3StatsPanel from "@/components/Web3StatsPanel";
-import styles from "@/app/assets/styles/MainPage.module.css";
+import DailyRewardModal from "@/components/rewards/DailyRewardModal";
+import VegasMintGame from "@/components/VegasMintGame";
+import SignInUnautorizedModal from "@/components/SignInUnautorizedModal";
+
+import Image from "next/image";
 import { RxAvatar } from "react-icons/rx";
 import { SiWeb3Dotjs } from "react-icons/si";
 import { FaMusic } from "react-icons/fa";
-import { useAuth } from "@/context/AuthContext";
-import SignInUnautorizedModal from "@/components/SignInUnautorizedModal";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
-import { TopCollections } from "@/types/topCollections";
-import VegasMintGame from "@/components/VegasMintGame";
-import Image from "next/image";
-import NFTSliderPanel from "@/components/NFTSliderPanel";
+import { useAuth } from "@/context/AuthContext";
+
+import styles from "@/app/assets/styles/MainPage.module.css";
 
 const DashboardLayout = () => {
-  const [nfts, setNFTs] = React.useState<any[]>([]);
-  const [topCollections, setTopCollections] = React.useState<TopCollections[]>([]);
+  const [nfts, setNFTs] = useState<any[]>([]);
+  const [totalNFTCreations, setTotalNFTCreations] = useState(0);
+  const [totalTopCollections, setTotalTopCollections] = useState(0);
 
-  const [totalNFTCreations, setTotalNFTCreations] = React.useState<number>(0);
-  const [totalTopCollections, setTotalTopCollections] = React.useState<number>(0);
-
-  const [showVegasGame, setShowVegasGame] = React.useState(false);
-  const [showRewards, setShowRewards] = useState(true);
-  const [secondsLeft, setSecondsLeft] = useState(30);
+  const [showVegasGame, setShowVegasGame] = useState(false);
+  const [showRewards, setShowRewards] = useState(false);
 
   const { user, authenticated } = useAuth();
 
+  // ────────────────────────────────────────────────
+  // 📦 Initial Rewards Check
   useEffect(() => {
     const lastClaim = localStorage.getItem("lastRewardClaimDate");
     const today = new Date().toISOString().split("T")[0];
-
-    if (lastClaim === today) {
-      setShowRewards(false);
+    if (lastClaim !== today) {
+      setShowRewards(true);
     }
   }, []);
 
-  useEffect(() => {
-    if (!showRewards) return;
-
-    const interval = setInterval(() => {
-      setSecondsLeft(prev => {
-        if (prev <= 1) {
-          clearInterval(interval);
-          const today = new Date().toISOString().split("T")[0];
-          localStorage.setItem("lastRewardClaimDate", today);
-          setShowRewards(false);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [showRewards]);
-
-
-  // Always call hooks unconditionally
+  // ────────────────────────────────────────────────
+  // 📡 Fetch Data
   useEffect(() => {
     if (user && authenticated) {
       fetchNFTs();
@@ -68,7 +47,7 @@ const DashboardLayout = () => {
   const fetchNFTs = async () => {
     const querySnapshot = await getDocs(collection(db, "signatures"));
     const nfts = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    setNFTs(nfts);      
+    setNFTs(nfts);
     if (user) {
       const userNFTs = nfts.filter((item: any) => item.createdBy === user.uid);
       setTotalNFTCreations(userNFTs.length);
@@ -78,136 +57,95 @@ const DashboardLayout = () => {
   const fetchTopCollections = async () => {
     const querySnapshot = await getDocs(collection(db, "topCollections"));
     const collections = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    setTopCollections(collections as TopCollections[]);
     if (user) {
       const userCollections = collections.filter((item: any) => item.createdBy === user.uid);
       setTotalTopCollections(userCollections.length);
     }
   };
 
+  const handleRewardClaim = () => {
+    const today = new Date().toISOString().split("T")[0];
+    localStorage.setItem("lastRewardClaimDate", today);
+    setShowVegasGame(true);
+    setShowRewards(false);
+  };
+
   const showPanel = (panel: string) => {
     const panels = ['left', 'center', 'right'];
     panels.forEach((p) => {
-      const panelElement = document.getElementById(`core-${p}-panel`);
-      if (panelElement) {
-        panelElement.style.display = p === panel ? 'block' : 'none';
-      }
+      const el = document.getElementById(`core-${p}-panel`);
+      if (el) el.style.display = p === panel ? 'block' : 'none';
     });
   };
 
-  // Return fallback **after** all hooks have been used
   if (!user || !authenticated) {
-    return (
-      <SignInUnautorizedModal 
-        open={true}
-        onClose={() => {}}
-        pageName="Dashboard"
-      />
-    );
+    return <SignInUnautorizedModal open={true} onClose={() => {}} pageName="Dashboard" />;
   }
-// could you help me to add a counter that disapear in 1 min 
-        
+
   return (
-    <div style={{ background: 'radial-gradient(circle at center, #0f0f2a 0%, #070713 100%)', marginBottom: '-10px' }}>
+    <div style={{ background: 'radial-gradient(circle at center, #0f0f2a 0%, #070713 100%)' }}>
+      {/* 🎁 Rewards Modal */}
       {showRewards && (
-        <div style={{ textAlign: 'center', width: '100%', margin: '10px auto' }}>
-          <br />
-          <h1 className={`title ${styles.glitch}`}>BlockBeats </h1>
-          <button style={{ margin: '0 auto', background: 'var(--neon-color)' }} className={styles.submitBtn} onClick={() => setShowVegasGame(true)}>
-            ⏳ Claim <span style={{ color: 'gold' }}>100 <span className="glitch">BBC</span></span>&nbsp;
-            <span style={{ color: 'red' }}>{secondsLeft}s left</span>
-          </button>
-          <br />
-          <br />
-          <button
-            style={{ margin: '0 auto', animation: 'none', background: 'transparent' }}
-            className={styles.submitBtn}
-            onClick={() => setShowRewards(false)}
-          >
-            Close Rewards
-          </button>
-          <br />
-          <br />
-          <br />
-          <Image
-            src="/avatar/phase-6.webp"
-            alt="Coin"
-            width={300}
-            height={300}
-            style={{ display: 'block', margin: '0 auto', marginTop: '10px', animation: 'fadeIn 1s ease-in-out' }}
-          />
-          <br />
-          <p style={{ fontSize: '1.2rem', position: 'relative', top: '-80px', marginBottom: '-50px' }}>
-            <b style={{ color: 'red' }}>Note: You can only claim rewards once every day.</b><br />  
-            <br />
-            <b style={{ color: 'white' }}>Tip:</b> Complete quests to earn more rewards!
-          </p>
-          <br />
-        </div>
+        <DailyRewardModal
+          onClaim={handleRewardClaim}
+          onClose={() => setShowRewards(false)}
+        />
       )}
 
-      {!showRewards && (
-        <>
-          <div className={styles.buttonsContainer}>
-            <button onClick={() => showPanel('left')} className={styles.button}>
-              <RxAvatar />
-            </button>
-            <button onClick={() => showPanel('center')} className={styles.button}>
-              <FaMusic />
-            </button>
-            <button onClick={() => showPanel('right')} className={styles.button}>
-              <SiWeb3Dotjs />
-            </button>
-          </div>
+      {/* 🎰 Game */}
+      {showVegasGame && (
+        <VegasMintGame
+          onClose={() => {
+            const today = new Date().toISOString().split("T")[0];
+            localStorage.setItem("lastRewardClaimDate", today);
+            setShowRewards(false);
+            setShowVegasGame(false);
+          }}
+        />
+      )}
 
-          <div className={styles.dashboardContainer}>
+      {/* 📱 Mobile App-style Buttons */}
+      <div className={styles.buttonsContainer}>
+        <button onClick={() => showPanel('left')} className={styles.button}><RxAvatar /></button>
+        <button onClick={() => showPanel('center')} className={styles.button}><FaMusic /></button>
+        <button onClick={() => showPanel('right')} className={styles.button}><SiWeb3Dotjs /></button>
+      </div>
+
+      {/* 🖥️ Main 3-Panel Grid */}
+      <div className={styles.dashboardContainer}>
+        <div className={styles.desktopGrid}>
+          <div id="core-left-panel" className={styles.leftPanel}><CharacterPanel /></div>
+          <div id="core-center-panel" className={styles.centerPanel}>
+            <h2><span className='glitch box'>LAUNCHPAD Musical NFTs</span></h2>
             <br />
-            <div className={styles.desktopGrid}>
-              <div id="core-left-panel" className={styles.leftPanel}>
-                <CharacterPanel />
-              </div>
-              <div id="core-center-panel" className={styles.centerPanel}>
-                <NFTSliderPanel nfts={nfts} collections={topCollections} />
-              </div>
-              <div id="core-right-panel" className={styles.rightPanel}>
-                <Web3StatsPanel totalNFTCreations={totalNFTCreations} totalTopCollections={totalTopCollections} />
-              </div>
+            <div style={{ fontSize: '0.8rem' }}>
+              <b className="glitch">BlockBeats 3.0</b> is a platform where you can <strong style={{ color: 'var(--neon-color)'}}>create, trade, and collect</strong> <strong style={{ color: 'var(--clr-3)'}}>musical NFTs</strong>. <br />
+              <strong style={{ color: 'var(--clr-3)'}}>Join our community</strong> to explore unique music creations and <strong style={{ color: 'var(--neon-color)'}}>support artists</strong>!
             </div>
-            {/* <NFTSliderPanel nfts={nfts} collections={topCollections} /> */}
-            <br />
-            <hr />
-            <p style={{ padding: '20px 70px' }}>
-              <span className="glitch">BlockBeats 3.0</span> <span>empowers anyone to trade music and visual creativity through an interactive platform that connects art and real-world experiences.</span>
-            </p>
-            <hr />
-            <br />
+            <Image
+              src="/launchpad/simple.png"
+              alt="Launchpad"
+              width={500}
+              height={500}
+              className="avatar-launchpad"
+            />
           </div>
-        </>  
-      )}
+          <div id="core-right-panel" className={styles.rightPanel}>
+            <Web3StatsPanel
+              totalNFTCreations={totalNFTCreations}
+              totalTopCollections={totalTopCollections}
+            />
+          </div>
+        </div>
 
-       {showVegasGame && (
-          <VegasMintGame
-            onClose={() => {
-              const today = new Date().toISOString().split("T")[0];
-              localStorage.setItem("lastRewardClaimDate", today);
-              setShowRewards(false);
-              setShowVegasGame(false)
-            }}
-            nfts={nfts.map(nft => ({
-              id: nft.id,
-              title: nft.songName || 'Untitled',
-              author: nft.createdBy || 'Unknown',
-              colorMap: nft.colorMap ?? [],
-              songName: nft.songName || 'Untitled',
-              notesPlayed: nft.notesPlayed ?? [],
-              frequencyRange: (nft as any).frequencyRange ?? [0, 0],
-              color: (nft as any).color ?? '#FFFFFF',
-              createdBy: nft.createdBy || 'Unknown',
-              tempo: (nft as any).tempo ?? 120,
-              createdAt: (nft as any).createdAt ?? new Date().toISOString(),
-            }))}
-          />
-        )}
+        <hr />
+        <p style={{ padding: '20px 70px' }}>
+          <span>
+            empowers anyone to trade music and visual creativity through an interactive platform that connects art and real-world experiences.
+          </span>
+        </p>
+        <hr />
+      </div>
     </div>
   );
 };

@@ -10,26 +10,26 @@ interface LayoutProps {
 }
 
 const Layout = ({ children }: LayoutProps) => {
-  const { authenticated, role } = useAuth()
+  const { authenticated } = useAuth()
 
   // check if location is different from /collections
   const isCollectionsPage = typeof window !== 'undefined' && window.location.pathname.includes('/collections')
 
   return (
       <>
-        <Nav />
         {authenticated && (
           <>
+            <Nav />
             {location.pathname !== '/studio' && (
               <SidebarMenu />
             )}
-            {/* <SidebarChatPanel /> */}
+            <SidebarChatPanel />
           </>
         )}
         <main className="p-4">
             {authenticated && <div className='custom-nav-spacer' />}
             {children}
-            {!isCollectionsPage && <Footer />}
+            {authenticated && !isCollectionsPage && <Footer />}
         </main>
       </>  
   )

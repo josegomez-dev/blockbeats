@@ -69,11 +69,6 @@ for (let octave = 3; octave <= 4; octave++) {
   });
 }
 
-// Log once in dev mode so you can be sure it’s 24 keys
-if (process.env.NODE_ENV !== 'production') {
-  console.log('🎹 Generated notes:', notes.map(([n]) => n), `(${notes.length})`);
-}
-
 // ────────────────────────────────────────────────────────────────────────────────
 // Frequency-range presets (unchanged)
 // ────────────────────────────────────────────────────────────────────────────────

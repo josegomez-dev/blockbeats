@@ -1,1 +1,0 @@
-{"version":1,"contracts":[{"id":"448q65b79vpdu","package_name":"blockbeats","contract_name":"HelloStarknet","module_path":"blockbeats::HelloStarknet","artifacts":{"sierra":"blockbeats_HelloStarknet.contract_class.json","casm":null}}]}

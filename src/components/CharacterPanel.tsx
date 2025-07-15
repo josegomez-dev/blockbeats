@@ -6,7 +6,6 @@ import { doc, arrayUnion, updateDoc } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 import LevelUpOverlay from './LevelUpOverlay';
 import styles from '@/app/assets/styles/CharacterPanel.module.css';
-import stylesMain from '@/app/assets/styles/MainPage.module.css';
 import { db } from '../../firebase';
 import { useAuth } from '../context/AuthContext';
 import {
@@ -14,7 +13,6 @@ import {
   CHARACTER_LEVELUP_DURATION,
 } from '@/utils/constants/gameSettings';
 import { CHARACTER_STATS } from '@/utils/constants/characterStats';
-import { useRouter } from 'next/router';
 
 // ────────────────────────────────────────────────────────────────────────────────
 // TYPES & REDUCER
@@ -67,13 +65,6 @@ const reducer = (state: StatState, action: Action): StatState => {
   }
 };
 
-const getTodayDateString = () => {
-  const today = new Date();
-  return today.toISOString().split('T')[0]; // format: "2025-06-25"
-};
-
-const getClaimKey = (userId: string) => `lastClaimDate_${userId}`;
-
 // ────────────────────────────────────────────────────────────────────────────────
 // COMPONENT
 // ────────────────────────────────────────────────────────────────────────────────
@@ -87,23 +78,7 @@ const CharacterPanel: React.FC = () => {
   const [showGif, setShowGif] = useState(false);
   const [phaseIndex, setPhaseIndex] = useState(1);
 
-  const canClaim = useRef<boolean>(true);
   const prevLevel = useRef(level);
-
-  const router = useRouter();
-
-  const [hasClaimedToday, setHasClaimedToday] = useState(false);
-
-  useEffect(() => {
-    if (!user?.id) return;
-
-    const lastClaim = localStorage.getItem(getClaimKey(user.id));
-    if (lastClaim === getTodayDateString()) {
-      setHasClaimedToday(true);
-      canClaim.current = false;
-    }
-  }, [user]);
-
 
   const sfx = useRef<{ [key: string]: HTMLAudioElement }>({});
 
@@ -116,7 +91,6 @@ const CharacterPanel: React.FC = () => {
       };
     }
   }, []);
-
 
   // Auto increase stats
   useEffect(() => {
@@ -198,24 +172,6 @@ const CharacterPanel: React.FC = () => {
     setTimeout(() => container.remove(), 1600);
   };
 
-  const handleClaim = async () => {
-    if (!canClaim.current || hasClaimedToday || !user) return;
-
-    canClaim.current = false;
-    setHasClaimedToday(true);
-    localStorage.setItem(getClaimKey(user.id), getTodayDateString());
-
-    setOverlayMsg('💰 100 BBC Coins Claimed!');
-    sfx.current.levelUp1.play();
-    triggerCoinAnimation();
-
-    setTimeout(async () => {
-      await updateCoinsInFirestore(100, `Manual claim at level ${level}`);
-      sfx.current.coins.play();
-      setOverlayMsg(null);
-    }, CHARACTER_ANIMATION_DELAY);
-  };
-
   const avatarSrc = `/avatar/phase-${phaseIndex}.webp`;
 
   const changePhase = (dir: 'prev' | 'next') => {
@@ -238,10 +194,9 @@ const CharacterPanel: React.FC = () => {
 
       <h2> <span className='glitch box'>BEATO</span> </h2>
       <br />
-      <p className={styles.description}>
-        This is your personal music bot!<br />
-        <strong>Level up</strong> by completing quests and earning XP!
-      </p>
+      <div className={styles.description}>
+        This is <span className='glitch'>BEATO</span> your <strong style={{ color: 'var(--clr-3)' }}>Musical Bot</strong> <br />
+      </div>
 
 
       <div className={`${styles.bars}`}>
@@ -277,8 +232,6 @@ const CharacterPanel: React.FC = () => {
           src={avatarSrc}
           alt="Character"
           className={`${styles.avatar} ${animateLevel ? styles.avatarEvolve : ''}`}
-          onClick={() => router.push('/store')}
-          style={{ cursor: 'pointer' }}
         />
         {showGif && <img src="/evolve.gif" alt="evolving" className={styles.levelUpGif} />}
         <p className={styles.status}>
@@ -294,27 +247,10 @@ const CharacterPanel: React.FC = () => {
       </div>
 
       <p className={styles.description}>
-        <strong>Boost your creativity</strong> with special items and rewards!
+        <strong style={{ color: 'var(--clr-3)' }}>Level up</strong> by <strong style={{ color: 'var(--neon-color)' }}>completing quests</strong> and <strong style={{ color: 'var(--clr-3)' }}>earning XP</strong>! <br />
+        <strong style={{ color: 'var(--clr-3)' }}>Boost your creativity</strong> with <strong style={{ color: 'var(--neon-color)' }}>special items</strong> and <strong style={{ color: 'var(--neon-color)' }}>rewards</strong>!
       </p>
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', gap: '5px' }}>
-        <button
-          onClick={handleClaim}
-          className={stylesMain.submitBtn}
-          style={{ fontSize: '0.6rem', opacity: hasClaimedToday ? 0.5 : 1, animation: hasClaimedToday ? 'none' : '' }}
-          disabled={hasClaimedToday}
-        >
-          {hasClaimedToday ? '✅ Already Claimed Today' : '🪙 Claim Coins'}
-        </button>
-
-        {/* <button
-          disabled
-          className={stylesMain.submitBtn}
-          style={{ backgroundColor: 'transparent', opacity: 0.5, animation: 'none', fontSize: '0.6rem' }}
-        >
-          🚀 Boosts
-        </button> */}
-      </div>
     </div>
   );
 };

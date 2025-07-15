@@ -1,0 +1,51 @@
+.selectorWrapper {
+  padding: 2rem;
+  text-align: center;
+  color: white;
+}
+
+.title {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.slider {
+  display: flex;
+  overflow-x: auto;
+  gap: 1.5rem;
+  padding: 1rem;
+  scroll-snap-type: x mandatory;
+}
+
+.machineCard {
+  flex: 0 0 auto;
+  min-width: 260px;
+  background: linear-gradient(145deg, #1f2937, #111827);
+  border-radius: 16px;
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  scroll-snap-align: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+}
+
+.machineCard:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.2);
+}
+
+.icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.name {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.description {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
