@@ -141,7 +141,7 @@ const DashboardLayout = () => {
         <hr />
         <p style={{ padding: '20px 70px' }}>
           <span>
-            empowers anyone to trade music and visual creativity through an interactive platform that connects art and real-world experiences.
+            <strong className="glitch">BlockBeats 3.0</strong> empowers anyone to <strong style={{ color: 'var(--neon-color)' }}>trade music</strong> and <strong style={{ color: 'var(--neon-color)' }}>support artists</strong> through an interactive platform <strong style={{ color: 'var(--clr-3)' }}>that connects art and real-world experiences</strong>.
           </span>
         </p>
         <hr />

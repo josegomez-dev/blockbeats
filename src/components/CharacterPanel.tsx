@@ -121,7 +121,7 @@ const CharacterPanel: React.FC = () => {
   const handleLevelUp = async (newLevel: number) => {
     setAnimateLevel(true);
     setShowGif(true);
-    setOverlayMsg(`🎉 Level up! You reached level ${newLevel}!`);
+    setOverlayMsg(`🎉 Level up! \n You reached level ${newLevel}!`);
     toast.success(`🔥 Evolución completada: Nivel ${newLevel}`);
     sfx.current.levelUp2.play();
 
