@@ -227,7 +227,9 @@ export default function MusicStudioPage() {
 
           <div className={styles.actions}>
             <button onClick={playback}>▶️ Play</button>
-            <button onClick={stopPlayback}>⏹ Stop</button>
+            {isPlayingBack && (
+              <button onClick={stopPlayback}>⏹ Stop</button>
+            )}
             <button onClick={handleReset}>🧹 Reset</button>
             <button onClick={saveNFTData}>💾 Save</button>
             <button onClick={() => setFreqModalOpen(true)}>🎨 Frequency</button>

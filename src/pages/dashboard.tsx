@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import MusicDrawingPage from "@/components/MusicDrawingMachine";
 import CharacterPanel from "@/components/CharacterPanel";
 import Web3StatsPanel from "@/components/Web3StatsPanel";
 import styles from "@/app/assets/styles/MainPage.module.css";
@@ -14,7 +13,6 @@ import { db } from "../../firebase";
 import { TopCollections } from "@/types/topCollections";
 import VegasMintGame from "@/components/VegasMintGame";
 import Image from "next/image";
-import NeonSlider from "@/components/NeonSlider";
 import NFTSliderPanel from "@/components/NFTSliderPanel";
 
 const DashboardLayout = () => {
@@ -169,7 +167,7 @@ const DashboardLayout = () => {
                 <CharacterPanel />
               </div>
               <div id="core-center-panel" className={styles.centerPanel}>
-                <MusicDrawingPage nfts={nfts} topCollections={topCollections} />
+                <NFTSliderPanel nfts={nfts} collections={topCollections} />
               </div>
               <div id="core-right-panel" className={styles.rightPanel}>
                 <Web3StatsPanel totalNFTCreations={totalNFTCreations} totalTopCollections={totalTopCollections} />
