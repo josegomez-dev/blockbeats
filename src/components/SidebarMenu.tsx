@@ -1,9 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import styles from '@/app/assets/styles/SidebarMenu.module.css'; 
-import { FaHome, FaGamepad, FaStore, FaChalkboardTeacher, FaMusic } from 'react-icons/fa';
-import { RiGalleryLine } from 'react-icons/ri';
-import { BiCollection } from 'react-icons/bi';
+import { FaHome, FaStore, FaChalkboardTeacher, FaMusic } from 'react-icons/fa';
 import Link from 'next/link';
 
 const SidebarMenu = () => {

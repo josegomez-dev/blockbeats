@@ -21,6 +21,7 @@ const GalleryHeader: React.FC<GalleryHeaderProps> = ({ title = 'Explore My Galle
           width: '100%',
           padding: '25px 0 20px',
           zIndex: 1000,
+          top: 70,
         }}
       >
         {onBackClick ? (

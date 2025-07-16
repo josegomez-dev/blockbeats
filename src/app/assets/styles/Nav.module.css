@@ -7,7 +7,7 @@
     padding: 1rem;
     width: 100%;
     position: relative;
-    z-index: 2000;
+    z-index: 2000 !important;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -67,16 +67,6 @@
 
 
 
-  .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #1f2937; /* gray-800 */
-  padding: 10px 20px;
-  color: white;
-  z-index: 1000;
-  position: fixed;
-}
 
 .logoContainer {
   display: flex;
