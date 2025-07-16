@@ -5,7 +5,6 @@ import DrumDesigner from '@/components/machines/drumDesigner/DrumDesigner';
 // import AIMelodyGenerator from '@/components/machines/AIMelodyGenerator';
 import { useState } from 'react';
 import styles from '@/app/assets/styles/MusicStudio.module.css';
-import MidiOscillatorRecorder from '@/components/machines/midiMachine/MidiOscillatorRecorder';
 
 const MusicStudioPage = () => {
   const [selectedMachine, setSelectedMachine] = useState<string | null>(null);
