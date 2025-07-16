@@ -1,0 +1,255 @@
+.drumDesigner {
+  padding: 2rem;
+  background-color: rgba(0, 0, 0, 0.8); /* Light transparent */    
+  color: white;
+  border-radius: 12px;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
+  width: 100%;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.instrumentSelector {
+  margin-right: 10px;
+  padding: 4px 8px;
+  background: #222;
+  color: white;
+  border: 1px solid #444;
+  border-radius: 6px;
+}
+
+.cell {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #555;
+  margin-right: 4px;
+  background: #222;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.cell:hover {
+  background: #333;
+}
+
+.cell.active {
+  background: #0ff;
+}
+
+.cell.playing {
+  animation: pulse 0.4s ease;
+  border-color: white;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 4px rgba(0, 255, 255, 0.6);
+  }
+  50% {
+    transform: scale(1.2);
+    box-shadow: 0 0 12px rgba(0, 255, 255, 1);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 4px rgba(0, 255, 255, 0.6);
+  }
+}
+
+.soundGallery {
+  margin: 1rem 0;
+  padding: 1rem;
+  background: var(--clr-card, #1f2937);
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+.soundGrid {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  height: 140px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+}
+
+.soundGrid::-webkit-scrollbar {
+  height: 6px;
+}
+
+.soundGrid::-webkit-scrollbar-thumb {
+  background: #0ff;
+  border-radius: 3px;
+}
+
+.soundItem {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  cursor: pointer;
+  width: 80px;
+  padding: 0.75rem;
+  background: #2d3748;
+  border-radius: 10px;
+  transition: transform 0.2s ease;
+  color: #fff;
+  font-size: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.soundItem:hover {
+  transform: scale(1.05);
+  background: #4a5568;
+}
+
+
+.icon {
+  font-size: 1.8rem;
+  margin-bottom: 0.3rem;
+}
+
+.label {
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.addRowButton {
+  margin: 1rem 0;
+  padding: 0.5rem 1rem;
+  background: #0ff;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.filterBtn {
+  padding: 6px 12px;
+  background: #333;
+  color: white;
+  border: 1px solid #444;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.75rem;
+}
+
+.filterBtn:hover,
+.activeFilter {
+  background: #0ff;
+  color: #000;
+}
+
+.addRowButton:disabled {
+  background: #444;
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+.instrumentDropdown {
+  cursor: pointer;
+  position: relative;
+  padding: 6px;
+  border-radius: 8px;
+  background: #1a1a1a;
+  width: 40px;
+  text-align: center;
+}
+
+.iconOnly {
+  font-size: 20px;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 35px;
+  left: 0;
+  z-index: 1;
+  background: #111;
+  border: 1px solid #444;
+  border-radius: 8px;
+  padding: 5px 0;
+  width: 140px;
+}
+
+.dropdownItem {
+  padding: 5px 10px;
+  cursor: pointer;
+  display: flex;
+  gap: 8px;
+  color: #ccc;
+}
+.dropdownItem:hover {
+  background: #333;
+}
+
+.lockedRow {
+  opacity: 0.4;
+  pointer-events: auto; /* Allow clicking */
+  position: relative;
+}
+
+.lockedSelector {
+  width: 40px;
+  text-align: center;
+  font-size: 12px;
+}
+.cellDisabled {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #444;
+  background: #222;
+  margin: 1px;
+  border-radius: 3px;
+}
+
+.unlockButton {
+  padding: 6px 12px;
+  background: #0ff;
+  color: #000;
+  font-weight: bold;
+  font-size: 0.75rem;
+  border-radius: 8px;
+  margin-left: 1rem;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: 0.3s ease;
+}
+
+.unlockButton:hover {
+  opacity: 1;
+  background: #00f0f0;
+}

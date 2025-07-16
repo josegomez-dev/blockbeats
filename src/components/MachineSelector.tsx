@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from '@/app/assets/styles/MachineSelector.module.css';
+import Image from 'next/image';
 
 interface Machine {
   id: string;
@@ -15,33 +16,27 @@ interface MachineSelectorProps {
 const machines: Machine[] = [
   {
     id: 'drawing',
-    name: '🎨 Music Drawing Machine',
-    description: 'Compose melodies as pixel-art.',
-    icon: '🎼',
+    name: 'Music Drawing Machine',
+    description: 'Compose 8Bit melodies as pixel-art with 🎹 MIDI compatibility.',
+    icon: '/store/drumkit/synth-pixel.png',
   },
   {
     id: 'drums',
-    name: '🥁 Drum Designer',
-    description: 'Design rhythmic beats & patterns.',
-    icon: '🪘',
+    name: 'Drums Designer Machine',
+    description: 'Create custom drum patterns with a grid interface.',
+    icon: '/store/drumkit/futurebass.png',
   },
   {
-    id: 'ai',
-    name: '🤖 AI Melody Generator',
-    description: 'Let AI help you compose music.',
-    icon: '🎹',
+    id: 'voicemusic',
+    name: 'Voice Music Machine',
+    description: 'Generate melodies with your voice using AI.',
+    icon: '/store/drumkit/voicemusicmachine.png',
   },
   {
-    id: 'synth',
-    name: '🎛️ Synth Playground',
-    description: 'Tweak oscillators & filters live.',
-    icon: '🎚️',
-  },
-  {
-    id: 'visualizer',
-    name: '📊 Music Visualizer',
-    description: 'Turn audio into stunning visuals.',
-    icon: '🌈',
+    id: 'launchpad',
+    name: 'Launchpad Machine',
+    description: 'Trigger samples and loops with a grid interface.',
+    icon: '/store/drumkit/trap.png',
   },
 ];
 
@@ -56,7 +51,12 @@ const MachineSelector: React.FC<MachineSelectorProps> = ({ onSelect }) => {
             className={styles.machineCard}
             onClick={() => onSelect(machine.id)}
           >
-            <div className={styles.icon}>{machine.icon}</div>
+            <Image
+              src={machine.icon}
+              alt={machine.name}
+              width={200}
+              height={200}
+            />
             <h3 className={styles.name}>{machine.name}</h3>
             <p className={styles.description}>{machine.description}</p>
           </div>

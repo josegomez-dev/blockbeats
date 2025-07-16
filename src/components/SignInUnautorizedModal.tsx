@@ -26,10 +26,10 @@ const SignInUnautorizedModal: React.FC<SignInModalProps> = ({ open, onClose, pag
       closeIcon={<span className={styles.closeIcon}>×</span>}
     >
       <div className={styles.modalContent}>
-        <h2 className={styles.modalTitle}>Please Sign In</h2>
+        <h2 className={`${styles.modalTitle} box glitch`}> Unauthorized Access</h2>
         <br />
         <p className={styles.modalText}>
-          You need to sign in to access the <strong>{pageName}</strong>. Please sign in using your wallet.
+          You need to <strong style={{ color: 'var(--neon-color)'}}>sign in</strong> to access the <strong style={{ color: 'var(--clr-3)'}}>{pageName}</strong>. <br /> Please sign in using your <strong style={{ color: 'var(--neon-color)'}}>email</strong> or <strong style={{ color: 'var(--neon-color)'}}> wallet</strong>.
         </p>
         <br />
         <button

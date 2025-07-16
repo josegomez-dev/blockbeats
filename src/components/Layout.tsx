@@ -17,9 +17,9 @@ const Layout = ({ children }: LayoutProps) => {
 
   return (
       <>
+        <Nav />
         {authenticated && (
           <>
-            <Nav />
             {location.pathname !== '/studio' && (
               <SidebarMenu />
             )}
@@ -29,7 +29,7 @@ const Layout = ({ children }: LayoutProps) => {
         <main className="p-4">
             {authenticated && <div className='custom-nav-spacer' />}
             {children}
-            {authenticated && !isCollectionsPage && <Footer />}
+            {/* {authenticated && !isCollectionsPage && <Footer />} */}
         </main>
       </>  
   )

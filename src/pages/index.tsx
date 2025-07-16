@@ -372,30 +372,42 @@ const LandingPage = () => {
     </section>
 
       
-      {/* News Section */}
-      <hr />
-      <section className={styles.newsSection}>
-        <h2><span className='glitch'>🌎 BlockBeats NEWS</span></h2>
-        <div className={styles.newsGrid}>
-          {newsItems.map((item, index) => (
-            <div
-              className={styles.newsItem}
-              key={index}
-              onClick={() => handleOpenModal(undefined, item.videoUrl, item.title, item.description)}
-              style={{ cursor: 'pointer' }}
-            >
-              <div className={styles.newsIconPreview} style={{ backgroundImage: `url(${item.previewImage})` }}>
-                <FaRegNewspaper className={styles.newsIconReact} />
-                <div className={styles.previewOverlay}>▶️ Preview</div>
-              </div>
-
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
+    {/* News Section */}
+    <hr />
+    <section className={styles.newsSection}>
+      <h2><span className='glitch'>🌎 BlockBeats NEWS</span></h2>
+      <div className={styles.newsGrid}>
+        {newsItems.map((item, index) => (
+          <div
+            className={styles.newsItem}
+            key={index}
+            onClick={() => handleOpenModal(undefined, item.videoUrl, item.title, item.description)}
+            style={{ cursor: 'pointer' }}
+          >
+            <div className={styles.newsIconPreview} style={{ backgroundImage: `url(${item.previewImage})` }}>
+              <FaRegNewspaper className={styles.newsIconReact} />
+              <div className={styles.previewOverlay}>▶️ Preview</div>
             </div>
-          ))}
-        </div>
-      </section>
+
+            <h3>{item.title}</h3>
+            <p>{item.description}</p>
+          </div>
+        ))}
+      </div>
+    </section>
     
+    {/* Welcome Section */}
+    <section className={styles.welcomeSection}>
+      <div className={styles.imageContainer}>
+        <Image
+          src="/co-create-music.png"
+          alt="BlockBeats Launchpad"
+          width={500}
+          height={500}
+          style={{ width: '100%', height: 'auto', objectFit: 'cover', borderRadius: '1rem', boxShadow: '0 0 25px rgba(255,255,255,0.2)' }}
+        />  
+      </div>
+    </section>
 
     {open && (
       <Modal

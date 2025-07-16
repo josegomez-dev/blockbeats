@@ -820,6 +820,7 @@ p {
   width: 100%;
   height: auto;
   max-width: 650px;
+  cursor: pointer;
 }
 
 .avatar-launchpad:hover {
@@ -860,9 +861,7 @@ p {
   border-radius: 3px;
   width: 100%;
   height: 100%;
-  animation: pulseGlow 2s ease-in-out infinite alternate;
   box-shadow: 0 0 5px rgba(255, 255, 255, 0.15);
-  transition: transform 0.3s ease;
 }
 
 @keyframes pulseGlow {

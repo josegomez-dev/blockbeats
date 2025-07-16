@@ -1,7 +1,7 @@
 import GalleryHeader from '@/components/GalleryHeader';
 import MachineSelector from '@/components/MachineSelector';
 import MusicDrawingMachine from '@/components/machines/MusicDrawingMachine';
-// import DrumDesigner from '@/components/machines/DrumDesigner';
+import DrumDesigner from '@/components/machines/DrumDesigner';
 // import AIMelodyGenerator from '@/components/machines/AIMelodyGenerator';
 import { useState } from 'react';
 import styles from '@/app/assets/styles/MusicStudio.module.css';
@@ -13,8 +13,8 @@ const MusicStudioPage = () => {
     switch (selectedMachine) {
       case 'drawing':
         return <MusicDrawingMachine />;
-      // case 'drums':
-      //   return <DrumDesigner />;
+      case 'drums':
+        return <DrumDesigner />;
       // case 'ai':
       //   return <AIMelodyGenerator />;
       default:
@@ -27,7 +27,7 @@ const MusicStudioPage = () => {
       <br />
       <br />
       <br />
-      <GalleryHeader title='Welcome to BlockBeats Studio' />
+      <GalleryHeader title='BlockBeats Studio' />
       {!selectedMachine ? (
         <MachineSelector onSelect={setSelectedMachine} />
       ) : (

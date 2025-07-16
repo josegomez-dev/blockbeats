@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { db } from '../../../firebase';
 import { useAuth } from '@/context/AuthContext';
 import { useMidiInput } from '@/hooks/useMidiInput';
+import PlaybackControls from '@/components/machines/PlaybackControls';
 
 import {
   notes,
@@ -201,35 +202,24 @@ export default function MusicDrawingMachine() {
     <>
       <div className={styles.fullScreenStudio}>
         <header className={styles.topBar}>
-          <div>🎹 MIDI: {midiConnected ? midiDeviceName : 'Not Connected'}</div>
-          <div>🎛️ Tempo: 
-              <input 
-                type="number" 
-                min={99} 
-                max={450} 
-                value={tempo} 
-                onChange={(e) => setTempo(Number(e.target.value))} 
-              />
-          </div>
-          <div>🎼 Steps: &nbsp;
-              <input 
-                type="number" 
-                min={8} 
-                max={128} 
-                value={stepLength} 
-                onChange={(e) => setStepLength(Number(e.target.value))} 
-              /> 
-          </div>
+        <PlaybackControls
+          isPlaying={isPlayingBack}
+          tempo={tempo}
+          steps={stepLength}
+          onPlay={playback}
+          onStop={stopPlayback}
+          onTempoChange={setTempo}
+          onStepChange={setStepLength}
+          onReset={handleReset}
+          onSave={saveNFTData}
+          showFreq={true}
+          onOpenFrequencyModal={() => setFreqModalOpen(true)}
+          showDrumsToggle={true}
+          isDrumEnabled={isDrumEnabled}
+          onToggleDrums={setIsDrumEnabled}
+        />
 
-          <div className={styles.actions}>
-            <button onClick={playback}>▶️ Play</button>
-            {isPlayingBack && (
-              <button onClick={stopPlayback}>⏹ Stop</button>
-            )}
-            <button onClick={handleReset}>🧹 Reset</button>
-            <button onClick={saveNFTData}>💾 Save</button>
-            <button onClick={() => setFreqModalOpen(true)}>🎨 Frequency</button>
-          </div>
+
         </header>
 
         <main className={styles.canvasSection}>

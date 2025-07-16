@@ -12,8 +12,10 @@ import { FaMusic } from "react-icons/fa";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/router";
 
 import styles from "@/app/assets/styles/MainPage.module.css";
+import Footer from "@/components/Footer";
 
 const DashboardLayout = () => {
   const [nfts, setNFTs] = useState<any[]>([]);
@@ -24,6 +26,7 @@ const DashboardLayout = () => {
   const [showRewards, setShowRewards] = useState(false);
 
   const { user, authenticated } = useAuth();
+  const router = useRouter();
 
   // ────────────────────────────────────────────────
   // 📦 Initial Rewards Check
@@ -83,70 +86,75 @@ const DashboardLayout = () => {
   }
 
   return (
-    <div style={{ background: 'radial-gradient(circle at center, #0f0f2a 0%, #070713 100%)' }}>
-      {/* 🎁 Rewards Modal */}
-      {showRewards && (
-        <DailyRewardModal
-          onClaim={handleRewardClaim}
-          onClose={() => setShowRewards(false)}
-        />
-      )}
+    <>
+      <div style={{ background: 'radial-gradient(circle at center, #0f0f2a 0%, #070713 100%)' }}>
+        {/* 🎁 Rewards Modal */}
+        {showRewards && (
+          <DailyRewardModal
+            onClaim={handleRewardClaim}
+            onClose={() => setShowRewards(false)}
+          />
+        )}
 
-      {/* 🎰 Game */}
-      {showVegasGame && (
-        <VegasMintGame
-          onClose={() => {
-            const today = new Date().toISOString().split("T")[0];
-            localStorage.setItem("lastRewardClaimDate", today);
-            setShowRewards(false);
-            setShowVegasGame(false);
-          }}
-        />
-      )}
+        {/* 🎰 Game */}
+        {showVegasGame && (
+          <VegasMintGame
+            onClose={() => {
+              const today = new Date().toISOString().split("T")[0];
+              localStorage.setItem("lastRewardClaimDate", today);
+              setShowRewards(false);
+              setShowVegasGame(false);
+            }}
+          />
+        )}
 
-      {/* 📱 Mobile App-style Buttons */}
-      <div className={styles.buttonsContainer}>
-        <button onClick={() => showPanel('left')} className={styles.button}><RxAvatar /></button>
-        <button onClick={() => showPanel('center')} className={styles.button}><FaMusic /></button>
-        <button onClick={() => showPanel('right')} className={styles.button}><SiWeb3Dotjs /></button>
-      </div>
-
-      {/* 🖥️ Main 3-Panel Grid */}
-      <div className={styles.dashboardContainer}>
-        <div className={styles.desktopGrid}>
-          <div id="core-left-panel" className={styles.leftPanel}><CharacterPanel /></div>
-          <div id="core-center-panel" className={styles.centerPanel}>
-            <h2><span className='glitch box'>LAUNCHPAD Musical NFTs</span></h2>
-            <br />
-            <div style={{ fontSize: '0.8rem' }}>
-              <b className="glitch">BlockBeats 3.0</b> is a platform where you can <strong style={{ color: 'var(--neon-color)'}}>create, trade, and collect</strong> <strong style={{ color: 'var(--clr-3)'}}>musical NFTs</strong>. <br />
-              <strong style={{ color: 'var(--clr-3)'}}>Join our community</strong> to explore unique music creations and <strong style={{ color: 'var(--neon-color)'}}>support artists</strong>!
-            </div>
-            <Image
-              src="/launchpad/simple.png"
-              alt="Launchpad"
-              width={500}
-              height={500}
-              className="avatar-launchpad"
-            />
-          </div>
-          <div id="core-right-panel" className={styles.rightPanel}>
-            <Web3StatsPanel
-              totalNFTCreations={totalNFTCreations}
-              totalTopCollections={totalTopCollections}
-            />
-          </div>
+        {/* 📱 Mobile App-style Buttons */}
+        <div className={styles.buttonsContainer}>
+          <button onClick={() => showPanel('left')} className={styles.button}><RxAvatar /></button>
+          <button onClick={() => showPanel('center')} className={styles.button}><FaMusic /></button>
+          <button onClick={() => showPanel('right')} className={styles.button}><SiWeb3Dotjs /></button>
         </div>
 
-        <hr />
-        <p style={{ padding: '20px 70px' }}>
-          <span>
-            <strong className="glitch">BlockBeats 3.0</strong> empowers anyone to <strong style={{ color: 'var(--neon-color)' }}>trade music</strong> and <strong style={{ color: 'var(--neon-color)' }}>support artists</strong> through an interactive platform <strong style={{ color: 'var(--clr-3)' }}>that connects art and real-world experiences</strong>.
-          </span>
-        </p>
-        <hr />
+        {/* 🖥️ Main 3-Panel Grid */}
+        <div className={styles.dashboardContainer}>
+          <div className={styles.desktopGrid}>
+            <div id="core-left-panel" className={styles.leftPanel}><CharacterPanel /></div>
+            <div id="core-center-panel" className={styles.centerPanel}>
+              <h2><span className='glitch box'>LAUNCHPAD Musical NFTs</span></h2>
+              <br />
+              <div style={{ fontSize: '0.8rem' }}>
+                <b className="glitch">BlockBeats 3.0</b> is a platform where you can <strong style={{ color: 'var(--neon-color)'}}>create, trade, and collect</strong> <strong style={{ color: 'var(--clr-3)'}}>musical NFTs</strong>. <br />
+                <strong style={{ color: 'var(--clr-3)'}}>Join our community</strong> to explore unique music creations and <strong style={{ color: 'var(--neon-color)'}}>support artists</strong>!
+              </div>
+              <Image
+                src="/launchpad/simple.png"
+                alt="Launchpad"
+                width={500}
+                height={500}
+                className="avatar-launchpad"
+                onClick={() => router.push('/studio')}
+              />
+            </div>
+            <div id="core-right-panel" className={styles.rightPanel}>
+              <Web3StatsPanel
+                totalNFTCreations={totalNFTCreations}
+                totalTopCollections={totalTopCollections}
+              />
+            </div>
+          </div>
+
+          <hr />
+          <p style={{ padding: '20px 70px' }}>
+            <span>
+              <strong className="glitch">BlockBeats 3.0</strong> empowers anyone to <strong style={{ color: 'var(--neon-color)' }}>trade music</strong> and <strong style={{ color: 'var(--neon-color)' }}>support artists</strong> through an interactive platform <strong style={{ color: 'var(--clr-3)' }}>that connects art and real-world experiences</strong>.
+            </span>
+          </p>
+          <hr />
+        </div>
       </div>
-    </div>
+      <br />
+      <Footer />
+    </>
   );
 };
 
