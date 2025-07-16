@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect } from 'react';
 import styles from '@/app/assets/styles/MainPage.module.css';
-import PixelPreview from '@/components/PixelPreview';
+import PixelPreview from '@/components/machines/PixelPreview';
 import { addDoc, collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { useAuth } from '@/context/AuthContext';

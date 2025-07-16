@@ -3,7 +3,7 @@ import { useAuth } from "@/context/AuthContext";
 import styles from "@/app/assets/styles/MainPage.module.css";
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
-import PixelPreview from '@/components/PixelPreview';
+import PixelPreview from '@/components/machines/PixelPreview';
 import { Modal } from "react-responsive-modal";
 import SignInUnautorizedModal from '@/components/SignInUnautorizedModal';
 import GalleryHeader from '@/components/GalleryHeader';

@@ -152,7 +152,6 @@ const DashboardLayout = () => {
           <hr />
         </div>
       </div>
-      <br />
       <Footer />
     </>
   );

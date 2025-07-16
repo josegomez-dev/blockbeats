@@ -4,7 +4,7 @@ import React, { useEffect, useReducer, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { doc, arrayUnion, updateDoc } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
-import LevelUpOverlay from './LevelUpOverlay';
+import LevelUpOverlay from './rewards/LevelUpOverlay';
 import styles from '@/app/assets/styles/CharacterPanel.module.css';
 import { db } from '../../firebase';
 import { useAuth } from '../context/AuthContext';

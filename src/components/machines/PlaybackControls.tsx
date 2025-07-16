@@ -87,7 +87,7 @@ const PlaybackControls: React.FC<PlaybackControlsProps> = ({
                     onChange={(e) => onStepChange(Number(e.target.value))}
                     className={styles.stepSelector}
                 >
-                    {[4, 8, 12, 16, 24, 32].map((val) => (
+                    {stepOptions.map((val) => (
                     <option key={val} value={val}>
                         {val} Steps
                     </option>
@@ -109,7 +109,7 @@ const PlaybackControls: React.FC<PlaybackControlsProps> = ({
 
           {showDrumsToggle && (
             <label className={styles.selectGroup}>
-              Drums:
+              🥁
               <input
                 type="checkbox"
                 checked={isDrumEnabled}

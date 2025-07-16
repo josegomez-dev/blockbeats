@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { notes } from './../utils/constants/musicDrawingMachine';
+import { notes } from '../../../utils/constants/musicDrawingMachine';
 
 interface ColorMapItem {
   noteIndex: number;

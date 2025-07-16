@@ -6,10 +6,10 @@ import { useRouter } from 'next/router';
 import { useAuth } from '@/context/AuthContext';
 import styles from '@/app/assets/styles/Nav.module.css';
 import stylesMain from "@/app/assets/styles/MainPage.module.css";
-import { FaSignOutAlt, FaBell, FaCoins } from 'react-icons/fa';
+import { FaSignOutAlt, FaBell, FaCoins, FaMusic, FaBowlingBall } from 'react-icons/fa';
 import { MdDashboard } from 'react-icons/md';
 import { RiGalleryLine } from 'react-icons/ri';
-import { BiCollection } from 'react-icons/bi';
+import { BiCollection, BiGlasses } from 'react-icons/bi';
 import { FaStore, FaChalkboardTeacher, FaCog, FaStoreAlt } from 'react-icons/fa';
 import Avatar from 'react-avatar';
 import { useAccount, useBalance } from "@starknet-react/core";
@@ -238,7 +238,12 @@ export default function Nav() {
                   </Link>
                   <Link href="/studio">
                     <div className={styles.dropdownItem}>
-                      <FaStore className={styles.icon} /> Musical Studio
+                      <FaMusic className={styles.icon} /> Musical Studio
+                    </div>
+                  </Link>
+                  <Link href="/coleccions">
+                    <div className={styles.dropdownItem}>
+                      <BiCollection className={styles.icon} /> Top Collections
                     </div>
                   </Link>
                   <Link href="/marketplace">

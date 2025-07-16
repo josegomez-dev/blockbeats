@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { addDoc, collection } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 
-import { db } from '../../../firebase';
+import { db } from '../../../../firebase';
 import { useAuth } from '@/context/AuthContext';
 import { useMidiInput } from '@/hooks/useMidiInput';
 import PlaybackControls from '@/components/machines/PlaybackControls';
@@ -13,43 +13,35 @@ import PlaybackControls from '@/components/machines/PlaybackControls';
 import {
   notes,
   frequencyRanges,
-  scaleIntervals,
   SEQUENCER,
-  AUDIO,
   midiNoteToFrequency,
   ScaleName
 } from '@/utils/constants/musicDrawingMachine';
 
 import {
   playNote,
-  playMelody,
   playDrumLoop
 } from '@/utils/helpers/drumHelper';
 
 import {
   RANDOM_COLOR,
   TOGGLE,
-  TOGGLE_COLOR,
-  PICK_TWO,
-  RANDOM
+  TOGGLE_COLOR
 } from '@/utils/helpers/pixelHelper';
 
-import PixelCanvas from '../../components/PixelCanvas';
-import Piano from '../../components/Piano';
-import FrequencyModal from '../../components/FrequencyModal';
+import PixelCanvas from './PixelCanvas';
+import Piano from './Piano';
+import FrequencyModal from './FrequencyModal';
 
 import styles from '@/app/assets/styles/MusicStudio.module.css';
-import GalleryHeader from '@/components/GalleryHeader';
 
 export default function MusicDrawingMachine() {
   const { user } = useAuth();
 
   const [notesPlayed, setNotesPlayed] = useState<{ noteIndex: number; time: number }[]>([]);
   const [colorMap, setColorMap] = useState<{ noteIndex: number; time: number; color: string }[]>([]);
-  const [selectedRange, setSelectedRange] = useState('Mono');
+  const [selectedRange, setSelectedRange] = useState('Ornamental');
   const [selectedScale, setSelectedScale] = useState<ScaleName>('minor');
-  const [melodyKind, setMelodyKind] = useState<'chords' | 'solo' | 'both'>('both');
-  const [firstNote, setFirstNote] = useState(notes[0][0]);
   const [tempo, setTempo] = useState(SEQUENCER.DEFAULT_TEMPO);
   const [playIndex, setPlayIndex] = useState<number | null>(null);
   const [isPlayingBack, setIsPlayingBack] = useState(false);
@@ -69,18 +61,30 @@ export default function MusicDrawingMachine() {
 
   const frequencyStyle = frequencyRanges.find((r) => r.name === selectedRange)!;
 
+  // 🧠 MIDI FIX — matching by midi note number instead of frequency
   useMidiInput({
     onMidiNote: (midiNote) => {
-      const noteIdx = notes.findIndex(([note]) => midiNoteToFrequency(midiNote) === Number(note[1]));
-      if (noteIdx >= 0) handleNotePlay(noteIdx);
+      const noteIdx = notes.findIndex(([label, freq]) => {
+        const expectedMidi = Math.round(69 + 12 * Math.log2(Number(freq) / 440));
+        return expectedMidi === midiNote;
+      });
+
+      if (noteIdx >= 0) {
+        console.log(`🎹 MIDI Note ${midiNote} → Index: ${noteIdx}`);
+        handleNotePlay(noteIdx, true);
+      } else {
+        console.warn(`⚠️ Unmapped MIDI note: ${midiNote}`);
+      }
     },
     onDeviceConnect: (deviceName) => {
       setMidiConnected(true);
       setMidiDeviceName(deviceName);
+      console.log(`✅ MIDI Connected: ${deviceName}`);
     },
     onDeviceDisconnect: () => {
       setMidiConnected(false);
       setMidiDeviceName(null);
+      console.warn(`❌ MIDI Disconnected`);
     },
   });
 
@@ -91,12 +95,25 @@ export default function MusicDrawingMachine() {
     setNotesPlayed(updatedNotes);
     setColorMap(updatedColors);
     playNote(notes[noteIdx][1]);
-
     setNextTimeStep(time + 1);
   };
 
-  const handleNotePlay = (noteIdx: number) => {
-    playNote(notes[noteIdx][1]);
+const handleNotePlay = (noteIdx: number, isMidi = false) => {
+  playNote(notes[noteIdx][1]);
+
+  if (isMidi) {
+    // ⏩ MIDI behavior: instant recording and time advancement
+    const time = nextTimeStep;
+    setNextTimeStep((prev) => (prev + 1) % stepLength);
+
+    const newNote = { noteIndex: noteIdx, time };
+    const newColor = { noteIndex: noteIdx, time, color: RANDOM_COLOR() };
+
+    setNotesPlayed((prev) => [...prev, newNote]);
+    setColorMap((prev) => [...prev, newColor]);
+
+  } else {
+    // 🎹 Pointer or virtual keyboard behavior (group notes into chords)
     chordBuffer.current.push(noteIdx);
 
     if (chordTimeoutRef.current) clearTimeout(chordTimeoutRef.current);
@@ -120,7 +137,9 @@ export default function MusicDrawingMachine() {
 
       chordBuffer.current = [];
     }, 300);
-  };
+  }
+};
+
 
   const saveNFTData = async () => {
     const songName = prompt('Name your song-art NFT:');
@@ -157,7 +176,6 @@ export default function MusicDrawingMachine() {
     setIsPlayingBack(true);
 
     const freqMap = notes.map((n) => n[1]);
-
     let currentStep = 0;
     const interval = (60 / tempo) * 1000;
 
@@ -196,30 +214,28 @@ export default function MusicDrawingMachine() {
     setPlayIndex(null);
     stopPlayback();
     setNextTimeStep(0);
-  }
+  };
 
   return (
     <>
       <div className={styles.fullScreenStudio}>
         <header className={styles.topBar}>
-        <PlaybackControls
-          isPlaying={isPlayingBack}
-          tempo={tempo}
-          steps={stepLength}
-          onPlay={playback}
-          onStop={stopPlayback}
-          onTempoChange={setTempo}
-          onStepChange={setStepLength}
-          onReset={handleReset}
-          onSave={saveNFTData}
-          showFreq={true}
-          onOpenFrequencyModal={() => setFreqModalOpen(true)}
-          showDrumsToggle={true}
-          isDrumEnabled={isDrumEnabled}
-          onToggleDrums={setIsDrumEnabled}
-        />
-
-
+          <PlaybackControls
+            isPlaying={isPlayingBack}
+            tempo={tempo}
+            steps={stepLength}
+            onPlay={playback}
+            onStop={stopPlayback}
+            onTempoChange={setTempo}
+            onStepChange={setStepLength}
+            onReset={handleReset}
+            onSave={saveNFTData}
+            showFreq={true}
+            onOpenFrequencyModal={() => setFreqModalOpen(true)}
+            showDrumsToggle={true}
+            isDrumEnabled={isDrumEnabled}
+            onToggleDrums={setIsDrumEnabled}
+          />
         </header>
 
         <main className={styles.canvasSection}>
@@ -238,7 +254,7 @@ export default function MusicDrawingMachine() {
         </footer>
       </div>
 
-     {isFreqModalOpen && (
+      {isFreqModalOpen && (
         <FrequencyModal
           selected={selectedRange}
           onSelect={setSelectedRange}

@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './../app/assets/styles/VegasMintGame.module.css';
 import stylesMain from './../app/assets/styles/MainPage.module.css';
-import LevelUpOverlay from './LevelUpOverlay';
+import LevelUpOverlay from './rewards/LevelUpOverlay';
 import { useAuth } from '@/context/AuthContext';
 
 const EMOJIS = ['🍒', '🍋', '🔔', '💎', '🍉', '⭐', '7️⃣'];

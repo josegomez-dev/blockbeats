@@ -524,3 +524,121 @@
   height: auto;
   margin: 0 auto;
 }
+
+
+.sliderWrapper {
+  overflow: hidden;
+  width: 300px;
+  position: relative;
+  margin-top: 10px;
+}
+
+.sliderWrapper::before,
+.sliderWrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 30px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* .sliderWrapper::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(0, 247, 255, 0.8), transparent);
+} */
+
+.sliderTrack {
+  display: flex;
+  width: fit-content;
+}
+
+.card {
+  min-width: 100px;
+  height: 80px;
+  margin: 0 10px;
+  border: 2px solid;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.8);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+}
+
+/* styles/MusicBox.css or inside your module CSS file */
+.musicBox {
+  border-radius: 8px;
+  font-family: monospace;
+  color: white;
+  border: 2px solid var(--white-color);
+  width: 300px;
+  min-width: 300px;
+  position: relative;
+  text-align: center;
+  height: auto;
+  margin: 0 auto;
+}
+
+
+
+.collectionDrawer {
+  background-color: rgba(25, 25, 25, 0.95);
+  padding: 30px;
+  margin: 20px auto;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 1200px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease-in-out;
+}
+
+.collectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.collectionGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.nftCard {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  color: #fff;
+  padding: 10px 5px;
+  border-radius: 12px;
+  width: 150px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.nftCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+}
+
+.nftCard h4 {
+  font-size: 1rem;
+  color: #fff;
+  margin-bottom: 10px;
+  word-break: break-word;
+}

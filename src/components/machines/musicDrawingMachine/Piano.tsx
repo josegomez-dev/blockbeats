@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react';
 import Key from './Key';
-import { KeyType, notes, keyMap } from './../utils/constants/musicDrawingMachine';
+import { KeyType, notes, keyMap } from '../../../utils/constants/musicDrawingMachine';
 import { playNote } from '@/utils/helpers/drumHelper';
 
 interface PianoProps {

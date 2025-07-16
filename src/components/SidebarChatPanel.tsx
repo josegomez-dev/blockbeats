@@ -5,7 +5,7 @@ import Avatar from 'react-avatar';
 import { useAuth } from '@/context/AuthContext';
 import styles from "@/app/assets/styles/MainPage.module.css";
 import Image from 'next/image';
-import PixelPreview from './PixelPreview';
+import PixelPreview from './machines/PixelPreview';
 
 const TABS = ['Tokens', 'Chats'];
 

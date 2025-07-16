@@ -1,10 +1,11 @@
 import GalleryHeader from '@/components/GalleryHeader';
-import MachineSelector from '@/components/MachineSelector';
-import MusicDrawingMachine from '@/components/machines/MusicDrawingMachine';
-import DrumDesigner from '@/components/machines/DrumDesigner';
+import MachineSelector from '@/components/machines/MachineSelector';
+import MusicDrawingMachine from '@/components/machines/musicDrawingMachine/MusicDrawingMachine';
+import DrumDesigner from '@/components/machines/drumDesigner/DrumDesigner';
 // import AIMelodyGenerator from '@/components/machines/AIMelodyGenerator';
 import { useState } from 'react';
 import styles from '@/app/assets/styles/MusicStudio.module.css';
+import MidiOscillatorRecorder from '@/components/machines/midiMachine/MidiOscillatorRecorder';
 
 const MusicStudioPage = () => {
   const [selectedMachine, setSelectedMachine] = useState<string | null>(null);
@@ -15,6 +16,8 @@ const MusicStudioPage = () => {
         return <MusicDrawingMachine />;
       case 'drums':
         return <DrumDesigner />;
+      // case 'voicemusic':
+      //   return <MidiOscillatorRecorder />;
       // case 'ai':
       //   return <AIMelodyGenerator />;
       default:

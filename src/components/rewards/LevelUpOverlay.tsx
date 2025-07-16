@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import styles from './../app/assets/styles/LevelUpOverlay.module.css';
+import styles from '@/app/assets/styles/LevelUpOverlay.module.css';
 
 interface LevelUpOverlayProps {
   message: string;
