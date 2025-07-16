@@ -157,7 +157,6 @@ const CreateTopFanCollectionModal = () => {
                   </div>
                   <PixelPreview
                     colorMap={nft.colorMap || []}
-                    notesCount={nft.notesPlayed ? nft.notesPlayed.length : 0}
                     size={100}
                     backgroundColor={nft.color || '#000000'}
                   />
