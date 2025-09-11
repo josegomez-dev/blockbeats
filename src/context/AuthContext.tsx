@@ -14,7 +14,7 @@ import {
 import { auth, db } from "./../../firebase";
 import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
 import { EMPTY_USER, User } from "@/types/userTypes";
-import emailjs from 'emailjs-com';
+import emailjs from '@emailjs/browser';
 import toast from 'react-hot-toast';
 import { v4 as uuidv4 } from 'uuid';
 import { NOTIFICATIONS } from "@/utils/constants/notifications";
