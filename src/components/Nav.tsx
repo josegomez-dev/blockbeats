@@ -241,7 +241,7 @@ export default function Nav() {
                       <FaMusic className={styles.icon} /> Studio
                     </div>
                   </Link>
-                  <Link href="/colleccions">
+                  <Link href="/collecions">
                     <div className={styles.dropdownItem}>
                       <BiCollection className={styles.icon} /> Top Collections
                     </div>
