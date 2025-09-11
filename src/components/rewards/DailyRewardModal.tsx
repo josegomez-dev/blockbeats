@@ -28,7 +28,7 @@ const DailyRewardModal: React.FC<Props> = ({ onClose, onClaim }) => {
   }, [onClaim]);
 
   return (
-    <div style={{ textAlign: "center", width: "100%", margin: "10px auto" }}>
+    <div className="modal-content" style={{ textAlign: "center", width: "100%", margin: "10px auto" }}>
       <br />
       <h1 className={`title ${styles.glitch}`}>BlockBeats 3.0</h1>
       <button

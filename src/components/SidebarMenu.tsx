@@ -25,7 +25,7 @@ const SidebarMenu = () => {
 
   const menuItems = [
     { icon: <FaHome />, label: 'Dashboard', href: '/dashboard' },
-    { icon: <FaMusic />, label: 'Musical Studio', href: '/studio' },
+    { icon: <FaMusic />, label: 'Studio', href: '/studio' },
     { icon: <BiCollection />, label: 'Top Collections', href: '/collections' },
     { icon: <FaStore />, label: 'Marketplace', href: '/marketplace' },
     { icon: <FaChalkboardTeacher />, label: 'Quick Tutorials', href: '/tutorials' },

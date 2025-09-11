@@ -238,10 +238,10 @@ export default function Nav() {
                   </Link>
                   <Link href="/studio">
                     <div className={styles.dropdownItem}>
-                      <FaMusic className={styles.icon} /> Musical Studio
+                      <FaMusic className={styles.icon} /> Studio
                     </div>
                   </Link>
-                  <Link href="/coleccions">
+                  <Link href="/colleccions">
                     <div className={styles.dropdownItem}>
                       <BiCollection className={styles.icon} /> Top Collections
                     </div>
