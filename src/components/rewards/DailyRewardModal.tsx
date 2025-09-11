@@ -57,10 +57,11 @@ const DailyRewardModal: React.FC<Props> = ({ onClose, onClaim }) => {
         <b style={{ color: "red" }}>Note: You can only claim rewards once every day.</b><br />
         <b style={{ color: "white" }}>Tip:</b> Complete quests to earn more rewards!
       </p>
-
+<br />
+<br />
+<br />
       <button
         className={styles.submitBtn}
-        style={{ background: "transparent" }}
         onClick={onClose}
       >
         Close Rewards
