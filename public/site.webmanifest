@@ -1,0 +1,29 @@
+{
+  "name": "BlockBeats 3.0 - Web3 Music Creation Platform",
+  "short_name": "BlockBeats",
+  "description": "Create, mint, and trade musical NFTs on Starknet. Web3's first community-powered musical signature generator.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#00FFFF",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/logo.webp",
+      "sizes": "192x192",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo.webp",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["music", "entertainment", "productivity", "utilities"],
+  "lang": "en-US",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false
+}

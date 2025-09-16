@@ -10,6 +10,7 @@ import GalleryHeader from '@/components/GalleryHeader';
 import { NFT } from '@/types/nftTypes';
 import { playMelody, playDrumLoop } from "@/utils/helpers/drumHelper";
 import { notes } from "@/utils/constants/musicDrawingMachine"; // for frequency mapping
+import Head from 'next/head';
 
 
 const MarketplaceScreen = () => {
@@ -90,7 +91,17 @@ const MarketplaceScreen = () => {
   };
 
   return (
-    <div className="gallery-screen">
+    <>
+      <Head>
+        <title>BlockBeats Marketplace - Trade & Discover Musical NFTs</title>
+        <meta name="description" content="Explore the BlockBeats marketplace to discover, trade, and collect unique musical NFTs created by the community. Play and preview music before trading." />
+        <meta name="keywords" content="BlockBeats marketplace, musical NFT trading, music NFT collection, NFT marketplace, Web3 music trading, crypto music, blockchain music" />
+        <meta property="og:title" content="BlockBeats Marketplace - Trade & Discover Musical NFTs" />
+        <meta property="og:description" content="Explore the BlockBeats marketplace to discover, trade, and collect unique musical NFTs created by the community. Play and preview music before trading." />
+        <meta property="og:image" content="https://blockbeats-tau.vercel.app/logo.webp" />
+        <meta property="og:url" content="https://blockbeats-tau.vercel.app/marketplace" />
+      </Head>
+      <div className="gallery-screen">
       <GalleryHeader title="Explore the Marketplace" />
         
       <div className='test-marketplace-bg'>
@@ -175,6 +186,7 @@ const MarketplaceScreen = () => {
       </div>
 
     </div>
+    </>
   );
 };
 

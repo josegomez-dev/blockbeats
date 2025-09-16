@@ -16,6 +16,7 @@ import { useRouter } from "next/router";
 
 import styles from "@/app/assets/styles/MainPage.module.css";
 import Footer from "@/components/Footer";
+import Head from 'next/head';
 
 const DashboardLayout = () => {
   const [nfts, setNFTs] = useState<any[]>([]);
@@ -87,6 +88,15 @@ const DashboardLayout = () => {
 
   return (
     <>
+      <Head>
+        <title>BlockBeats Dashboard - Your Music NFT Collection & Stats</title>
+        <meta name="description" content="Access your BlockBeats dashboard to view your musical NFT collection, character progression, Web3 stats, and launchpad for creating new music." />
+        <meta name="keywords" content="BlockBeats dashboard, music NFT collection, character progression, Web3 stats, launchpad, musical NFTs, user dashboard" />
+        <meta property="og:title" content="BlockBeats Dashboard - Your Music NFT Collection & Stats" />
+        <meta property="og:description" content="Access your BlockBeats dashboard to view your musical NFT collection, character progression, Web3 stats, and launchpad for creating new music." />
+        <meta property="og:image" content="https://blockbeats-tau.vercel.app/logo.webp" />
+        <meta property="og:url" content="https://blockbeats-tau.vercel.app/dashboard" />
+      </Head>
       <div style={{ background: 'radial-gradient(circle at center, #0f0f2a 0%, #070713 100%)' }}>
         {/* 🎁 Rewards Modal */}
         {showRewards && (

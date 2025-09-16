@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useAuth } from "@/context/AuthContext";
 import Image from 'next/image';
+import Head from 'next/head';
 
 const LandingPage = () => {
   const [open, setOpen] = useState(false);
@@ -212,7 +213,21 @@ const LandingPage = () => {
 
 
   return (
-    <div className={styles.landingPage}>
+    <>
+      <Head>
+        <title>BlockBeats 3.0 - Web3 Music Creation Platform</title>
+        <meta name="description" content="Create, mint, and trade musical NFTs on Starknet. Web3's first community-powered musical signature generator with MIDI support, gamification, and NFT marketplace." />
+        <meta name="keywords" content="BlockBeats, Web3 music, NFT music, Starknet, music creation, MIDI, crypto music, blockchain music, musical NFTs, music marketplace, Argent X, Braavos, music generator, pixel music, drum machine, music studio, hackathon winner, Starknet hackathon" />
+        <meta property="og:title" content="BlockBeats 3.0 - Web3 Music Creation Platform" />
+        <meta property="og:description" content="Create, mint, and trade musical NFTs on Starknet. Web3's first community-powered musical signature generator with MIDI support, gamification, and NFT marketplace." />
+        <meta property="og:image" content="https://blockbeats-tau.vercel.app/logo.webp" />
+        <meta property="og:url" content="https://blockbeats-tau.vercel.app" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="BlockBeats 3.0 - Web3 Music Creation Platform" />
+        <meta name="twitter:description" content="Create, mint, and trade musical NFTs on Starknet. Web3's first community-powered musical signature generator with MIDI support, gamification, and NFT marketplace." />
+        <meta name="twitter:image" content="https://blockbeats-tau.vercel.app/logo.webp" />
+      </Head>
+      <div className={styles.landingPage}>
       {/* Hero Section */}
       <section className={styles.hero}>
         <div className={styles.heroContent}>
@@ -456,6 +471,7 @@ const LandingPage = () => {
     )}
       
     </div>
+    </>
   );
 };
 

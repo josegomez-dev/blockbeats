@@ -16,6 +16,7 @@ import { useRouter } from 'next/router';
 import { IWalletConnection } from "@/types/walletTypes";
 import { connect, disconnect } from "starknetkit";
 import { useBlockBeatsAnalytics } from '@/utils/analytics/blockbeatsEvents';
+import Head from 'next/head';
 
 const LoginScreen = () => {
   const router = useRouter();
@@ -210,7 +211,17 @@ const LoginScreen = () => {
   };
 
   return (
-    <main className={styles.main}>
+    <>
+      <Head>
+        <title>Join BlockBeats - Connect Wallet & Start Creating Music NFTs</title>
+        <meta name="description" content="Join BlockBeats 3.0 and start creating musical NFTs. Connect your Argent X or Braavos wallet to access the Web3 music creation platform." />
+        <meta name="keywords" content="BlockBeats login, connect wallet, Argent X, Braavos, Starknet wallet, Web3 music, NFT creation, music platform" />
+        <meta property="og:title" content="Join BlockBeats - Connect Wallet & Start Creating Music NFTs" />
+        <meta property="og:description" content="Join BlockBeats 3.0 and start creating musical NFTs. Connect your Argent X or Braavos wallet to access the Web3 music creation platform." />
+        <meta property="og:image" content="https://blockbeats-tau.vercel.app/logo.webp" />
+        <meta property="og:url" content="https://blockbeats-tau.vercel.app/login" />
+      </Head>
+      <main className={styles.main}>
       
       <div className={`${styles.bannerContainer} ${styles.bannerContainerCustom}`} style={{ marginBottom: '-80px' }}>
         <br />
@@ -416,6 +427,7 @@ const LoginScreen = () => {
       </div>
 
     </main>
+    </>
   );
 };
 
