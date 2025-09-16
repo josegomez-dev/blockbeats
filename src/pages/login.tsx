@@ -17,6 +17,7 @@ import { IWalletConnection } from "@/types/walletTypes";
 import { connect, disconnect } from "starknetkit";
 import { useBlockBeatsAnalytics } from '@/utils/analytics/blockbeatsEvents';
 import Head from 'next/head';
+import WalletAddressModal from '@/components/WalletAddressModal';
 
 const LoginScreen = () => {
   const router = useRouter();
@@ -29,6 +30,7 @@ const LoginScreen = () => {
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
 
   useEffect(() => {
     if (user && authenticated) {
@@ -86,11 +88,19 @@ const LoginScreen = () => {
   }, []);
 
   
-  const readWalletAddress = async () => {
-    const address = prompt("Please enter your wallet address:")
+  const readWalletAddress = () => {
+    // Check if we're on client side
+    if (typeof window === 'undefined') return;
+    
+    setIsWalletModalOpen(true);
+  }
+
+  const handleWalletAddressSubmit = async (address: string) => {
+    setIsWalletModalOpen(false);
+    
     setWalletConnection({
       // wallet: null,
-      address: address || '',
+      address: address,
     });
 
     // fetch all accounts from firebase to check if the account.walletStored is already registered
@@ -102,12 +112,13 @@ const LoginScreen = () => {
       return;
     }
 
-    if (address) {
-      handleConnect(address);
-    }
+    handleConnect(address);
   }
 
   const handleConnect = async (_address: string) => {
+    // Check if we're on client side
+    if (typeof window === 'undefined') return;
+    
     try {
       const result = await connect({ dappName: "BlockBeats" });
       if (result.wallet) {
@@ -170,6 +181,10 @@ const LoginScreen = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Check if we're on client side
+    if (typeof window === 'undefined') return;
+    
     try {
       setLoading(true);
       console.log('Login attempt started for email:', email);
@@ -425,6 +440,14 @@ const LoginScreen = () => {
         <canvas id="neon-canvas"></canvas>
         <div className="neon-glow"></div>
       </div>
+
+      {/* Wallet Address Input Modal */}
+      <WalletAddressModal
+        isOpen={isWalletModalOpen}
+        onClose={() => setIsWalletModalOpen(false)}
+        onSubmit={handleWalletAddressSubmit}
+        loading={loading}
+      />
 
     </main>
     </>
