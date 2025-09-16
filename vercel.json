@@ -4,19 +4,8 @@
   "devCommand": "yarn dev",
   "installCommand": "yarn install",
   "framework": "nextjs",
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/next"
-    }
-  ],
   "env": {
     "NODE_ENV": "production"
-  },
-  "functions": {
-    "src/pages/api/**/*.ts": {
-      "runtime": "nodejs18.x"
-    }
   },
   "headers": [
     {
