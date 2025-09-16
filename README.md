@@ -375,10 +375,10 @@ We welcome contributions from the community! Here's how you can help:
 - [🌍 Web3 Music Revolution](https://www.youtube.com/watch?v=6aGIqnu1UP8)
 
 ### **Community**
-- [📺 YouTube Channel](https://www.youtube.com/@blockbeats)
-- [🐦 Twitter](https://twitter.com/blockbeats)
-- [💬 Discord](https://discord.gg/blockbeats)
-- [📖 Documentation](https://docs.blockbeats.io)
+- [📺 YouTube Channel](https://www.youtube.com/@BlockBeats3.0)
+- [🐦 Twitter](https://x.com/blockbeats3pt0)
+- [💬 Discord](https://discord.gg/Cha49mwX)
+- [📖 Documentation](https://joses-organization-73.gitbook.io/blockbeats-3.0)
 
 ---
 
