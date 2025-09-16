@@ -89,9 +89,6 @@ const LoginScreen = () => {
 
   
   const readWalletAddress = () => {
-    // Check if we're on client side
-    if (typeof window === 'undefined') return;
-    
     setIsWalletModalOpen(true);
   }
 
@@ -116,9 +113,6 @@ const LoginScreen = () => {
   }
 
   const handleConnect = async (_address: string) => {
-    // Check if we're on client side
-    if (typeof window === 'undefined') return;
-    
     try {
       const result = await connect({ dappName: "BlockBeats" });
       if (result.wallet) {
@@ -181,9 +175,6 @@ const LoginScreen = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Check if we're on client side
-    if (typeof window === 'undefined') return;
     
     try {
       setLoading(true);
