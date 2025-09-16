@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "setup-env": "node setup-env.js",
+    "check-env": "node check-env.js"
   },
   "dependencies": {
     "@babel/runtime": "^7.27.1",
