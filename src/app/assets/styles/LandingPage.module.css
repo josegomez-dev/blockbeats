@@ -10,6 +10,7 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  padding-bottom: 120px; /* Space for sticky footer banner */
 }
 
 /* Hero */
@@ -408,9 +409,8 @@
   animation: robotIntro 1.5s ease-out;
 
   position: fixed;
-  bottom: 20px;
+  bottom: 120px;
   right: 20px;
-
   /* animation: robotStickIn 0.8s ease forwards; */
 }
 
@@ -512,7 +512,7 @@
   }
 
   .robotContainer {
-    bottom: 20px;
+    bottom: 80px;
     right: 20px;
     transform: scale(0.9);
   }
@@ -681,4 +681,1156 @@
 
 .ctaButton:hover {
   background: #ffffff;
+}
+
+/* Top NFT Showcase Styles */
+.topNFTShowcase {
+  padding: 80px 20px;
+  background: 
+    radial-gradient(ellipse at center, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+    linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.topNFTShowcase::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 0, 153, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.showcaseHeader {
+  text-align: center;
+  margin-bottom: 60px;
+  position: relative;
+  z-index: 2;
+}
+
+.showcaseHeader h2 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  background: linear-gradient(45deg, #00ffff, #ff0099, #00ffff);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 3s ease-in-out infinite;
+}
+
+.showcaseHeader p {
+  font-size: 1.2rem;
+  color: #ccc;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.nftGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  max-width: 1400px;
+  margin: 0 auto 60px;
+  position: relative;
+  z-index: 2;
+}
+
+.nftCard {
+  background: 
+    linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 2px solid rgba(0, 255, 255, 0.3);
+  border-radius: 20px;
+  padding: 20px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  animation: slideInUp 0.6s ease-out forwards;
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+.nftCard:hover {
+  transform: translateY(-10px) scale(1.02);
+  border-color: rgba(0, 255, 255, 0.8);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(0, 255, 255, 0.3);
+}
+
+.nftCardHovered {
+  transform: translateY(-10px) scale(1.02);
+}
+
+.rarityBadge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: #000;
+  z-index: 3;
+  text-shadow: none;
+}
+
+.nftImageContainer {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  border-radius: 15px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  background: linear-gradient(45deg, #1a1a2e, #16213e);
+}
+
+.nftImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.nftCard:hover .nftImage {
+  transform: scale(1.1);
+}
+
+.playOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.nftCard:hover .playOverlay {
+  opacity: 1;
+}
+
+.playButton {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(0, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #000;
+  transition: all 0.3s ease;
+}
+
+.playButton:hover {
+  background: #fff;
+  transform: scale(1.1);
+}
+
+.nftInfo {
+  text-align: center;
+}
+
+.nftTitle {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+.nftArtist {
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-bottom: 15px;
+}
+
+.nftMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nftCategory {
+  background: rgba(0, 255, 255, 0.2);
+  color: #00ffff;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.nftPrice {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #ffd700;
+}
+
+.nftHoverEffects {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.scanLine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00ffff, transparent);
+  animation: scan 2s linear infinite;
+}
+
+.cornerGlow {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, transparent, rgba(0, 255, 255, 0.3), transparent);
+  border-radius: 22px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.nftCard:hover .cornerGlow {
+  opacity: 1;
+}
+
+.showcaseCTA {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 2;
+}
+
+.ctaButtonSecondary {
+  padding: 12px 20px;
+  background: transparent;
+  color: #00ffff;
+  font-weight: bold;
+  border: 2px solid #00ffff;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ctaButtonSecondary:hover {
+  background: #00ffff;
+  color: #000;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+}
+
+/* Animations */
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes slideInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scan {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .showcaseHeader h2 {
+    font-size: 2rem;
+  }
+  
+  .nftGrid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .showcaseCTA {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .ctaButton, .ctaButtonSecondary {
+    width: 200px;
+  }
+}
+
+/* Real Music NFTs Styles */
+.realMusicNFTs {
+  padding: 80px 20px;
+  background: 
+    radial-gradient(ellipse at center, rgba(255, 0, 153, 0.1) 0%, transparent 50%),
+    linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.realMusicNFTs::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 30% 70%, rgba(255, 0, 153, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 70% 30%, rgba(0, 255, 255, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.realNFTGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  max-width: 1200px;
+  margin: 0 auto 60px;
+  position: relative;
+  z-index: 2;
+}
+
+.realNFTCard {
+  background: 
+    linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+  border: 2px solid rgba(255, 0, 153, 0.3);
+  border-radius: 15px;
+  padding: 20px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  animation: slideInUp 0.6s ease-out forwards;
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+.realNFTCard:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(255, 0, 153, 0.6);
+  box-shadow: 
+    0 15px 30px rgba(0, 0, 0, 0.3),
+    0 0 25px rgba(255, 0, 153, 0.3);
+}
+
+.realNFTCardPlaying {
+  border-color: rgba(255, 0, 153, 0.8);
+  box-shadow: 
+    0 15px 30px rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(255, 0, 153, 0.5);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.realNFTImageContainer {
+  position: relative;
+  width: 100%;
+  height: 150px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 15px;
+  background: linear-gradient(45deg, #1a1a2e, #16213e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.realNFTPlayOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.realNFTCard:hover .realNFTPlayOverlay {
+  opacity: 1;
+}
+
+.realNFTPlayButton {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255, 0, 153, 0.9);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.realNFTPlayButton:hover {
+  background: #ff0099;
+  transform: scale(1.1);
+}
+
+.realNFTPlayButton.playing {
+  background: #00ffff;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+.realNFTInfo {
+  text-align: center;
+}
+
+.realNFTTitle {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 6px;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.realNFTArtist {
+  font-size: 0.8rem;
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+.realNFTMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.7rem;
+}
+
+.realNFTDate {
+  color: #888;
+}
+
+.realNFTTempo {
+  background: rgba(255, 0, 153, 0.2);
+  color: #ff0099;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.realNFTHoverEffects {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+.realNFTScanLine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ff0099, transparent);
+  animation: scan 2.5s linear infinite;
+}
+
+.realNFTCornerGlow {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, transparent, rgba(255, 0, 153, 0.3), transparent);
+  border-radius: 17px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.realNFTCard:hover .realNFTCornerGlow {
+  opacity: 1;
+}
+
+/* Loading States */
+.loadingGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  max-width: 1200px;
+  margin: 0 auto 60px;
+  position: relative;
+  z-index: 2;
+}
+
+.nftCardSkeleton {
+  background: 
+    linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+  border: 2px solid rgba(255, 0, 153, 0.2);
+  border-radius: 15px;
+  padding: 20px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.skeletonImage {
+  width: 100%;
+  height: 150px;
+  background: linear-gradient(90deg, #333 25%, #444 50%, #333 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
+
+.skeletonText {
+  width: 80%;
+  height: 16px;
+  background: linear-gradient(90deg, #333 25%, #444 50%, #333 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.skeletonTextSmall {
+  width: 60%;
+  height: 12px;
+  background: linear-gradient(90deg, #333 25%, #444 50%, #333 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+/* Empty State */
+.emptyState {
+  text-align: center;
+  padding: 60px 20px;
+  max-width: 500px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.emptyIcon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  opacity: 0.7;
+}
+
+.emptyState h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.emptyState p {
+  font-size: 1rem;
+  color: #ccc;
+  margin-bottom: 30px;
+}
+
+/* Animations */
+@keyframes pulse {
+  0%, 100% { 
+    box-shadow: 0 0 20px rgba(255, 0, 153, 0.3);
+  }
+  50% { 
+    box-shadow: 0 0 30px rgba(255, 0, 153, 0.6);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Responsive Design for Real NFTs */
+@media (max-width: 768px) {
+  .realNFTGrid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+  .realNFTImageContainer {
+    height: 120px;
+  }
+  
+  .realNFTTitle {
+    font-size: 1rem;
+  }
+  
+  .realNFTArtist {
+    font-size: 0.7rem;
+  }
+  
+  .realNFTMeta {
+    font-size: 0.6rem;
+  }
+}
+
+/* Auto Gallery Banner Styles */
+.autoGalleryBanner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: 
+    linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(26, 26, 46, 0.95) 100%);
+  backdrop-filter: blur(20px);
+  border-top: 2px solid rgba(0, 255, 255, 0.3);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.autoGalleryBanner:hover {
+  height: 120px;
+  border-top-color: rgba(0, 255, 255, 0.6);
+  box-shadow: 0 -10px 30px rgba(0, 255, 255, 0.2);
+}
+
+.bannerBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bannerParticles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 50%, rgba(255, 0, 153, 0.1) 0%, transparent 50%);
+  animation: particleFloat 8s ease-in-out infinite;
+}
+
+.bannerGrid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  animation: gridMove 20s linear infinite;
+}
+
+.bannerContent {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  gap: 20px;
+}
+
+.bannerNFTPreview {
+  flex-shrink: 0;
+}
+
+.bannerNFTContainer {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(45deg, #1a1a2e, #16213e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(0, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.autoGalleryBanner:hover .bannerNFTContainer {
+  border-color: rgba(0, 255, 255, 0.6);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+.bannerPlayOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.bannerNFTContainer:hover .bannerPlayOverlay {
+  opacity: 1;
+}
+
+.bannerPlayButton {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 255, 255, 0.9);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: #000;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.bannerPlayButton:hover {
+  background: #fff;
+  transform: scale(1.1);
+}
+
+.bannerPlayButton.playing {
+  background: #ff0099;
+  color: #fff;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+.bannerInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.bannerTitle {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  animation: slideInFromLeft 0.5s ease-out;
+}
+
+.bannerArtist {
+  font-size: 0.8rem;
+  color: #ccc;
+  margin-bottom: 6px;
+  animation: slideInFromLeft 0.5s ease-out 0.1s both;
+}
+
+.bannerMeta {
+  display: flex;
+  gap: 15px;
+  font-size: 0.7rem;
+  animation: slideInFromLeft 0.5s ease-out 0.2s both;
+}
+
+.bannerTempo {
+  background: rgba(0, 255, 255, 0.2);
+  color: #00ffff;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.bannerProgress {
+  color: #888;
+}
+
+.bannerControls {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.bannerControlButton {
+  width: 35px;
+  height: 35px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  color: #00ffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+}
+
+.bannerControlButton:hover:not(:disabled) {
+  background: rgba(0, 255, 255, 0.2);
+  border-color: rgba(0, 255, 255, 0.6);
+  transform: scale(1.1);
+}
+
+.bannerControlButton:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.bannerControlButton.active {
+  background: rgba(0, 255, 255, 0.3);
+  border-color: rgba(0, 255, 255, 0.8);
+  color: #fff;
+}
+
+.bannerProgressBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.bannerProgressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #00ffff, #ff0099, #00ffff);
+  background-size: 200% 100%;
+  animation: gradientShift 2s ease-in-out infinite;
+  transition: width 0.3s ease;
+}
+
+.bannerQuickAccess {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  padding: 6px 12px;
+  background: rgba(255, 0, 153, 0.2);
+  color: #ff0099;
+  border: 1px solid rgba(255, 0, 153, 0.4);
+  border-radius: 15px;
+  font-size: 0.7rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 3;
+}
+
+.bannerQuickAccess:hover {
+  background: rgba(255, 0, 153, 0.4);
+  border-color: rgba(255, 0, 153, 0.8);
+  transform: translateY(-2px);
+}
+
+/* Animations */
+@keyframes particleFloat {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.3;
+  }
+  50% { 
+    transform: translateY(-10px) rotate(180deg);
+    opacity: 0.6;
+  }
+}
+
+@keyframes gridMove {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(20px); }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes progressFill {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+/* Responsive Design for Banner */
+@media (max-width: 768px) {
+  .autoGalleryBanner {
+    height: 80px;
+    padding: 0 10px;
+  }
+  
+  .autoGalleryBanner:hover {
+    height: 90px;
+  }
+  
+  .bannerContent {
+    gap: 10px;
+  }
+  
+  .bannerNFTContainer {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .bannerTitle {
+    font-size: 0.9rem;
+  }
+  
+  .bannerArtist {
+    font-size: 0.7rem;
+  }
+  
+  .bannerMeta {
+    font-size: 0.6rem;
+    gap: 10px;
+  }
+  
+  .bannerControlButton {
+    width: 30px;
+    height: 30px;
+    font-size: 0.7rem;
+  }
+  
+  .bannerQuickAccess {
+    top: 5px;
+    right: 10px;
+    padding: 4px 8px;
+    font-size: 0.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .bannerInfo {
+    display: none; /* Hide info on very small screens */
+  }
+  
+  .bannerControls {
+    gap: 5px;
+  }
+  
+  .bannerControlButton {
+    width: 25px;
+    height: 25px;
+    font-size: 0.6rem;
+  }
+}
+
+/* Robot Skins Showcase Styles */
+.robotSkinsShowcase {
+  padding: 80px 20px;
+  background: 
+    radial-gradient(ellipse at center, rgba(255, 0, 153, 0.1) 0%, transparent 50%),
+    linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.robotSkinsShowcase::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 40% 60%, rgba(255, 0, 153, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 60% 40%, rgba(0, 255, 255, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.skinsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  max-width: 1000px;
+  margin: 0 auto 60px;
+  position: relative;
+  z-index: 2;
+}
+
+.skinCard {
+  background: 
+    linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 2px solid rgba(255, 0, 153, 0.3);
+  border-radius: 20px;
+  padding: 25px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  animation: slideInUp 0.6s ease-out forwards;
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+.skinCard:hover {
+  transform: translateY(-10px) scale(1.02);
+  border-color: rgba(255, 0, 153, 0.8);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(255, 0, 153, 0.3);
+}
+
+.skinCardHovered {
+  transform: translateY(-10px) scale(1.02);
+}
+
+.skinImageContainer {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  border-radius: 15px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  background: linear-gradient(45deg, #1a1a2e, #16213e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.skinImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.skinCard:hover .skinImage {
+  transform: scale(1.05);
+}
+
+.skinInfo {
+  text-align: center;
+}
+
+.skinTitle {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.skinDescription {
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-bottom: 15px;
+  line-height: 1.4;
+}
+
+.skinMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.skinCategory {
+  background: rgba(255, 0, 153, 0.2);
+  color: #ff0099;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.skinPrice {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #ffd700;
+}
+
+.skinHoverEffects {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.skinScanLine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ff0099, transparent);
+  animation: scan 2s linear infinite;
+}
+
+.skinCornerGlow {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, transparent, rgba(255, 0, 153, 0.3), transparent);
+  border-radius: 22px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.skinCard:hover .skinCornerGlow {
+  opacity: 1;
+}
+
+/* Responsive Design for Robot Skins */
+@media (max-width: 768px) {
+  .skinsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .skinImageContainer {
+    height: 200px;
+  }
+  
+  .skinTitle {
+    font-size: 1.2rem;
+  }
+  
+  .skinDescription {
+    font-size: 0.8rem;
+  }
+  
+  .skinMeta {
+    flex-direction: column;
+    gap: 10px;
+  }
 }

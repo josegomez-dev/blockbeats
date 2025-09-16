@@ -9,6 +9,11 @@ import Link from 'next/link';
 import { useAuth } from "@/context/AuthContext";
 import Image from 'next/image';
 import Head from 'next/head';
+import TopNFTShowcase from '@/components/TopNFTShowcase';
+import RealMusicNFTs from '@/components/RealMusicNFTs';
+import AutoGalleryBanner from '@/components/AutoGalleryBanner';
+import RobotSkinsShowcase from '@/components/RobotSkinsShowcase';
+import Footer from '@/components/Footer';
 
 const LandingPage = () => {
   const [open, setOpen] = useState(false);
@@ -410,19 +415,32 @@ const LandingPage = () => {
         ))}
       </div>
     </section>
+
     
     {/* Welcome Section */}
     <section className={styles.welcomeSection}>
       <div className={styles.imageContainer}>
+        <br />
         <Image
           src="/co-create-music.png"
           alt="BlockBeats Launchpad"
           width={500}
-          height={500}
-          style={{ width: '100%', height: 'auto', objectFit: 'cover', borderRadius: '1rem', boxShadow: '0 0 25px rgba(255,255,255,0.2)' }}
+          height={300}
+          style={{ width: '100%', maxWidth: '800px', height: 'auto', objectFit: 'cover', borderRadius: '1rem', boxShadow: '0 0 25px rgba(255,255,255,0.2)', margin: '0 auto', display: 'block' }}
         />  
       </div>
     </section>
+    <br />
+
+    {/* Top NFT Showcase */}
+    <hr />
+    <TopNFTShowcase />
+    
+    {/* Robot Skins Showcase */}
+    <hr />
+    <RobotSkinsShowcase />
+
+    <Footer />
 
     {open && (
       <Modal
@@ -469,6 +487,9 @@ const LandingPage = () => {
         )}
       </Modal>
     )}
+
+    {/* Auto Gallery Banner - Sticky Footer */}
+    <AutoGalleryBanner />
       
     </div>
     </>
