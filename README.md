@@ -403,7 +403,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Email**: josegomez.dev@gmail.com
 - **Discord**: [Join our community](https://discord.gg/Cha49mwX)
 - **Twitter**: [@blockbeats](https://x.com/blockbeats3pt0)
-- **Website**: [blockbeats.io](https://blockbeats-tau.vercel.app/)
+- **Website**: [https://blockbeats-tau.vercel.app/](https://blockbeats-tau.vercel.app/)
 
 ---
 
