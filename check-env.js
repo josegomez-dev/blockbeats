@@ -5,17 +5,20 @@
  * Checks if all required environment variables are properly set
  */
 
+// Load environment variables from .env.local
+require('dotenv').config({ path: '.env.local' });
+
 console.log('\n🔍 BlockBeats Environment Check');
 console.log('================================');
 
 // Required Firebase variables
 const requiredFirebaseVars = [
-  'FIREBASE_API_KEY',
-  'FIREBASE_AUTH_DOMAIN',
-  'FIREBASE_PROJECT_ID',
-  'FIREBASE_STORAGE_BUCKET',
-  'FIREBASE_MESSAGING_SENDER_ID',
-  'FIREBASE_APP_ID',
+  'NEXT_PUBLIC_FIREBASE_API_KEY',
+  'NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN',
+  'NEXT_PUBLIC_FIREBASE_PROJECT_ID',
+  'NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET',
+  'NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID',
+  'NEXT_PUBLIC_FIREBASE_APP_ID',
 ];
 
 const missingVars = [];
@@ -35,11 +38,11 @@ requiredFirebaseVars.forEach((varName) => {
 
 // Check optional Analytics variable
 console.log('\n📊 Analytics Configuration:');
-if (process.env.ANALYTICS_MEASUREMENT_ID) {
+if (process.env.NEXT_PUBLIC_ANALYTICS_MEASUREMENT_ID) {
   console.log('  Analytics Measurement ID: ✅ Set');
 } else {
   console.log('  Analytics Measurement ID: ⚠️  Not set (optional)');
-  warnings.push('ANALYTICS_MEASUREMENT_ID is not set (optional)');
+  warnings.push('NEXT_PUBLIC_ANALYTICS_MEASUREMENT_ID is not set (optional)');
 }
 
 // Check app configuration

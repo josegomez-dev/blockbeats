@@ -39,18 +39,18 @@ const envLocalContent = `# ===========================================
 # ===========================================
 # FIREBASE CONFIGURATION (REQUIRED)
 # ===========================================
-FIREBASE_API_KEY=AIzaSyDLzTaGe_WCw9RVdutz4Mqx-ViQrL_to9Y
-FIREBASE_AUTH_DOMAIN=blockbeats-ee6d3.firebaseapp.com
-FIREBASE_PROJECT_ID=blockbeats-ee6d3
-FIREBASE_STORAGE_BUCKET=blockbeats-ee6d3.firebasestorage.app
-FIREBASE_MESSAGING_SENDER_ID=380764586846
-FIREBASE_APP_ID=1:380764586846:web:7285f377aa1d29103d85cf
+NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSyDLzTaGe_WCw9RVdutz4Mqx-ViQrL_to9Y
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=blockbeats-ee6d3.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=blockbeats-ee6d3
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=blockbeats-ee6d3.firebasestorage.app
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=380764586846
+NEXT_PUBLIC_FIREBASE_APP_ID=1:380764586846:web:7285f377aa1d29103d85cf
 
 # ===========================================
 # ANALYTICS CONFIGURATION (OPTIONAL)
 # ===========================================
 # Analytics Measurement ID (serves both Firebase Analytics and Google Analytics)
-ANALYTICS_MEASUREMENT_ID=G-018RENMEBY
+NEXT_PUBLIC_ANALYTICS_MEASUREMENT_ID=G-018RENMEBY
 
 # ===========================================
 # APPLICATION CONFIGURATION

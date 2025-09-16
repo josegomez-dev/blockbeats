@@ -55,12 +55,12 @@ export function validateEnvironment(): EnvValidationResult {
 
   // Required Firebase variables
   const requiredFirebaseVars = [
-    'FIREBASE_API_KEY',
-    'FIREBASE_AUTH_DOMAIN',
-    'FIREBASE_PROJECT_ID',
-    'FIREBASE_STORAGE_BUCKET',
-    'FIREBASE_MESSAGING_SENDER_ID',
-    'FIREBASE_APP_ID',
+    'NEXT_PUBLIC_FIREBASE_API_KEY',
+    'NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN',
+    'NEXT_PUBLIC_FIREBASE_PROJECT_ID',
+    'NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET',
+    'NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID',
+    'NEXT_PUBLIC_FIREBASE_APP_ID',
   ];
 
   // Check required Firebase variables
@@ -71,7 +71,7 @@ export function validateEnvironment(): EnvValidationResult {
       result.isValid = false;
     } else {
       // Update config status
-      const key = varName.replace('FIREBASE_', '').toLowerCase();
+      const key = varName.replace('NEXT_PUBLIC_FIREBASE_', '').toLowerCase();
       if (key === 'api_key') result.config.firebase.apiKey = true;
       if (key === 'auth_domain') result.config.firebase.authDomain = true;
       if (key === 'project_id') result.config.firebase.projectId = true;
@@ -82,11 +82,11 @@ export function validateEnvironment(): EnvValidationResult {
   });
 
   // Optional Analytics variable
-  if (process.env.ANALYTICS_MEASUREMENT_ID) {
+  if (process.env.NEXT_PUBLIC_ANALYTICS_MEASUREMENT_ID) {
     result.config.firebase.measurementId = true;
     result.config.analytics.measurementId = true;
   } else {
-    result.warnings.push('ANALYTICS_MEASUREMENT_ID is not set (optional)');
+    result.warnings.push('NEXT_PUBLIC_ANALYTICS_MEASUREMENT_ID is not set (optional)');
   }
 
   // App configuration

@@ -30,8 +30,8 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <Toaster/>
                 <Component {...pageProps} />
                 <Analytics />
-                {process.env.ANALYTICS_MEASUREMENT_ID && (
-                  <GoogleAnalytics gaId={process.env.ANALYTICS_MEASUREMENT_ID} />
+                {process.env.NEXT_PUBLIC_ANALYTICS_MEASUREMENT_ID && (
+                  <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_ANALYTICS_MEASUREMENT_ID} />
                 )}
             </Layout>
         </GlobalProvider>
