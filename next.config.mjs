@@ -80,7 +80,7 @@ const nextConfig = {
   
   // Compiler options
   compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
+    removeConsole: false, // Keep console logs for debugging in production
   },
   
   // Performance optimizations
