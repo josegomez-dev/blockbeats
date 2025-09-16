@@ -17,25 +17,18 @@ import { IWalletConnection } from "@/types/walletTypes";
 import { connect, disconnect } from "starknetkit";
 import { useBlockBeatsAnalytics } from '@/utils/analytics/blockbeatsEvents';
 import Head from 'next/head';
-import DebugInfo from '@/components/DebugInfo';
 
 const LoginScreen = () => {
   const router = useRouter();
   const { user, signUpWithWallet, signUp, signIn, authenticated, verifyEmail, sendWelcomeEmail, walletConnectionAuth, setWalletConnectionAuth } = useAuth();
   const { trackWalletConnection } = useBlockBeatsAnalytics();
   const [walletConnection, setWalletConnection] = useState<IWalletConnection | null>(null);
-  const [mounted, setMounted] = useState(false);
 
   const [email, setEmail] = useState("");
   const [createAccountEmail, setCreateAccountEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  // Ensure component is mounted on client side
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   useEffect(() => {
     if (user && authenticated) {
@@ -216,26 +209,6 @@ const LoginScreen = () => {
       return walletConnectionAuth?.address ? `${walletConnectionAuth.address.slice(0, 6)}...${walletConnectionAuth.address.slice(-4)}` : 'Not connected';
     }
   };
-
-  // Prevent hydration mismatch
-  if (!mounted) {
-    return (
-      <>
-        <Head>
-          <title>Join BlockBeats - Connect Wallet & Start Creating Music NFTs</title>
-          <meta name="description" content="Join BlockBeats 3.0 and start creating musical NFTs. Connect your Argent X or Braavos wallet to access the Web3 music creation platform." />
-          <meta name="keywords" content="BlockBeats login, connect wallet, Argent X, Braavos, Starknet wallet, Web3 music, NFT creation, music platform" />
-          <meta property="og:title" content="Join BlockBeats - Connect Wallet & Start Creating Music NFTs" />
-          <meta property="og:description" content="Join BlockBeats 3.0 and start creating musical NFTs. Connect your Argent X or Braavos wallet to access the Web3 music creation platform." />
-          <meta property="og:image" content="https://blockbeats-tau.vercel.app/logo.webp" />
-          <meta property="og:url" content="https://blockbeats-tau.vercel.app/login" />
-        </Head>
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-          <div>Loading...</div>
-        </div>
-      </>
-    );
-  }
 
   return (
     <>
@@ -453,7 +426,6 @@ const LoginScreen = () => {
         <div className="neon-glow"></div>
       </div>
 
-      <DebugInfo />
     </main>
     </>
   );

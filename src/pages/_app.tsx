@@ -14,25 +14,13 @@ import type { AppProps } from 'next/app'
 import { Toaster } from 'react-hot-toast'
 import { Analytics } from '@vercel/analytics/react';
 import { GoogleAnalytics } from '@next/third-parties/google';
-import { useEffect, useState } from 'react';
 
 import Layout from '@/components/Layout'
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [mounted, setMounted] = useState(false);
-  
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const chains = [sepolia];
   const provider = publicProvider();
   const connectors = [braavos(), argent()];
-  
-  // Prevent hydration mismatch by not rendering until mounted
-  if (!mounted) {
-    return null;
-  }
   
   return (
     <StarknetConfig chains={chains} provider={provider} connectors={connectors}>
