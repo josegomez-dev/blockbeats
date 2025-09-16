@@ -8,7 +8,11 @@
     "start": "next start",
     "lint": "next lint",
     "setup-env": "node setup-env.js",
-    "check-env": "node check-env.js"
+    "check-env": "node check-env.js",
+    "build:prod": "NODE_ENV=production next build",
+    "start:prod": "NODE_ENV=production next start",
+    "vercel-build": "yarn build",
+    "postbuild": "yarn check-env"
   },
   "dependencies": {
     "@babel/runtime": "^7.27.1",
