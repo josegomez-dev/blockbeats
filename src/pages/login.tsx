@@ -24,6 +24,7 @@ const LoginScreen = () => {
   const { user, signUpWithWallet, signUp, signIn, authenticated, verifyEmail, sendWelcomeEmail, walletConnectionAuth, setWalletConnectionAuth } = useAuth();
   const { trackWalletConnection } = useBlockBeatsAnalytics();
   const [walletConnection, setWalletConnection] = useState<IWalletConnection | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   const [email, setEmail] = useState("");
   const [createAccountEmail, setCreateAccountEmail] = useState("");
@@ -32,6 +33,11 @@ const LoginScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
 
+  // Ensure component is mounted on client side
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   useEffect(() => {
     if (user && authenticated) {
       router.push('/dashboard');
@@ -39,7 +45,10 @@ const LoginScreen = () => {
   }, [user, authenticated, router]);
 
   useEffect(() => {
-    document.addEventListener("mousemove", (e) => {
+    // Only run on client side
+    if (typeof window === 'undefined') return;
+
+    const handleMouseMove = (e: MouseEvent) => {
       const x = e.clientX / window.innerWidth - 0.5;
       const y = e.clientY / window.innerHeight - 0.5;
 
@@ -84,7 +93,14 @@ const LoginScreen = () => {
       }
 
       drawPlasma();
-    });
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+
+    // Cleanup function
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+    };
   }, []);
 
   
@@ -215,6 +231,33 @@ const LoginScreen = () => {
       return walletConnectionAuth?.address ? `${walletConnectionAuth.address.slice(0, 6)}...${walletConnectionAuth.address.slice(-4)}` : 'Not connected';
     }
   };
+
+  // Show loading state until mounted on client
+  if (!mounted) {
+    return (
+      <>
+        <Head>
+          <title>Join BlockBeats - Connect Wallet & Start Creating Music NFTs</title>
+          <meta name="description" content="Join BlockBeats 3.0 and start creating musical NFTs. Connect your Argent X or Braavos wallet to access the Web3 music creation platform." />
+          <meta name="keywords" content="BlockBeats login, connect wallet, Argent X, Braavos, Starknet wallet, Web3 music, NFT creation, music platform" />
+          <meta property="og:title" content="Join BlockBeats - Connect Wallet & Start Creating Music NFTs" />
+          <meta property="og:description" content="Join BlockBeats 3.0 and start creating musical NFTs. Connect your Argent X or Braavos wallet to access the Web3 music creation platform." />
+          <meta property="og:image" content="https://blockbeats-tau.vercel.app/logo.webp" />
+          <meta property="og:url" content="https://blockbeats-tau.vercel.app/login" />
+        </Head>
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignItems: 'center', 
+          height: '100vh',
+          background: 'radial-gradient(circle at center, #0f0f2a 0%, #070713 100%)',
+          color: '#00FFFF'
+        }}>
+          <div>Loading BlockBeats...</div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
