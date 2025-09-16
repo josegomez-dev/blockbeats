@@ -247,13 +247,35 @@ const LoginScreen = () => {
         </Head>
         <div style={{ 
           display: 'flex', 
+          flexDirection: 'column',
           justifyContent: 'center', 
           alignItems: 'center', 
           height: '100vh',
           background: 'radial-gradient(circle at center, #0f0f2a 0%, #070713 100%)',
-          color: '#00FFFF'
+          color: '#00FFFF',
+          textAlign: 'center',
+          padding: '20px'
         }}>
-          <div>Loading BlockBeats...</div>
+          <div style={{ fontSize: '24px', marginBottom: '20px', fontWeight: 'bold' }}>
+            🎵 BlockBeats
+          </div>
+          <div style={{ fontSize: '16px', marginBottom: '10px' }}>
+            ⚠️ Troubles with some services on production
+          </div>
+          <div style={{ fontSize: '14px', color: '#888' }}>
+            We're working on it...
+          </div>
+          <div style={{ 
+            marginTop: '30px', 
+            fontSize: '12px', 
+            color: '#666',
+            border: '1px solid #333',
+            padding: '10px',
+            borderRadius: '5px',
+            backgroundColor: 'rgba(0,0,0,0.3)'
+          }}>
+            Please try refreshing the page in a few moments
+          </div>
         </div>
       </>
     );
