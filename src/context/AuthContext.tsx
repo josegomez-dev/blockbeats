@@ -18,7 +18,7 @@ import emailjs from '@emailjs/browser';
 import toast from 'react-hot-toast';
 import { v4 as uuidv4 } from 'uuid';
 import { NOTIFICATIONS } from "@/utils/constants/notifications";
-import router from "next/router";
+import { useRouter } from "next/router";
 
 
 interface AuthContextType {
@@ -55,10 +55,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [role, setRole] = useState<string>('user')
   const [authenticated, setAuthenticated] = useState<boolean>(false)
   const [walletConnectionAuth, setWalletConnectionAuth] = useState<any>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user && window.location.pathname !== '/') {
+      if (user && typeof window !== 'undefined' && window.location.pathname !== '/') {
         // User is signed in, fetch user data from Firestore
         const accountRef = doc(db, "accounts", user.uid);
         getDoc(accountRef).then((accountSnap) => {
@@ -180,7 +181,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         emailVerified: true,
       }, { merge: true });
       toast.success("Email verified successfully.");
-      window.location.reload();
+      if (typeof window !== 'undefined') {
+        window.location.reload();
+      }
       
     } catch (error) {
       console.error("Error sending email verification:", error);
@@ -289,8 +292,10 @@ const removeUndefined = (obj: any): any => {
 
   const signIn = async (email: string, password: string) => {
     try {
+      console.log('Attempting to sign in with email:', email);
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
+      console.log('Firebase auth successful, user:', user.uid);
   
       // Fetch corresponding account from Firestore
       const accountRef = doc(db, "accounts", user.uid);
@@ -311,7 +316,9 @@ const removeUndefined = (obj: any): any => {
         setAuthenticated(true);
         setRole(accountData.role || "user");
 
-        router.push('/dashboard');
+        if (typeof window !== 'undefined') {
+          router.push('/dashboard');
+        }
   
         console.log("User signed in and account fetched successfully.");
       } else {

@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { db } from '../../../../firebase';
 import { useAuth } from '@/context/AuthContext';
 import { useMidiInput } from '@/hooks/useMidiInput';
+import { useBlockBeatsAnalytics } from '@/utils/analytics/blockbeatsEvents';
 import PlaybackControls from '@/components/machines/PlaybackControls';
 
 import {
@@ -37,6 +38,7 @@ import styles from '@/app/assets/styles/MusicStudio.module.css';
 
 export default function MusicDrawingMachine() {
   const { user } = useAuth();
+  const { trackMusicCreation, trackNFTCreation } = useBlockBeatsAnalytics();
 
   const [notesPlayed, setNotesPlayed] = useState<{ noteIndex: number; time: number }[]>([]);
   const [colorMap, setColorMap] = useState<{ noteIndex: number; time: number; color: string }[]>([]);
@@ -157,6 +159,11 @@ const handleNotePlay = (noteIdx: number, isMidi = false) => {
         createdBy: user?.uid,
         id: uuidv4(),
       });
+      
+      // Track NFT creation
+      trackNFTCreation(songName, 'drawing', tempo);
+      trackMusicCreation('drawing');
+      
       toast.success('Saved as NFT!');
     } catch (error) {
       console.error(error);

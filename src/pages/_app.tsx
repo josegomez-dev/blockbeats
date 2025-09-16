@@ -12,6 +12,8 @@ import { GlobalProvider } from '@/context/GlobalContext'
 import { AuthProvider } from '@/context/AuthContext'
 import type { AppProps } from 'next/app'
 import { Toaster } from 'react-hot-toast'
+import { Analytics } from '@vercel/analytics/react';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 import Layout from '@/components/Layout'
 
@@ -27,6 +29,10 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Layout>
                 <Toaster/>
                 <Component {...pageProps} />
+                <Analytics />
+                {process.env.NEXT_PUBLIC_GA_ID && (
+                  <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+                )}
             </Layout>
         </GlobalProvider>
       </AuthProvider>

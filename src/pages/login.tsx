@@ -15,10 +15,12 @@ import { useRouter } from 'next/router';
 
 import { IWalletConnection } from "@/types/walletTypes";
 import { connect, disconnect } from "starknetkit";
+import { useBlockBeatsAnalytics } from '@/utils/analytics/blockbeatsEvents';
 
 const LoginScreen = () => {
   const router = useRouter();
   const { user, signUpWithWallet, signUp, signIn, authenticated, verifyEmail, sendWelcomeEmail, walletConnectionAuth, setWalletConnectionAuth } = useAuth();
+  const { trackWalletConnection } = useBlockBeatsAnalytics();
   const [walletConnection, setWalletConnection] = useState<IWalletConnection | null>(null);
 
   const [email, setEmail] = useState("");
@@ -27,9 +29,11 @@ const LoginScreen = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  if (user && authenticated) {
-    router.push('/dashboard');
-  }
+  useEffect(() => {
+    if (user && authenticated) {
+      router.push('/dashboard');
+    }
+  }, [user, authenticated, router]);
 
   useEffect(() => {
     document.addEventListener("mousemove", (e) => {
@@ -117,6 +121,10 @@ const LoginScreen = () => {
           }
         );
         
+        // Track wallet connection
+        const walletType = result.wallet?.id?.includes('argent') ? 'argent' : 'braavos';
+        trackWalletConnection(walletType, _address);
+        
         toast.success(`Wallet ${_address} connected successfully!`);
         setIsModalOpen(true);
       } else {
@@ -163,14 +171,19 @@ const LoginScreen = () => {
     e.preventDefault();
     try {
       setLoading(true);
+      console.log('Login attempt started for email:', email);
+      
       // check if email is already in accounts collection in firebase
       const accounts = await getAllAccounts();
       const existingAccount = accounts.find((account) => account.email === email);
+      
       if (existingAccount) {
+        console.log('Existing account found, signing in...');
         toast.success("You're already in.");
         await signIn(existingAccount.email, "abc123");
         return;
       } else {
+        console.log('New account, signing up...');
         // await sendWelcomeEmail(email, "abc123");
         await signUp(email, "abc123");
         setLoading(false);
@@ -180,8 +193,8 @@ const LoginScreen = () => {
       }
       
     } catch (error) {
-      console.error("Error signing up:", error);
-      toast.error("Error signing up. Please try again.");
+      console.error("Error in login process:", error);
+      toast.error(`Error: ${error instanceof Error ? error.message : 'Unknown error occurred'}`);
       setLoading(false);
       return;
     }
