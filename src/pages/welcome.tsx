@@ -39,12 +39,18 @@ const WelcomeScreen = () => {
 
   useEffect(() => {
     // Only run on client side and ensure DOM is ready
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined') {
+      console.log('🚫 Welcome: Server side, skipping plasma effects');
+      return;
+    }
+    
+    console.log('✅ Welcome: Client side, setting up plasma effects');
     
     let handleMouseMove: ((e: MouseEvent) => void) | null = null;
     
     // Add a small delay to ensure DOM is fully loaded
     const timer = setTimeout(() => {
+      console.log('🎨 Welcome: Setting up mouse move handler');
       handleMouseMove = (e: MouseEvent) => {
         const x = e.clientX / window.innerWidth - 0.5;
         const y = e.clientY / window.innerHeight - 0.5;
@@ -55,9 +61,16 @@ const WelcomeScreen = () => {
         }
 
         const canvas = document.getElementById("neon-canvas") as HTMLCanvasElement | null;
-        if (!canvas) return;
+        if (!canvas) {
+          console.log('❌ Welcome: Canvas not found');
+          return;
+        }
         const ctx = canvas.getContext("2d");
-        if (!ctx) return;
+        if (!ctx) {
+          console.log('❌ Welcome: Canvas context not available');
+          return;
+        }
+        console.log('✅ Welcome: Canvas and context ready');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
@@ -108,6 +121,7 @@ const WelcomeScreen = () => {
 
   
   const readWalletAddress = () => {
+    console.log('🔘 Welcome: Connect Wallet button clicked');
     setIsWalletModalOpen(true);
   }
 
@@ -194,6 +208,7 @@ const WelcomeScreen = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('📧 Welcome: Email form submitted');
     
     try {
       setLoading(true);
@@ -243,6 +258,44 @@ const WelcomeScreen = () => {
         <title>Welcome to BlockBeats - Test Page with Plasma Effects</title>
         <meta name="description" content="Testing plasma effects and animations on a separate welcome page to isolate production issues." />
       </Head>
+      
+      {/* Debug Info */}
+      <div style={{
+        position: 'fixed',
+        top: '10px',
+        right: '10px',
+        background: 'rgba(0,0,0,0.8)',
+        color: '#00FFFF',
+        padding: '10px',
+        borderRadius: '5px',
+        fontSize: '12px',
+        zIndex: 9999,
+        maxWidth: '200px'
+      }}>
+        <div>🔍 Debug Info:</div>
+        <div>Mounted: {typeof window !== 'undefined' ? '✅' : '❌'}</div>
+        <div>Loading: {loading ? '⏳' : '✅'}</div>
+        <div>Authenticated: {authenticated ? '✅' : '❌'}</div>
+        <div>User: {user ? '✅' : '❌'}</div>
+        <div>Wallet: {walletConnection ? '✅' : '❌'}</div>
+        <div>Environment: {process.env.NODE_ENV}</div>
+        <div>Vercel Env: {process.env.NEXT_PUBLIC_VERCEL_ENV || 'undefined'}</div>
+        <button 
+          onClick={() => console.log('🧪 Test button clicked!')}
+          style={{ 
+            background: '#00FFFF', 
+            color: '#000', 
+            border: 'none', 
+            padding: '5px 10px', 
+            borderRadius: '3px',
+            marginTop: '5px',
+            cursor: 'pointer'
+          }}
+        >
+          Test Click
+        </button>
+      </div>
+      
       <main className={styles.main}>
       
       <div className={`${styles.bannerContainer} ${styles.bannerContainerCustom}`} style={{ marginBottom: '-80px' }}>
