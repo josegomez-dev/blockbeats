@@ -19,33 +19,7 @@ import { useBlockBeatsAnalytics } from '@/utils/analytics/blockbeatsEvents';
 import Head from 'next/head';
 import WalletAddressModal from '@/components/WalletAddressModal';
 
-// Simplified error handling for wallet conflicts
-const handleWalletErrors = () => {
-  try {
-    // Suppress wallet extension errors that break the page
-    const originalError = console.error;
-    console.error = (...args) => {
-      try {
-        const message = args[0]?.toString() || '';
-        if (
-          message.includes('Cannot redefine property: ethereum') ||
-          message.includes('Cannot set property ethereum') ||
-          message.includes('Identifier') && message.includes('already been declared')
-        ) {
-          console.warn('🚫 Suppressed wallet extension conflict:', message);
-          return;
-        }
-        originalError.apply(console, args);
-      } catch (e) {
-        // If error handling fails, just continue
-        originalError.apply(console, args);
-      }
-    };
-  } catch (e) {
-    // If error handling setup fails, just continue
-    console.warn('Error handling setup failed:', e);
-  }
-};
+// Removed complex error handling that was causing issues
 
 const WelcomeScreen = () => {
   const router = useRouter();
@@ -60,26 +34,11 @@ const WelcomeScreen = () => {
   const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
 
-  // Initialize error handling and mounting
+  // Simple mounting - no complex error handling
   useEffect(() => {
-    try {
-      // Handle wallet extension conflicts
-      handleWalletErrors();
-      
-      // Set mounted state immediately
-      setMounted(true);
-      console.log('✅ Welcome: Component mounted successfully');
-    } catch (error) {
-      console.warn('⚠️ Welcome: Error in useEffect:', error);
-      // Still set mounted even if error handling fails
-      setMounted(true);
-    }
-  }, []);
-
-  // Also set mounted on client side immediately as fallback
-  if (typeof window !== 'undefined' && !mounted) {
     setMounted(true);
-  }
+    console.log('✅ Welcome: Component mounted successfully');
+  }, []);
 
   useEffect(() => {
     if (user && authenticated) {
@@ -180,6 +139,7 @@ const WelcomeScreen = () => {
   
   const readWalletAddress = () => {
     console.log('🔘 Welcome: Connect Wallet button clicked');
+    alert('Connect Wallet button works!');
     setIsWalletModalOpen(true);
   }
 
@@ -267,6 +227,7 @@ const WelcomeScreen = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log('📧 Welcome: Email form submitted');
+    alert('Email form submitted!');
     
     try {
       setLoading(true);
@@ -339,7 +300,10 @@ const WelcomeScreen = () => {
         <div>Environment: {process.env.NODE_ENV}</div>
         <div>Vercel Env: {process.env.NEXT_PUBLIC_VERCEL_ENV || 'undefined'}</div>
         <button 
-          onClick={() => console.log('🧪 Test button clicked!')}
+          onClick={() => {
+            console.log('🧪 Test button clicked!');
+            alert('Test button works!');
+          }}
           style={{ 
             background: '#00FFFF', 
             color: '#000', 
@@ -434,14 +398,7 @@ const WelcomeScreen = () => {
             ) : (
               <button
                 className={styles.submitBtnLarge}
-                onClick={(e) => {
-                  console.log('🔘 Welcome: Test Connect Wallet button clicked - event:', e);
-                  e.preventDefault();
-                  e.stopPropagation();
-                  readWalletAddress();
-                }}
-                onMouseDown={() => console.log('🔘 Welcome: Test Connect Wallet button mousedown')}
-                onMouseUp={() => console.log('🔘 Welcome: Test Connect Wallet button mouseup')}
+                onClick={readWalletAddress}
                 style={{ 
                   cursor: 'pointer',
                   pointerEvents: 'auto',
@@ -461,10 +418,7 @@ const WelcomeScreen = () => {
           <br />
 
           <form 
-            onSubmit={(e) => {
-              console.log('📝 Welcome: Form submitted - event:', e);
-              handleSubmit(e);
-            }} 
+            onSubmit={handleSubmit} 
             className={styles.form}
           >
             <input
@@ -487,12 +441,6 @@ const WelcomeScreen = () => {
                   zIndex: 1000,
                   position: 'relative'
                 }}
-                onClick={(e) => {
-                  console.log('📧 Welcome: Test Join Now button clicked - event:', e);
-                  console.log('📧 Welcome: Form will submit with email:', email);
-                }}
-                onMouseDown={() => console.log('📧 Welcome: Test Join Now button mousedown')}
-                onMouseUp={() => console.log('📧 Welcome: Test Join Now button mouseup')}
               >
                 Test Join Now 🚀
               </button>
