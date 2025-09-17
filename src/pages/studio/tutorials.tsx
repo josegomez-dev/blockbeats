@@ -125,7 +125,7 @@ const TutorialsAndGuidesScreen = () => {
     <>
       <GalleryHeader title="Tutorials & Guides" />       
 
-      <div className='test-tutorials-bg' style={{ textAlign: 'center' }}>
+      <div className='test-tutorials-bg text-center'>
         <br />
         <br />
         <br />
@@ -134,33 +134,19 @@ const TutorialsAndGuidesScreen = () => {
         <h1><span className='glitch'>How to Use BlockBeats</span></h1>
         <p>Follow your guide and get started with Web3 music creation in just a few steps.</p>
         <br />
-        <button onClick={() => router.push('/dashboard/dashboard')} className={styles.submitBtn} style={{ animation: 'none' }}>Create New Musical NFT</button>                    
+        <button onClick={() => router.push('/dashboard/dashboard')} className={`${styles.submitBtn} button-no-animation`}>Create New Musical NFT</button>                    
       </div>
       <br />
 
-      <div style={{ textAlign: 'center' }}>
+      <div className="text-center">
 
           {/* Tutorial Type Selector */}
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          gap: '8px',
-          flexWrap: 'wrap',
-          marginBottom: '1.5rem',
-        }}>
+        <div className="tutorial-type-selector">
           {tutorialTypes.map((type) => (
             <button
               key={type}
               onClick={() => selectTutorialType(type as TutorialType)}
-              style={{
-                padding: '0.5rem 1rem',
-                borderRadius: '8px',
-                cursor: 'pointer',
-                backgroundColor: type === tutorialType ? '#00ffff33' : '#222',
-                color: '#fff',
-                border: type === tutorialType ? '2px solid #0ff' : '1px solid #555',
-                fontSize: '12px',
-              }}
+              className={`tutorial-type-button ${type === tutorialType ? 'active' : ''}`}
             >
               {type.toUpperCase()}
             </button>
@@ -168,26 +154,12 @@ const TutorialsAndGuidesScreen = () => {
         </div>
 
         {/* Steps Selector */}
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          gap: '8px',
-          flexWrap: 'wrap',
-          marginBottom: '1.5rem',
-        }}>
+        <div className="tutorial-type-selector">
           {tutorialSteps.map((tut, index) => (
             <button
               key={index}
               onClick={() => selectStep(index)}
-              style={{
-                padding: '0.5rem 1rem',
-                borderRadius: '8px',
-                cursor: 'pointer',
-                backgroundColor: index === step ? '#00ffff33' : '#222',
-                color: '#fff',
-                border: index === step ? '2px solid #0ff' : '1px solid #555',
-                fontSize: '12px',
-              }}
+              className={`tutorial-type-button ${index === step ? 'active' : ''}`}
             >
               {tut.title}
             </button>
@@ -195,37 +167,26 @@ const TutorialsAndGuidesScreen = () => {
         </div>
 
         {/* Tutorial Card */}
-        <div
-          style={{
-            position: 'relative',
-            background: '#111',
-            borderRadius: '16px',
-            padding: '2rem',
-            maxWidth: '800px',
-            margin: '0 auto',
-            boxShadow: '0 0 30px rgba(0,255,255,0.1)',
-            overflow: 'hidden',
-          }}
-        >
-          <div className={styles.characterContainer} style={{ animation: 'float 2s ease-in-out infinite' }}>
+        <div className="tutorial-card">
+          <div className={`${styles.characterContainer} character-float`}>
             <Image
               src={current.characterPose}
               alt="Guide Character"
               width={180}
               height={180}
-              style={{ marginBottom: '-2.5rem' }}
+              className="avatar-container"
             />
           </div>
 
           <h4 className="glitch">{current.title}</h4>
-          <p style={{ color: '#ccc', maxWidth: '500px', margin: '10px auto', fontSize: '12px' }}>{current.message}</p>
-          <button onClick={current.action} className={styles.submitBtn} style={{ background: 'transparent', animation: 'none' }}>
+          <p className="tutorial-message">{current.message}</p>
+          <button onClick={current.action} className={`${styles.submitBtn} button-transparent-no-animation`}>
             {current.button}
           </button>
 
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1rem' }}>
-            <div onClick={prevStep} style={{ cursor: 'pointer' }}>⬅️</div>
-            <div onClick={nextStep} style={{ cursor: 'pointer' }}>➡️</div>
+          <div className="tutorial-navigation">
+            <div onClick={prevStep} className="tutorial-navigation-item">⬅️</div>
+            <div onClick={nextStep} className="tutorial-navigation-item">➡️</div>
           </div>
         </div>
     </div>

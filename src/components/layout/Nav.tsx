@@ -105,49 +105,6 @@ export default function Nav() {
     return () => document.removeEventListener('click', closeDropdowns);
   }, []);
 
-  type AnimatedBalanceProps = {
-    start: number;
-    end: number;
-    duration?: number;
-  };
-
-  const AnimatedBalance: React.FC<AnimatedBalanceProps> = ({ start, end, duration = 1000 }) => {
-    const [displayedValue, setDisplayedValue] = useState(start);
-    const [isAnimating, setIsAnimating] = useState(false);
-
-    useEffect(() => {
-      const difference = end - start;
-      if (difference === 0) return;
-
-      setIsAnimating(true); // Start animation
-
-      const increment = difference / (duration / 30); // change every 30ms
-      let current = start;
-
-      const timer = setInterval(() => {
-        current += increment;
-        if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
-          current = end;
-          clearInterval(timer);
-          setIsAnimating(false); // Stop animation
-        }
-        setDisplayedValue(Math.floor(current));
-      }, 1530);
-
-      return () => clearInterval(timer);
-    }, [start, end, duration]);
-
-    return (
-      <span className={isAnimating ? "pulse-animation" : ""}>
-        {displayedValue} <span className="glitch">BBC</span>
-    </span>
-    );
-  };
-
-
-  const getCoinsToAdd = user?.bbcPoints ? user.bbcPoints + 100 : 100;
-
-
   const handleClearNotifications = () => {
     if (!user) {
       toast.error('User not found');
@@ -181,7 +138,7 @@ export default function Nav() {
           <>
             {/* 👤 User Menu */}
             <li id='personal-pts-balance-nav' className={styles.navItem}>
-              <AnimatedBalance start={user?.bbcPoints || 0} end={getCoinsToAdd} />&nbsp;
+              {user?.bbcPoints ? user.bbcPoints : 0}
             </li>
             <li className={`${styles.navItem} ${styles.dropdown}`} ref={dropdownRef}>
               <button className={styles.avatarButton} onClick={toggleDropdown}>
@@ -198,38 +155,35 @@ export default function Nav() {
 
               {dropdownOpen && (
                 <div className={styles.dropdownMenu}>
-                  {/* <div style={{ display: 'flex', alignItems: 'center', padding: '10px', color: 'white' }}>
+                  {/* <div className="flex-align-center-padding">
                     <Avatar name={user?.email.split('@')[0]} size="30" round className="contact-avatar" />
                     &nbsp;
-                    <span style={{ overflow: 'auto' }}>{user?.displayName || user?.email}</span>
+                    <span className="overflow-auto">{user?.displayName || user?.email}</span>
                   </div> */}
                                     
                   <hr />
 
                   {user?.walletStored ? (
                     <div> &nbsp;&nbsp;
-                    💳&nbsp;<span className='glitch' style={{marginTop: '-15px' }}>{user?.walletStored.slice(0, 5)}...{user?.walletStored.slice(-4)} {data?.symbol} </span>
+                    💳&nbsp;<span className='glitch mt-neg-15'>{user?.walletStored.slice(0, 5)}...{user?.walletStored.slice(-4)} {data?.symbol} </span>
                   </div> ) : (
-                    <div style={{ margin: '15px 25px', marginTop: '15px' }}>
+                    <div className="mx-4 my-3">
                         <button
                           className={stylesMain.submitBtnLarge}
                           // onClick={readWalletAddress}
                         >
                           <span>Connect Wallet</span>
-                          <img src="/images/logos/starknet-logo.svg" style={{ position: 'absolute', top: 30, margin: '0 auto', left: 10 }} alt="blockbeats-logo" width={60} />
+                          <img src="/images/logos/starknet-logo.svg" className="position-absolute" style={{ top: 30, margin: '0 auto', left: 10 }} alt="blockbeats-logo" width={60} />
                         </button>
                         <br />
                     </div>
                   )}
                   
                   <hr />
-                  <div style={{ display: 'flex', alignItems: 'center', padding: '10px', color: 'white' }}>
-                    Points:&nbsp;<AnimatedBalance start={user?.bbcPoints || 0} end={getCoinsToAdd} />&nbsp;
+                  <div className="flex-align-center-padding">
+                    <FaCoins color="gold" />&nbsp; Points:&nbsp; {user?.bbcPoints ? user.bbcPoints : 0} &nbsp;
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', padding: '10px', color: 'white' }}>
-                    <FaCoins color="gold" />&nbsp;<strong>Total</strong>: {(0).toFixed(2)}
-                  </div>
-
+             
                   <hr />
                   <Link href="/dashboard/dashboard">
                     <div className={styles.dropdownItem}>
@@ -257,7 +211,7 @@ export default function Nav() {
                     </div>
                   </Link>
                   <hr />
-                  <div className={`${styles.logout}`} style={{ display: 'flex', justifyContent: 'center', padding: 25, cursor: 'pointer' }} onClick={() => {
+                  <div className={`${styles.logout} flex-justify-center cursor-pointer p-25`} onClick={() => {
                     // alert to confirm logout
                     handleLogout();
                   }}>
@@ -278,7 +232,7 @@ export default function Nav() {
               {notifOpen && (
                 <div className={styles.notificationDropdown}>
                   {notifications.length === 0 ? (
-                    <div style={{ padding: 35 }}>No notifications</div>
+                    <div className="p-35">No notifications</div>
                   ) : (
                     notifications.map((n, index) => (
                      <>

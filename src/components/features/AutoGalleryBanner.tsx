@@ -171,14 +171,13 @@ const AutoGalleryBanner: React.FC = () => {
       <div className={styles.bannerContent}>
         {/* Left Side - NFT Preview */}
         <div className={styles.bannerNFTPreview}>
-          <div 
-            className={styles.bannerNFTContainer}
+          <div
+            className={`${styles.bannerNFTContainer} cursor-pointer`}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
               handlePlayNFT(currentNFT);
             }}
-            style={{ cursor: 'pointer' }}
           >
             <PixelPreview
               colorMap={currentNFT.colorMap || []}
@@ -187,16 +186,12 @@ const AutoGalleryBanner: React.FC = () => {
             />
             <div className={styles.bannerPlayOverlay}>
               <button
-                className={`${styles.bannerPlayButton} ${isPlaying ? styles.playing : ''}`}
+                className={`${styles.bannerPlayButton} ${isPlaying ? styles.playing : ''} transform-scale-1`}
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
                   console.log('🔘 Button clicked!');
                   handlePlayNFT(currentNFT);
-                }}
-                style={{
-                  transform: 'scale(1)',
-                  transition: 'transform 0.1s ease'
                 }}
                 onMouseDown={(e) => {
                   e.currentTarget.style.transform = 'scale(0.95)';

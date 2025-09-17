@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from '@/app/assets/styles/components/MachineSelector.module.css';
 import Image from 'next/image';
-import Footer from '../layout/Footer';
 
 interface Machine {
   id: string;
@@ -49,7 +48,7 @@ const machines: Machine[] = [
 const MachineSelector: React.FC<MachineSelectorProps> = ({ onSelect }) => {
   return (
     <>
-      <div className={styles.selectorWrapper}>
+      <div>
         <h2 className={`box`}>🎛️ Select Your&nbsp;<strong className='glitch'>BlockBeats</strong>&nbsp; <strong style={{ color: 'var(--clr-3)'}}>Music Machine</strong></h2>
         <div className={styles.slider}>
           {machines.map((machine) => (
@@ -71,7 +70,6 @@ const MachineSelector: React.FC<MachineSelectorProps> = ({ onSelect }) => {
           ))}
         </div>
       </div>
-      <Footer />
     </>
   );
 };

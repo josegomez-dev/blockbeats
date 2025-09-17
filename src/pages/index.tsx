@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from '@/app/assets/styles/pages/LandingPage.module.css';
 import stylesMain from "@/app/assets/styles/layouts/MainPage.module.css";
-import { Modal } from 'react-responsive-modal';
 import { FaRegNewspaper, FaTwitter, FaDiscord, FaYoutube, FaFacebook, FaMedium, FaTelegram, FaLinkedin, FaInstagram, FaTiktok } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -16,10 +15,6 @@ import RobotSkinsShowcase from '../components/features/RobotSkinsShowcase';
 import Footer from '../components/layout/Footer';
 
 const LandingPage = () => {
-  const [open, setOpen] = useState(false);
-  const [selectedEmbedHtml, setSelectedEmbedHtml] = useState<string | null>(null);
-  const [selectedTitle, setSelectedTitle] = useState<string | null>(null);
-  const [selectedDescription, setSelectedDescription] = useState<string | null>(null);
 
   const { user } = useAuth(); // Assuming you have a useAuth hook to get the user context
 
@@ -46,18 +41,8 @@ const LandingPage = () => {
   }, []);
 
 
-  const handleOpenModal = (embedHtml: string | undefined, fallbackVideoUrl: string, title: string, description: string) => {
-    if (embedHtml) {
-      setSelectedEmbedHtml(embedHtml);
-    } else {
-      const embedUrl = fallbackVideoUrl.replace('watch?v=', 'embed/');
-      setSelectedEmbedHtml(
-        `<iframe width="560" height="315" src="${embedUrl}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
-      );
-    }
-    setSelectedTitle(title);
-    setSelectedDescription(description);
-    setOpen(true);
+  const handleVideoClick = (videoUrl: string) => {
+    window.open(videoUrl, '_blank');
   };
 
   useEffect(() => {
@@ -237,14 +222,14 @@ const LandingPage = () => {
       <section className={styles.hero}>
         <div className={styles.heroContent}>
           <h1>🤖 Welcome... </h1>
-          <h2 className={styles.typewriter} style={{fontSize: '20px'}}>The Future of Music & Art NFTs</h2>
+          <h2 className={`${styles.typewriter} text-xl`}>The Future of Music & Art NFTs</h2>
           <br />
           <span className="glitch">Create, share, and experience music like never before — powered by Web3.</span>
           <br />
           <br />
           <button className={stylesMain.submitBtn} onClick={() => window.location.replace('/auth/login')}>🖼️ CREATE & 🎹 PLAY </button>
           <Link href="https://joses-organization-73.gitbook.io/blockbeats-3.0" target="_blank" rel="noopener noreferrer">
-            <button  style={{ animation: 'none', background: 'transparent', color: 'white' }} className={stylesMain.submitBtn}>📑 DOCS</button>
+            <button className={`${stylesMain.submitBtn} button-transparent`}>📑 DOCS</button>
           </Link>
 
           <ul className={styles.socialMediaLinks}>
@@ -281,13 +266,13 @@ const LandingPage = () => {
           </ul>
 
           {/* <Link href="edublockbeats" target="_blank" rel="noopener noreferrer">
-            <button  style={{ animation: 'none', background: 'transparent', color: 'white' }} className={stylesMain.submitBtn}>👩🏼‍🏫 EDU-BLOCKBEATS</button>
+            <button className={`${stylesMain.submitBtn} button-transparent`}>👩🏼‍🏫 EDU-BLOCKBEATS</button>
           </Link> */}
 
           <br />
-          <img className={styles.character2} src="/images/avatars/phase-5.webp" style={{ width: '200px', height: 'auto', marginBottom: '-106px'  }} alt="BlockBeats Robot"  />
-          <img className={styles.character3} src="/images/avatars/phase-4.webp" style={{ width: '200px', height: 'auto', marginBottom: '-120px'  }} alt="BlockBeats Robot"  />
-          <img className={styles.character1} src="/images/avatars/phase-6.webp" style={{ width: '200px', height: 'auto', marginBottom: '-120px'  }} alt="BlockBeats Robot"  />
+          <img className={`${styles.character2} character-container-small`} src="/images/avatars/phase-5.webp" alt="BlockBeats Robot"  />
+          <img className={`${styles.character3} character-container`} src="/images/avatars/phase-4.webp" alt="BlockBeats Robot"  />
+          <img className={`${styles.character1} character-container`} src="/images/avatars/phase-6.webp" alt="BlockBeats Robot"  />
         </div>
       </section>
       <hr />
@@ -310,7 +295,7 @@ const LandingPage = () => {
               alt="BlockBeats Logo"
               width={80}
               height={80}
-              style={{ verticalAlign: 'middle' }}
+              className="vertical-align-middle"
             />
             About &nbsp;
            <span className='glitch'>BlockBeats 3.0</span> LAUNCHPAD</h2>
@@ -324,7 +309,7 @@ const LandingPage = () => {
           <div className={styles.missionBlock}>
             <h3>🚀 Mission</h3>
             <p>
-              <span style={{ color: 'var(--neon-color)'}}>BlockBeats 3.0</span> is committed to democratizing access to music creation and NFT monetization, fostering innovation in audiovisual expression, and enabling new forms of interaction through cutting-edge technologies.
+              <span className="text-neon">BlockBeats 3.0</span> is committed to democratizing access to music creation and NFT monetization, fostering innovation in audiovisual expression, and enabling new forms of interaction through cutting-edge technologies.
             </p>
           </div>
         </div>
@@ -379,13 +364,7 @@ const LandingPage = () => {
             alt="EDU BlockBeats"
             width={500}
             height={500}
-            style={{
-              width: '100%',
-              height: 'auto',
-              objectFit: 'cover',
-              borderRadius: '1rem',
-              boxShadow: '0 0 25px rgba(255,255,255,0.2)',
-            }}
+            className="image-responsive"
           />
         </div>
       </div>
@@ -399,12 +378,11 @@ const LandingPage = () => {
       <div className={styles.newsGrid}>
         {newsItems.map((item, index) => (
           <div
-            className={styles.newsItem}
+            className={`${styles.newsItem} news-item-cursor`}
             key={index}
-            onClick={() => handleOpenModal(undefined, item.videoUrl, item.title, item.description)}
-            style={{ cursor: 'pointer' }}
+            onClick={() => handleVideoClick(item.videoUrl)}
           >
-            <div className={styles.newsIconPreview} style={{ backgroundImage: `url(${item.previewImage})` }}>
+            <div className={`${styles.newsIconPreview} news-icon-background`} style={{ backgroundImage: `url(${item.previewImage})` }}>
               <FaRegNewspaper className={styles.newsIconReact} />
               <div className={styles.previewOverlay}>▶️ Preview</div>
             </div>
@@ -442,51 +420,6 @@ const LandingPage = () => {
 
     <Footer />
 
-    {open && (
-      <Modal
-        open={open}
-        onClose={() => setOpen(false)}
-        closeOnEsc={true}
-        closeOnOverlayClick={true}
-        showCloseIcon={false}
-        center
-        classNames={{
-          modal: open ? stylesMain.modal : stylesMain.modalClosed,
-          // overlay: stylesMain.modalOverlay,
-          // closeButton: stylesMain.closeButton,
-        }}
-        styles={{ modal: { width: '100%' } }}
-      >
-        {selectedEmbedHtml && (
-          <div>
-              <div style={{ padding: '25px', textAlign: 'center' }}>
-                <span className={`${stylesMain.modalTitle} glitch`} data-text={selectedTitle} style={{ fontSize: '16px', fontWeight: 'bold' }}>
-                  {selectedTitle}
-                </span>
-                <br />
-                <br />
-                <p style={{ width: '200px', margin: '0 auto', fontSize: '12px' }}>
-                  {selectedDescription}
-                </p>
-              </div>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: `
-                    <div style="width: 100%; height: 100%;">
-                      ${selectedEmbedHtml}
-                    </div>
-                  `,
-                }}
-              />
-              <div style={{ textAlign: 'center' }}>
-                <button className={stylesMain.submitBtn} onClick={() => setOpen(false)} style={{ width: '150px' }}>
-                  Go Back
-                </button>
-              </div>
-          </div>
-        )}
-      </Modal>
-    )}
 
     {/* Auto Gallery Banner - Sticky Footer */}
     <AutoGalleryBanner />

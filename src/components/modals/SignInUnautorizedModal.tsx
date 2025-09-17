@@ -29,7 +29,7 @@ const SignInUnautorizedModal: React.FC<SignInModalProps> = ({ open, onClose, pag
         <h2 className={`${styles.modalTitle} box glitch`}> Unauthorized Access</h2>
         <br />
         <p className={styles.modalText}>
-          You need to <strong style={{ color: 'var(--neon-color)'}}>sign in</strong> to access the <strong style={{ color: 'var(--clr-3)'}}>{pageName}</strong>. <br /> Please sign in using your <strong style={{ color: 'var(--neon-color)'}}>email</strong> or <strong style={{ color: 'var(--neon-color)'}}> wallet</strong>.
+          You need to <strong className="text-neon">sign in</strong> to access the <strong className="text-clr-3">{pageName}</strong>. <br /> Please sign in using your <strong className="text-neon">email</strong> or <strong className="text-neon"> wallet</strong>.
         </p>
         <br />
         <button

@@ -156,35 +156,17 @@ const LoginFresh = () => {
           <meta property="og:image" content="https://blockbeats-tau.vercel.app/images/logos/logo.webp" />
           <meta property="og:url" content="https://blockbeats-tau.vercel.app/login-fresh" />
         </Head>
-        <div style={{ 
-          display: 'flex', 
-          flexDirection: 'column',
-          justifyContent: 'center', 
-          alignItems: 'center', 
-          height: '100vh',
-          background: 'radial-gradient(circle at center, #0f0f2a 0%, #070713 100%)',
-          color: '#00FFFF',
-          textAlign: 'center',
-          padding: '20px'
-        }}>
-          <div style={{ fontSize: '24px', marginBottom: '20px', fontWeight: 'bold' }}>
+        <div className="login-container">
+          <div className="login-title">
             🎵 BlockBeats
           </div>
-          <div style={{ fontSize: '16px', marginBottom: '10px' }}>
+          <div className="login-subtitle">
             {authenticated ? '🔄 Redirecting to dashboard...' : '⚠️ Troubles with some services on production'}
           </div>
-          <div style={{ fontSize: '14px', color: '#888' }}>
+          <div className="login-description">
             {authenticated ? 'Please wait...' : "We're working on it..."}
           </div>
-          <div style={{ 
-            marginTop: '30px', 
-            fontSize: '12px', 
-            color: '#666',
-            border: '1px solid #333',
-            padding: '10px',
-            borderRadius: '5px',
-            backgroundColor: 'rgba(0,0,0,0.3)'
-          }}>
+          <div className="login-debug">
             Please try refreshing the page in a few moments
           </div>
         </div>
@@ -205,7 +187,7 @@ const LoginFresh = () => {
       </Head>
       <main className={styles.main}>
       
-      <div className={`${styles.bannerContainer} ${styles.bannerContainerCustom}`} style={{ marginBottom: '-80px' }}>
+      <div className={`${styles.bannerContainer} ${styles.bannerContainerCustom} banner-margin-bottom`}>
         <br />
         <br />
         <br />
@@ -231,14 +213,14 @@ const LoginFresh = () => {
           <h2 className={styles.bannerTitle}>🎧 Join <span data-text="BLOCKBEATS" className="glitch">BLOCKBEATS</span></h2>
           
           {!loading && (
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '20px', float: 'right', marginTop: '-90px' }}>
+            <div className="banner-logo-container">
               <Link href={'https://braavos.app/'} target={'_blank'}>
                 <Image
                   src="/images/logos/braavos.jpeg"
                   alt="braavos-logo"
                   width={35}
                   height={35}
-                  style={{ filter: 'invert(1) drop-shadow(0 0 0.3rem #ffffff70)', cursor: 'pointer' }}
+                  className="logo-filter"
                 />
               </Link>  
               &nbsp;
@@ -249,13 +231,13 @@ const LoginFresh = () => {
                   alt="argentx-logo"
                   width={35}
                   height={35}
-                  style={{ cursor: 'pointer' }}
+                  className="cursor-pointer"
                 />
               </Link>  
             </div>
           )}
 
-          <div style={{ position: 'relative', display: 'inline-block' }}>
+          <div className="wallet-button-container">
             <button
               className={styles.submitBtnLarge}
               onClick={handleWalletClick}
@@ -267,23 +249,10 @@ const LoginFresh = () => {
                 width: '300px'
               }}
             >
-              <span style={{ position: 'relative', marginTop: '-20px' }}>Connect Wallet</span>
-              <img src="/images/logos/starknet-logo.svg" style={{ position: 'absolute', top: 30, margin: '0 auto', left: 10, filter: 'grayscale(100%)' }} alt="blockbeats-logo" width={60} />
+              <span className="wallet-button-text">Connect Wallet</span>
+              <img src="/images/logos/starknet-logo.svg" className="wallet-logo" alt="blockbeats-logo" width={60} />
             </button>
-            <div style={{
-              position: 'absolute',
-              top: '-8px',
-              right: '-8px',
-              background: 'linear-gradient(45deg, #ff6b6b, #ff8e8e)',
-              color: '#fff',
-              padding: '4px 8px',
-              borderRadius: '12px',
-              fontSize: '10px',
-              fontWeight: 'bold',
-              textTransform: 'uppercase',
-              letterSpacing: '0.5px',
-              boxShadow: '0 2px 8px rgba(255, 107, 107, 0.4)',
-            }}>
+            <div className="wallet-badge">
               Coming Soon
             </div>
           </div>
@@ -304,16 +273,9 @@ const LoginFresh = () => {
               disabled={loading}
             />
             {!loading ? (
-              <button type="submit" className={styles.submitBtn} style={{ animation: 'none'}}>Join Now 🚀</button>
+              <button type="submit" className={`${styles.submitBtn} btn-join-now`}>Join Now 🚀</button>
             ) : (
-              <div style={{ 
-                display: 'flex', 
-                justifyContent: 'center', 
-                alignItems: 'center', 
-                height: '50px',
-                color: '#00FFFF',
-                fontSize: '16px'
-              }}>
+              <div className="loading-container">
                 Processing...
               </div>
             )}

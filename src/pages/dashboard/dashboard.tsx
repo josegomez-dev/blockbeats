@@ -97,7 +97,7 @@ const DashboardLayout = () => {
         <meta property="og:image" content="https://blockbeats-tau.vercel.app/images/logos/logo.webp" />
         <meta property="og:url" content="https://blockbeats-tau.vercel.app/dashboard" />
       </Head>
-      <div style={{ background: 'radial-gradient(circle at center, #0f0f2a 0%, #070713 100%)' }}>
+      <div className="dashboard-background">
         {/* 🎁 Rewards Modal */}
         {showRewards && (
           <DailyRewardModal
@@ -132,9 +132,9 @@ const DashboardLayout = () => {
             <div id="core-center-panel" className={styles.centerPanel}>
               <h2><span className='glitch box'>LAUNCHPAD Musical NFTs</span></h2>
               <br />
-              <div style={{ fontSize: '0.8rem' }}>
-                <b className="glitch">BlockBeats 3.0</b> is a platform where you can <strong style={{ color: 'var(--neon-color)'}}>create, trade, and collect</strong> <strong style={{ color: 'var(--clr-3)'}}>musical NFTs</strong>. <br />
-                <strong style={{ color: 'var(--clr-3)'}}>Join our community</strong> to explore unique music creations and <strong style={{ color: 'var(--neon-color)'}}>support artists</strong>!
+              <div className="dashboard-description">
+                <b className="glitch">BlockBeats 3.0</b> is a platform where you can <strong className="text-neon-color">create, trade, and collect</strong> <strong className="text-clr-3">musical NFTs</strong>. <br />
+                <strong className="text-clr-3">Join our community</strong> to explore unique music creations and <strong className="text-neon-color">support artists</strong>!
               </div>
               <Image
                 src="/images/launchpad/simple.png"
@@ -154,9 +154,9 @@ const DashboardLayout = () => {
           </div>
 
           <hr />
-          <p style={{ padding: '20px 70px' }}>
+          <p className="dashboard-description-large">
             <span>
-              <strong className="glitch">BlockBeats 3.0</strong> empowers anyone to <strong style={{ color: 'var(--neon-color)' }}>trade music</strong> and <strong style={{ color: 'var(--neon-color)' }}>support artists</strong> through an interactive platform <strong style={{ color: 'var(--clr-3)' }}>that connects art and real-world experiences</strong>.
+              <strong className="glitch">BlockBeats 3.0</strong> empowers anyone to <strong className="text-neon-color">trade music</strong> and <strong className="text-neon-color">support artists</strong> through an interactive platform <strong className="text-clr-3">that connects art and real-world experiences</strong>.
             </span>
           </p>
           <hr />

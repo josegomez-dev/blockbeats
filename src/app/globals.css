@@ -1,5 +1,6 @@
 @import "./assets/styles/layouts/Nav.module.css";
 @import "./assets/styles/pages/Auth.module.css";
+@import "./assets/styles/utilities.css";
 @import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
 
 

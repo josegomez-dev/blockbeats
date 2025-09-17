@@ -110,11 +110,11 @@ const MarketplaceScreen = () => {
         <br />
         <br />
         <br />
-        <div className="bannerContainer" style={{ textAlign: "center", margin: "0 auto" }}>
+        <div className="bannerContainer banner-container-center">
           <h1><span className='glitch'>Marketplace</span></h1>
           <p>Trade and explore unique NFTs created by our community.</p>
           <br />
-          <button onClick={() => window.location.href = '/dashboard/dashboard'} className={styles.submitBtn} style={{ animation: 'none' }}>Create New NFT</button>
+          <button onClick={() => window.location.href = '/dashboard/dashboard'} className={`${styles.submitBtn} button-no-animation`}>Create New NFT</button>
         </div>
       
       </div>
@@ -127,7 +127,7 @@ const MarketplaceScreen = () => {
           styles={{ modal: { backgroundColor: 'rgba(0, 0, 0, 0.8)', height: 'auto' } }}
           showCloseIcon={false}
         >
-          <div className={styles.modalContent} style={{ textAlign: 'center' }}>
+          <div className={`${styles.modalContent} text-center`}>
             <div className={styles.nftDetails}>
               <h3>{selectedNFT.songName || 'Untitled'}</h3>
               <PixelPreview
@@ -148,21 +148,11 @@ const MarketplaceScreen = () => {
         </Modal>
       )}
 
-      <div className="gallery-screen" style={{ padding: '15px' }}>
+      <div className="gallery-screen gallery-screen-padding">
         <div className="gallery-grid">
           {nfts.map((src, index) => (
             <div className="gallery-item" key={index} onClick={() => handleViewNFT(src)}>
-              <h4
-                style={{
-                  whiteSpace: "nowrap",         // keeps text in one line
-                  overflow: "hidden",           // hides the overflow
-                  textOverflow: "ellipsis",     // adds the "..." at the end
-                  fontSize: "16px",             // or whatever size you want
-                  marginBottom: "10px",         // space between title and image
-                  maxWidth: "150px",            // limit width to prevent overflow
-                  overflowX: "auto"
-                }}
-              >
+              <h4 className="gallery-item-title">
                 {src.songName}
               </h4>
               <div className="gallery-item-overlay">

@@ -42,7 +42,12 @@ const MusicStudioPage = () => {
       <br />
       <GalleryHeader title='BlockBeats Studio' />
       {!selectedMachine ? (
-        <MachineSelector onSelect={setSelectedMachine} />
+        <>
+          <MachineSelector onSelect={setSelectedMachine} />  
+          <p>
+            <strong>Note:</strong> The Voice Music Machine and Launchpad Machine are not available yet.
+          </p>
+        </>
       ) : (
         renderMachine()
       )}

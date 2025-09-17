@@ -59,24 +59,18 @@ const WalletAddressModal: React.FC<WalletAddressModalProps> = ({
       }} 
       center
     >
-      <div className="modal-content" style={{ textAlign: 'center', padding: '20px' }}>
-        <div style={{ marginBottom: '20px' }}>
-          <h2 className={styles.modalTitle} style={{ 
-            background: 'linear-gradient(45deg, #00FFFF, #FF00FF)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            fontSize: '24px',
-            marginBottom: '10px'
-          }}>
+      <div className="modal-content modal-content-center">
+        <div className="modal-section">
+          <h2 className={`${styles.modalTitle} modal-title-gradient`}>
             🔗 Connect Your Wallet
           </h2>
-          <p style={{ color: '#ccc', fontSize: '14px', marginBottom: '20px' }}>
+          <p className="modal-description">
             Enter your Starknet wallet address to connect
           </p>
         </div>
 
         <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: '20px' }}>
+          <div className="modal-input-container">
             <input
               type="text"
               value={address}
@@ -85,48 +79,31 @@ const WalletAddressModal: React.FC<WalletAddressModalProps> = ({
                 setError('');
               }}
               placeholder="0x1234...abcd"
-              className={styles.emailInput}
-              style={{
-                width: '100%',
-                padding: '15px',
-                fontSize: '16px',
-                textAlign: 'center',
-                letterSpacing: '1px'
-              }}
+              className={`${styles.emailInput} modal-input`}
+              style={{ textAlign: 'center', letterSpacing: '1px' }}
               disabled={loading}
             />
             {error && (
-              <p style={{ color: '#ff6b6b', fontSize: '12px', marginTop: '5px' }}>
+              <p className="modal-error">
                 {error}
               </p>
             )}
           </div>
 
-          <div style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
+          <div className="modal-buttons">
             <button
               type="button"
               onClick={handleClose}
-              className={styles.submitBtn}
-              style={{
-                backgroundColor: 'transparent',
-                border: '2px solid #666',
-                color: '#666',
-                flex: 1
-              }}
+              className={`${styles.submitBtn} modal-button-secondary`}
+              style={{ flex: 1 }}
               disabled={loading}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className={styles.submitBtn}
-              style={{
-                background: 'linear-gradient(45deg, #00FFFF, #FF00FF)',
-                border: 'none',
-                flex: 1,
-                position: 'relative',
-                overflow: 'hidden'
-              }}
+              className={`${styles.submitBtn} modal-button-primary`}
+              style={{ flex: 1 }}
               disabled={loading}
             >
               {loading ? (
@@ -138,14 +115,8 @@ const WalletAddressModal: React.FC<WalletAddressModalProps> = ({
           </div>
         </form>
 
-        <div style={{ 
-          marginTop: '20px', 
-          padding: '15px', 
-          backgroundColor: 'rgba(0, 255, 255, 0.1)',
-          borderRadius: '10px',
-          border: '1px solid rgba(0, 255, 255, 0.3)'
-        }}>
-          <p style={{ fontSize: '12px', color: '#00FFFF', margin: 0 }}>
+        <div className="modal-footer">
+          <p className="modal-footer-text">
             💡 <strong>Supported Wallets:</strong> Argent X, Braavos
           </p>
         </div>

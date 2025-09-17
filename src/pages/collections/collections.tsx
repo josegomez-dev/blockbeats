@@ -142,13 +142,13 @@ const CollectionsScreen = () => {
             <br />
             <br />
 
-            <div className="bannerContainer" style={{ textAlign: "center", margin: "0 auto" }}>
+            <div className="bannerContainer banner-container-center">
               <h1><span className='glitch'>Top Collections</span></h1>
               <p>Trade and explore unique NFTs created by our community.</p>
             </div>
 
             <br />
-            <button onClick={() => router.push('/createCollections')} className={styles.submitBtn} style={{ animation: 'none' }}>Create Top Collection</button>
+            <button onClick={() => router.push('/createCollections')} className={`${styles.submitBtn} button-no-animation`}>Create Top Collection</button>
         </div>
     <br />
             <CollectionsSlider 
@@ -216,7 +216,7 @@ const CollectionsScreen = () => {
                         }}
                         styles={{ modal: { width: '100%', background: 'black' } }}
               >
-                <div className={styles.modalContent} style={{ textAlign: 'center' }}>
+                <div className={`${styles.modalContent} text-center`}>
                         <br />
                         <br />
                   <button
@@ -228,7 +228,7 @@ const CollectionsScreen = () => {
 
                   <button className={styles.submitBtn} onClick={() => setIsModalOpen(false)}>Close</button>
 
-                  <div className={'gallery-grid'} style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+                  <div className={'gallery-grid gallery-grid-flex'}>
                     {userNFTS.map((nft) => (
                       <div key={nft.id} className={`${styles.nftCard} gallery-item`}>
                         <h4>{nft.songName}</h4>
