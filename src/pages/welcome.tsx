@@ -24,19 +24,12 @@ const WelcomeScreen = () => {
   const { user, signUpWithWallet, signUp, signIn, authenticated, verifyEmail, sendWelcomeEmail, walletConnectionAuth, setWalletConnectionAuth } = useAuth();
   const { trackWalletConnection } = useBlockBeatsAnalytics();
   const [walletConnection, setWalletConnection] = useState<IWalletConnection | null>(null);
-  const [mounted, setMounted] = useState(false);
-
   const [email, setEmail] = useState("");
   const [createAccountEmail, setCreateAccountEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
-
-  // Ensure component is mounted on client side
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   useEffect(() => {
     if (user && authenticated) {
@@ -45,61 +38,71 @@ const WelcomeScreen = () => {
   }, [user, authenticated, router]);
 
   useEffect(() => {
-    // Only run on client side
+    // Only run on client side and ensure DOM is ready
     if (typeof window === 'undefined') return;
+    
+    let handleMouseMove: ((e: MouseEvent) => void) | null = null;
+    
+    // Add a small delay to ensure DOM is fully loaded
+    const timer = setTimeout(() => {
+      handleMouseMove = (e: MouseEvent) => {
+        const x = e.clientX / window.innerWidth - 0.5;
+        const y = e.clientY / window.innerHeight - 0.5;
 
-    const handleMouseMove = (e: MouseEvent) => {
-      const x = e.clientX / window.innerWidth - 0.5;
-      const y = e.clientY / window.innerHeight - 0.5;
-
-      const layers = document.getElementById("parallax-layers");
-      if (layers) {
-        layers.style.transform = `translate(${x * 20}px, ${y * 20}px)`;
-      }
-
-      const canvas = document.getElementById("neon-canvas") as HTMLCanvasElement | null;
-      if (!canvas) return;
-      const ctx = canvas.getContext("2d");
-      if (!ctx) return;
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-
-      let particles: { x: number; y: number; vx: number; vy: number; radius: number }[] = [];
-
-      for (let i = 0; i < 60; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.5,
-          vy: (Math.random() - 0.5) * 0.5,
-          radius: Math.random() * 2 + 1,
-        });
-      }
-
-      function drawPlasma() {
-        if (!canvas || !ctx) return;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "rgba(23, 236, 236, 0.6)";
-        for (const p of particles) {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-          ctx.fill();
-          p.x += p.vx;
-          p.y += p.vy;
-          if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-          if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+        const layers = document.getElementById("parallax-layers");
+        if (layers) {
+          layers.style.transform = `translate(${x * 20}px, ${y * 20}px)`;
         }
-        requestAnimationFrame(drawPlasma);
+
+        const canvas = document.getElementById("neon-canvas") as HTMLCanvasElement | null;
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles: { x: number; y: number; vx: number; vy: number; radius: number }[] = [];
+
+        for (let i = 0; i < 60; i++) {
+          particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            vx: (Math.random() - 0.5) * 0.5,
+            vy: (Math.random() - 0.5) * 0.5,
+            radius: Math.random() * 2 + 1,
+          });
+        }
+
+        function drawPlasma() {
+          if (!canvas || !ctx) return;
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.fillStyle = "rgba(23, 236, 236, 0.6)";
+          for (const p of particles) {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fill();
+            p.x += p.vx;
+            p.y += p.vy;
+            if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+            if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+          }
+          requestAnimationFrame(drawPlasma);
+        }
+
+        drawPlasma();
+      };
+
+      if (handleMouseMove) {
+        document.addEventListener("mousemove", handleMouseMove);
       }
-
-      drawPlasma();
-    };
-
-    document.addEventListener("mousemove", handleMouseMove);
+    }, 100); // Small delay to ensure DOM is ready
 
     // Cleanup function
     return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
+      clearTimeout(timer);
+      if (handleMouseMove) {
+        document.removeEventListener("mousemove", handleMouseMove);
+      }
     };
   }, []);
 
@@ -232,38 +235,7 @@ const WelcomeScreen = () => {
     }
   };
 
-  // Show loading state until mounted on client
-  if (!mounted) {
-    return (
-      <>
-        <Head>
-          <title>Welcome to BlockBeats - Test Page with Plasma Effects</title>
-          <meta name="description" content="Testing plasma effects and animations on a separate welcome page to isolate production issues." />
-        </Head>
-        <div style={{ 
-          display: 'flex', 
-          flexDirection: 'column',
-          justifyContent: 'center', 
-          alignItems: 'center', 
-          height: '100vh',
-          background: 'radial-gradient(circle at center, #0f0f2a 0%, #070713 100%)',
-          color: '#00FFFF',
-          textAlign: 'center',
-          padding: '20px'
-        }}>
-          <div style={{ fontSize: '24px', marginBottom: '20px', fontWeight: 'bold' }}>
-            🎵 BlockBeats Welcome
-          </div>
-          <div style={{ fontSize: '16px', marginBottom: '10px' }}>
-            Testing plasma effects...
-          </div>
-          <div style={{ fontSize: '14px', color: '#888' }}>
-            Loading with full animations
-          </div>
-        </div>
-      </>
-    );
-  }
+  // Removed problematic loading state that was causing infinite loading
 
   return (
     <>
