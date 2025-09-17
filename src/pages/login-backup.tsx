@@ -44,7 +44,64 @@ const LoginScreen = () => {
     }
   }, [user, authenticated, router]);
 
-  // Removed plasma effects and complex animations for production compatibility
+  useEffect(() => {
+    // Only run on client side
+    if (typeof window === 'undefined') return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const x = e.clientX / window.innerWidth - 0.5;
+      const y = e.clientY / window.innerHeight - 0.5;
+
+      const layers = document.getElementById("parallax-layers");
+      if (layers) {
+        layers.style.transform = `translate(${x * 20}px, ${y * 20}px)`;
+      }
+
+      const canvas = document.getElementById("neon-canvas") as HTMLCanvasElement | null;
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      let particles: { x: number; y: number; vx: number; vy: number; radius: number }[] = [];
+
+      for (let i = 0; i < 60; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          vx: (Math.random() - 0.5) * 0.5,
+          vy: (Math.random() - 0.5) * 0.5,
+          radius: Math.random() * 2 + 1,
+        });
+      }
+
+      function drawPlasma() {
+        if (!canvas || !ctx) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "rgba(23, 236, 236, 0.6)";
+        for (const p of particles) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fill();
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+          if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+        }
+        requestAnimationFrame(drawPlasma);
+      }
+
+      drawPlasma();
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+
+    // Cleanup function
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
 
   
   const readWalletAddress = () => {
@@ -175,7 +232,7 @@ const LoginScreen = () => {
     }
   };
 
-  // Simplified loading state for production compatibility
+  // Show loading state until mounted on client
   if (!mounted) {
     return (
       <>
@@ -190,15 +247,34 @@ const LoginScreen = () => {
         </Head>
         <div style={{ 
           display: 'flex', 
+          flexDirection: 'column',
           justifyContent: 'center', 
           alignItems: 'center', 
           height: '100vh',
-          background: '#0a0a0a',
+          background: 'radial-gradient(circle at center, #0f0f2a 0%, #070713 100%)',
           color: '#00FFFF',
-          textAlign: 'center'
+          textAlign: 'center',
+          padding: '20px'
         }}>
-          <div style={{ fontSize: '24px', fontWeight: 'bold' }}>
-            🎵 BlockBeats Loading...
+          <div style={{ fontSize: '24px', marginBottom: '20px', fontWeight: 'bold' }}>
+            🎵 BlockBeats
+          </div>
+          <div style={{ fontSize: '16px', marginBottom: '10px' }}>
+            ⚠️ Troubles with some services on production
+          </div>
+          <div style={{ fontSize: '14px', color: '#888' }}>
+            We're working on it...
+          </div>
+          <div style={{ 
+            marginTop: '30px', 
+            fontSize: '12px', 
+            color: '#666',
+            border: '1px solid #333',
+            padding: '10px',
+            borderRadius: '5px',
+            backgroundColor: 'rgba(0,0,0,0.3)'
+          }}>
+            Please try refreshing the page in a few moments
           </div>
         </div>
       </>
@@ -225,7 +301,7 @@ const LoginScreen = () => {
         <br />
         <br />
         <p>
-          It’s <span data-text="Web3" className="glitch">Web3</span>’s first community-powered <br /> <b>musical signature generator</b> — <b>mintable, shareable, tradable</b>... <br /><br />
+          It's <span data-text="Web3" className="glitch">Web3</span>'s first community-powered <br /> <b>musical signature generator</b> — <b>mintable, shareable, tradable</b>... <br /><br />
         </p>
         <p>
           <span className={styles.typewriterLoop}>✨ We turn music into immutable art.</span> <br /><br />
@@ -416,7 +492,10 @@ const LoginScreen = () => {
         </div>
       </Modal>
 
-      {/* Removed plasma background effects for production compatibility */}
+      <div id="parallax-layers">
+        <canvas id="neon-canvas"></canvas>
+        <div className="neon-glow"></div>
+      </div>
 
       {/* Wallet Address Input Modal */}
       <WalletAddressModal
