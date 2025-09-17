@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![BlockBeats Logo](public/logo.webp)
+![BlockBeats Logo](public/images/logos/logo.webp)
 
 **We turn music into immutable art. It's Web3's first community-powered musical signature generator — mintable, shareable, tradable... And give them full ownership of their creation through NFTs.**
 
@@ -271,22 +271,38 @@ trackNFTCreation('My Song', 'drawing', 120); // Tracks NFT creation
 blockbeats/
 ├── src/
 │   ├── app/                    # Next.js App Router
-│   │   ├── assets/styles/      # CSS Modules
+│   │   ├── assets/styles/      # CSS Modules (organized)
+│   │   │   ├── components/     # Component-specific styles
+│   │   │   ├── layouts/        # Layout styles
+│   │   │   └── pages/          # Page-specific styles
 │   │   └── globals.css         # Global styles
-│   ├── components/             # React components
+│   ├── components/             # React components (organized)
+│   │   ├── features/           # Feature components
+│   │   ├── layout/             # Layout components
 │   │   ├── machines/           # Music creation tools
 │   │   │   ├── drumDesigner/   # Drum machine
 │   │   │   └── musicDrawingMachine/ # Pixel music creator
-│   │   ├── rewards/            # Gamification components
-│   │   └── ...
+│   │   ├── modals/             # Modal components
+│   │   └── ui/                 # UI components
 │   ├── context/                # React contexts
 │   ├── hooks/                  # Custom React hooks
-│   ├── pages/                  # Page components
+│   ├── pages/                  # Page components (organized)
+│   │   ├── auth/               # Authentication pages
+│   │   ├── dashboard/          # Dashboard pages
+│   │   ├── marketplace/        # Marketplace pages
+│   │   ├── studio/             # Studio pages
+│   │   └── collections/        # Collection pages
 │   ├── types/                  # TypeScript definitions
 │   └── utils/                  # Helper functions
-├── public/                     # Static assets
+├── public/                     # Static assets (organized)
+│   ├── images/                 # All images
+│   │   ├── avatars/            # Character phases
+│   │   ├── backgrounds/        # Background images
+│   │   ├── logos/              # Logo files
+│   │   ├── characters/         # Character images
+│   │   ├── store/              # Store items
+│   │   └── launchpad/          # Launchpad images
 │   ├── sounds/                 # Audio files
-│   ├── avatar/                 # Character phases
 │   └── ...
 └── firebase.ts                 # Firebase configuration
 ```
