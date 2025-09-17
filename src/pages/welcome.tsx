@@ -353,6 +353,24 @@ const WelcomeScreen = () => {
         >
           Test Click
         </button>
+        <button 
+          onClick={() => {
+            console.log('🧪 Simple test button clicked!');
+            alert('Simple test button works!');
+          }}
+          style={{ 
+            background: '#ff0099', 
+            color: '#fff', 
+            border: 'none', 
+            padding: '5px 10px', 
+            borderRadius: '3px',
+            marginTop: '5px',
+            cursor: 'pointer',
+            marginLeft: '5px'
+          }}
+        >
+          Simple Test
+        </button>
       </div>
       
       <main className={styles.main}>
@@ -417,7 +435,20 @@ const WelcomeScreen = () => {
             ) : (
               <button
                 className={styles.submitBtnLarge}
-                onClick={readWalletAddress}
+                onClick={(e) => {
+                  console.log('🔘 Welcome: Test Connect Wallet button clicked - event:', e);
+                  e.preventDefault();
+                  e.stopPropagation();
+                  readWalletAddress();
+                }}
+                onMouseDown={() => console.log('🔘 Welcome: Test Connect Wallet button mousedown')}
+                onMouseUp={() => console.log('🔘 Welcome: Test Connect Wallet button mouseup')}
+                style={{ 
+                  cursor: 'pointer',
+                  pointerEvents: 'auto',
+                  zIndex: 1000,
+                  position: 'relative'
+                }}
               >
                 <span style={{ position: 'relative', marginTop: '-20px' }}>Test Connect Wallet</span>
                 <img src="/starknet-logo.svg" style={{ position: 'absolute', top: 30, margin: '0 auto', left: 10 }} alt="blockbeats-logo" width={60} />
@@ -430,7 +461,13 @@ const WelcomeScreen = () => {
           <hr />
           <br />
 
-          <form onSubmit={handleSubmit} className={styles.form}>
+          <form 
+            onSubmit={(e) => {
+              console.log('📝 Welcome: Form submitted - event:', e);
+              handleSubmit(e);
+            }} 
+            className={styles.form}
+          >
             <input
               type="email"
               required
@@ -441,7 +478,25 @@ const WelcomeScreen = () => {
               disabled={loading}
             />
             {!loading ? (
-              <button type="submit" className={styles.submitBtn} style={{ animation: 'none'}}>Test Join Now 🚀</button>
+              <button 
+                type="submit" 
+                className={styles.submitBtn} 
+                style={{ 
+                  animation: 'none',
+                  cursor: 'pointer',
+                  pointerEvents: 'auto',
+                  zIndex: 1000,
+                  position: 'relative'
+                }}
+                onClick={(e) => {
+                  console.log('📧 Welcome: Test Join Now button clicked - event:', e);
+                  console.log('📧 Welcome: Form will submit with email:', email);
+                }}
+                onMouseDown={() => console.log('📧 Welcome: Test Join Now button mousedown')}
+                onMouseUp={() => console.log('📧 Welcome: Test Join Now button mouseup')}
+              >
+                Test Join Now 🚀
+              </button>
             ) : (
               <Preloader />
             )}
