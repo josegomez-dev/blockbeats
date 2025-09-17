@@ -1,5 +1,5 @@
-@import "./assets/styles/Nav.module.css";
-@import "./assets/styles/Auth.module.css";
+@import "./assets/styles/layouts/Nav.module.css";
+@import "./assets/styles/pages/Auth.module.css";
 @import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
 
 
@@ -63,7 +63,7 @@ body::before {
   left: 0;
   width: 110%;
   height: 110%;
-  background-image: url('/bg1.webp');
+  background-image: url('/images/backgrounds/bg1.webp');
   background-size: cover;
   background-position: center;
   filter: blur(5px) brightness(0.5);
@@ -775,7 +775,7 @@ p {
 }
 
 .test-bg {
-  background-image: url('/collections-bg.png');
+  background-image: url('/images/backgrounds/collections-bg.png');
   background-size: cover;
   background-position: center;
   width: 100%;
@@ -784,7 +784,7 @@ p {
   box-shadow: inset 0 -1px 0 white;
 }
 .test-creations-bg {
-  background-image: url('/gallery-bg.png');
+  background-image: url('/images/backgrounds/gallery-bg.png');
   background-size: cover;
   background-position: center;
   width: 100%;
@@ -793,7 +793,7 @@ p {
   box-shadow: inset 0 -1px 0 white;
 }
 .test-marketplace-bg {
-  background-image: url('/marketplace-bg.png');
+  background-image: url('/images/backgrounds/marketplace-bg.png');
   background-size: cover;
   background-position: center;
   width: 100%;
@@ -802,7 +802,7 @@ p {
   box-shadow: inset 0 -1px 0 white;
 }
 .test-tutorials-bg {
-  background-image: url('/edu-bg.png');
+  background-image: url('/images/backgrounds/edu-bg.png');
   background-size: cover;
   background-position: center;
   width: 100%;
@@ -911,7 +911,7 @@ p {
   position: absolute;
   width: 20px;
   height: 20px;
-  background-image: url('/coin.svg');
+  background-image: url('/images/coins.webp');
   background-size: cover;
   animation: floatUp 1.5s ease-out forwards;
 }

@@ -6,9 +6,9 @@ export default function Document() {
       <Head>
         {/* Favicon and Icons */}
         <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/logo.webp" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/logo.webp" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/logo.webp" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/logos/logo.webp" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/logos/logo.webp" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/logos/logo.webp" />
         <link rel="manifest" href="/site.webmanifest" />
         
         {/* Theme Color */}

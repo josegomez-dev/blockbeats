@@ -1,19 +1,19 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import styles from './../app/assets/styles/LandingPage.module.css';
-import stylesMain from "@/app/assets/styles/MainPage.module.css";
+import styles from '@/app/assets/styles/pages/LandingPage.module.css';
+import stylesMain from "@/app/assets/styles/layouts/MainPage.module.css";
 import { Modal } from 'react-responsive-modal';
 import { FaRegNewspaper, FaTwitter, FaDiscord, FaYoutube, FaFacebook, FaMedium, FaTelegram, FaLinkedin, FaInstagram, FaTiktok } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from '../context/AuthContext';
 import Image from 'next/image';
 import Head from 'next/head';
-import TopNFTShowcase from '@/components/TopNFTShowcase';
-import RealMusicNFTs from '@/components/RealMusicNFTs';
-import AutoGalleryBanner from '@/components/AutoGalleryBanner';
-import RobotSkinsShowcase from '@/components/RobotSkinsShowcase';
-import Footer from '@/components/Footer';
+import TopNFTShowcase from '../components/features/TopNFTShowcase';
+import RealMusicNFTs from '../components/features/RealMusicNFTs';
+import AutoGalleryBanner from '../components/features/AutoGalleryBanner';
+import RobotSkinsShowcase from '../components/features/RobotSkinsShowcase';
+import Footer from '../components/layout/Footer';
 
 const LandingPage = () => {
   const [open, setOpen] = useState(false);
@@ -62,7 +62,7 @@ const LandingPage = () => {
 
   useEffect(() => {
     if (user && user.uid) {
-      router.push('/dashboard');
+      router.push('/dashboard/dashboard');
     }
   }
   , [user, router]);
@@ -71,27 +71,27 @@ const LandingPage = () => {
     // {
     //   title: 'Holographic Experiences',
     //   description: 'Deliver immersive holographic live performances.',
-    //   icon: '/icons/1.png',
+    //   icon: '/images/icons/1.png',
     // },
     {
       title: 'Feel the Music',
       description: 'Innovative haptic feedback devices that allow users to feel music through vibrations.',
-      icon: '/icons/5.png',
+      icon: '/images/icons/5.png',
     },
     {
       title: 'Drone Performances',
       description: 'Coordinate drone-based visual performances for your music.',
-      icon: '/icons/4.png',
+      icon: '/images/icons/4.png',
     },
     {
       title: 'NFT Minting Machines',
       description: 'Deploy interactive minting machines for luxury NFT experiences.',
-      icon: '/icons/2.png',
+      icon: '/images/icons/2.png',
     },
     {
       title: 'Smart Light Shows',
       description: 'Synchronize light installations with your music NFTs.',
-      icon: '/icons/3.png',
+      icon: '/images/icons/3.png',
     },
   ];
 
@@ -99,7 +99,7 @@ const LandingPage = () => {
     {
       name: 'José Alejandro Gómez Castro',
       role: 'Founder, CTO & Creative Director',
-      avatar: '/team/ale.png',
+      avatar: '/images/characters/1guy.png',
       socialMediaLinks: [
         { url: 'https://www.linkedin.com/in/josealejandrogomezcastro/', icon: <FaLinkedin /> },
         { url: 'https://josegomezdev.medium.com/', icon: <FaMedium /> },
@@ -119,7 +119,7 @@ const LandingPage = () => {
     {
       name: 'Ricardo Patino',
       role: 'Operations Manager',
-      avatar: '/team/richard.png',
+      avatar: '/images/characters/2guy.png',
       socialMediaLinks: [
         { url: 'https://x.com/Ricardo15727088', icon: <FaTwitter /> },
         { url: 'https://www.linkedin.com/in/ricardopatino1/', icon: <FaLinkedin /> },
@@ -135,7 +135,7 @@ const LandingPage = () => {
     {
       name: 'Pamela Sanchez',
       role: 'Accessibility Specialist',
-      avatar: '/team/pame.png',
+      avatar: '/images/characters/3guy.png',
       socialMediaLinks: [
         { url: 'https://www.facebook.com/pamela.sanchez.771282', icon: <FaFacebook className={styles.twitterIcon} /> },
         { url: 'https://www.linkedin.com/in/wensdy-s%C3%A1nchez-carranza-ing-sistemas/', icon: <FaLinkedin className={styles.discordIcon} /> },
@@ -148,7 +148,7 @@ const LandingPage = () => {
     {
       name: 'Luis Elias Gomez Castro',
       role: 'Audience Engagement',
-      avatar: '/team/elias.png',
+      avatar: '/images/characters/4guy.png',
       socialMediaLinks: [
         { url: 'https://www.facebook.com/eliasdevcr', icon: <FaFacebook className={styles.twitterIcon} /> },
         { url: 'https://www.linkedin.com/in/eliasgomezcastro/', icon: <FaLinkedin className={styles.discordIcon} /> },
@@ -163,9 +163,9 @@ const LandingPage = () => {
 
 
   const sponsors = [
-  { image: '/1.png', url: 'https://josegomez-dev.github.io/catarsismusical/' },
-  { image: '/dojo.png', url: 'https://dojoengine.org' },
-  { image: '/download.jpeg', url: 'https://starknet.io' },
+  { image: '/images/icons/1.png', url: 'https://josegomez-dev.github.io/catarsismusical/' },
+  { image: '/images/logos/logo.webp', url: 'https://dojoengine.org' },
+  { image: '/images/logos/logo.webp', url: 'https://starknet.io' },
 ];
 
 
@@ -225,12 +225,12 @@ const LandingPage = () => {
         <meta name="keywords" content="BlockBeats, Web3 music, NFT music, Starknet, music creation, MIDI, crypto music, blockchain music, musical NFTs, music marketplace, Argent X, Braavos, music generator, pixel music, drum machine, music studio, hackathon winner, Starknet hackathon" />
         <meta property="og:title" content="BlockBeats 3.0 - Web3 Music Creation Platform" />
         <meta property="og:description" content="Create, mint, and trade musical NFTs on Starknet. Web3's first community-powered musical signature generator with MIDI support, gamification, and NFT marketplace." />
-        <meta property="og:image" content="https://blockbeats-tau.vercel.app/logo.webp" />
+        <meta property="og:image" content="https://blockbeats-tau.vercel.app/images/logos/logo.webp" />
         <meta property="og:url" content="https://blockbeats-tau.vercel.app" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="BlockBeats 3.0 - Web3 Music Creation Platform" />
         <meta name="twitter:description" content="Create, mint, and trade musical NFTs on Starknet. Web3's first community-powered musical signature generator with MIDI support, gamification, and NFT marketplace." />
-        <meta name="twitter:image" content="https://blockbeats-tau.vercel.app/logo.webp" />
+        <meta name="twitter:image" content="https://blockbeats-tau.vercel.app/images/logos/logo.webp" />
       </Head>
       <div className={styles.landingPage}>
       {/* Hero Section */}
@@ -242,7 +242,7 @@ const LandingPage = () => {
           <span className="glitch">Create, share, and experience music like never before — powered by Web3.</span>
           <br />
           <br />
-          <button className={stylesMain.submitBtn} onClick={() => window.location.replace('/login')}>🖼️ CREATE & 🎹 PLAY </button>
+          <button className={stylesMain.submitBtn} onClick={() => window.location.replace('/auth/login')}>🖼️ CREATE & 🎹 PLAY </button>
           <Link href="https://joses-organization-73.gitbook.io/blockbeats-3.0" target="_blank" rel="noopener noreferrer">
             <button  style={{ animation: 'none', background: 'transparent', color: 'white' }} className={stylesMain.submitBtn}>📑 DOCS</button>
           </Link>
@@ -285,9 +285,9 @@ const LandingPage = () => {
           </Link> */}
 
           <br />
-          <img className={styles.character2} src="/avatar/phase-5.webp" style={{ width: '200px', height: 'auto', marginBottom: '-106px'  }} alt="BlockBeats Robot"  />
-          <img className={styles.character3} src="/avatar/phase-4.webp" style={{ width: '200px', height: 'auto', marginBottom: '-120px'  }} alt="BlockBeats Robot"  />
-          <img className={styles.character1} src="/avatar/phase-6.webp" style={{ width: '200px', height: 'auto', marginBottom: '-120px'  }} alt="BlockBeats Robot"  />
+          <img className={styles.character2} src="/images/avatars/phase-5.webp" style={{ width: '200px', height: 'auto', marginBottom: '-106px'  }} alt="BlockBeats Robot"  />
+          <img className={styles.character3} src="/images/avatars/phase-4.webp" style={{ width: '200px', height: 'auto', marginBottom: '-120px'  }} alt="BlockBeats Robot"  />
+          <img className={styles.character1} src="/images/avatars/phase-6.webp" style={{ width: '200px', height: 'auto', marginBottom: '-120px'  }} alt="BlockBeats Robot"  />
         </div>
       </section>
       <hr />
@@ -295,7 +295,7 @@ const LandingPage = () => {
 
     {/* Robot Character */}
     <div className={`${styles.robotContainer}`}>
-      <img src="/avatar/phase-1.webp" alt="BlockBeats Robot" className={styles.robotImage} />
+      <img src="/images/avatars/phase-1.webp" alt="BlockBeats Robot" className={styles.robotImage} />
       <div className={`${styles.robotSpeech}`}>
         {randomMessage}
       </div>
@@ -306,7 +306,7 @@ const LandingPage = () => {
       <section className={styles.visionMissionSection}>
         <h2>
             <Image
-              src="/logo.webp"
+              src="/images/logos/logo.webp"
               alt="BlockBeats Logo"
               width={80}
               height={80}
@@ -375,7 +375,7 @@ const LandingPage = () => {
         {/* Right Column: Image */}
         <div className={styles.featureImage}>
           <Image
-            src="/edu.png"
+            src="/images/edu.png"
             alt="EDU BlockBeats"
             width={500}
             height={500}
@@ -422,7 +422,7 @@ const LandingPage = () => {
       <div className={styles.imageContainer}>
         <br />
         <Image
-          src="/co-create-music.png"
+          src="/images/co-create-music.png"
           alt="BlockBeats Launchpad"
           width={500}
           height={300}

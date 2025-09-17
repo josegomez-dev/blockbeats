@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import styles from '@/app/assets/styles/PlaybackControls.module.css';
+import styles from '@/app/assets/styles/components/PlaybackControls.module.css';
 
 interface PlaybackControlsProps {
   isPlaying: boolean;

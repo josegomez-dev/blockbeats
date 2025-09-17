@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from '@/app/assets/styles/MachineSelector.module.css';
+import styles from '@/app/assets/styles/components/MachineSelector.module.css';
 import Image from 'next/image';
-import Footer from '../Footer';
+import Footer from '../layout/Footer';
 
 interface Machine {
   id: string;
@@ -20,28 +20,28 @@ const machines: Machine[] = [
     id: 'drawing',
     name: 'Music Drawing Machine',
     description: 'Compose 8Bit melodies as pixel-art with 🎹 MIDI compatibility.',
-    icon: '/store/drumkit/synth-pixel.png',
+    icon: '/images/store/drumkit/synth-pixel.png',
     ready: true,
   },
   {
     id: 'drums',
     name: 'Drums Designer Machine',
     description: 'Create custom drum patterns with a grid interface.',
-    icon: '/store/drumkit/futurebass.png',
+    icon: '/images/store/drumkit/futurebass.png',
     ready: true,
   },
   {
     id: 'voicemusic',
     name: 'Voice Music Machine',
     description: 'Generate melodies with your voice using AI.',
-    icon: '/store/drumkit/voicemusicmachine.png',
+    icon: '/images/store/drumkit/voicemusicmachine.png',
     ready: false,
   },
   {
     id: 'launchpad',
     name: 'Launchpad Machine',
     description: 'Trigger samples and loops with a grid interface.',
-    icon: '/store/drumkit/trap.png',
+    icon: '/images/store/drumkit/trap.png',
     ready: false,
   },
 ];

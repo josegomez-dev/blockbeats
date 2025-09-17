@@ -34,7 +34,7 @@ import PixelCanvas from './PixelCanvas';
 import Piano from './Piano';
 import FrequencyModal from './FrequencyModal';
 
-import styles from '@/app/assets/styles/MusicStudio.module.css';
+import styles from '@/app/assets/styles/pages/MusicStudio.module.css';
 
 export default function MusicDrawingMachine() {
   const { user } = useAuth();

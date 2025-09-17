@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import styles from '@/app/assets/styles/DrumDesigner.module.css';
+import styles from '@/app/assets/styles/components/DrumDesigner.module.css';
 import { BACKING_TRACKS, DRUM_SOUNDS } from '../../../utils/constants/drumMachine';
 import { playSound } from '../../../utils/helpers/audioHelper';
 import PlaybackControls from '@/components/machines/PlaybackControls';
-import Footer from '@/components/Footer';
+import Footer from '@/components/layout/Footer';
 
 const MIN_STEPS = 4;
 const MAX_STEPS = 32;

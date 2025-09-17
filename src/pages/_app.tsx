@@ -8,14 +8,14 @@ import {
   braavos,
 } from "@starknet-react/core";
 
-import { GlobalProvider } from '@/context/GlobalContext'
-import { AuthProvider } from '@/context/AuthContext'
+import { GlobalProvider } from '../context/GlobalContext';
+import { AuthProvider } from '../context/AuthContext';
 import type { AppProps } from 'next/app'
 import { Toaster } from 'react-hot-toast'
 import { Analytics } from '@vercel/analytics/react';
 import { GoogleAnalytics } from '@next/third-parties/google';
 
-import Layout from '@/components/Layout'
+import { Layout } from '../components/layout';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const chains = [sepolia];

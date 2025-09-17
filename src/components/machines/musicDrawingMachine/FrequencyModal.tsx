@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import styles from '@/app/assets/styles/MainPage.module.css';
+import styles from '@/app/assets/styles/layouts/MainPage.module.css';
 import { frequencyRanges } from '@/utils/constants/musicDrawingMachine';
 
 interface FrequencyModalProps {
@@ -50,7 +50,7 @@ const FrequencyModal: React.FC<FrequencyModalProps> = ({ selected, onSelect, onS
         }}
       >
         <Image
-          src="/frequency-types.webp"
+          src="/images/frequency-types.webp"
           alt="frequency types"
           width={350}
           height={350}

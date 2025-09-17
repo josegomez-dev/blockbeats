@@ -18,7 +18,7 @@ export const useSEO = (props: SEOProps = {}) => {
   const {
     title = 'BlockBeats 3.0 - Web3 Music Creation Platform',
     description = 'Create, mint, and trade musical NFTs on Starknet. Web3\'s first community-powered musical signature generator with MIDI support, gamification, and NFT marketplace.',
-    image = 'https://blockbeats-tau.vercel.app/logo.webp',
+    image = 'https://blockbeats-tau.vercel.app/images/logos/logo.webp',
     url = 'https://blockbeats-tau.vercel.app',
     type = 'website',
     keywords = [
