@@ -1,48 +1,24 @@
 import { useState, useEffect } from "react";
 import Head from 'next/head';
 import { toast } from 'react-hot-toast';
-import "react-responsive-modal/styles.css";
-import { Modal } from "react-responsive-modal";
 import { useAuth } from "@/context/AuthContext";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
 import { User } from "@/types/userTypes";
-import Avatar from "react-avatar";
-import Preloader from "@/components/Preloader";
 import styles from "@/app/assets/styles/MainPage.module.css";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from 'next/router';
-
-import { IWalletConnection } from "@/types/walletTypes";
-import { connect, disconnect } from "starknetkit";
-import { useBlockBeatsAnalytics } from '@/utils/analytics/blockbeatsEvents';
-import WalletAddressModal from '@/components/WalletAddressModal';
 
 const LoginFresh = () => {
-  const router = useRouter();
-  const { user, signUpWithWallet, signUp, signIn, authenticated, verifyEmail, sendWelcomeEmail, walletConnectionAuth, setWalletConnectionAuth } = useAuth();
-  const { trackWalletConnection } = useBlockBeatsAnalytics();
-  const [walletConnection, setWalletConnection] = useState<IWalletConnection | null>(null);
-  const [mounted, setMounted] = useState(false);
-
+  const { signUp, signIn } = useAuth();
   const [email, setEmail] = useState("");
-  const [createAccountEmail, setCreateAccountEmail] = useState("");
   const [loading, setLoading] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   // Ensure component is mounted on client side
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  useEffect(() => {
-    if (user && authenticated) {
-      router.push('/dashboard');
-    }
-  }, [user, authenticated, router]);
 
   // Plasma effects and parallax
   useEffect(() => {
@@ -137,10 +113,9 @@ const LoginFresh = () => {
         return;
       } else {
         console.log('New account, signing up...');
-        // await sendWelcomeEmail(email, "abc123");
         await signUp(email, "abc123");
         setLoading(false);
-        setIsModalOpen(true);
+        toast.success("Account created successfully!");
         setEmail("");
         return;
       }
@@ -153,84 +128,9 @@ const LoginFresh = () => {
     }
   };
 
-  const readWalletAddress = () => {
-    setIsWalletModalOpen(true);
-  }
-
-  const handleWalletAddressSubmit = async (address: string) => {
-    setIsWalletModalOpen(false);
-    
-    setWalletConnection({
-      // wallet: null,
-      address: address,
-    });
-
-    // fetch all accounts from firebase to check if the account.walletStored is already registered
-    const accounts = await getAllAccounts();
-    const existingAccount = accounts.find((account) => account.walletStored === address);
-    if (existingAccount) {
-      await signIn(existingAccount.email, "abc123");
-      toast.success("You're already in.");
-      return;
-    }
-
-    handleConnect(address);
-  }
-
-  const handleConnect = async (_address: string) => {
-    try {
-      const result = await connect({ dappName: "BlockBeats" });
-      if (result.wallet) {
-        setWalletConnection({
-          wallet: result.wallet,
-          address: _address,
-        });
-        setWalletConnectionAuth(
-          {
-            wallet: result.wallet,
-            address: _address,
-          }
-        );
-        
-        // Track wallet connection
-        const walletType = result.wallet?.id?.includes('argent') ? 'argent' : 'braavos';
-        trackWalletConnection(walletType, _address);
-        
-        toast.success(`Wallet ${_address} connected successfully!`);
-        setIsModalOpen(true);
-      } else {
-        toast.error("No wallet found in connection result.");
-        setWalletConnection(null);
-      }
-    } catch (error) {
-      toast.error("Failed to connect wallet.");
-      setWalletConnection(null);
-    }
-  };
-
-  const handleDisconnect = async () => {
-    if (!walletConnection) {
-      toast.error("No wallet connected.");
-      return;
-    }
-    try {
-      await disconnect();
-      setWalletConnection(null);
-      toast.success("Wallet disconnected successfully!");
-      console.log("Wallet disconnected");
-    } catch (error) {
-      toast.error("Failed to disconnect wallet.");
-      console.error("Failed to disconnect wallet:", error);
-    }
-  };
-
-  const getWallet = () => {
-    if (user?.walletStored) {
-      return user.walletStored ? `${user.walletStored.slice(0, 6)}...${user.walletStored.slice(-4)}` : 'Not connected';
-    }
-    if (walletConnection?.address) {
-      return walletConnectionAuth?.address ? `${walletConnectionAuth.address.slice(0, 6)}...${walletConnectionAuth.address.slice(-4)}` : 'Not connected';
-    }
+  const handleWalletClick = () => {
+    console.log('🔘 Fresh Login: Wallet button clicked');
+    alert('Wallet connection coming soon!');
   };
 
   // Show loading state until mounted on client
@@ -314,9 +214,6 @@ const LoginFresh = () => {
       <br />
       <br />
 
-      {authenticated ? (
-        <Preloader />
-      ) : (
       <div className={styles.bannerContainer}>
         {/* 🚀 Neon Whitelist Banner */}
      
@@ -348,25 +245,13 @@ const LoginFresh = () => {
             </div>
           )}
 
-          <>
-            {walletConnection?.address ? (
-              // <button
-              //   className={styles.submitBtnLarge}
-              //   onClick={handleDisconnect}
-              // >
-              //   Disconnect Wallet: {walletConnection.address.slice(0, 6)}...{walletConnection.address.slice(-4)}
-              // </button>
-              <Preloader />
-            ) : (
-              <button
-                className={styles.submitBtnLarge}
-                onClick={readWalletAddress}
-              >
-                <span style={{ position: 'relative', marginTop: '-20px' }}>Connect Wallet</span>
-                <img src="/starknet-logo.svg" style={{ position: 'absolute', top: 30, margin: '0 auto', left: 10 }} alt="blockbeats-logo" width={60} />
-              </button>
-            )}
-          </>
+          <button
+            className={styles.submitBtnLarge}
+            onClick={handleWalletClick}
+          >
+            <span style={{ position: 'relative', marginTop: '-20px' }}>Connect Wallet</span>
+            <img src="/starknet-logo.svg" style={{ position: 'absolute', top: 30, margin: '0 auto', left: 10 }} alt="blockbeats-logo" width={60} />
+          </button>
 
           <br />
           <br />
@@ -386,7 +271,16 @@ const LoginFresh = () => {
             {!loading ? (
               <button type="submit" className={styles.submitBtn} style={{ animation: 'none'}}>Join Now 🚀</button>
             ) : (
-              <Preloader />
+              <div style={{ 
+                display: 'flex', 
+                justifyContent: 'center', 
+                alignItems: 'center', 
+                height: '50px',
+                color: '#00FFFF',
+                fontSize: '16px'
+              }}>
+                Processing...
+              </div>
             )}
           </form>
 
@@ -396,93 +290,16 @@ const LoginFresh = () => {
           <br />
         </div>
       </div>
-      )}
       
 
       <br />
       <br />
       <br />
 
-      <Modal classNames={{ root: styles.modal }} open={isModalOpen} onClose={() => setIsModalOpen(false)} styles={{ modal: {  backdropFilter: 'blur(100px)', backgroundColor: 'rgba(20, 50, 100, 0.6)', width: '90%' } }} center>
-        <div className="modal-content">
-          <br />
-          <h2 className={styles.modalTitle}>Thanks to join our whitelist</h2>
-          <br />
-          {walletConnectionAuth?.wallet.icon ? (<img src={walletConnectionAuth?.wallet.icon} alt="Wallet Icon" />) : (<Avatar 
-            size="50" 
-            textSizeRatio={1.75} 
-            name={user?.email || ''} 
-            alt={'user-profile-picture'}
-            round={true}
-            color='var(--secondary-color)'
-          />)}
-          
-          <br />
-          <br />
-          {user?.walletStored ? (
-            <p style={{ fontSize: '12px' }}>
-              Your Wallet Address:&nbsp;
-              <b style={{ color: 'gold' }}>
-                {getWallet()}
-              </b>
-              &nbsp;
-            </p>
-            ) : (
-            <p style={{ fontSize: '12px' }}>
-              Your Wallet Address:&nbsp;
-              <b style={{ color: 'red' }}>Not connected</b>
-            </p>
-            )}
-          <br />
-          <p style={{ fontSize: '12px' }}>
-            Your email is: <b>{user?.email}</b> 
-          </p>
-
-          <br />
-          <button className={styles.submitBtn} onClick={() => {
-            if (user) {
-              setIsModalOpen(false);
-              router.push('/dashboard');
-            }
-          }}>
-            Let's go! 🎶
-          </button>
-
-          {!user && (
-            <div>
-              <br />
-              <div style={{ display: "flex", justifyContent: "space-between", gap: "25px" }}>
-                <input className={styles.emailInput} style={{ height: '50px', marginTop: '15px' }} onChange={(e) => setCreateAccountEmail(e.target.value)} type="text" />
-                <button className={styles.submitBtn} style={{ width: '100px', padding: '0 20px' }} onClick={() => {
-                  signUpWithWallet(createAccountEmail, "abc123", walletConnectionAuth || null);
-                }}>
-                  Create <br/> Account
-                </button>
-              </div>
-            </div>
-          )}
-            
-          <br />
-          <b>Note:</b> If you already have an account, you can <span className="glitch" style={{ color: 'var(--primary-color)' }}>continue</span> with your email.
-          <br />
-          <p className={`glitch ${styles.modalText}`} style={{ fontSize: '12px' }}>
-            <b>We're excited to have you on board!</b>
-          </p>
-        </div>
-      </Modal>
-
       <div id="parallax-layers">
         <canvas id="neon-canvas"></canvas>
         <div className="neon-glow"></div>
       </div>
-
-      {/* Wallet Address Input Modal */}
-      <WalletAddressModal
-        isOpen={isWalletModalOpen}
-        onClose={() => setIsWalletModalOpen(false)}
-        onSubmit={handleWalletAddressSubmit}
-        loading={loading}
-      />
 
     </main>
     </>
