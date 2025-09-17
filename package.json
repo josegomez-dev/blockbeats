@@ -24,7 +24,7 @@
     "core-js-pure": "^3.42.0",
     "firebase": "^11.7.3",
     "framer-motion": "^12.15.0",
-    "get-starknet-core": "^3.3.5",
+    "get-starknet-core": "^3.2.0",
     "next": "14.2.4",
     "prettier": "^3.3.2",
     "prop-types": "^15.8.1",
@@ -37,9 +37,13 @@
     "react-responsive-modal": "^6.4.2",
     "react-sparklines": "^1.7.0",
     "react-sparklines-ts": "^1.8.7",
-    "starknet": "^6.24.1",
+    "starknet": "^6.15.0",
     "starknetkit": "^2.10.4",
-    "uuid": "^11.1.0"
+    "tailwindcss": "3.4.17",
+    "tailwindcss-animate": "^1.0.7",
+    "url-join": "5.0.0",
+    "uuid": "^11.1.0",
+    "zod": "4.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.27.1",
@@ -48,7 +52,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-sparklines": "^1.7.5",
-    "eslint": "^9.15.0",
+    "eslint": "^8.57.0",
     "eslint-config-next": "14.2.4",
     "typescript": "^5"
   }
