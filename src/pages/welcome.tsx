@@ -19,22 +19,32 @@ import { useBlockBeatsAnalytics } from '@/utils/analytics/blockbeatsEvents';
 import Head from 'next/head';
 import WalletAddressModal from '@/components/WalletAddressModal';
 
-// Error boundary for wallet conflicts
+// Simplified error handling for wallet conflicts
 const handleWalletErrors = () => {
-  // Suppress wallet extension errors that break the page
-  const originalError = console.error;
-  console.error = (...args) => {
-    const message = args[0]?.toString() || '';
-    if (
-      message.includes('Cannot redefine property: ethereum') ||
-      message.includes('Cannot set property ethereum') ||
-      message.includes('Identifier') && message.includes('already been declared')
-    ) {
-      console.warn('🚫 Suppressed wallet extension conflict:', message);
-      return;
-    }
-    originalError.apply(console, args);
-  };
+  try {
+    // Suppress wallet extension errors that break the page
+    const originalError = console.error;
+    console.error = (...args) => {
+      try {
+        const message = args[0]?.toString() || '';
+        if (
+          message.includes('Cannot redefine property: ethereum') ||
+          message.includes('Cannot set property ethereum') ||
+          message.includes('Identifier') && message.includes('already been declared')
+        ) {
+          console.warn('🚫 Suppressed wallet extension conflict:', message);
+          return;
+        }
+        originalError.apply(console, args);
+      } catch (e) {
+        // If error handling fails, just continue
+        originalError.apply(console, args);
+      }
+    };
+  } catch (e) {
+    // If error handling setup fails, just continue
+    console.warn('Error handling setup failed:', e);
+  }
 };
 
 const WelcomeScreen = () => {
@@ -52,13 +62,24 @@ const WelcomeScreen = () => {
 
   // Initialize error handling and mounting
   useEffect(() => {
-    // Handle wallet extension conflicts
-    handleWalletErrors();
-    
-    // Set mounted state
-    setMounted(true);
-    console.log('✅ Welcome: Component mounted successfully');
+    try {
+      // Handle wallet extension conflicts
+      handleWalletErrors();
+      
+      // Set mounted state immediately
+      setMounted(true);
+      console.log('✅ Welcome: Component mounted successfully');
+    } catch (error) {
+      console.warn('⚠️ Welcome: Error in useEffect:', error);
+      // Still set mounted even if error handling fails
+      setMounted(true);
+    }
   }, []);
+
+  // Also set mounted on client side immediately as fallback
+  if (typeof window !== 'undefined' && !mounted) {
+    setMounted(true);
+  }
 
   useEffect(() => {
     if (user && authenticated) {
@@ -287,29 +308,7 @@ const WelcomeScreen = () => {
     }
   };
 
-  // Show loading until properly mounted and wallet errors handled
-  if (!mounted) {
-    return (
-      <>
-        <Head>
-          <title>Welcome to BlockBeats - Loading...</title>
-        </Head>
-        <div style={{ 
-          display: 'flex', 
-          justifyContent: 'center', 
-          alignItems: 'center', 
-          height: '100vh',
-          background: '#0a0a0a',
-          color: '#00FFFF',
-          textAlign: 'center'
-        }}>
-          <div style={{ fontSize: '24px', fontWeight: 'bold' }}>
-            🎵 BlockBeats Loading...
-          </div>
-        </div>
-      </>
-    );
-  }
+  // Removed loading state - render immediately to avoid production issues
 
   return (
     <>
