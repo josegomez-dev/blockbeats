@@ -19,6 +19,24 @@ import { useBlockBeatsAnalytics } from '@/utils/analytics/blockbeatsEvents';
 import Head from 'next/head';
 import WalletAddressModal from '@/components/WalletAddressModal';
 
+// Error boundary for wallet conflicts
+const handleWalletErrors = () => {
+  // Suppress wallet extension errors that break the page
+  const originalError = console.error;
+  console.error = (...args) => {
+    const message = args[0]?.toString() || '';
+    if (
+      message.includes('Cannot redefine property: ethereum') ||
+      message.includes('Cannot set property ethereum') ||
+      message.includes('Identifier') && message.includes('already been declared')
+    ) {
+      console.warn('🚫 Suppressed wallet extension conflict:', message);
+      return;
+    }
+    originalError.apply(console, args);
+  };
+};
+
 const WelcomeScreen = () => {
   const router = useRouter();
   const { user, signUpWithWallet, signUp, signIn, authenticated, verifyEmail, sendWelcomeEmail, walletConnectionAuth, setWalletConnectionAuth } = useAuth();
@@ -30,6 +48,17 @@ const WelcomeScreen = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  // Initialize error handling and mounting
+  useEffect(() => {
+    // Handle wallet extension conflicts
+    handleWalletErrors();
+    
+    // Set mounted state
+    setMounted(true);
+    console.log('✅ Welcome: Component mounted successfully');
+  }, []);
 
   useEffect(() => {
     if (user && authenticated) {
@@ -50,8 +79,10 @@ const WelcomeScreen = () => {
     
     // Add a small delay to ensure DOM is fully loaded
     const timer = setTimeout(() => {
-      console.log('🎨 Welcome: Setting up mouse move handler');
-      handleMouseMove = (e: MouseEvent) => {
+      try {
+        console.log('🎨 Welcome: Setting up mouse move handler');
+        handleMouseMove = (e: MouseEvent) => {
+          try {
         const x = e.clientX / window.innerWidth - 0.5;
         const y = e.clientY / window.innerHeight - 0.5;
 
@@ -86,7 +117,7 @@ const WelcomeScreen = () => {
           });
         }
 
-        function drawPlasma() {
+        const drawPlasma = () => {
           if (!canvas || !ctx) return;
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           ctx.fillStyle = "rgba(23, 236, 236, 0.6)";
@@ -100,13 +131,19 @@ const WelcomeScreen = () => {
             if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
           }
           requestAnimationFrame(drawPlasma);
+        };
+
+            drawPlasma();
+          } catch (error) {
+            console.warn('⚠️ Welcome: Error in plasma animation:', error);
+          }
+        };
+
+        if (handleMouseMove) {
+          document.addEventListener("mousemove", handleMouseMove);
         }
-
-        drawPlasma();
-      };
-
-      if (handleMouseMove) {
-        document.addEventListener("mousemove", handleMouseMove);
+      } catch (error) {
+        console.warn('⚠️ Welcome: Error setting up plasma effects:', error);
       }
     }, 100); // Small delay to ensure DOM is ready
 
@@ -250,7 +287,29 @@ const WelcomeScreen = () => {
     }
   };
 
-  // Removed problematic loading state that was causing infinite loading
+  // Show loading until properly mounted and wallet errors handled
+  if (!mounted) {
+    return (
+      <>
+        <Head>
+          <title>Welcome to BlockBeats - Loading...</title>
+        </Head>
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignItems: 'center', 
+          height: '100vh',
+          background: '#0a0a0a',
+          color: '#00FFFF',
+          textAlign: 'center'
+        }}>
+          <div style={{ fontSize: '24px', fontWeight: 'bold' }}>
+            🎵 BlockBeats Loading...
+          </div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
