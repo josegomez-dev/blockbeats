@@ -317,7 +317,7 @@ const removeUndefined = (obj: any): any => {
         setRole(accountData.role || "user");
 
         if (typeof window !== 'undefined') {
-          router.push('/dashboard/dashboard');
+          router.push('/dashboard');
         }
   
         console.log("User signed in and account fetched successfully.");

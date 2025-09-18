@@ -115,25 +115,15 @@ const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, tota
             <li className={styles.coinsContainer}>
               <div className={styles.coinRow}>
                 <p className={styles.tokenMeta}><strong> <RiGalleryLine /> </strong>: <span className="glitch">{totalNFTCreations}</span> | <strong> <BiCollection /></strong>: <span className="glitch">{totalTopCollections}</span></p>
-                <hr />
-                <p className={styles.tokenStat}>
-                  <span className={styles.tokenValue}>
-                    {user?.bbcPoints}
-                  </span>&nbsp;
-                  <strong className="glitch">BBC</strong>
-                </p>
-                <p className={styles.tokenStat}><FaCoins color="gold" /> <strong>Total</strong>: <span className={styles.tokenValue}>${(0).toFixed(2)}</span></p>
               </div>
             </li>
           </ul>
 
           <ul>
-            <h4 style={{ textAlign: 'center' }}>Tokens</h4>
-            <hr />
             {Object.entries(prices).map(([coin, { change, isPositive }]) => (
               <li className={styles.coinsContainer} key={coin}>
                 <div className={styles.coinRow}>
-                  <div className={styles.coinLabel}><FaCoins color="gold" /> <strong>{coin}</strong>: ${(sparkData[coin]?.slice(-1)[0] || 1000).toFixed(2)}
+                  <div className={styles.coinLabel}>🪙 <strong>{coin}</strong>: ${(sparkData[coin]?.slice(-1)[0] || 1000).toFixed(2)}
                     <span className={`${styles.coinsText} ${isPositive ? styles.green : styles.red}`}>
                       {isPositive ? "▲" : "▼"} {change}%
                     </span>

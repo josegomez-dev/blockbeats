@@ -138,6 +138,7 @@ export default function Nav() {
           <>
             {/* 👤 User Menu */}
             <li id='personal-pts-balance-nav' className={styles.navItem}>
+              <FaCoins color="gold" />&nbsp;
               {user?.bbcPoints ? user.bbcPoints : 0}
             </li>
             <li className={`${styles.navItem} ${styles.dropdown}`} ref={dropdownRef}>
@@ -161,8 +162,8 @@ export default function Nav() {
                     <span className="overflow-auto">{user?.displayName || user?.email}</span>
                   </div> */}
                                     
+                  {/*
                   <hr />
-
                   {user?.walletStored ? (
                     <div> &nbsp;&nbsp;
                     💳&nbsp;<span className='glitch mt-neg-15'>{user?.walletStored.slice(0, 5)}...{user?.walletStored.slice(-4)} {data?.symbol} </span>
@@ -177,7 +178,7 @@ export default function Nav() {
                         </button>
                         <br />
                     </div>
-                  )}
+                  )} */}
                   
                   <hr />
                   <div className="flex-align-center-padding">
@@ -185,22 +186,22 @@ export default function Nav() {
                   </div>
              
                   <hr />
-                  <Link href="/dashboard/dashboard">
+                  <Link href="/dashboard">
                     <div className={styles.dropdownItem}>
                       <MdDashboard className={styles.icon} /> Dashboard
                     </div>
                   </Link>
-                  <Link href="/studio/studio">
+                  <Link href="/studio">
                     <div className={styles.dropdownItem}>
                       <FaMusic className={styles.icon} /> Studio
                     </div>
                   </Link>
-                  <Link href="/collections/collections">
+                  <Link href="/collections">
                     <div className={styles.dropdownItem}>
                       <BiCollection className={styles.icon} /> Top Collections
                     </div>
                   </Link>
-                  <Link href="/marketplace/marketplace">
+                  <Link href="/marketplace">
                     <div className={styles.dropdownItem}>
                       <FaStore className={styles.icon} /> Marketplace
                     </div>

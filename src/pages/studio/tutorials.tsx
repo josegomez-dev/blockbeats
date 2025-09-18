@@ -134,7 +134,7 @@ const TutorialsAndGuidesScreen = () => {
         <h1><span className='glitch'>How to Use BlockBeats</span></h1>
         <p>Follow your guide and get started with Web3 music creation in just a few steps.</p>
         <br />
-        <button onClick={() => router.push('/dashboard/dashboard')} className={`${styles.submitBtn} button-no-animation`}>Create New Musical NFT</button>                    
+        <button onClick={() => router.push('/dashboard')} className={`${styles.submitBtn} button-no-animation`}>Create New Musical NFT</button>                    
       </div>
       <br />
 

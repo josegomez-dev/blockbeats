@@ -140,13 +140,13 @@ const TopNFTShowcase: React.FC = () => {
       <div className={styles.showcaseCTA}>
         <button 
           className={styles.ctaButton}
-          onClick={() => window.location.href = '/marketplace/marketplace'}
+          onClick={() => window.location.href = '/marketplace'}
         >
           🚀 Explore All NFTs
         </button>
         <button 
           className={styles.ctaButtonSecondary}
-          onClick={() => window.location.href = '/studio/studio'}
+          onClick={() => window.location.href = '/studio'}
         >
           🎹 Create Your Own
         </button>

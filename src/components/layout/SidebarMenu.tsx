@@ -24,10 +24,10 @@ const SidebarMenu = () => {
   }, [isExpanded]);
 
   const menuItems = [
-    { icon: <FaHome />, label: 'Dashboard', href: '/dashboard/dashboard' },
-    { icon: <FaMusic />, label: 'Studio', href: '/studio/studio' },
-    { icon: <BiCollection />, label: 'Top Collections', href: '/collections/collections' },
-    { icon: <FaStore />, label: 'Marketplace', href: '/marketplace/marketplace' },
+    { icon: <FaHome />, label: 'Dashboard', href: '/dashboard' },
+    { icon: <FaMusic />, label: 'Studio', href: '/studio' },
+    { icon: <BiCollection />, label: 'Top Collections', href: '/collections' },
+    { icon: <FaStore />, label: 'Marketplace', href: '/marketplace' },
     { icon: <FaChalkboardTeacher />, label: 'Quick Tutorials', href: '/studio/tutorials' },
   ];
 

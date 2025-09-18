@@ -28,7 +28,7 @@ const GalleryHeader: React.FC<GalleryHeaderProps> = ({ title = 'Explore My Galle
           <div onClick={onBackClick} style={{ position: 'absolute', top: 30, right: 15, cursor: 'pointer' }}>
             <FaArrowLeft style={{ marginRight: 10 }} />
           </div>) : (
-          <Link href="/dashboard/dashboard" style={{ position: 'absolute', top: 30, right: 15, cursor: 'pointer' }}>
+          <Link href="/dashboard" style={{ position: 'absolute', top: 30, right: 15, cursor: 'pointer' }}>
             <FaArrowLeft style={{ marginRight: 10 }} />
           </Link>)}
         <div style={{ textAlign: 'center', margin: '0 auto', marginBottom: '-5px' }}>

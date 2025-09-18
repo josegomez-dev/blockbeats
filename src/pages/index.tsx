@@ -47,7 +47,7 @@ const LandingPage = () => {
 
   useEffect(() => {
     if (user && user.uid) {
-      router.push('/dashboard/dashboard');
+      router.push('/dashboard');
     }
   }
   , [user, router]);

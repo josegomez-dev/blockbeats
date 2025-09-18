@@ -142,7 +142,7 @@ const DashboardLayout = () => {
                 width={500}
                 height={500}
                 className="avatar-launchpad"
-                onClick={() => router.push('/studio/studio')}
+                onClick={() => router.push('/studio')}
               />
             </div>
             <div id="core-right-panel" className={styles.rightPanel}>

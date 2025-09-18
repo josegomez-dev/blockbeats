@@ -212,7 +212,7 @@ const RealMusicNFTs: React.FC = () => {
       <div className={styles.showcaseCTA}>
         <button 
           className={styles.ctaButton}
-          onClick={() => window.location.href = '/marketplace/marketplace'}
+          onClick={() => window.location.href = '/marketplace'}
         >
           🛒 View All NFTs
         </button>

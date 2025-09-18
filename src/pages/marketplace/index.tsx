@@ -11,6 +11,7 @@ import { NFT } from '@/types/nftTypes';
 import { playMelody, playDrumLoop } from "@/utils/helpers/drumHelper";
 import { notes } from "@/utils/constants/musicDrawingMachine"; // for frequency mapping
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 
 const MarketplaceScreen = () => {
@@ -25,6 +26,7 @@ const MarketplaceScreen = () => {
   const [stopDrumRef, setStopDrumRef] = React.useState<(() => void) | null>(null);
 
   const { user } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     const fetchNFTs = async () => {
@@ -114,7 +116,7 @@ const MarketplaceScreen = () => {
           <h1><span className='glitch'>Marketplace</span></h1>
           <p>Trade and explore unique NFTs created by our community.</p>
           <br />
-          <button onClick={() => window.location.href = '/dashboard/dashboard'} className={`${styles.submitBtn} button-no-animation`}>Create New NFT</button>
+          <button onClick={() => router.push('/dashboard')} className={`${styles.submitBtn} button-no-animation`}>Create New NFT</button>
         </div>
       
       </div>

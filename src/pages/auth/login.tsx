@@ -26,7 +26,7 @@ const LoginFresh = () => {
   useEffect(() => {
     if (mounted && authenticated) {
       console.log('User already authenticated, redirecting to dashboard...');
-      router.push('/dashboard/dashboard');
+      router.push('/dashboard');
     }
   }, [mounted, authenticated, router]);
 

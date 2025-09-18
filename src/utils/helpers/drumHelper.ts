@@ -51,6 +51,7 @@ export const playDrumLoop = (
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
     osc.frequency.setValueAtTime(150, ctx.currentTime);
+    gain.gain.setValueAtTime(0.5, ctx.currentTime);
     gain.gain.exponentialRampToValueAtTime(
       0.001,
       ctx.currentTime + AUDIO.DRUM_LENGTH

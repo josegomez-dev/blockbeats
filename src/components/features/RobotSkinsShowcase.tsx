@@ -130,13 +130,13 @@ const RobotSkinsShowcase: React.FC = () => {
       <div className={styles.showcaseCTA}>
         <button 
           className={styles.ctaButton}
-          onClick={() => window.location.href = '/marketplace/marketplace'}
+          onClick={() => window.location.href = '/marketplace'}
         >
           🛒 View All Skins
         </button>
         <button 
           className={styles.ctaButtonSecondary}
-          onClick={() => window.location.href = '/studio/studio'}
+          onClick={() => window.location.href = '/studio'}
         >
           🎨 Create Custom Skin
         </button>

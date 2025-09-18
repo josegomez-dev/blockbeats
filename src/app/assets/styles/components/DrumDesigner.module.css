@@ -1,16 +1,9 @@
 .drumDesigner {
-  padding: 2rem;
   background-color: rgba(0, 0, 0, 0.8); /* Light transparent */    
   color: white;
   border-radius: 12px;
   box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
   width: 100%;
-}
-
-@media (min-width: 768px) {
-  .drumDesigner {
-    margin-top: 80px;
-  }
 }
 
 .controls {
@@ -29,6 +22,41 @@
   text-align: center;
   max-width: 800px;
   margin: 0 auto;
+}
+
+/* Measure markers */
+.measureRow {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  padding: 4px 0;
+}
+
+.measureLabel {
+  width: 40px;
+  font-size: 0.8rem;
+  color: #00ffff;
+  font-weight: bold;
+  text-align: left;
+}
+
+.measureMarker {
+  width: 28px;
+  height: 20px;
+  margin-right: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: #00ffff;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.measureStart {
+  background: rgba(0, 255, 255, 0.2);
+  border-color: #00ffff;
 }
 
 .row {
@@ -183,6 +211,29 @@
   color: #000;
 }
 
+.recommendedFilter {
+  border: 2px solid #ffd700 !important;
+  background: linear-gradient(135deg, #ffd700, #ffed4e) !important;
+  color: #1a1a1a !important;
+  position: relative;
+}
+
+.recommendedBadge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #ff6b6b;
+  color: white;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: bold;
+}
+
 .addRowButton:disabled {
   background: #444;
   color: #aaa;
@@ -197,6 +248,14 @@
   background: #1a1a1a;
   width: 40px;
   text-align: center;
+  transition: all 0.3s ease;
+}
+
+.instrumentDropdown.selectedForSound {
+  background: #00ffff;
+  color: #1a1a1a;
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
 }
 
 .iconOnly {
@@ -262,4 +321,627 @@
 .unlockButton:hover {
   opacity: 1;
   background: #00f0f0;
+}
+
+/* Integrated Machine Controls */
+.machineControls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  margin: 1rem 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Controls Container */
+.controlsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+/* Transport Controls Bar */
+.transportControlsBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(20, 20, 40, 0.9));
+  border: 1px solid #00ffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Pattern Controls Bar */
+.patternControlsBar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(40, 20, 40, 0.8));
+  border: 1px solid #ff6b6b;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(255, 107, 107, 0.2);
+  backdrop-filter: blur(10px);
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.transportButtons {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.timingControls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.patternButtons {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.transportControls {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.transportBtn {
+  background: linear-gradient(135deg, #00ffff, #00ff88);
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  color: #1a1a1a;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 50px;
+  height: 50px;
+  font-size: 1.2rem;
+}
+
+.transportBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 255, 255, 0.4);
+}
+
+.transportBtn.playing {
+  background: linear-gradient(135deg, #ff6b6b, #e63946);
+  color: white;
+}
+
+.stopBtn {
+  background: linear-gradient(135deg, #ff6b6b, #e63946);
+  color: white;
+}
+
+.stopBtn:hover {
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+}
+
+.resetBtn {
+  background: linear-gradient(135deg, #ffa726, #ff9800);
+  color: white;
+}
+
+.resetBtn:hover {
+  box-shadow: 0 4px 15px rgba(255, 167, 38, 0.4);
+}
+
+.controlGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.controlLabel {
+  color: #00ffff;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-shadow: 0 0 5px #00ffff;
+}
+
+.controlInput {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid #00ffff;
+  border-radius: 5px;
+  color: white;
+  padding: 0.5rem;
+  text-align: center;
+  width: 80px;
+  font-size: 0.9rem;
+}
+
+.controlInput:focus {
+  outline: none;
+  border-color: #00ff88;
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+}
+
+.controlSelect {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid #00ffff;
+  border-radius: 5px;
+  color: white;
+  padding: 0.5rem;
+  text-align: center;
+  width: 80px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.controlSelect:focus {
+  outline: none;
+  border-color: #00ff88;
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+}
+
+.controlSelect option {
+  background: #000;
+  color: #00ffff;
+}
+
+.addRowBtn {
+  background: linear-gradient(135deg, #4caf50, #388e3c);
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.addRowBtn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+}
+
+.addRowBtn:disabled {
+  background: linear-gradient(135deg, #666, #444);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+
+.soundGalleryBtn {
+  background: linear-gradient(135deg, #00ffff, #00ff88);
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  color: #1a1a1a;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.soundGalleryBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 255, 255, 0.4);
+}
+
+.autoPatternBtn {
+  background: linear-gradient(135deg, #ff6b6b, #e63946);
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.autoPatternBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+}
+
+.autoPatternBtn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.6);
+}
+
+.autoPatternBtn.generating {
+  animation: pulse 0.5s ease-in-out;
+  background: linear-gradient(135deg, #ff9a56, #ff6b6b);
+}
+
+.autoPatternBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+
+/* Backdrop Overlay */
+.sidebarBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  backdrop-filter: blur(2px);
+}
+
+/* Collapsible Sound Sidebar */
+.soundSidebar {
+  position: fixed;
+  top: 0;
+  right: -400px;
+  width: 400px;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.95);
+  border-left: 2px solid #00ffff;
+  transition: right 0.3s ease;
+  z-index: 1000;
+  overflow-y: auto;
+  backdrop-filter: blur(10px);
+}
+
+.soundSidebar.sidebarOpen {
+  right: 0;
+}
+
+.sidebarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #00ffff;
+  background: rgba(0, 255, 255, 0.1);
+}
+
+.sidebarHeader h3 {
+  color: #00ffff;
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.closeSidebar {
+  background: none;
+  border: none;
+  color: #00ffff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.closeSidebar:hover {
+  background: rgba(0, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.sidebarFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-bottom: 1px solid #333;
+}
+
+.sidebarSoundList {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sidebarSoundItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.sidebarSoundItem:hover {
+  background: rgba(0, 255, 255, 0.1);
+  border-color: #00ffff;
+  transform: translateX(5px);
+}
+
+.soundIcon {
+  font-size: 1.5rem;
+  min-width: 30px;
+  text-align: center;
+}
+
+.soundInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  flex: 1;
+}
+
+.soundLabel {
+  color: white;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.soundType {
+  color: #00ffff;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.selectionIndicator {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #00ffff;
+  color: #1a1a1a;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+.selectionMode {
+  background: rgba(0, 255, 255, 0.1);
+  border: 1px solid #00ffff;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.selectionMode p {
+  color: #00ffff;
+  margin: 0 0 0.5rem 0;
+  font-weight: bold;
+}
+
+.instructionText {
+  color: #ccc !important;
+  font-weight: normal !important;
+  font-size: 0.8rem !important;
+  margin: 0.5rem 0 !important;
+}
+
+.previewedSound {
+  background: rgba(0, 255, 255, 0.2);
+  border: 1px solid #00ffff;
+  border-radius: 6px;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  text-align: center;
+}
+
+.previewedSound span {
+  color: #00ffff;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.setSoundBtn {
+  background: linear-gradient(135deg, #4caf50, #388e3c);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.setSoundBtn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+}
+
+.setSoundBtn:disabled {
+  background: #666;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.cancelSelection {
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.3rem 0.8rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.cancelSelection:hover {
+  background: #e63946;
+}
+
+
+.previewedSoundItem {
+  background: rgba(0, 255, 255, 0.15) !important;
+  border: 2px solid #00ffff !important;
+  transform: scale(1.02);
+}
+
+.previewIndicator {
+  color: #00ffff;
+  font-weight: bold;
+  font-size: 1.2rem;
+  opacity: 1;
+}
+
+/* Responsive adjustments for integrated controls */
+@media (max-width: 768px) {
+  .machineControls {
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 0.8rem;
+  }
+  
+  .transportControls {
+    justify-content: center;
+  }
+  
+  .transportBtn {
+    min-width: 45px;
+    height: 45px;
+    font-size: 1rem;
+  }
+  
+  .controlInput {
+    width: 70px;
+    font-size: 0.8rem;
+  }
+  
+  .controlSelect {
+    width: 70px;
+    font-size: 0.8rem;
+  }
+  
+  .addRowBtn {
+    font-size: 0.8rem;
+    padding: 0.6rem 0.8rem;
+  }
+  
+  .soundGalleryBtn {
+    font-size: 0.8rem;
+    padding: 0.6rem 0.8rem;
+  }
+  
+  .autoPatternBtn {
+    font-size: 0.8rem;
+    padding: 0.6rem 0.8rem;
+  }
+  
+  .soundSidebar {
+    width: 100vw;
+    right: -100vw;
+  }
+  
+  .transportControlsBar {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .timingControls {
+    justify-content: center;
+  }
+  
+  .patternControlsBar {
+    padding: 1rem;
+  }
+  
+  .patternButtons {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .machineControls {
+    padding: 0.5rem;
+    gap: 0.5rem;
+  }
+  
+  .transportBtn {
+    min-width: 40px;
+    height: 40px;
+    font-size: 0.9rem;
+  }
+  
+  .controlInput {
+    width: 60px;
+    font-size: 0.7rem;
+  }
+  
+  .controlSelect {
+    width: 60px;
+    font-size: 0.7rem;
+  }
+  
+  .addRowBtn {
+    font-size: 0.7rem;
+    padding: 0.5rem 0.6rem;
+  }
+  
+  .soundGalleryBtn {
+    font-size: 0.7rem;
+    padding: 0.5rem 0.6rem;
+  }
+  
+  .autoPatternBtn {
+    font-size: 0.7rem;
+    padding: 0.5rem 0.6rem;
+  }
+  
+  .transportControlsBar {
+    padding: 0.8rem;
+    gap: 0.8rem;
+  }
+  
+  .patternControlsBar {
+    padding: 0.8rem;
+    gap: 0.8rem;
+  }
+  
+  .timingControls {
+    gap: 0.8rem;
+  }
+  
+  .patternButtons {
+    gap: 0.8rem;
+  }
 }

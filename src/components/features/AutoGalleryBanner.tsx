@@ -266,7 +266,7 @@ const AutoGalleryBanner: React.FC = () => {
       {/* Quick Access Button */}
       <button 
         className={styles.bannerQuickAccess}
-        onClick={() => window.location.href = '/marketplace/marketplace'}
+        onClick={() => window.location.href = '/marketplace'}
       >
         🛒 View All
       </button>
