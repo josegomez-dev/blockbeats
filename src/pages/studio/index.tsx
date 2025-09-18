@@ -252,8 +252,8 @@ const MusicStudioPage = () => {
                   <span className={styles.statLabel}>Creative Possibilities</span>
                 </div>
                 <div className={styles.statItem}>
-                  <span className={styles.statNumber}>100%</span>
-                  <span className={styles.statLabel}>Web3 Ready</span>
+                  <span className={styles.statNumber}>Comming Soon</span>
+                  <span className={styles.statLabel}>Web3 on-chain storage</span>
                 </div>
               </div>
             </div>
