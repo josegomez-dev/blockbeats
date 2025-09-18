@@ -136,13 +136,13 @@ const DashboardLayout = () => {
                 <b className="glitch">BlockBeats 3.0</b> is a platform where you can <strong className="text-neon-color">create, trade, and collect</strong> <strong className="text-clr-3">musical NFTs</strong>. <br />
                 <strong className="text-clr-3">Join our community</strong> to explore unique music creations and <strong className="text-neon-color">support artists</strong>!
               </div>
-              <Image
-                src="/images/launchpad/simple.png"
-                alt="Launchpad"
-                width={500}
-                height={500}
-                className="avatar-launchpad"
-                onClick={() => router.push('/studio')}
+              <video 
+                src="/images/launchpad/simplevideo.mp4" 
+                autoPlay 
+                loop 
+                muted 
+                className="avatar-launchpad" 
+                onClick={() => router.push('/studio')} 
               />
             </div>
             <div id="core-right-panel" className={styles.rightPanel}>

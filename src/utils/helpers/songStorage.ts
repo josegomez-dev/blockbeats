@@ -46,6 +46,7 @@ const MACHINE_STORAGE_KEY = 'blockbeats_machines';
 
 export const saveSong = (songData: SongData): void => {
   try {
+    if (typeof window === 'undefined') return;
     const savedSongs = getSavedSongs();
     
     const songToSave: SavedSong = {
@@ -54,6 +55,7 @@ export const saveSong = (songData: SongData): void => {
       createdAt: songData.createdAt.toISOString(),
       updatedAt: songData.updatedAt.toISOString(),
       data: {
+        name: songData.name,
         tempo: songData.tempo,
         steps: songData.steps,
         volume: songData.volume,
@@ -89,7 +91,6 @@ export const loadSong = (songId: string): SongData | null => {
 
     return {
       id: savedSong.id,
-      name: savedSong.name,
       createdAt: new Date(savedSong.createdAt),
       updatedAt: new Date(savedSong.updatedAt),
       ...savedSong.data
@@ -102,6 +103,7 @@ export const loadSong = (songId: string): SongData | null => {
 
 export const getSavedSongs = (): SavedSong[] => {
   try {
+    if (typeof window === 'undefined') return [];
     const stored = localStorage.getItem(STORAGE_KEY);
     return stored ? JSON.parse(stored) : [];
   } catch (error) {
@@ -112,6 +114,7 @@ export const getSavedSongs = (): SavedSong[] => {
 
 export const deleteSong = (songId: string): void => {
   try {
+    if (typeof window === 'undefined') return;
     const savedSongs = getSavedSongs();
     const filteredSongs = savedSongs.filter(song => song.id !== songId);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(filteredSongs));

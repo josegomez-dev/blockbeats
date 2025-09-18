@@ -194,15 +194,15 @@ const SongManagerModal: React.FC<SongManagerModalProps> = ({
                       <h4 className={styles.songName}>{song.name}</h4>
                       <p className={styles.songMeta}>
                         Created: {new Date(song.createdAt).toLocaleDateString()}
-                        {song.drawingMachine?.notesPlayed.length ? 
-                          ` • ${song.drawingMachine.notesPlayed.length} melody notes` : 
+                        {song.data.drawingMachine?.notesPlayed.length ? 
+                          ` • ${song.data.drawingMachine.notesPlayed.length} melody notes` : 
                           ''
                         }
-                        {song.drumMachine?.grid.length ? 
-                          ` • ${song.drumMachine.grid.length} drum tracks` : 
+                        {song.data.drumMachine?.grid.length ? 
+                          ` • ${song.data.drumMachine.grid.length} drum tracks` : 
                           ''
                         }
-                        • {song.tempo} BPM • {song.steps} steps
+                        • {song.data.tempo} BPM • {song.data.steps} steps
                       </p>
                     </div>
                     
