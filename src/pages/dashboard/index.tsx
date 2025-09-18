@@ -97,7 +97,10 @@ const DashboardLayout = () => {
         <meta property="og:image" content="https://blockbeats-tau.vercel.app/images/logos/logo.webp" />
         <meta property="og:url" content="https://blockbeats-tau.vercel.app/dashboard" />
       </Head>
+      
       <div className="dashboard-background">
+        <h2><span className='glitch box'>LAUNCHPAD Musical NFTs</span></h2>
+
         {/* 🎁 Rewards Modal */}
         {showRewards && (
           <DailyRewardModal
@@ -127,24 +130,68 @@ const DashboardLayout = () => {
 
         {/* 🖥️ Main 3-Panel Grid */}
         <div className={styles.dashboardContainer}>
+
           <div className={styles.desktopGrid}>
             <div id="core-left-panel" className={styles.leftPanel}><CharacterPanel /></div>
             <div id="core-center-panel" className={styles.centerPanel}>
-              <div style={{ position: 'relative', zIndex: 2 }}>
-                <h2><span className='glitch box'>LAUNCHPAD Musical NFTs</span></h2>
-                <br />
-                <div className="dashboard-description">
-                  <b className="glitch">BlockBeats 3.0</b> is a platform where you can <strong className="text-neon-color">create, trade, and collect</strong> <strong className="text-clr-3">musical NFTs</strong>. <br />
-                  <strong className="text-clr-3">Join our community</strong> to explore unique music creations and <strong className="text-neon-color">support artists</strong>!
+              
+              <div className="launchpad-content">
+
+                {/* Centered Buttons */}
+                <div className="launchpad-center">
+                  <div className="buttons-container">
+                    {/* Musical particles around the entire button area */}
+                    <div className="musical-particles">
+                      <div className="musical-note">♪</div>
+                      <div className="musical-note">♫</div>
+                      <div className="musical-note">♪</div>
+                      <div className="musical-note">♫</div>
+                      <div className="musical-note">♪</div>
+                      <div className="musical-note">♫</div>
+                      <div className="musical-note">♪</div>
+                      <div className="musical-note">♫</div>
+                    </div>
+                    
+                    {/* Start Button */}
+                    <div className="start-button-container">
+                      <button 
+                        className="start-button"
+                        onClick={() => router.push('/studio')}
+                      >
+                        <span className="start-button-text">START</span>
+                        <span className="start-button-subtitle">Create Music</span>
+                      </button>
+                    </div>
+                    
+                    {/* Co-operative Mode Button */}
+                    <div className="coop-button-container">
+                      <div className="coming-soon-badge">Coming Soon</div>
+                      <button 
+                        className="coop-button"
+                        disabled
+                      >
+                        <span className="coop-button-text">Co-operative Mode</span>
+                        <span className="coop-button-subtitle">Play music with friends</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bottom Text Content */}
+                <div className="launchpad-bottom" style={{ position: 'relative', zIndex: 2 }}>
+                  <div className="dashboard-description">
+                    <b className="glitch">BlockBeats 3.0</b> is a platform where you can <strong className="text-neon-color">create, trade, and collect</strong> <strong className="text-clr-3">musical NFTs</strong>. <br />
+                    <strong className="text-clr-3">Join our community</strong> to explore unique music creations and <strong className="text-neon-color">support artists</strong>!
+                  </div>
                 </div>
               </div>
+              
               <video 
                 src="/images/launchpad/simplevideo.mp4" 
                 autoPlay 
                 loop 
                 muted 
                 className="avatar-launchpad" 
-                onClick={() => router.push('/studio')} 
               />
             </div>
             <div id="core-right-panel" className={styles.rightPanel}>

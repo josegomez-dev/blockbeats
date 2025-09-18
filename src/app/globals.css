@@ -837,13 +837,561 @@ p {
   opacity: 0.9;
 }
 
+/* Launchpad Content Layout */
+.launchpad-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.launchpad-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.launchpad-bottom {
+  text-align: center;
+}
+
+/* Start Button Styles - Enhanced Futuristic Musical Design */
+.start-button {
+  background: linear-gradient(135deg, #00ffff, #0080ff, #ff00ff, #00ff88);
+  background-size: 400% 400%;
+  border: none;
+  border-radius: 50px;
+  padding: 20px 40px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 
+    0 8px 25px rgba(0, 255, 255, 0.4),
+    0 0 50px rgba(255, 0, 255, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+  min-width: 200px;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  animation: gradientShift 3s ease-in-out infinite, pulseGlow 2s ease-in-out infinite;
+  z-index: 10;
+}
+
+/* Animated gradient background */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Shimmer effect */
+.start-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  animation: shimmer 2s infinite;
+  z-index: 1;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Musical note particles */
+.start-button::after {
+  content: '♪ ♫ ♪ ♫';
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.2rem;
+  animation: floatNotes 3s ease-in-out infinite;
+  z-index: 2;
+}
+
+@keyframes floatNotes {
+  0%, 100% { 
+    transform: translateX(-50%) translateY(0) rotate(0deg);
+    opacity: 0.8;
+  }
+  50% { 
+    transform: translateX(-50%) translateY(-10px) rotate(5deg);
+    opacity: 1;
+  }
+}
+
+.start-button:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 
+    0 15px 35px rgba(0, 255, 255, 0.6),
+    0 0 80px rgba(255, 0, 255, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  background: linear-gradient(135deg, #00ff88, #00ffff, #ff00ff, #ffff00);
+  animation-duration: 1.5s, 1s;
+}
+
+.start-button:hover::after {
+  animation-duration: 1.5s;
+}
+
+.start-button:active {
+  transform: translateY(-2px) scale(1.02);
+}
+
+.start-button-text {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #000;
+  text-shadow: 
+    0 2px 4px rgba(255, 255, 255, 0.3),
+    0 0 10px rgba(0, 255, 255, 0.5);
+  letter-spacing: 2px;
+  position: relative;
+  z-index: 3;
+  animation: textGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes textGlow {
+  0% { 
+    text-shadow: 
+      0 2px 4px rgba(255, 255, 255, 0.3),
+      0 0 10px rgba(0, 255, 255, 0.5);
+  }
+  100% { 
+    text-shadow: 
+      0 2px 4px rgba(255, 255, 255, 0.5),
+      0 0 20px rgba(255, 0, 255, 0.7);
+  }
+}
+
+.start-button-subtitle {
+  font-size: 0.9rem;
+  color: #000;
+  opacity: 0.8;
+  font-weight: 500;
+  letter-spacing: 1px;
+  position: relative;
+  z-index: 3;
+}
+
+/* Sound wave rings effect */
+.start-button-container {
+  position: relative;
+  display: inline-block;
+}
+
+.start-button-container::before,
+.start-button-container::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid rgba(0, 255, 255, 0.3);
+  border-radius: 50%;
+  animation: soundWaves 2s ease-out infinite;
+}
+
+.start-button-container::before {
+  width: 120%;
+  height: 120%;
+  animation-delay: 0s;
+}
+
+.start-button-container::after {
+  width: 140%;
+  height: 140%;
+  animation-delay: 0.5s;
+}
+
+@keyframes soundWaves {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* Buttons container layout */
+.buttons-container {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  width: 100%;
+  max-width: 600px;
+}
+
+/* Floating musical notes around the entire button area */
+.musical-particles {
+  position: absolute;
+  top: -50px;
+  left: -50px;
+  right: -50px;
+  bottom: -50px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.musical-note {
+  position: absolute;
+  color: rgba(0, 255, 255, 0.6);
+  font-size: 1rem;
+  animation: floatAround 4s ease-in-out infinite;
+}
+
+.musical-note:nth-child(1) {
+  top: 10%;
+  left: 5%;
+  animation-delay: 0s;
+}
+
+.musical-note:nth-child(2) {
+  top: 20%;
+  right: 5%;
+  animation-delay: 0.5s;
+}
+
+.musical-note:nth-child(3) {
+  top: 40%;
+  left: 0%;
+  animation-delay: 1s;
+}
+
+.musical-note:nth-child(4) {
+  top: 50%;
+  right: 0%;
+  animation-delay: 1.5s;
+}
+
+.musical-note:nth-child(5) {
+  bottom: 30%;
+  left: 10%;
+  animation-delay: 2s;
+}
+
+.musical-note:nth-child(6) {
+  bottom: 20%;
+  right: 10%;
+  animation-delay: 2.5s;
+}
+
+.musical-note:nth-child(7) {
+  top: 30%;
+  left: 50%;
+  animation-delay: 3s;
+}
+
+.musical-note:nth-child(8) {
+  bottom: 40%;
+  right: 50%;
+  animation-delay: 3.5s;
+}
+
+@keyframes floatAround {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.6;
+  }
+  25% {
+    transform: translateY(-15px) rotate(5deg);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-10px) rotate(-3deg);
+    opacity: 0.8;
+  }
+  75% {
+    transform: translateY(-20px) rotate(3deg);
+    opacity: 1;
+  }
+}
+
+/* Enhanced holographic border effect */
+.start-button {
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+}
+
+.start-button::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, 
+    #00ffff, #ff00ff, #ffff00, #00ff88, 
+    #ff0080, #8000ff, #00ffff);
+  background-size: 400% 400%;
+  border-radius: 52px;
+  z-index: -1;
+  animation: borderGlow 3s ease-in-out infinite;
+}
+
+@keyframes borderGlow {
+  0% { 
+    background-position: 0% 50%;
+    filter: hue-rotate(0deg);
+  }
+  50% { 
+    background-position: 100% 50%;
+    filter: hue-rotate(180deg);
+  }
+  100% { 
+    background-position: 0% 50%;
+    filter: hue-rotate(360deg);
+  }
+}
+
+/* Co-operative Mode Button Styles */
+.coop-button-container {
+  position: relative;
+  display: inline-block;
+}
+
+.coming-soon-badge {
+  position: absolute;
+  top: -15px;
+  right: -10px;
+  background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.4);
+  animation: badgePulse 2s ease-in-out infinite;
+  z-index: 15;
+}
+
+@keyframes badgePulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 2px 8px rgba(255, 107, 107, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.6);
+  }
+}
+
+.coop-button {
+  background: linear-gradient(135deg, #666, #888, #999);
+  background-size: 400% 400%;
+  border: none;
+  border-radius: 50px;
+  padding: 20px 40px;
+  cursor: not-allowed;
+  transition: all 0.4s ease;
+  box-shadow: 
+    0 8px 25px rgba(100, 100, 100, 0.3),
+    0 0 30px rgba(150, 150, 150, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+  min-width: 200px;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  animation: gradientShift 4s ease-in-out infinite;
+  z-index: 10;
+  opacity: 0.7;
+}
+
+.coop-button:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 
+    0 10px 30px rgba(100, 100, 100, 0.4),
+    0 0 40px rgba(150, 150, 150, 0.3);
+}
+
+.coop-button-text {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #333;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+  letter-spacing: 1px;
+  position: relative;
+  z-index: 3;
+}
+
+.coop-button-subtitle {
+  font-size: 0.8rem;
+  color: #444;
+  opacity: 0.8;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  position: relative;
+  z-index: 3;
+}
+
+/* Sound wave rings for coop button */
+.coop-button-container::before,
+.coop-button-container::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid rgba(150, 150, 150, 0.2);
+  border-radius: 50%;
+  animation: soundWaves 3s ease-out infinite;
+}
+
+.coop-button-container::before {
+  width: 120%;
+  height: 120%;
+  animation-delay: 0s;
+}
+
+.coop-button-container::after {
+  width: 140%;
+  height: 140%;
+  animation-delay: 1s;
+}
+
 /* Text styling for overlay content */
 .centerPanel h2 {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  margin-bottom: 0.5rem;
 }
 
 .centerPanel .dashboard-description {
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  margin-bottom: 0;
+}
+
+/* Responsive Buttons */
+@media (max-width: 768px) {
+  .buttons-container {
+    flex-direction: column;
+    gap: 20px;
+    max-width: 400px;
+  }
+  
+  .start-button, .coop-button {
+    min-width: 160px;
+    min-height: 60px;
+    padding: 15px 30px;
+  }
+  
+  .start-button-text {
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+  }
+  
+  .coop-button-text {
+    font-size: 1.3rem;
+  }
+  
+  .start-button-subtitle, .coop-button-subtitle {
+    font-size: 0.8rem;
+  }
+  
+  .launchpad-content {
+    padding: 0.8rem;
+  }
+  
+  .musical-note {
+    font-size: 0.8rem;
+  }
+  
+  .start-button::after {
+    font-size: 1rem;
+    top: -15px;
+  }
+  
+  .coming-soon-badge {
+    font-size: 0.6rem;
+    padding: 3px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .buttons-container {
+    flex-direction: column;
+    gap: 15px;
+    max-width: 300px;
+  }
+  
+  .start-button, .coop-button {
+    min-width: 140px;
+    min-height: 50px;
+    padding: 12px 25px;
+  }
+  
+  .start-button-text {
+    font-size: 1.2rem;
+  }
+  
+  .coop-button-text {
+    font-size: 1.1rem;
+  }
+  
+  .start-button-subtitle, .coop-button-subtitle {
+    font-size: 0.7rem;
+  }
+  
+  .musical-note {
+    font-size: 0.7rem;
+  }
+  
+  .start-button::after {
+    font-size: 0.9rem;
+    top: -12px;
+  }
+  
+  .start-button-container::before,
+  .start-button-container::after,
+  .coop-button-container::before,
+  .coop-button-container::after {
+    width: 110%;
+    height: 110%;
+  }
+  
+  .start-button-container::after,
+  .coop-button-container::after {
+    width: 120%;
+    height: 120%;
+  }
+  
+  .coming-soon-badge {
+    font-size: 0.5rem;
+    padding: 2px 8px;
+    top: -12px;
+    right: -8px;
+  }
 }
 
 .box {
