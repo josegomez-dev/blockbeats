@@ -12,6 +12,7 @@ import TopNFTShowcase from '../components/features/TopNFTShowcase';
 import RealMusicNFTs from '../components/features/RealMusicNFTs';
 import AutoGalleryBanner from '../components/features/AutoGalleryBanner';
 import RobotSkinsShowcase from '../components/features/RobotSkinsShowcase';
+import FeaturesGallery from '../components/features/FeaturesGallery';
 import Footer from '../components/layout/Footer';
 
 const LandingPage = () => {
@@ -221,10 +222,9 @@ const LandingPage = () => {
       {/* Hero Section */}
       <section className={styles.hero}>
         <div className={styles.heroContent}>
-          <h1>🤖 Welcome... </h1>
           <h2 className={`${styles.typewriter} text-xl`}>The Future of Music & Art NFTs</h2>
           <br />
-          <span className="glitch">Create, share, and experience music like never before — powered by Web3.</span>
+          <span className="glitch">Create, share, and experience music like never before — powered by Starknet</span>
           <br />
           <br />
           <button className={stylesMain.submitBtn} onClick={() => window.location.replace('/auth/login')}>🖼️ CREATE & 🎹 PLAY </button>
@@ -394,21 +394,7 @@ const LandingPage = () => {
       </div>
     </section>
 
-    
-    {/* Welcome Section */}
-    <section className={styles.welcomeSection}>
-      <div className={styles.imageContainer}>
-        <br />
-        <Image
-          src="/images/co-create-music.png"
-          alt="BlockBeats Launchpad"
-          width={500}
-          height={300}
-          style={{ width: '100%', maxWidth: '800px', height: 'auto', objectFit: 'cover', borderRadius: '1rem', boxShadow: '0 0 25px rgba(255,255,255,0.2)', margin: '0 auto', display: 'block' }}
-        />  
-      </div>
-    </section>
-    <br />
+  
 
     {/* Top NFT Showcase */}
     <hr />

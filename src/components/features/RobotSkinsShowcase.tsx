@@ -128,18 +128,24 @@ const RobotSkinsShowcase: React.FC = () => {
 
       {/* Call to Action */}
       <div className={styles.showcaseCTA}>
-        <button 
-          className={styles.ctaButton}
-          onClick={() => window.location.href = '/marketplace'}
-        >
-          🛒 View All Skins
-        </button>
-        <button 
-          className={styles.ctaButtonSecondary}
-          onClick={() => window.location.href = '/studio'}
-        >
-          🎨 Create Custom Skin
-        </button>
+        <div className={styles.buttonContainer}>
+          <div className={styles.comingSoonBadge}>Coming Soon</div>
+          <button 
+            className={styles.ctaButton}
+            disabled
+          >
+            🛒 View All Skins
+          </button>
+        </div>
+        <div className={styles.buttonContainer}>
+          <div className={styles.comingSoonBadge}>Coming Soon</div>
+          <button 
+            className={styles.ctaButtonSecondary}
+            disabled
+          >
+            🎨 Create Custom Skin
+          </button>
+        </div>
       </div>
     </section>
   );

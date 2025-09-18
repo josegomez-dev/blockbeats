@@ -10,7 +10,7 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  padding-bottom: 120px; /* Space for sticky footer banner */
+  padding-bottom: 90px; /* Space for sticky footer banner */
 }
 
 /* Hero */
@@ -40,38 +40,36 @@
 .typewriter {
   font-size: 3rem;
   font-weight: bold;
-  width: 100%;
-  max-width: 400px;
   color: #fff;
   white-space: nowrap;
-  border-right: 4px solid #fff;
+  border-right: 3px solid #00ffff;
   box-sizing: border-box;
-  animation: typing 5s linear infinite, blink 0.75s step-end infinite;
+  overflow: hidden;
+  animation: 
+    typing 3.5s steps(40, end) 1s both,
+    blink 1s step-end infinite 4.5s;
+  max-width: 0;
+  margin: 0 auto;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
 }
 
-/* Smooth infinite typing */
+/* Typewriter animation */
 @keyframes typing {
-  0% {
-    width: 0;
+  from {
+    max-width: 0;
   }
-  40% {
-    width: 100%;
-  }
-  60% {
-    width: 100%;
-  }
-  100% {
-    width: 0;
+  to {
+    max-width: 100%;
   }
 }
 
 /* Blinking cursor */
 @keyframes blink {
-  0%, 100% {
-    border-color: transparent;
+  0%, 50% {
+    border-color: #00ffff;
   }
-  50% {
-    border-color: #fff;
+  51%, 100% {
+    border-color: transparent;
   }
 }
 
@@ -95,6 +93,259 @@
 
 .ctaButton:hover {
   background-color: #e6007a;
+}
+
+
+/* Features Gallery */
+.featuresGallery {
+  padding: 80px 20px;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(20, 20, 40, 0.95));
+  color: white;
+  animation: fadeIn 2s ease-in-out;
+}
+
+.gallerySection {
+  margin-bottom: 80px;
+}
+
+.gallerySection:last-child {
+  margin-bottom: 0;
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.sectionHeader h2 {
+  font-size: 2.8rem;
+  margin-bottom: 15px;
+  color: var(--neon-color);
+}
+
+.sectionHeader p {
+  font-size: 1.2rem;
+  color: #ccc;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto 50px;
+  padding: 0 20px;
+}
+
+.galleryCard {
+  background: linear-gradient(145deg, rgba(0, 0, 0, 0.8), rgba(20, 20, 40, 0.9));
+  border: 2px solid rgba(0, 255, 255, 0.3);
+  border-radius: 20px;
+  padding: 25px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  backdrop-filter: blur(15px);
+  overflow: hidden;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(0, 255, 255, 0.1);
+  animation: slideInUp 0.8s ease-out forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.galleryCard:nth-child(1) { animation-delay: 0.1s; }
+.galleryCard:nth-child(2) { animation-delay: 0.2s; }
+.galleryCard:nth-child(3) { animation-delay: 0.3s; }
+.galleryCard:nth-child(4) { animation-delay: 0.4s; }
+
+.galleryCard:hover {
+  transform: translateY(-10px) scale(1.02);
+  border-color: rgba(0, 255, 255, 0.8);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(0, 255, 255, 0.3);
+}
+
+.galleryCardHovered {
+  transform: translateY(-10px) scale(1.02);
+}
+
+.cardImageContainer {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  border-radius: 15px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  background: linear-gradient(45deg, #1a1a2e, #16213e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 255, 255, 0.2);
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.galleryCard:hover .cardImage {
+  transform: scale(1.05);
+}
+
+.cardInfo {
+  text-align: center;
+}
+
+.cardTitle {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.cardArtist,
+.cardDescription {
+  font-size: 0.95rem;
+  color: #ccc;
+  margin-bottom: 15px;
+  line-height: 1.4;
+}
+
+.cardMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cardCategory {
+  background: rgba(0, 255, 255, 0.1);
+  color: #00ffff;
+  padding: 6px 15px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid rgba(0, 255, 255, 0.3);
+}
+
+.cardPrice {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.sectionCTA {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+}
+
+@keyframes slideInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Gallery Styles */
+@media (max-width: 768px) {
+  .featuresGallery {
+    padding: 60px 15px;
+  }
+  
+  .gallerySection {
+    margin-bottom: 60px;
+  }
+  
+  .sectionHeader h2 {
+    font-size: 2.2rem;
+  }
+  
+  .sectionHeader p {
+    font-size: 1rem;
+  }
+  
+  .galleryGrid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 0 15px;
+  }
+  
+  .galleryCard {
+    padding: 20px;
+  }
+  
+  .cardImageContainer {
+    height: 180px;
+  }
+  
+  .sectionCTA {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .featuresGallery {
+    padding: 40px 10px;
+  }
+  
+  .gallerySection {
+    margin-bottom: 50px;
+  }
+  
+  .sectionHeader h2 {
+    font-size: 1.8rem;
+  }
+  
+  .sectionHeader p {
+    font-size: 0.9rem;
+  }
+  
+  .galleryGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 0 10px;
+  }
+  
+  .typewriter {
+    font-size: 1.8rem;
+    max-width: 95%;
+    animation: 
+      typing 2.5s steps(30, end) 1s both,
+      blink 1s step-end infinite 3.5s;
+  }
+  
+  .galleryCard {
+    padding: 15px;
+  }
+  
+  .cardImageContainer {
+    height: 160px;
+  }
+  
+  .cardTitle {
+    font-size: 1.2rem;
+  }
+  
+  .cardArtist,
+  .cardDescription {
+    font-size: 0.85rem;
+  }
 }
 
 /* News Section */
@@ -312,15 +563,6 @@
   }
 }
 
-.typewriter {
-  display: inline-block;
-  overflow: hidden;
-  border-right: 4px solid #fff;
-  white-space: nowrap;
-  animation:
-    typing 4s steps(30, end),
-    blink 0.75s step-end infinite;
-}
 
 .servicesSection {
   color: #fff;
@@ -496,6 +738,9 @@
   .typewriter {
     font-size: 2.5rem;
     max-width: 90%;
+    animation: 
+      typing 3s steps(35, end) 1s both,
+      blink 1s step-end infinite 4s;
   }
 
   .ctaButton {
@@ -740,7 +985,10 @@
   margin: 0 auto 60px;
   position: relative;
   z-index: 2;
+  justify-items: center;
+  align-items: center;
 }
+
 
 .nftCard {
   background: 
@@ -924,6 +1172,39 @@
   z-index: 2;
 }
 
+.buttonContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.comingSoonBadge {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+  z-index: 10;
+  animation: badgePulse 2s infinite;
+}
+
+@keyframes badgePulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(255, 107, 107, 0.6);
+  }
+}
+
 .ctaButtonSecondary {
   padding: 12px 20px;
   background: transparent;
@@ -939,6 +1220,31 @@
   background: #00ffff;
   color: #000;
   box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+}
+
+.ctaButtonSecondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.ctaButtonSecondary:disabled:hover {
+  background: transparent;
+  color: #00ffff;
+  transform: none;
+  box-shadow: none;
+}
+
+.ctaButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.ctaButton:disabled:hover {
+  background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+  transform: none;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
 }
 
 /* Animations */
@@ -1680,7 +1986,10 @@
   margin: 0 auto 60px;
   position: relative;
   z-index: 2;
+  justify-items: center;
+  align-items: center;
 }
+
 
 .skinCard {
   background: 
