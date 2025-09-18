@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   useAccount,
   useConnect,
@@ -26,6 +26,16 @@ const StarknetConnectButton: React.FC<StarknetConnectButtonProps> = ({
     address: address || undefined 
   });
   const [isConnecting, setIsConnecting] = useState(false);
+  const [hasTriggeredConnect, setHasTriggeredConnect] = useState(false);
+
+  // Watch for when address becomes available after connection
+  useEffect(() => {
+    if (isConnected && address && hasTriggeredConnect && onConnect) {
+      console.log('🎯 Address available, calling onConnect:', { address, profile });
+      onConnect(address, profile);
+      setHasTriggeredConnect(false); // Reset flag
+    }
+  }, [isConnected, address, profile, hasTriggeredConnect, onConnect]);
 
   const getWalletButtonStyle = (connectorName: string, isConnecting: boolean) => {
     const baseStyle = {
@@ -82,15 +92,18 @@ const StarknetConnectButton: React.FC<StarknetConnectButtonProps> = ({
   const handleConnect = async (connector: any) => {
     try {
       setIsConnecting(true);
-      await connect({ connector });
+      console.log('🔄 Attempting to connect wallet:', connector.name);
+      
+      const result = await connect({ connector });
+      console.log('✅ Wallet connection result:', result);
+      
       toast.success('Wallet connected successfully!');
       
-      // Call the onConnect callback with address and profile
-      if (onConnect && address) {
-        onConnect(address, profile);
-      }
+      // Set flag to trigger useEffect when address becomes available
+      setHasTriggeredConnect(true);
+      
     } catch (error) {
-      console.error('Connection error:', error);
+      console.error('❌ Connection error:', error);
       toast.error('Failed to connect wallet');
     } finally {
       setIsConnecting(false);

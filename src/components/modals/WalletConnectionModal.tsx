@@ -31,13 +31,52 @@ const WalletConnectionModal: React.FC<WalletConnectionModalProps> = ({
       const randomNames = [
         'CryptoArtist', 'BeatMaker', 'SoundWizard', 'MusicMage', 'RhythmMaster',
         'ToneCraft', 'MelodyMaker', 'SoundSculptor', 'AudioAlchemist', 'BeatBuilder',
-        'HarmonyHero', 'SoundSage', 'MusicMaven', 'TuneTitan', 'AudioAce'
+        'HarmonyHero', 'SoundSage', 'MusicMaven', 'TuneTitan', 'AudioAce',
+        'NeonBeat', 'CyberSound', 'PixelRhythm', 'QuantumTune', 'DigitalHarmony',
+        'SynthMaster', 'BassWizard', 'DrumLord', 'VibeCraft', 'SonicSage',
+        'ElectroMage', 'BasslineKing', 'DropMaster', 'FrequencyLord', 'WaveRider'
       ];
       const randomName = randomNames[Math.floor(Math.random() * randomNames.length)];
       const randomNumber = Math.floor(Math.random() * 9999) + 1;
       setDisplayName(`${randomName}${randomNumber}`);
     }
   }, [isOpen, displayName]);
+
+  // Generate new random name function
+  const generateRandomName = () => {
+    const randomNames = [
+      'CryptoArtist', 'BeatMaker', 'SoundWizard', 'MusicMage', 'RhythmMaster',
+      'ToneCraft', 'MelodyMaker', 'SoundSculptor', 'AudioAlchemist', 'BeatBuilder',
+      'HarmonyHero', 'SoundSage', 'MusicMaven', 'TuneTitan', 'AudioAce',
+      'NeonBeat', 'CyberSound', 'PixelRhythm', 'QuantumTune', 'DigitalHarmony',
+      'SynthMaster', 'BassWizard', 'DrumLord', 'VibeCraft', 'SonicSage',
+      'ElectroMage', 'BasslineKing', 'DropMaster', 'FrequencyLord', 'WaveRider'
+    ];
+    const randomName = randomNames[Math.floor(Math.random() * randomNames.length)];
+    const randomNumber = Math.floor(Math.random() * 9999) + 1;
+    setDisplayName(`${randomName}${randomNumber}`);
+  };
+
+  // Get initials from display name
+  const getInitials = (name: string) => {
+    if (!name) return '??';
+    
+    // If name has spaces, use first letter of each word
+    if (name.includes(' ')) {
+      return name
+        .split(' ')
+        .map(word => word.charAt(0))
+        .join('')
+        .toUpperCase()
+        .slice(0, 2);
+    }
+    
+    // If no spaces, take first two characters
+    return name
+      .replace(/[0-9]/g, '') // Remove numbers
+      .toUpperCase()
+      .slice(0, 2);
+  };
 
   // Pre-fill email if profile has a name
   useEffect(() => {
@@ -102,19 +141,50 @@ const WalletConnectionModal: React.FC<WalletConnectionModalProps> = ({
             )}
           </div>
 
+          {/* Profile Preview */}
+          <div className={styles.profilePreview}>
+            <h3>👤 Profile Preview</h3>
+            <div className={styles.previewCard}>
+              <div className={styles.avatarContainer}>
+                <div className={styles.avatar}>
+                  {displayName ? getInitials(displayName) : '??'}
+                </div>
+              </div>
+              <div className={styles.previewInfo}>
+                <div className={styles.previewName}>
+                  {displayName || 'Your Display Name'}
+                </div>
+                <div className={styles.previewEmail}>
+                  {email || 'your.email@example.com'}
+                </div>
+              </div>
+            </div>
+          </div>
+
           <form onSubmit={handleSubmit} className={styles.modalForm}>
             <div className={styles.formGroup}>
               <label htmlFor="displayName">Display Name</label>
-              <input
-                type="text"
-                id="displayName"
-                value={displayName}
-                onChange={(e) => setDisplayName(e.target.value)}
-                placeholder="Enter your display name"
-                required
-                disabled={isSubmitting}
-                className={styles.modalInput}
-              />
+              <div className={styles.inputWithButton}>
+                <input
+                  type="text"
+                  id="displayName"
+                  value={displayName}
+                  onChange={(e) => setDisplayName(e.target.value)}
+                  placeholder="Enter your display name"
+                  required
+                  disabled={isSubmitting}
+                  className={styles.modalInput}
+                />
+                <button
+                  type="button"
+                  onClick={generateRandomName}
+                  disabled={isSubmitting}
+                  className={styles.generateButton}
+                  title="Generate new random name"
+                >
+                  🎲
+                </button>
+              </div>
               <small className={styles.formHint}>
                 This will be your public name on BlockBeats
               </small>
