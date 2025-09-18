@@ -153,6 +153,7 @@ const LoginFresh = () => {
       
       // First, try to sign in with the wallet address
       try {
+        console.log('🔄 Attempting to sign in with wallet...');
         await signInWithWallet(address);
         toast.success(`Welcome back! Signed in with wallet: ${profile?.name || address.slice(0, 6)}...${address.slice(-4)}`);
         console.log('✅ Existing wallet user signed in successfully');
@@ -163,11 +164,13 @@ const LoginFresh = () => {
         }
       } catch (signInError) {
         console.log('ℹ️ No existing account found, showing modal for new user...');
+        console.log('Sign in error:', signInError);
         
         // If sign in fails, show modal for new user to enter email and name
         setConnectedWalletAddress(address);
         setConnectedProfile(profile);
         setShowWalletModal(true);
+        console.log('🎯 Modal should now be visible:', true);
       }
     } catch (error) {
       console.error('❌ Error in wallet authentication:', error);
@@ -199,10 +202,16 @@ const LoginFresh = () => {
   };
 
   const handleModalClose = () => {
+    console.log('🚪 Closing wallet modal');
     setShowWalletModal(false);
     setConnectedWalletAddress("");
     setConnectedProfile(null);
   };
+
+  // Debug modal state
+  useEffect(() => {
+    console.log('🔍 Modal state changed:', { showWalletModal, connectedWalletAddress });
+  }, [showWalletModal, connectedWalletAddress]);
 
   // Show loading state until mounted on client or if redirecting
   if (!mounted || authenticated) {

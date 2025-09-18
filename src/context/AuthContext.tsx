@@ -458,6 +458,7 @@ const removeUndefined = (obj: any): any => {
         console.log("Wallet-based user signed in and account fetched successfully.");
       } else {
         console.warn("No account document found for this wallet address.");
+        throw new Error("No account found for this wallet address");
       }
     } catch (error) {
       console.error("Error signing in with wallet:", error);
