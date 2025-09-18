@@ -5,6 +5,8 @@
   text-align: center;
   animation: fadeSlide 0.6s ease-in-out;
   margin: 0 auto;
+  position: relative;
+  overflow: hidden;
 }
 
 .title {
@@ -16,7 +18,7 @@
   position: relative;
   width: 100%;
   padding: 1rem;
-  margin-top: 60px;
+  margin-top: 20px;
 }
 
 .description {
@@ -90,52 +92,6 @@
   color: #000;
 }
 
-.bars {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  width: 200px;
-  top: 190px;
-  margin-bottom: -80px;
-  margin-top: 25px;
-}
-
-.bars label {
-  font-size: 0.7rem;
-  color: #aaa;
-  text-align: center;
-  margin: 0 auto;
-}
-
-.progressBar {
-  background: #222;
-  border: 1px solid #555;
-  border-radius: 8px;
-  overflow: hidden;
-  height: 10px;
-  margin-bottom: 10px;
-  width: 100%;
-
-}
-
-.energyBar {
-  height: 100%;
-  background-color: #00ffd0;
-  transition: width 1s ease-in-out;
-}
-
-.creativityBar {
-  height: 100%;
-  background-color: #eab308;
-  transition: width 1s ease-in-out;
-}
-
-.experienceBar {
-  height: 100%;
-  background-color: #4f46e5;
-  transition: width 1s ease-in-out;
-}
 
 .levelUp {
   animation: pulseGlow 1.2s ease-in-out forwards;
@@ -168,24 +124,6 @@
   }
 }
 
-.barGroup {
-  margin-bottom: 1rem;
-}
-
-.barLabel {
-  display: flex;
-  justify-content: space-between;
-  margin-left: 5px;
-  font-weight: bold;
-  margin-bottom: 0.25rem;
-}
-
-.barText {
-  text-align: center;
-  font-size: 0.55rem;
-  color: #aaa;
-  margin-top: 4px;
-}
 
 .levelUpGif {
   width: 250px;
@@ -210,4 +148,53 @@
     opacity: 0;
     transform: scale(1);
   }
+}
+
+/* Video Background Styles */
+.videoBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 0.3;
+  border-radius: 12px;
+}
+
+/* Ensure content is above video background */
+.panel h2,
+.panel .description,
+.panel .avatarContainer,
+.panel .status {
+  position: relative;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin: 4px 0;
+}
+
+/* Special styling for the main content areas */
+.panel h2 {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
+}
+
+.panel .description {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(2px);
+}
+
+
+.panel .avatarContainer {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+  border-radius: 12px;
+}
+
+.panel .status {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(2px);
 }

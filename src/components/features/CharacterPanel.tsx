@@ -12,7 +12,7 @@ import {
   CHARACTER_ANIMATION_DELAY,
   CHARACTER_LEVELUP_DURATION,
 } from '@/utils/constants/gameSettings';
-import { CHARACTER_STATS } from '@/utils/constants/characterStats';
+import { xpService } from '@/utils/xpService';
 
 // ────────────────────────────────────────────────────────────────────────────────
 // TYPES & REDUCER
@@ -79,6 +79,8 @@ const CharacterPanel: React.FC = () => {
   const [phaseIndex, setPhaseIndex] = useState(1);
 
   const prevLevel = useRef(level);
+  const sessionStartTime = useRef<number>(Date.now());
+  const lastXPSave = useRef<number>(Date.now());
 
   const sfx = useRef<{ [key: string]: HTMLAudioElement }>({});
 
@@ -92,31 +94,75 @@ const CharacterPanel: React.FC = () => {
     }
   }, []);
 
-  // Auto increase stats
+  // Load user's XP data from Firebase
   useEffect(() => {
-    const interval = setInterval(() => {
+    if (user) {
+      loadUserXPData();
+    }
+  }, [user]);
+
+  // Subscribe to XP updates from the service
+  useEffect(() => {
+    if (!user) return;
+    
+    const unsubscribe = xpService.subscribeToXPUpdates((xp, level) => {
       dispatch({
         type: 'INCREMENT_STATS',
-        payload: {
-          energy: Math.random() * 3,
-          creativity: Math.random() * 2,
-          xp: Math.random() * 5,
-        },
+        payload: { xp, level }
       });
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
+    });
 
-  // Detect level up
+    return unsubscribe;
+  }, [user]);
+
+  // Time-based XP system - award XP every minute of app usage
+  useEffect(() => {
+    if (!user) return;
+    
+    const timeInterval = setInterval(() => {
+      const now = Date.now();
+      const timeSpent = now - lastXPSave.current;
+      
+      // Award 1 XP for every minute (60000ms) spent on the app
+      if (timeSpent >= 60000) {
+        const minutesSpent = Math.floor(timeSpent / 60000);
+        lastXPSave.current = now;
+        xpService.awardTimeXP(user.uid, minutesSpent);
+      }
+    }, 60000); // Check every minute
+
+    return () => clearInterval(timeInterval);
+  }, [user]);
+
+  const loadUserXPData = async () => {
+    if (!user) return;
+    
+    try {
+      const { xp, level, phase } = await xpService.loadUserXPData(user.uid);
+      setPhaseIndex(phase);
+      
+      dispatch({
+        type: 'INCREMENT_STATS',
+        payload: { xp, level }
+      });
+    } catch (error) {
+      console.error('Error loading user XP data:', error);
+    }
+  };
+
+
+  // Detect level up and phase progression
   useEffect(() => {
     if (level > prevLevel.current) {
       prevLevel.current = level;
-      if (level <= MAX_PHASE) {
-        handleLevelUp(level);
-        setPhaseIndex(level);
+      const newPhase = Math.min(level, MAX_PHASE);
+      
+      if (newPhase > phaseIndex) {
+        setPhaseIndex(newPhase);
+        handleLevelUp(newPhase);
       }
     }
-  }, [level]);
+  }, [level, phaseIndex]);
 
   const handleLevelUp = async (newLevel: number) => {
     setAnimateLevel(true);
@@ -174,23 +220,23 @@ const CharacterPanel: React.FC = () => {
 
   const avatarSrc = `/images/avatars/phase-${phaseIndex}.webp`;
 
-  const changePhase = (dir: 'prev' | 'next') => {
-    const newIndex = dir === 'next'
-      ? Math.min(phaseIndex + 1, MAX_PHASE)
-      : Math.max(phaseIndex - 1, MIN_PHASE);
-    setPhaseIndex(newIndex);
-    handleLevelUp(newIndex);
-  };
 
-  const STAT_VALUES: Record<string, number> = {
-    energy: energy,
-    creativity: creativity,
-    experience: xp,
-  };
+
 
   return (
     <div className={styles.panel}>
       {overlayMsg && <LevelUpOverlay message={overlayMsg} onClose={() => setOverlayMsg(null)} />}
+
+      {/* Video Background for Phase 1 */}
+      {phaseIndex === 1 && (
+        <video 
+          src="/images/characters/boy-animated.mp4" 
+          autoPlay 
+          loop 
+          muted 
+          className={styles.videoBackground} 
+        />
+      )}
 
       <h2> <span className='glitch box'>BEATO</span> </h2>
       <br />
@@ -199,34 +245,8 @@ const CharacterPanel: React.FC = () => {
       </div>
 
 
-      <div className={`${styles.bars}`}>
-        {CHARACTER_STATS.map(({ key, label, icon }) => (
-          <div key={key} className={styles.barGroup}>
-            <div className={styles.barLabel}>
-              <label>
-                {icon} {Math.floor(STAT_VALUES[key])}%
-              </label>
-            </div>
-            <div className={styles.progressBar}>
-              <div
-                className={styles[`${key}Bar`]}
-                style={{ width: `${Math.min(100, STAT_VALUES[key])}%` }}
-              />
-            </div>
-            <p className={styles.barText}>{label}</p>
-          </div>
-        ))}
-      </div>
 
       <div className={styles.avatarContainer}>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginBottom: '8px', position: 'absolute', zIndex: 100, right: 0 }}>
-          <button onClick={() => changePhase('prev')} disabled={phaseIndex === MIN_PHASE + 1} style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>
-            ⬅️
-          </button>
-          <button onClick={() => changePhase('next')} disabled={phaseIndex === MAX_PHASE} style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>
-            ➡️
-          </button>
-        </div>
 
         <img
           src={avatarSrc}
