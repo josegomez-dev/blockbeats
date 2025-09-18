@@ -130,11 +130,13 @@ const DashboardLayout = () => {
           <div className={styles.desktopGrid}>
             <div id="core-left-panel" className={styles.leftPanel}><CharacterPanel /></div>
             <div id="core-center-panel" className={styles.centerPanel}>
-              <h2><span className='glitch box'>LAUNCHPAD Musical NFTs</span></h2>
-              <br />
-              <div className="dashboard-description">
-                <b className="glitch">BlockBeats 3.0</b> is a platform where you can <strong className="text-neon-color">create, trade, and collect</strong> <strong className="text-clr-3">musical NFTs</strong>. <br />
-                <strong className="text-clr-3">Join our community</strong> to explore unique music creations and <strong className="text-neon-color">support artists</strong>!
+              <div style={{ position: 'relative', zIndex: 2 }}>
+                <h2><span className='glitch box'>LAUNCHPAD Musical NFTs</span></h2>
+                <br />
+                <div className="dashboard-description">
+                  <b className="glitch">BlockBeats 3.0</b> is a platform where you can <strong className="text-neon-color">create, trade, and collect</strong> <strong className="text-clr-3">musical NFTs</strong>. <br />
+                  <strong className="text-clr-3">Join our community</strong> to explore unique music creations and <strong className="text-neon-color">support artists</strong>!
+                </div>
               </div>
               <video 
                 src="/images/launchpad/simplevideo.mp4" 

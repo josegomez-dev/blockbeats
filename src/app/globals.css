@@ -814,18 +814,36 @@ p {
 
 .avatar-launchpad {
   transition: transform 0.4s ease;
-
+  
   display: block;
-  margin: 0 auto;
-  margin-top: 10px;
   width: 100%;
-  height: auto;
-  max-width: 650px;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  object-fit: cover;
+  border-radius: 15px;
   cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  opacity: 0.7;
 }
 
 .avatar-launchpad:hover {
   transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* Text styling for overlay content */
+.centerPanel h2 {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.centerPanel .dashboard-description {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 .box {
