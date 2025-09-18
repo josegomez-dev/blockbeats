@@ -37,6 +37,9 @@ interface AuthContextType {
 
   signUp: (email: string, password: string) => Promise<void>;
   signUpWithWallet: (email: string, password: string, _walletConnection: any) => Promise<void>;
+  signUpWithWalletOnly: (walletAddress: string, profile?: any) => Promise<void>;
+  updateWalletAccount: (walletAddress: string, email: string, displayName: string, profile?: any) => Promise<void>;
+  addEmailToWalletAccount: (email: string) => Promise<void>;
   signIn: (email: string, password: string) => Promise<void>;
   signInWithWallet: (walletAddress: string) => Promise<void>;
   signInWithGoogle: () => Promise<void>;
@@ -290,6 +293,105 @@ const removeUndefined = (obj: any): any => {
     }
   };
 
+  const signUpWithWalletOnly = async (walletAddress: string, profile?: any) => {
+    try {
+      const uid = walletAddress.toLowerCase();
+      
+      const _user = {
+        ...EMPTY_USER,
+        uid: uid,
+        id: uid,
+        email: profile?.name ? `${profile.name}@wallet.local` : `${walletAddress.slice(0, 8)}@wallet.local`,
+        displayName: profile?.name || `Wallet User ${walletAddress.slice(0, 6)}`,
+        walletStored: walletAddress,
+        emailVerified: false, // Wallet-only users haven't verified email
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+
+      const sanitizedUser = removeUndefined({
+        ..._user,
+        notifications: NOTIFICATIONS,
+      });
+
+      await setDoc(doc(db, "accounts", uid), sanitizedUser);
+  
+      setUser(_user as any);
+      setAuthenticated(true);
+      setRole(_user.role);
+
+      console.log("Wallet-only user created successfully.");
+      toast.success("Account created with wallet address!");
+    } catch (error) {
+      console.error("Error creating wallet-only account:", error);
+      throw error;
+    }
+  };
+
+  const updateWalletAccount = async (walletAddress: string, email: string, displayName: string, profile?: any) => {
+    try {
+      const uid = walletAddress.toLowerCase();
+      
+      const _user = {
+        ...EMPTY_USER,
+        uid: uid,
+        id: uid,
+        email: email,
+        displayName: displayName,
+        walletStored: walletAddress,
+        emailVerified: false, // Email not verified yet
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+
+      const sanitizedUser = removeUndefined({
+        ..._user,
+        notifications: NOTIFICATIONS,
+      });
+
+      await setDoc(doc(db, "accounts", uid), sanitizedUser);
+  
+      setUser(_user as any);
+      setAuthenticated(true);
+      setRole(_user.role);
+
+      console.log("Wallet account updated successfully.");
+      toast.success("Account created successfully!");
+    } catch (error) {
+      console.error("Error updating wallet account:", error);
+      throw error;
+    }
+  };
+
+  const addEmailToWalletAccount = async (email: string) => {
+    try {
+      if (!user || !user.walletStored) {
+        throw new Error("No wallet account found to add email to");
+      }
+
+      const userRef = doc(db, "accounts", user.uid);
+      await updateDoc(userRef, {
+        email: email,
+        emailVerified: false,
+        updatedAt: new Date(),
+      });
+
+      // Update local user state
+      setUser({
+        ...user,
+        email: email,
+        emailVerified: false,
+        updatedAt: new Date(),
+      });
+
+      console.log("Email added to wallet account successfully.");
+      toast.success("Email added to your account! Please verify it.");
+    } catch (error) {
+      console.error("Error adding email to wallet account:", error);
+      throw error;
+    }
+  };
+
   const signIn = async (email: string, password: string) => {
     try {
       console.log('Attempting to sign in with email:', email);
@@ -390,6 +492,9 @@ const removeUndefined = (obj: any): any => {
         setWalletConnectionAuth,
         signUp, 
         signUpWithWallet,
+        signUpWithWalletOnly,
+        updateWalletAccount,
+        addEmailToWalletAccount,
         signIn, 
         signInWithWallet,
         signInWithGoogle,

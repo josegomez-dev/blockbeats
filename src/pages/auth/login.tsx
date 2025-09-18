@@ -9,13 +9,19 @@ import styles from "@/app/assets/styles/layouts/MainPage.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from 'next/router';
+import { useAccount } from '@starknet-react/core';
+import StarknetConnectButton from '../../components/wallet/StarknetConnectButton';
+import WalletConnectionModal from '../../components/modals/WalletConnectionModal';
 
 const LoginFresh = () => {
-  const { signUp, signIn, authenticated } = useAuth();
+  const { signUp, signIn, signInWithWallet, signUpWithWalletOnly, updateWalletAccount, authenticated } = useAuth();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [showWalletModal, setShowWalletModal] = useState(false);
+  const [connectedWalletAddress, setConnectedWalletAddress] = useState("");
+  const [connectedProfile, setConnectedProfile] = useState(null);
 
   // Ensure component is mounted on client side
   useEffect(() => {
@@ -138,9 +144,64 @@ const LoginFresh = () => {
     }
   };
 
-  const handleWalletClick = () => {
-    console.log('🔘 Fresh Login: Wallet button clicked');
-    alert('Wallet connection coming soon!');
+  const handleWalletConnect = async (address: string, profile?: any) => {
+    console.log('🔗 Wallet connected:', address);
+    console.log('👤 Profile:', profile);
+    
+    try {
+      setLoading(true);
+      
+      // First, try to sign in with the wallet address
+      try {
+        await signInWithWallet(address);
+        toast.success(`Welcome back! Signed in with wallet: ${profile?.name || address.slice(0, 6)}...${address.slice(-4)}`);
+        console.log('✅ Existing wallet user signed in successfully');
+        
+        // Redirect to dashboard after successful sign in
+        if (typeof window !== 'undefined') {
+          router.push('/dashboard');
+        }
+      } catch (signInError) {
+        console.log('ℹ️ No existing account found, showing modal for new user...');
+        
+        // If sign in fails, show modal for new user to enter email and name
+        setConnectedWalletAddress(address);
+        setConnectedProfile(profile);
+        setShowWalletModal(true);
+      }
+    } catch (error) {
+      console.error('❌ Error in wallet authentication:', error);
+      toast.error('Failed to authenticate with wallet. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleWalletDisconnect = () => {
+    console.log('🔌 Wallet disconnected');
+    toast.success('Wallet disconnected');
+  };
+
+  const handleModalContinue = async (email: string, displayName: string) => {
+    try {
+      await updateWalletAccount(connectedWalletAddress, email, displayName, connectedProfile);
+      setShowWalletModal(false);
+      toast.success('Account created successfully! Welcome to BlockBeats!');
+      
+      // Redirect to dashboard
+      if (typeof window !== 'undefined') {
+        router.push('/dashboard');
+      }
+    } catch (error) {
+      console.error('❌ Error creating wallet account:', error);
+      toast.error('Failed to create account. Please try again.');
+    }
+  };
+
+  const handleModalClose = () => {
+    setShowWalletModal(false);
+    setConnectedWalletAddress("");
+    setConnectedProfile(null);
   };
 
   // Show loading state until mounted on client or if redirecting
@@ -237,25 +298,16 @@ const LoginFresh = () => {
             </div>
           )}
 
-          <div className="wallet-button-container">
-            <button
-              className={styles.submitBtnLarge}
-              onClick={handleWalletClick}
-              style={{
-                background: 'linear-gradient(45deg, #333, #666)',
-                color: '#fff',
-                opacity: 0.7,
-                cursor: 'not-allowed',
-                width: '300px'
-              }}
-            >
-              <span className="wallet-button-text">Connect Wallet</span>
-              <img src="/images/logos/starknet-logo.svg" className="wallet-logo" alt="blockbeats-logo" width={60} />
-            </button>
-            <div className="wallet-badge">
-              Coming Soon
-            </div>
+          <div style={{ textAlign: 'center', margin: '20px 0' }}>
+            <p style={{ color: '#ccc', fontSize: '0.9rem' }}>
+              🔗 Connect your Starknet wallet to create an account or sign in
+            </p>
           </div>
+
+          <StarknetConnectButton 
+            onConnect={handleWalletConnect}
+            onDisconnect={handleWalletDisconnect}
+          />
 
           <br />
           <br />
@@ -297,6 +349,16 @@ const LoginFresh = () => {
         <canvas id="neon-canvas"></canvas>
         <div className="neon-glow"></div>
       </div>
+
+      {/* Wallet Connection Modal */}
+      <WalletConnectionModal
+        isOpen={showWalletModal}
+        onClose={handleModalClose}
+        onContinue={handleModalContinue}
+        walletAddress={connectedWalletAddress}
+        profile={connectedProfile}
+        isLoading={loading}
+      />
 
     </main>
     </>

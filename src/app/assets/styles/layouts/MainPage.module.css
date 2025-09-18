@@ -642,3 +642,356 @@
   margin-bottom: 10px;
   word-break: break-word;
 }
+
+/* Wallet Connection Styles */
+.walletButtonContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+  width: 100%;
+}
+
+.walletConnectors {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+.walletConnectors button {
+  transition: all 0.3s ease !important;
+}
+
+.walletConnectors button:hover:not(:disabled) {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2) !important;
+}
+
+.walletConnectors button:active:not(:disabled) {
+  transform: translateY(0) !important;
+}
+
+.walletButtonText {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.walletLogo {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
+}
+
+.walletInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.walletName {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.walletProfilePicture {
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.walletStatus {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+/* Responsive wallet styles */
+@media (max-width: 768px) {
+  .walletButtonContainer {
+    margin: 15px 0;
+    width: 100%;
+  }
+  
+  .walletConnectors {
+    max-width: 100%;
+    width: 100%;
+  }
+  
+  .walletButtonText {
+    font-size: 0.9rem;
+  }
+  
+  .walletLogo {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .walletButtonContainer {
+    margin: 10px 0;
+    padding: 0 10px;
+  }
+  
+  .walletConnectors {
+    max-width: 100%;
+    width: 100%;
+  }
+  
+  .walletButtonText {
+    font-size: 0.8rem;
+  }
+  
+  .walletLogo {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Wallet Connection Modal Styles */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modalContent {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(20, 20, 40, 0.98));
+  border: 2px solid rgba(0, 255, 255, 0.3);
+  border-radius: 20px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 30px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modalHeader h2 {
+  color: #fff;
+  font-size: 1.5rem;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.modalCloseButton {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.modalCloseButton:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+}
+
+.modalCloseButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.modalBody {
+  padding: 30px;
+}
+
+.walletInfo {
+  background: rgba(0, 255, 255, 0.1);
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 25px;
+}
+
+.walletInfo p {
+  margin: 5px 0;
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.walletAddress {
+  color: #00ffff;
+  font-weight: bold;
+  font-family: monospace;
+}
+
+.starknetName {
+  color: #ffd700;
+  font-weight: bold;
+}
+
+.modalForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formGroup label {
+  color: #fff;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.modalInput {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 12px 15px;
+  color: #fff;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.modalInput:focus {
+  outline: none;
+  border-color: #00ffff;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+.modalInput:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.modalInput::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.formHint {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+  margin-top: 5px;
+}
+
+.modalActions {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.modalCancelButton {
+  flex: 1;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.modalCancelButton:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.modalCancelButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.modalSubmitButton {
+  flex: 2;
+  background: linear-gradient(45deg, #00ffff, #ff00ff);
+  border: none;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.modalSubmitButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 255, 255, 0.3);
+}
+
+.modalSubmitButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Responsive modal styles */
+@media (max-width: 768px) {
+  .modalOverlay {
+    padding: 10px;
+  }
+  
+  .modalContent {
+    max-width: 100%;
+  }
+  
+  .modalHeader {
+    padding: 20px 20px 15px;
+  }
+  
+  .modalHeader h2 {
+    font-size: 1.3rem;
+  }
+  
+  .modalBody {
+    padding: 20px;
+  }
+  
+  .modalActions {
+    flex-direction: column;
+  }
+  
+  .modalCancelButton,
+  .modalSubmitButton {
+    flex: 1;
+  }
+}
