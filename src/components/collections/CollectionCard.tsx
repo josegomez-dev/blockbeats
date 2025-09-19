@@ -8,12 +8,14 @@ interface CollectionCardProps {
   collection: TopCollections;
   onClick: (collectionId: string) => void;
   isSelected?: boolean;
+  isCompact?: boolean;
 }
 
 const CollectionCard: React.FC<CollectionCardProps> = ({ 
   collection, 
   onClick, 
-  isSelected = false 
+  isSelected = false,
+  isCompact = false
 }) => {
   const getGradientStyle = (color: string) => {
     // Use collectionColor if available, otherwise fall back to color, then default
@@ -28,7 +30,7 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
 
   return (
     <div 
-      className={`${styles.collectionCard} ${isSelected ? styles.selected : ''}`}
+      className={`${styles.collectionCard} ${isSelected ? styles.selected : ''} ${isCompact ? styles.compact : ''}`}
       style={getGradientStyle(collection.color || '#00ffc3')}
       onClick={() => onClick(collection.id)}
     >
@@ -48,7 +50,7 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
           </p>
           <div className={styles.collectionStats}>
             <span className={styles.songCount}>
-              {collection.nftsList?.length || 0} songs
+              {collection.nfts?.length || 0} songs
             </span>
             <span className={styles.separator}>•</span>
             <span className={styles.createdBy}>

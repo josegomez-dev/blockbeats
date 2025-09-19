@@ -74,6 +74,7 @@
   margin: 0;
   line-height: 1.4;
   max-width: 500px;
+  text-align: left;
 }
 
 .collectionStats {
@@ -158,6 +159,37 @@
   transform: translateY(-2px);
 }
 
+.navButton {
+  background: rgba(0, 255, 195, 0.1);
+  border: 1px solid rgba(0, 255, 195, 0.3);
+  color: #00ffc3;
+  padding: 0.6rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+}
+
+.navButton:hover:not(.disabled) {
+  background: rgba(0, 255, 195, 0.2);
+  border-color: rgba(0, 255, 195, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 255, 195, 0.3);
+}
+
+.navButton.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #666;
+}
+
 .closeButton {
   width: 40px;
   height: 40px;
@@ -239,6 +271,12 @@
     padding: 0.6rem 1.2rem;
     font-size: 0.9rem;
   }
+  
+  .navButton {
+    min-width: 35px;
+    height: 35px;
+    font-size: 0.9rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -281,5 +319,11 @@
   .shuffleButton {
     padding: 0.5rem 1rem;
     font-size: 0.85rem;
+  }
+  
+  .navButton {
+    min-width: 32px;
+    height: 32px;
+    font-size: 0.8rem;
   }
 }

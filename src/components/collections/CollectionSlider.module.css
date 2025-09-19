@@ -1,0 +1,172 @@
+.sliderContainer {
+  margin: 2rem 0;
+  padding: 0 2rem;
+}
+
+.sliderHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.sliderTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.sliderIcon {
+  font-size: 1.8rem;
+  filter: drop-shadow(0 0 10px rgba(0, 255, 195, 0.3));
+}
+
+.title {
+  color: #ffffff;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin: 0;
+  text-shadow: 0 0 10px rgba(0, 255, 195, 0.2);
+}
+
+.subtitle {
+  color: #cccccc;
+  font-size: 1rem;
+  margin: 0;
+  font-style: italic;
+  flex: 1;
+  text-align: center;
+}
+
+.sliderControls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.scrollButton {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(0, 255, 195, 0.3);
+  background: rgba(0, 0, 0, 0.4);
+  color: #00ffc3;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.scrollButton:hover:not(:disabled) {
+  background: rgba(0, 255, 195, 0.2);
+  border-color: #00ffc3;
+  box-shadow: 0 0 15px rgba(0, 255, 195, 0.3);
+  transform: scale(1.1);
+}
+
+.scrollButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.sliderWrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  border: 1px solid rgba(0, 255, 195, 0.1);
+}
+
+.slider {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 0.5rem 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.slider::-webkit-scrollbar {
+  display: none;
+}
+
+.sliderItem {
+  flex: 0 0 200px;
+  min-width: 200px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sliderContainer {
+    padding: 0 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .sliderHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+
+  .sliderTitle {
+    gap: 0.5rem;
+  }
+
+  .sliderIcon {
+    font-size: 1.5rem;
+  }
+
+  .title {
+    font-size: 1.4rem;
+  }
+
+  .subtitle {
+    text-align: left;
+    font-size: 0.9rem;
+  }
+
+  .sliderControls {
+    align-self: flex-end;
+  }
+
+  .scrollButton {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+
+  .sliderWrapper {
+    padding: 0.8rem;
+  }
+
+  .slider {
+    gap: 1rem;
+  }
+
+  .sliderItem {
+    flex: 0 0 160px;
+    min-width: 160px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sliderContainer {
+    padding: 0 0.5rem;
+  }
+
+  .sliderItem {
+    flex: 0 0 140px;
+    min-width: 140px;
+  }
+
+  .slider {
+    gap: 0.8rem;
+  }
+}

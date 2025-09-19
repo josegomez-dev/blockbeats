@@ -1048,6 +1048,246 @@
   margin-bottom: 3rem;
 }
 
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.sectionSubtitle {
+  color: #cccccc;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+.categoryFilter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  border: 1px solid rgba(0, 255, 195, 0.2);
+}
+
+.categoryButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 25px;
+  color: #ffffff;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.categoryButton:hover {
+  background: rgba(0, 255, 195, 0.2);
+  border-color: rgba(0, 255, 195, 0.4);
+  transform: translateY(-2px);
+}
+
+.categoryButton.active {
+  background: rgba(0, 255, 195, 0.3);
+  border-color: #00ffc3;
+  color: #00ffc3;
+  box-shadow: 0 0 15px rgba(0, 255, 195, 0.3);
+}
+
+.categoryIcon {
+  font-size: 1.1rem;
+}
+
+.categoryName {
+  font-weight: 500;
+}
+
+.communityCollectionsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+/* Two Column Layout for Music Player */
+.twoColumnLayout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.playlistColumn {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  padding: 1.5rem;
+  border: 1px solid rgba(0, 255, 195, 0.2);
+}
+
+.infoColumn {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  padding: 1.5rem;
+  border: 1px solid rgba(0, 255, 195, 0.2);
+}
+
+.columnHeader {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.columnHeader h3 {
+  color: #00ffc3;
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 10px rgba(0, 255, 195, 0.3);
+}
+
+.columnHeader p {
+  color: #cccccc;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* Now Playing Info */
+.nowPlayingInfo {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.currentTrack {
+  text-align: center;
+}
+
+.trackVisual {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.playingIndicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+.equalizer {
+  display: flex;
+  align-items: end;
+  gap: 3px;
+  height: 30px;
+}
+
+.equalizer .bar {
+  width: 4px;
+  background: #00ffc3;
+  border-radius: 2px;
+  animation: equalizer 1s ease-in-out infinite;
+}
+
+.equalizer .bar:nth-child(1) { animation-delay: 0s; }
+.equalizer .bar:nth-child(2) { animation-delay: 0.1s; }
+.equalizer .bar:nth-child(3) { animation-delay: 0.2s; }
+.equalizer .bar:nth-child(4) { animation-delay: 0.3s; }
+
+@keyframes equalizer {
+  0%, 100% { height: 10px; }
+  50% { height: 30px; }
+}
+
+.trackDetails {
+  text-align: left;
+}
+
+.trackTitle {
+  color: #ffffff;
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.trackDescription {
+  color: #cccccc;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.trackStats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.statLabel {
+  color: #cccccc;
+  font-size: 0.9rem;
+}
+
+.statValue {
+  color: #00ffc3;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.collaborativeInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem;
+  background: rgba(249, 202, 36, 0.1);
+  border: 1px solid rgba(249, 202, 36, 0.3);
+  border-radius: 8px;
+  color: #f9ca24;
+  font-size: 0.9rem;
+}
+
+.collaborativeIcon {
+  font-size: 1.1rem;
+}
+
+.noTrackPlaying {
+  text-align: center;
+  color: #888888;
+  padding: 2rem;
+}
+
+.noTrackIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.noTrackPlaying h4 {
+  color: #cccccc;
+  margin-bottom: 0.5rem;
+}
+
+.noTrackPlaying p {
+  font-size: 0.9rem;
+  margin: 0;
+}
+
 .playlistView {
   background: rgba(0, 0, 0, 0.6);
   border-radius: 20px;
@@ -1168,6 +1408,35 @@
   .collectionsGrid {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 1.5rem;
+  }
+
+  .communityCollectionsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+
+  .categoryFilter {
+    gap: 0.5rem;
+    padding: 0.8rem;
+  }
+
+  .categoryButton {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .categoryName {
+    display: none;
+  }
+
+  .twoColumnLayout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .playlistColumn,
+  .infoColumn {
+    padding: 1rem;
   }
   
   .playlistView {

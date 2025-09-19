@@ -9,7 +9,11 @@ interface CollectionHeaderProps {
   onClose: () => void;
   onPlayAll?: () => void;
   onShuffle?: () => void;
+  onNext?: () => void;
+  onPrevious?: () => void;
   isPlaying?: boolean;
+  canGoNext?: boolean;
+  canGoPrevious?: boolean;
 }
 
 const CollectionHeader: React.FC<CollectionHeaderProps> = ({ 
@@ -17,7 +21,11 @@ const CollectionHeader: React.FC<CollectionHeaderProps> = ({
   onClose, 
   onPlayAll,
   onShuffle,
-  isPlaying = false
+  onNext,
+  onPrevious,
+  isPlaying = false,
+  canGoNext = false,
+  canGoPrevious = false
 }) => {
   const getGradientStyle = (color: string) => {
     // Use collectionColor if available, otherwise fall back to color, then default
@@ -50,9 +58,6 @@ const CollectionHeader: React.FC<CollectionHeaderProps> = ({
               {collection.collectionDescription}
             </p>
             <div className={styles.collectionStats}>
-            <span className={styles.songCount}>
-              {collection.nftsList?.length || 0} songs
-            </span>
               <span className={styles.separator}>•</span>
               <span className={styles.createdBy}>
                 Created by {collection.createdBy?.slice(0, 6)}...{collection.createdBy?.slice(-4)}
@@ -69,6 +74,28 @@ const CollectionHeader: React.FC<CollectionHeaderProps> = ({
             >
               {isPlaying ? '⏸️' : '▶️'} {isPlaying ? 'Pause' : 'Play All'}
             </button>
+            
+            {isPlaying && (
+              <>
+                <button
+                  className={`${styles.navButton} ${!canGoPrevious ? styles.disabled : ''}`}
+                  onClick={onPrevious}
+                  disabled={!canGoPrevious}
+                  title="Previous"
+                >
+                  ⏮️
+                </button>
+                <button
+                  className={`${styles.navButton} ${!canGoNext ? styles.disabled : ''}`}
+                  onClick={onNext}
+                  disabled={!canGoNext}
+                  title="Next"
+                >
+                  ⏭️
+                </button>
+              </>
+            )}
+            
             <button
               className={styles.shuffleButton}
               onClick={onShuffle}

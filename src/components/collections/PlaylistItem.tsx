@@ -10,6 +10,7 @@ interface PlaylistItemProps {
   index: number;
   isPlaying?: boolean;
   onPlay: (nft: NFT) => void;
+  onView?: (nft: NFT) => void;
   onRemove?: (nftId: string) => void;
   showRemoveButton?: boolean;
 }
@@ -19,6 +20,7 @@ const PlaylistItem: React.FC<PlaylistItemProps> = ({
   index, 
   isPlaying, 
   onPlay, 
+  onView,
   onRemove,
   showRemoveButton = false
 }) => {
@@ -83,9 +85,20 @@ const PlaylistItem: React.FC<PlaylistItemProps> = ({
         <button
           className={`${styles.playButton} ${isPlaying ? styles.playing : ''}`}
           onClick={() => onPlay(nft)}
+          title={isPlaying ? 'Pause' : 'Play'}
         >
           {isPlaying ? '⏸️' : '▶️'}
         </button>
+        
+        {onView && (
+          <button
+            className={styles.viewButton}
+            onClick={() => onView(nft)}
+            title="View details"
+          >
+            👁️
+          </button>
+        )}
         
         {showRemoveButton && onRemove && (
           <button

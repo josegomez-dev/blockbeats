@@ -27,6 +27,39 @@
   animation: selectedPulse 2s ease-in-out infinite;
 }
 
+.collectionCard.compact {
+  min-height: 120px;
+  padding: 1rem;
+}
+
+.collectionCard.compact .collectionIcon {
+  margin-bottom: 0.5rem;
+}
+
+.collectionCard.compact .iconWrapper {
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+}
+
+.collectionCard.compact .collectionName {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.collectionCard.compact .collectionDescription {
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.collectionCard.compact .collectionStats {
+  font-size: 0.7rem;
+}
+
 @keyframes selectedPulse {
   0%, 100% {
     box-shadow: 0 0 20px var(--primary-color, rgba(0, 255, 195, 0.3));
