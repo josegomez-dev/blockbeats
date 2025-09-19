@@ -233,9 +233,6 @@ const LoginFresh = () => {
           <div className="login-subtitle">
             {authenticated ? '🔄 Loading BlockBeats Experience...' : '⚠️ Troubles with some services on production'}
           </div>
-          <div className="login-description">
-            {authenticated ? 'Please wait...' : "We're working on it..."}
-          </div>
         </div>
       </>
     );
