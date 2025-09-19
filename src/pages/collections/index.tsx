@@ -124,11 +124,6 @@ const CollectionsScreen = () => {
     setStopMelodyRef(() => stopMelody);
   };
 
-  // redirect to SignInUnauthorized
-  if (!authenticated) {
-    return <SignInUnauthorized />;
-  }
-
   return (
     <>
       <div className="gallery-screen">
