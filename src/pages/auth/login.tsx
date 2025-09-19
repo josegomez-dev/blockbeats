@@ -236,9 +236,6 @@ const LoginFresh = () => {
           <div className="login-description">
             {authenticated ? 'Please wait...' : "We're working on it..."}
           </div>
-          <div className="login-debug">
-            Please try refreshing the page in a few moments
-          </div>
         </div>
       </>
     );

@@ -16,7 +16,9 @@ import {
   frequencyRanges,
   SEQUENCER,
   midiNoteToFrequency,
-  ScaleName
+  ScaleName,
+  scaleIntervals,
+  SCALE_NAMES
 } from '@/utils/constants/musicDrawingMachine';
 
 import {
@@ -33,6 +35,7 @@ import {
 import PixelCanvas from './PixelCanvas';
 import Piano from './Piano';
 import FrequencyModal from './FrequencyModal';
+import RandomMelodyModal from './RandomMelodyModal';
 
 import styles from '@/app/assets/styles/pages/MusicStudio.module.css';
 
@@ -55,12 +58,21 @@ interface MusicDrawingMachineProps {
 
 export interface MusicDrawingMachineRef {
   play: () => void;
+  pause: () => void;
+  resume: () => void;
   stop: () => void;
   reset: () => void;
   save: () => void;
   openFreqModal: () => void;
   toggleDrums: () => void;
   stopDrums: () => void;
+  generateRandomMelody: (options: {
+    scale: ScaleName;
+    mode: 'single' | 'chords' | 'both';
+    density: number;
+    tempo?: number;
+    steps?: number;
+  }) => void;
   getData: () => {
     notesPlayed: { noteIndex: number; time: number }[];
     colorMap: { noteIndex: number; time: number; color: string }[];
@@ -101,13 +113,16 @@ const MusicDrawingMachine = forwardRef<MusicDrawingMachineRef, MusicDrawingMachi
   const tempo = externalTempo ?? internalTempo;
   const steps = externalSteps ?? internalSteps;
   const volume = externalVolume ?? 80;
-  const isDrumEnabled = externalDrumEnabled !== undefined ? externalDrumEnabled : true;
   
   const [playIndex, setPlayIndex] = useState<number | null>(null);
   const [isFreqModalOpen, setFreqModalOpen] = useState(false);
+  const [isRandomMelodyModalOpen, setRandomMelodyModalOpen] = useState(false);
   
   // Internal state for independent operation
   const [internalIsDrumEnabled, setInternalIsDrumEnabled] = useState(true);
+  
+  // Determine the actual drum state - use external if provided, otherwise use internal
+  const isDrumEnabled = externalDrumEnabled !== undefined ? externalDrumEnabled : internalIsDrumEnabled;
 
   const stopMelodyRef = useRef<(() => void) | null>(null);
   const stopDrumRef = useRef<(() => void) | null>(null);
@@ -115,39 +130,132 @@ const MusicDrawingMachine = forwardRef<MusicDrawingMachineRef, MusicDrawingMachi
   const chordBuffer = useRef<number[]>([]);
   const chordTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [nextTimeStep, setNextTimeStep] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [currentStep, setCurrentStep] = useState(0);
 
   const [midiConnected, setMidiConnected] = useState(false);
   const [midiDeviceName, setMidiDeviceName] = useState<string | null>(null);
 
   const frequencyStyle = frequencyRanges.find((r) => r.name === selectedRange)!;
 
+  // Random melody generator
+  const generateRandomMelody = useCallback((options: {
+    scale: ScaleName;
+    mode: 'single' | 'chords' | 'both';
+    density: number; // 0.1 to 1.0
+    tempo?: number;
+    steps?: number;
+  }) => {
+    const { scale, mode, density, tempo: newTempo, steps: newSteps } = options;
+    
+    // Generate random tempo and steps if not provided
+    const randomTempo = newTempo || Math.floor(Math.random() * 141) + 60; // 60-200 BPM
+    const randomSteps = newSteps || Math.floor(Math.random() * 25) + 8; // 8-32 steps
+    
+    // Update tempo and steps
+    if (randomTempo !== tempo) {
+      setInternalTempo(randomTempo);
+    }
+    if (randomSteps !== steps) {
+      setInternalSteps(randomSteps);
+    }
 
+    // Get scale intervals
+    const intervals = scaleIntervals[scale];
+    if (!intervals) {
+      toast.error(`Scale ${scale} not found`);
+      return;
+    }
 
-  // Expose functions to parent component
-  useImperativeHandle(ref, () => ({
-    play: playback,
-    stop: stopPlayback,
-    reset: handleReset,
-    save: saveNFTData,
-    openFreqModal: () => setFreqModalOpen(true),
-    toggleDrums: () => {
-      if (onDrumToggle) {
-        onDrumToggle(!isDrumEnabled);
-      } else {
-        setInternalIsDrumEnabled(!internalIsDrumEnabled);
+    // Generate random root note (focus on middle range for better sound)
+    const middleRangeStart = Math.floor(notes.length * 0.3); // Start from 30% of range
+    const middleRangeEnd = Math.floor(notes.length * 0.7);   // End at 70% of range
+    const rootNoteIndex = Math.floor(Math.random() * (middleRangeEnd - middleRangeStart)) + middleRangeStart;
+    const rootNote = notes[rootNoteIndex];
+    const rootFreq = rootNote[1];
+
+    const newNotes: Array<{ noteIndex: number; time: number; color: string }> = [];
+    const newColors: Array<{ noteIndex: number; time: number; color: string }> = [];
+
+    // Generate notes based on mode
+    const finalSteps = randomSteps;
+    const finalTempo = randomTempo;
+
+    // Ensure we generate at least some notes
+    const minNotes = Math.max(1, Math.floor(finalSteps * 0.1)); // At least 10% of steps
+    let notesGenerated = 0;
+    
+    for (let step = 0; step < finalSteps; step++) {
+      // Skip some steps based on density, but ensure minimum notes
+      if (Math.random() > density && notesGenerated >= minNotes) continue;
+
+      const time = step; // Use discrete step values for compatibility
+
+      if (mode === 'single' || mode === 'both') {
+        // Generate single note
+        const intervalIndex = Math.floor(Math.random() * intervals.length);
+        const interval = intervals[intervalIndex];
+        const noteIndex = (rootNoteIndex + interval) % notes.length;
+        
+        newNotes.push({
+          noteIndex,
+          time,
+          color: RANDOM_COLOR()
+        });
+        newColors.push({
+          noteIndex,
+          time,
+          color: RANDOM_COLOR()
+        });
+        notesGenerated++;
       }
-    },
-    stopDrums: () => {
-      stopDrumRef.current?.();
-      stopDrumRef.current = null;
-    },
-    getData: () => ({
-      notesPlayed,
-      colorMap,
-      selectedRange,
-      isDrumEnabled
-    })
-  }), [notesPlayed, colorMap, selectedRange, isDrumEnabled, onDrumToggle, internalIsDrumEnabled]);
+
+      if (mode === 'chords' || mode === 'both') {
+        // Generate chord (2-4 notes) with unique notes
+        const chordSize = Math.floor(Math.random() * 3) + 2; // 2-4 notes
+        const chordNotes: number[] = [];
+        const usedIntervals = new Set<number>();
+        
+        for (let i = 0; i < chordSize; i++) {
+          let intervalIndex, interval, noteIndex;
+          let attempts = 0;
+          
+          // Try to find a unique interval (max 10 attempts to avoid infinite loop)
+          do {
+            intervalIndex = Math.floor(Math.random() * intervals.length);
+            interval = intervals[intervalIndex];
+            noteIndex = (rootNoteIndex + interval) % notes.length;
+            attempts++;
+          } while (usedIntervals.has(interval) && attempts < 10);
+          
+          usedIntervals.add(interval);
+          chordNotes.push(noteIndex);
+        }
+
+        // Add chord notes
+        chordNotes.forEach(noteIndex => {
+          newNotes.push({
+            noteIndex,
+            time, // Same discrete time value for all chord notes
+            color: RANDOM_COLOR()
+          });
+          newColors.push({
+            noteIndex,
+            time, // Same discrete time value for all chord notes
+            color: RANDOM_COLOR()
+          });
+          notesGenerated++;
+        });
+      }
+    }
+
+    // Update state
+    setNotesPlayed(newNotes);
+    setColorMap(newColors);
+    
+    toast.success(`🎵 Generated ${scale} melody with ${newNotes.length} notes! Tempo: ${randomTempo} BPM, Steps: ${randomSteps}`);
+  }, [tempo, steps, setInternalTempo, setInternalSteps]);
+
 
   // 🧠 MIDI FIX — matching by midi note number instead of frequency
   useMidiInput({
@@ -257,40 +365,59 @@ const handleNotePlay = (noteIdx: number, isMidi = false) => {
     }
   };
 
-  const stopPlayback = useCallback(() => {
+  const pausePlayback = useCallback(() => {
+    setIsPaused(true);
     stopMelodyRef.current?.();
     stopDrumRef.current?.();
-    setPlayIndex(null);
-    onStop?.(); // Call external stop handler
-  }, [onStop]);
+    // Keep current step position for resume
+  }, []);
 
-  const playback = useCallback(() => {
+  const resumePlayback = useCallback(() => {
     if (!notesPlayed.length) return toast('Nothing to play!');
-    onPlay?.(); // Call external play handler
-
+    
+    setIsPaused(false);
+    
     const freqMap = notes.map((n) => n[1]);
-    let currentStep = 0;
+    let stepCounter = currentStep;
     const interval = (60 / tempo) * 1000;
 
-    const currentDrumEnabled = externalDrumEnabled !== undefined ? isDrumEnabled : internalIsDrumEnabled;
+    const currentDrumEnabled = isDrumEnabled;
+    console.log('🥁 Playback drums state:', { 
+      isDrumEnabled, 
+      currentDrumEnabled,
+      tempo,
+      steps 
+    });
+    
     if (currentDrumEnabled) {
+      console.log('🥁 Starting drums...');
       stopDrumRef.current = playDrumLoop(tempo, () => {
         stopDrumRef.current = null;
       }, steps);
+    } else {
+      console.log('🥁 Drums disabled, skipping drum loop');
     }
 
     const intervalId = setInterval(() => {
-      setPlayIndex(currentStep);
-      const notesAtStep = notesPlayed.filter(n => n.time === currentStep);
+      if (isPaused) {
+        clearInterval(intervalId);
+        return;
+      }
+      
+      setPlayIndex(stepCounter);
+      setCurrentStep(stepCounter);
+      const notesAtStep = notesPlayed.filter(n => n.time === stepCounter);
       notesAtStep.forEach(({ noteIndex }) => {
         playNote(freqMap[noteIndex]);
       });
 
-      currentStep++;
-      if (currentStep >= steps) {
+      stepCounter++;
+      if (stepCounter >= steps) {
         clearInterval(intervalId);
         stopDrumRef.current?.();
         setPlayIndex(null);
+        setCurrentStep(0);
+        setIsPaused(false);
         onStop?.(); // Call external stop handler when song finishes
       }
     }, interval);
@@ -298,8 +425,86 @@ const handleNotePlay = (noteIdx: number, isMidi = false) => {
     stopMelodyRef.current = () => {
       clearInterval(intervalId);
       setPlayIndex(null);
+      setCurrentStep(0);
+      setIsPaused(false);
     };
-  }, [notesPlayed.length, tempo, steps, isDrumEnabled, onPlay, onStop]);
+  }, [notesPlayed.length, tempo, steps, isDrumEnabled, onStop, currentStep]);
+
+  const stopPlayback = useCallback(() => {
+    stopMelodyRef.current?.();
+    stopDrumRef.current?.();
+    setPlayIndex(null);
+    setCurrentStep(0);
+    setIsPaused(false);
+    onStop?.(); // Call external stop handler
+  }, [onStop]);
+
+  const playback = useCallback(() => {
+    if (!notesPlayed.length) return toast('Nothing to play!');
+    
+    // If paused, just resume (don't restart)
+    if (isPaused) {
+      setIsPaused(false);
+      return;
+    }
+    
+    // Start fresh playback
+    onPlay?.(); // Call external play handler
+    setCurrentStep(0);
+    setIsPaused(false);
+
+    const freqMap = notes.map((n) => n[1]);
+    let stepCounter = 0;
+    const interval = (60 / tempo) * 1000;
+
+    const currentDrumEnabled = isDrumEnabled;
+    console.log('🥁 Playback drums state:', { 
+      isDrumEnabled, 
+      currentDrumEnabled,
+      tempo,
+      steps 
+    });
+    
+    if (currentDrumEnabled) {
+      console.log('🥁 Starting drums...');
+      stopDrumRef.current = playDrumLoop(tempo, () => {
+        stopDrumRef.current = null;
+      }, steps);
+    } else {
+      console.log('🥁 Drums disabled, skipping drum loop');
+    }
+
+    const intervalId = setInterval(() => {
+      if (isPaused) {
+        clearInterval(intervalId);
+        return;
+      }
+      
+      setPlayIndex(stepCounter);
+      setCurrentStep(stepCounter);
+      const notesAtStep = notesPlayed.filter(n => n.time === stepCounter);
+      notesAtStep.forEach(({ noteIndex }) => {
+        playNote(freqMap[noteIndex]);
+      });
+
+      stepCounter++;
+      if (stepCounter >= steps) {
+        clearInterval(intervalId);
+        stopDrumRef.current?.();
+        setPlayIndex(null);
+        setCurrentStep(0);
+        setIsPaused(false);
+        onStop?.(); // Call external stop handler when song finishes
+      }
+    }, interval);
+
+    stopMelodyRef.current = () => {
+      clearInterval(intervalId);
+      setPlayIndex(null);
+      setCurrentStep(0);
+      setIsPaused(false);
+    };
+  }, [notesPlayed.length, tempo, steps, isDrumEnabled, onPlay, onStop, isPaused]);
 
   // Handle external play/stop state changes
   useEffect(() => {
@@ -310,6 +515,43 @@ const handleNotePlay = (noteIdx: number, isMidi = false) => {
     }
   }, [isPlaying, notesPlayed.length, playback, stopPlayback]);
 
+  // Expose functions to parent component
+  useImperativeHandle(ref, () => ({
+    play: playback,
+    pause: pausePlayback,
+    resume: resumePlayback,
+    stop: stopPlayback,
+    reset: handleReset,
+    save: saveNFTData,
+    openFreqModal: () => setFreqModalOpen(true),
+    toggleDrums: () => {
+      console.log('🥁 Toggling drums:', { 
+        currentState: isDrumEnabled, 
+        newState: !isDrumEnabled,
+        hasExternalControl: !!onDrumToggle 
+      });
+      
+      if (onDrumToggle) {
+        // If external control is provided, use it
+        onDrumToggle(!isDrumEnabled);
+      } else {
+        // Otherwise, toggle internal state
+        setInternalIsDrumEnabled(!internalIsDrumEnabled);
+      }
+    },
+    stopDrums: () => {
+      stopDrumRef.current?.();
+      stopDrumRef.current = null;
+    },
+    generateRandomMelody,
+    getData: () => ({
+      notesPlayed,
+      colorMap,
+      selectedRange,
+      isDrumEnabled
+    })
+  }), [notesPlayed, colorMap, selectedRange, isDrumEnabled, onDrumToggle, internalIsDrumEnabled, generateRandomMelody, playback, pausePlayback, resumePlayback, stopPlayback]);
+
   const handleReset = () => {
     setNotesPlayed([]);
     setColorMap([]);
@@ -317,6 +559,7 @@ const handleNotePlay = (noteIdx: number, isMidi = false) => {
     stopPlayback();
     setNextTimeStep(0);
   };
+
 
   return (
     <>
@@ -326,23 +569,35 @@ const handleNotePlay = (noteIdx: number, isMidi = false) => {
             {/* Dedicated Playback Controls */}
             <MusicDrawingMachinePlaybackControls
               isPlaying={isPlaying}
+              isPaused={isPaused}
               tempo={tempo}
               steps={steps}
               isDrumEnabled={isDrumEnabled}
               selectedRange={selectedRange}
               onPlay={playback}
+              onPause={pausePlayback}
+              onResume={resumePlayback}
               onStop={stopPlayback}
               onReset={handleReset}
               onTempoChange={setInternalTempo}
               onStepsChange={setInternalSteps}
               onToggleDrums={(enabled) => {
+                console.log('🥁 PlaybackControls onToggleDrums:', { 
+                  enabled, 
+                  currentState: isDrumEnabled,
+                  hasExternalControl: !!onDrumToggle 
+                });
+                
                 if (onDrumToggle) {
+                  // If external control is provided, use it
                   onDrumToggle(enabled);
                 } else {
+                  // Otherwise, set internal state
                   setInternalIsDrumEnabled(enabled);
                 }
               }}
               onOpenFreqModal={() => setFreqModalOpen(true)}
+              onOpenRandomMelodyModal={() => setRandomMelodyModalOpen(true)}
             />
         </div>
 
@@ -368,6 +623,14 @@ const handleNotePlay = (noteIdx: number, isMidi = false) => {
           selected={selectedRange}
           onSelect={setSelectedRange}
           onSubmit={() => setFreqModalOpen(false)}
+        />
+      )}
+
+      {isRandomMelodyModalOpen && (
+        <RandomMelodyModal
+          isVisible={isRandomMelodyModalOpen}
+          onClose={() => setRandomMelodyModalOpen(false)}
+          onGenerate={generateRandomMelody}
         />
       )}
     </>
