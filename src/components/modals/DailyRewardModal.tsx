@@ -62,6 +62,7 @@ const DailyRewardModal: React.FC<Props> = ({ onClose, onClaim }) => {
 <br />
       <button
         className={styles.submitBtn}
+        style={{ background: "transparent" }}
         onClick={onClose}
       >
         Close Rewards

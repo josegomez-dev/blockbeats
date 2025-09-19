@@ -26,7 +26,6 @@ const MusicStudioPage = () => {
       id: 'drawing',
       name: 'Music Drawing Machine',
       description: 'Compose 8Bit melodies as pixel-art with MIDI compatibility',
-      icon: '/images/store/drumkit/synth-pixel.png',
       video: '/images/avatars/phase-3.mp4',
       ready: true,
       color: '#00ffff',
@@ -36,7 +35,6 @@ const MusicStudioPage = () => {
       id: 'drums',
       name: 'Drums Designer Machine',
       description: 'Create custom drum patterns with a grid interface',
-      icon: '/images/store/drumkit/futurebass.png',
       video: '/images/avatars/phase-4.mp4',
       ready: true,
       color: '#ff6b6b',
@@ -46,7 +44,6 @@ const MusicStudioPage = () => {
       id: 'voicemusic',
       name: 'Voice Music Machine',
       description: 'Generate melodies with your voice using AI',
-      icon: '/images/store/drumkit/voicemusicmachine.png',
       ready: false,
       color: '#4ecdc4',
       category: 'AI Voice'
@@ -55,7 +52,6 @@ const MusicStudioPage = () => {
       id: 'launchpad',
       name: 'Launchpad Machine',
       description: 'Trigger samples and loops with a grid interface',
-      icon: '/images/store/drumkit/trap.png',
       ready: false,
       color: '#45b7d1',
       category: 'Sampler'
@@ -139,58 +135,7 @@ const MusicStudioPage = () => {
       </Head>
 
       <div className={styles.studioContainer}>
-        {/* Epic Studio Header */}
-        <div className={styles.studioHeader}>
-          <div className={styles.headerBackground}></div>
-          <div className={styles.headerContent}>
-            <div className={styles.studioLogo}>
-              <FaMusic className={styles.logoIcon} />
-              <h1 className={styles.studioTitle}>
-                <span className="glitch" data-text="BlockBeats">BlockBeats</span>
-                <span className={styles.studioSubtitle}>STUDIO</span>
-              </h1>
-            </div>
-            
-            {/* Epic Transport Controls - Only show when inside a machine */}
-            {selectedMachine && (
-              <>
-
-
-                {/* Action Buttons */}
-                <div className={styles.actionButtons}>
-                  <button 
-                    className={styles.actionBtn} 
-                    title="Song Manager"
-                    onClick={() => setShowSongManager(true)}
-                  >
-                    <FaList />
-                  </button>
-                  {/* <button 
-                    className={styles.actionBtn} 
-                    title="Save Project"
-                    onClick={() => {
-                      if (selectedMachine === 'drawing') {
-                        musicDrawingMachineRef.current?.save();
-                      }
-                    }}
-                  >
-                    <FaSave />
-                  </button> */}
-                  {/* <button className={styles.actionBtn} title="Export">
-                    <FaDownload />
-                  </button>
-                  <button 
-                    className={styles.actionBtn} 
-                    title="Settings"
-                    onClick={() => setShowSettings(!showSettings)}
-                  >
-                    <FaCog />
-                  </button> */}
-                </div>
-              </>
-            )}
-          </div>
-        </div>
+        <br />
 
         {/* Main Studio Content */}
         <div className={styles.studioContent}>
@@ -228,17 +173,6 @@ const MusicStudioPage = () => {
                     
                     {/* Video Overlay */}
                     <div className={styles.videoOverlay}></div>
-                    
-                    <div className={styles.machineIcon}>
-                      <Image
-                        src={machine.icon}
-                        alt={machine.name}
-                        width={80}
-                        height={80}
-                        className={styles.machineImage}
-                      />
-                      <div className={styles.machineGlow}></div>
-                    </div>
                     
                     <div className={styles.machineInfo}>
                       <div className={styles.machineCategory}>{machine.category}</div>
