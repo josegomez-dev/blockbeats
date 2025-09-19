@@ -42,6 +42,10 @@ import ColorSidebar from './ColorSidebar';
 
 import styles from '@/app/assets/styles/pages/MusicStudio.module.css';
 
+// BBC Points costs for premium features
+const RANDOM_MELODY_COST = 250;
+const QUICK_GENERATE_COST = 100;
+
 interface MusicDrawingMachineProps {
   isPlaying?: boolean;
   onPlay?: () => void;
@@ -145,7 +149,58 @@ const MusicDrawingMachine = forwardRef<MusicDrawingMachineRef, MusicDrawingMachi
   const [selectedColor, setSelectedColor] = useState('#ffffff');
   const [isQuickGenerateModalOpen, setIsQuickGenerateModalOpen] = useState(false);
 
+  // Auth context for BBC points
+  const { updateCoinsInFirestore } = useAuth();
+
   const frequencyStyle = frequencyRanges.find((r) => r.name === selectedRange)!;
+
+  // BBC Points validation and payment functions
+  const canAffordRandomMelody = user && (user.bbcPoints || 0) >= RANDOM_MELODY_COST;
+  const canAffordQuickGenerate = user && (user.bbcPoints || 0) >= QUICK_GENERATE_COST;
+
+  const handleRandomMelodyClick = async () => {
+    if (!user) {
+      toast.error('Please log in to use Random Melody generation!');
+      return;
+    }
+
+    if (!canAffordRandomMelody) {
+      toast.error(`Insufficient BBC coins! Need ${RANDOM_MELODY_COST} coins.`);
+      return;
+    }
+
+    try {
+      // Deduct coins
+      await updateCoinsInFirestore(-RANDOM_MELODY_COST, 'Random Melody Generation');
+      setRandomMelodyModalOpen(true);
+      toast.success('Random Melody unlocked! 🎵');
+    } catch (error) {
+      console.error('Error processing payment:', error);
+      toast.error('Failed to process payment. Please try again.');
+    }
+  };
+
+  const handleQuickGenerateClick = async () => {
+    if (!user) {
+      toast.error('Please log in to use Quick Generate!');
+      return;
+    }
+
+    if (!canAffordQuickGenerate) {
+      toast.error(`Insufficient BBC coins! Need ${QUICK_GENERATE_COST} coins.`);
+      return;
+    }
+
+    try {
+      // Deduct coins
+      await updateCoinsInFirestore(-QUICK_GENERATE_COST, 'Quick Generate by Genre');
+      setIsQuickGenerateModalOpen(true);
+      toast.success('Quick Generate unlocked! 🚀');
+    } catch (error) {
+      console.error('Error processing payment:', error);
+      toast.error('Failed to process payment. Please try again.');
+    }
+  };
 
   // Add silence/blank step function
   const addSilence = useCallback((timeStep: number) => {
@@ -597,6 +652,19 @@ const handleNotePlay = (noteIdx: number, isMidi = false) => {
   return (
     <>
       <div className={styles.fullScreenStudio}>
+        {/* Video Background */}
+        <video
+          className={styles.machineVideoBackground}
+          autoPlay
+          loop
+          muted
+          playsInline
+        >
+          <source src="/images/avatars/phase-3.mp4" type="video/mp4" />
+        </video>
+        
+        {/* Video Overlay */}
+        <div className={styles.videoOverlay}></div>
           
           <div className={styles.topBar}>
             {/* Dedicated Playback Controls */}
@@ -633,11 +701,14 @@ const handleNotePlay = (noteIdx: number, isMidi = false) => {
                 }
               }}
               onOpenFreqModal={() => setFreqModalOpen(true)}
-              onOpenRandomMelodyModal={() => setRandomMelodyModalOpen(true)}
+              onOpenRandomMelodyModal={handleRandomMelodyClick}
               onAddSilence={() => addSilence(nextTimeStep)}
               isSilenceMode={isSilenceMode}
               onOpenColorSidebar={() => setIsColorSidebarOpen(true)}
-              onOpenQuickGenerate={() => setIsQuickGenerateModalOpen(true)}
+              onOpenQuickGenerate={handleQuickGenerateClick}
+              userCoins={user?.bbcPoints || 0}
+              randomMelodyCost={RANDOM_MELODY_COST}
+              quickGenerateCost={QUICK_GENERATE_COST}
             />
         </div>
 

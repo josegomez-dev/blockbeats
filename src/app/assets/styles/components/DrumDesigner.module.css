@@ -780,6 +780,34 @@
   box-shadow: none;
 }
 
+/* Disabled state for premium buttons */
+.premiumSingleBtn.disabled,
+.premiumTripleBtn.disabled {
+  background: linear-gradient(135deg, #666666, #444444) !important;
+  color: #aaa !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  opacity: 0.6;
+}
+
+.premiumSingleBtn.disabled:hover,
+.premiumTripleBtn.disabled:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.premiumSingleBtn.disabled .coinIcon,
+.premiumTripleBtn.disabled .coinIcon {
+  color: #aaa !important;
+}
+
+.premiumSingleBtn.disabled .priceTag,
+.premiumTripleBtn.disabled .priceTag {
+  background: rgba(170, 170, 170, 0.2) !important;
+  color: #aaa !important;
+  border-color: #aaa !important;
+}
+
 .modalFooter {
   border-top: 1px solid #333;
   padding-top: 1rem;

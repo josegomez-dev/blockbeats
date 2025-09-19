@@ -28,7 +28,7 @@ const CollectionsScreen = () => {
   const [stopDrumRef, setStopDrumRef] = useState<(() => void) | null>(null);
   const [isPlayingAll, setIsPlayingAll] = useState(false);
 
-  const { user } = useAuth();
+  const { user, authenticated } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
@@ -123,6 +123,11 @@ const CollectionsScreen = () => {
 
     setStopMelodyRef(() => stopMelody);
   };
+
+  // redirect to SignInUnauthorized
+  if (!authenticated) {
+    return <SignInUnauthorized />;
+  }
 
   return (
     <>

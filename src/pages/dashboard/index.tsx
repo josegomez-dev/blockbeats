@@ -168,8 +168,8 @@ const DashboardLayout = () => {
                         className="coop-button"
                         disabled
                       >
-                        <span className="coop-button-text">Co-operative Mode</span>
-                        <span className="coop-button-subtitle">Play music with friends</span>
+                        <span className="coop-button-text">Co-operative <span className="text-neon-color">Live</span> Mode</span>
+                        <span className="text-neon-color">Play music with friends</span>
                       </button>
                     </div>
                   </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { FaPlay, FaPause, FaStop, FaUndo, FaDrum, FaMusic, FaDice, FaVolumeMute, FaPalette, FaRocket, FaVolumeUp, FaPlug, FaUnlink } from 'react-icons/fa';
+import { FaPlay, FaPause, FaStop, FaUndo, FaDrum, FaMusic, FaDice, FaVolumeMute, FaPalette, FaRocket, FaVolumeUp, FaPlug, FaUnlink, FaCoins } from 'react-icons/fa';
 import styles from '@/app/assets/styles/pages/MusicStudio.module.css';
 
 // Function to get dynamic styling based on frequency range
@@ -56,6 +56,9 @@ interface MusicDrawingMachinePlaybackControlsProps {
   isSilenceMode?: boolean;
   onOpenColorSidebar?: () => void;
   onOpenQuickGenerate?: () => void;
+  userCoins?: number;
+  randomMelodyCost?: number;
+  quickGenerateCost?: number;
 }
 
 const MusicDrawingMachinePlaybackControls: React.FC<MusicDrawingMachinePlaybackControlsProps> = ({
@@ -82,6 +85,9 @@ const MusicDrawingMachinePlaybackControls: React.FC<MusicDrawingMachinePlaybackC
   isSilenceMode = false,
   onOpenColorSidebar,
   onOpenQuickGenerate,
+  userCoins = 0,
+  randomMelodyCost = 250,
+  quickGenerateCost = 100,
 }) => {
   return (
     <div className={styles.machineControls}>
@@ -194,23 +200,31 @@ const MusicDrawingMachinePlaybackControls: React.FC<MusicDrawingMachinePlaybackC
 
           <div className={styles.controlGroup}>
             <button 
-              className={styles.randomMelodyBtn}
+              className={`${styles.randomMelodyBtn} ${userCoins < randomMelodyCost ? styles.insufficientCoins : ''}`}
               onClick={onOpenRandomMelodyModal}
-              title="Generate Random Melody"
+              title={`Generate Random Melody - ${randomMelodyCost} BBC Coins`}
             >
               <FaDice />
               <span>Random Melody</span>
+              <div className={styles.coinCost}>
+                <FaCoins />
+                <span>{randomMelodyCost}</span>
+              </div>
             </button>
           </div>
 
           <div className={styles.controlGroup}>
             <button 
-              className={styles.randomMelodyBtn}
+              className={`${styles.randomMelodyBtn} ${userCoins < quickGenerateCost ? styles.insufficientCoins : ''}`}
               onClick={onOpenQuickGenerate}
-              title="Quick Generate by Genre"
+              title={`Quick Generate by Genre - ${quickGenerateCost} BBC Coins`}
             >
               <FaRocket />
               <span>Quick Generate</span>
+              <div className={styles.coinCost}>
+                <FaCoins />
+                <span>{quickGenerateCost}</span>
+              </div>
             </button>
           </div>
 

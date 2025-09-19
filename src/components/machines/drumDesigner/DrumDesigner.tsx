@@ -17,7 +17,7 @@ import toast from 'react-hot-toast';
 
 const MIN_STEPS = 4;
 const MAX_STEPS = 32;
-const MAX_INSTRUMENTS = 5;
+const MAX_INSTRUMENTS = 9; // Increased from 5 to 9
 const INITIAL_INSTRUMENTS = 4;
 
 const MAX_FREE_ROWS = 7; // 4 default + 3 more allowed
@@ -652,6 +652,8 @@ const DrumDesigner = forwardRef<DrumDesignerRef, DrumDesignerProps>(({
           onGenerateAutoPattern={generateAutoPattern}
           onOpenPremiumModal={openPremiumModal}
           onOpenCustomSoundModal={() => setIsCustomSoundModalOpen(true)}
+          isUserLoggedIn={!!user}
+          userCoins={user?.bbcPoints || 0}
         />
       </div>
 

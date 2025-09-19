@@ -280,7 +280,14 @@ const LandingPage = () => {
 
     {/* Robot Character */}
     <div className={`${styles.robotContainer}`}>
-      <img src="/images/avatars/phase-1.webp" alt="BlockBeats Robot" className={styles.robotImage} />
+      <video 
+        src="/images/characters/boy-animated.mp4" 
+        className={styles.robotImage}
+        autoPlay
+        loop
+        muted
+        playsInline
+      />
       <div className={`${styles.robotSpeech}`}>
         {randomMessage}
       </div>
@@ -397,12 +404,12 @@ const LandingPage = () => {
   
 
     {/* Top NFT Showcase */}
-    <hr />
-    <TopNFTShowcase />
+    {/* <hr />
+    <TopNFTShowcase /> */}
     
     {/* Robot Skins Showcase */}
-    <hr />
-    <RobotSkinsShowcase />
+    {/* <hr />
+    <RobotSkinsShowcase /> */}
 
     <Footer />
 

@@ -15,6 +15,8 @@ interface PatternControlsProps {
   onGenerateAutoPattern: () => void;
   onOpenPremiumModal: (action: 'single' | 'triple') => void;
   onOpenCustomSoundModal: () => void;
+  isUserLoggedIn?: boolean;
+  userCoins?: number;
 }
 
 const PatternControls: React.FC<PatternControlsProps> = ({
@@ -28,6 +30,8 @@ const PatternControls: React.FC<PatternControlsProps> = ({
   onGenerateAutoPattern,
   onOpenPremiumModal,
   onOpenCustomSoundModal,
+  isUserLoggedIn = false,
+  userCoins = 0,
 }) => {
   return (
     <div className={styles.patternControlsBar}>
@@ -92,10 +96,18 @@ const PatternControls: React.FC<PatternControlsProps> = ({
         {/* Premium Unlock Buttons - Always Visible */}
         <div className={styles.controlGroup}>
           <button 
-            className={styles.premiumSingleBtn}
+            className={`${styles.premiumSingleBtn} ${!isUserLoggedIn || userCoins < 500 ? styles.disabled : ''}`}
             onClick={() => onOpenPremiumModal('single')}
-            disabled={gridLength >= maxInstruments}
-            title={gridLength >= maxInstruments ? "Maximum instruments reached" : "Unlock 1 Premium Row (500 BBC)"}
+            disabled={gridLength >= maxInstruments || !isUserLoggedIn || userCoins < 500}
+            title={
+              !isUserLoggedIn 
+                ? "Please log in to unlock premium features" 
+                : userCoins < 500 
+                  ? "Insufficient BBC coins! Need 500 coins"
+                  : gridLength >= maxInstruments 
+                    ? "Maximum instruments reached" 
+                    : "Unlock 1 Premium Row (500 BBC)"
+            }
           >
             <FaLock />
             <span>+1 Row</span>
@@ -106,10 +118,18 @@ const PatternControls: React.FC<PatternControlsProps> = ({
 
         <div className={styles.controlGroup}>
           <button 
-            className={styles.premiumTripleBtn}
+            className={`${styles.premiumTripleBtn} ${!isUserLoggedIn || userCoins < 800 ? styles.disabled : ''}`}
             onClick={() => onOpenPremiumModal('triple')}
-            disabled={gridLength >= maxInstruments}
-            title={gridLength >= maxInstruments ? "Maximum instruments reached" : "Unlock 3 Premium Rows (800 BBC)"}
+            disabled={gridLength >= maxInstruments || !isUserLoggedIn || userCoins < 800}
+            title={
+              !isUserLoggedIn 
+                ? "Please log in to unlock premium features" 
+                : userCoins < 800 
+                  ? "Insufficient BBC coins! Need 800 coins"
+                  : gridLength >= maxInstruments 
+                    ? "Maximum instruments reached" 
+                    : "Unlock 3 Premium Rows (800 BBC)"
+            }
           >
             <FaLock />
             <span>+3 Rows</span>

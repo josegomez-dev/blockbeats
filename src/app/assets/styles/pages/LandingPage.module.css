@@ -650,11 +650,13 @@
   transform-origin: center;
   animation: robotIntro 1.5s ease-out;
 
+
   position: fixed;
   bottom: 120px;
   right: 20px;
   /* animation: robotStickIn 0.8s ease forwards; */
 }
+
 
 /* Robot Image */
 .robotImage {
@@ -662,6 +664,8 @@
   height: auto;
   animation: waveHand 3s infinite ease-in-out;
   filter: drop-shadow(0 0 20px rgba(255, 0, 153, 0.7));
+  border-radius: 50%;
+  transform: scaleX(-1); /* Horizontal flip */
 }
 
 /* Speech Bubble */

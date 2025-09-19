@@ -290,6 +290,23 @@ const MusicStudioPage = () => {
                 </h3>
               </div>
               <div className={styles.workspaceContent}>
+                {/* Video Background for Drums Designer Machine */}
+                {selectedMachine === 'drums' && (
+                  <>
+                    <video
+                      className={styles.machineVideoBackground}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                    >
+                      <source src="/images/avatars/phase-4.mp4" type="video/mp4" />
+                    </video>
+                    
+                    {/* Video Overlay */}
+                    <div className={styles.videoOverlay}></div>
+                  </>
+                )}
                 
                 {renderMachine()}
               </div>

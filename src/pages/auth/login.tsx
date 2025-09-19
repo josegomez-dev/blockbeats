@@ -343,6 +343,13 @@ const LoginFresh = () => {
             And take full ownership of your creation through <br /> 🔐 <span data-text="NFTs" className="glitch">NFTs</span>.
           </p>
           <br />
+          
+          {/* Welcome Page Link */}
+          <div style={{ textAlign: 'center', marginTop: '20px' }}>
+            <Link href="/" className={styles.welcomeLink}>
+              ← Back to Welcome Page
+            </Link>
+          </div>
         </div>
       </div>
       

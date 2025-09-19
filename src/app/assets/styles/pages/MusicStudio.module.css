@@ -661,7 +661,6 @@
   align-items: center;
   justify-content: center;
   min-height: 70vh;
-  padding: 2rem;
 }
 
 
@@ -815,6 +814,42 @@
   justify-content: center;
   width: 100%;
   box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Video Background for Music Drawing Machine */
+.machineVideoBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  opacity: 0.15;
+  transition: opacity 0.4s ease;
+}
+
+/* Video Overlay for Music Drawing Machine */
+.videoOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  transition: background 0.4s ease;
+  pointer-events: none;
+}
+
+/* Workspace Content Container */
+.workspaceContent {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 80vh;
+  overflow: hidden;
 }
 
 .canvasSection {
@@ -830,10 +865,13 @@
   border: 1px solid rgba(0, 255, 255, 0.2);
   padding: 2rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 2;
 }
 
 .topBar {
-  
+  position: relative;
+  z-index: 2;
 }
 
 .bottomBar {
@@ -842,6 +880,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  z-index: 2;
 }
 
 /* Responsive adjustments for Music Drawing Machine */
@@ -1115,6 +1155,43 @@
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(255, 107, 107, 0.5);
   background: linear-gradient(135deg, #ff5252, #ff9800);
+}
+
+/* Coin Cost Display */
+.coinCost {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: rgba(255, 215, 0, 0.2);
+  border: 1px solid #ffd700;
+  border-radius: 12px;
+  padding: 0.2rem 0.5rem;
+  margin-left: 0.5rem;
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: #ffd700;
+}
+
+.coinCost svg {
+  font-size: 0.6rem;
+}
+
+/* Insufficient Coins State */
+.insufficientCoins {
+  opacity: 0.6;
+  background: linear-gradient(135deg, #666666, #444444) !important;
+  cursor: not-allowed;
+}
+
+.insufficientCoins:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.insufficientCoins .coinCost {
+  background: rgba(255, 0, 0, 0.2);
+  border-color: #ff0000;
+  color: #ff0000;
 }
 
 .silenceBtn {

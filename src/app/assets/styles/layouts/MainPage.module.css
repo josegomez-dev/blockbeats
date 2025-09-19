@@ -233,6 +233,27 @@
   box-shadow: 0 0 15px #0ff;
 }
 
+/* Welcome Page Link */
+.welcomeLink {
+  color: #00ffff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  padding: 8px 16px;
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  border-radius: 20px;
+  background: rgba(0, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.welcomeLink:hover {
+  color: #ffffff;
+  background: rgba(0, 255, 255, 0.2);
+  border-color: rgba(0, 255, 255, 0.6);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+  transform: translateY(-2px);
+}
+
 @keyframes glowBorder {
   from {
     border-color: var(--primary-color);

@@ -10,7 +10,7 @@ interface LayoutProps {
 }
 
 const Layout = ({ children }: LayoutProps) => {
-  const { authenticated } = useAuth()
+  const { authenticated, loading } = useAuth()
 
   // check if location is different from /collections
   const isCollectionsPage = typeof window !== 'undefined' && window.location.pathname.includes('/collections')
@@ -20,10 +20,13 @@ const Layout = ({ children }: LayoutProps) => {
   const shouldHideSidebar = typeof window !== 'undefined' && 
     hiddenSidebarPaths.some(path => window.location.pathname.startsWith(path))
 
+  const hiddenNavPaths = ['/auth/login', '/auth/signup'];
+
   return (
       <>
-        <Nav />
-        {authenticated && (
+        {/* Hide navbar during loading/preloader */}
+        {!loading && authenticated && !hiddenNavPaths.some(path => window.location.pathname.startsWith(path)) && <Nav />}
+        {authenticated && !loading && (
           <>
             {!shouldHideSidebar && (
               <SidebarMenu />
@@ -32,7 +35,7 @@ const Layout = ({ children }: LayoutProps) => {
           </>
         )}
         <main className="p-4">
-            {authenticated && <div className='custom-nav-spacer' />}
+            {authenticated && !loading && <div className='custom-nav-spacer' />}
             {children}
             {/* {authenticated && !isCollectionsPage && <Footer />} */}
         </main>
