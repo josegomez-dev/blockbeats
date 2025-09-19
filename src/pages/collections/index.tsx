@@ -397,7 +397,7 @@ const CollectionsScreen = () => {
           </div>
           <br />
           <button 
-            onClick={() => router.push('/createCollections')} 
+            onClick={() => router.push('/collections/createCollections')} 
             className={`${styles.submitBtn} button-no-animation`}
           >
             Create New Collection

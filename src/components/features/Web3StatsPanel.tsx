@@ -118,7 +118,7 @@ const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, tota
                   Artworks: <strong> <RiGalleryLine /> </strong>: <span className="glitch">{totalNFTCreations}</span> 
                 </p>
                 <p className={styles.tokenMeta}>
-                  NFTs minted: <strong> <FaInfinity /> </strong>: <span className="glitch">0</span> 
+                  NFTs: <strong> <FaInfinity /> </strong>: <span className="glitch">0</span> 
                 </p>
                 <p className={styles.tokenMeta}>
                   Collections: <strong> <BiCollection /></strong>: <span className="glitch">{totalTopCollections}</span>

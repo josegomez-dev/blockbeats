@@ -1184,7 +1184,7 @@
 
 .equalizer {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   gap: 3px;
   height: 30px;
 }
