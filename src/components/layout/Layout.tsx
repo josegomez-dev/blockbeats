@@ -16,7 +16,7 @@ const Layout = ({ children }: LayoutProps) => {
   const isCollectionsPage = typeof window !== 'undefined' && window.location.pathname.includes('/collections')
 
   // Define paths where SidebarMenu should be hidden
-  const hiddenSidebarPaths = ['/studio', '/dashboard', '/marketplace', '/collections']
+  const hiddenSidebarPaths = ['/studio', '/dashboard', '/marketplace', '/collections', '/auth/login', '/auth/signup']
   const shouldHideSidebar = typeof window !== 'undefined' && 
     hiddenSidebarPaths.some(path => window.location.pathname.startsWith(path))
 

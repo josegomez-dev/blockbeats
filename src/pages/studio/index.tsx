@@ -27,6 +27,7 @@ const MusicStudioPage = () => {
       name: 'Music Drawing Machine',
       description: 'Compose 8Bit melodies as pixel-art with MIDI compatibility',
       icon: '/images/store/drumkit/synth-pixel.png',
+      video: '/images/avatars/phase-3.mp4',
       ready: true,
       color: '#00ffff',
       category: 'Synthesizer'
@@ -36,6 +37,7 @@ const MusicStudioPage = () => {
       name: 'Drums Designer Machine',
       description: 'Create custom drum patterns with a grid interface',
       icon: '/images/store/drumkit/futurebass.png',
+      video: '/images/avatars/phase-4.mp4',
       ready: true,
       color: '#ff6b6b',
       category: 'Drum Machine'
@@ -211,6 +213,22 @@ const MusicStudioPage = () => {
                     onClick={() => machine.ready && setSelectedMachine(machine.id)}
                     style={{ '--machine-color': machine.color } as React.CSSProperties}
                   >
+                    {/* Video Background */}
+                    {machine.video && (
+                      <video
+                        className={styles.machineVideo}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                      >
+                        <source src={machine.video} type="video/mp4" />
+                      </video>
+                    )}
+                    
+                    {/* Video Overlay */}
+                    <div className={styles.videoOverlay}></div>
+                    
                     <div className={styles.machineIcon}>
                       <Image
                         src={machine.icon}
