@@ -99,8 +99,6 @@ const DashboardLayout = () => {
       </Head>
       
       <div className="dashboard-background">
-        <h2><span className='glitch box'>LAUNCHPAD Musical NFTs</span></h2>
-
         {/* 🎁 Rewards Modal */}
         {showRewards && (
           <DailyRewardModal

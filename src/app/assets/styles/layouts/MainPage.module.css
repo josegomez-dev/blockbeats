@@ -315,12 +315,15 @@
 .rightPanel {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 15px;
-  padding: 1rem;
   overflow: hidden;
   transition: all 0.4s ease;
   text-align: center;
   position: relative;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.rightPanel {
+  padding: 1rem;
 }
 
 /* Animations */

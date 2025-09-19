@@ -1,10 +1,10 @@
 export const BLOCKBEATS_NEWS = [
   {
-    text: "📺 Watch the full demo presentation on YouTube!",
+    text: "📺 Watch the full demo!",
     url: "https://www.youtube.com/watch?v=W84Qst6bHxU&t=20s",
   },
   {
-    text: "🏆 BlockBeats won 2nd place at the Starknet Hackathon!",
+    text: "🏆 2nd place at Hackathon!",
     url: "https://www.youtube.com/watch?v=Uk9lCM9xS5Y",
   },
   {

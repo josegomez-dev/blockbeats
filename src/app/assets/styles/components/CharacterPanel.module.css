@@ -125,12 +125,6 @@
 }
 
 
-.levelUpGif {
-  width: 250px;
-  position: absolute;
-  height: auto;
-  left: 45px;
-}
 
 @keyframes fadeInOut {
   0% {
@@ -170,7 +164,6 @@
 .panel .status {
   position: relative;
   z-index: 1;
-  background: rgba(0, 0, 0, 0.6);
   padding: 8px 12px;
   border-radius: 8px;
   margin: 4px 0;
@@ -178,12 +171,10 @@
 
 /* Special styling for the main content areas */
 .panel h2 {
-  background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(4px);
 }
 
 .panel .description {
-  background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(2px);
 }
 

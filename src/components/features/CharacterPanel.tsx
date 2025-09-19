@@ -75,7 +75,6 @@ const CharacterPanel: React.FC = () => {
   const { user, updateCoinsInFirestore } = useAuth();
   const [overlayMsg, setOverlayMsg] = useState<string | null>(null);
   const [animateLevel, setAnimateLevel] = useState(false);
-  const [showGif, setShowGif] = useState(false);
   const [phaseIndex, setPhaseIndex] = useState(1);
 
   const prevLevel = useRef(level);
@@ -166,7 +165,6 @@ const CharacterPanel: React.FC = () => {
 
   const handleLevelUp = async (newLevel: number) => {
     setAnimateLevel(true);
-    setShowGif(true);
     setOverlayMsg(`🎉 Level up! \n You reached level ${newLevel}!`);
     toast.success(`🔥 Evolución completada: Nivel ${newLevel}`);
     sfx.current.levelUp2.play();
@@ -181,7 +179,6 @@ const CharacterPanel: React.FC = () => {
 
     setTimeout(() => {
       setAnimateLevel(false);
-      setShowGif(false);
       setOverlayMsg(null);
     }, CHARACTER_ANIMATION_DELAY + CHARACTER_LEVELUP_DURATION);
   };
@@ -227,10 +224,10 @@ const CharacterPanel: React.FC = () => {
     <div className={styles.panel}>
       {overlayMsg && <LevelUpOverlay message={overlayMsg} onClose={() => setOverlayMsg(null)} />}
 
-      {/* Video Background for Phase 1 */}
-      {phaseIndex === 1 && (
+      {/* Video Background based on character phase */}
+      {phaseIndex <= 6 && (
         <video 
-          src="/images/characters/boy-animated.mp4" 
+          src={`/images/avatars/phase-${phaseIndex}.mp4`} 
           autoPlay 
           loop 
           muted 
@@ -246,14 +243,13 @@ const CharacterPanel: React.FC = () => {
 
 
 
-      <div className={styles.avatarContainer}>
+      <div>
 
         <img
           src={avatarSrc}
           alt="Character"
           className={`${styles.avatar} ${animateLevel ? styles.avatarEvolve : ''}`}
         />
-        {showGif && <img src="/images/evolve.gif" alt="evolving" className={styles.levelUpGif} />}
         <p className={styles.status}>
           Level:{' '}
           <span className={`glitch ${animateLevel ? styles.levelUp : ''}`} data-text={level}>

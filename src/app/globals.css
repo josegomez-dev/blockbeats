@@ -861,8 +861,8 @@ p {
 
 /* Start Button Styles - Enhanced Futuristic Musical Design */
 .start-button {
-  background: linear-gradient(135deg, #00ffff, #0080ff, #ff00ff, #00ff88);
-  background-size: 400% 400%;
+  background: linear-gradient(135deg, #00ffff, #ff00ff);
+  background-size: 200% 200%;
   border: none;
   border-radius: 50px;
   padding: 20px 40px;
@@ -881,7 +881,6 @@ p {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  animation: gradientShift 3s ease-in-out infinite, pulseGlow 2s ease-in-out infinite;
   z-index: 10;
 }
 
@@ -945,7 +944,7 @@ p {
     0 15px 35px rgba(0, 255, 255, 0.6),
     0 0 80px rgba(255, 0, 255, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  background: linear-gradient(135deg, #00ff88, #00ffff, #ff00ff, #ffff00);
+  background: linear-gradient(135deg, #00ffff, #ff00ff);
   animation-duration: 1.5s, 1s;
 }
 
@@ -960,7 +959,7 @@ p {
 .start-button-text {
   font-size: 1.8rem;
   font-weight: bold;
-  color: #000;
+  color: #fff;
   text-shadow: 
     0 2px 4px rgba(255, 255, 255, 0.3),
     0 0 10px rgba(0, 255, 255, 0.5);
@@ -985,7 +984,7 @@ p {
 
 .start-button-subtitle {
   font-size: 0.9rem;
-  color: #000;
+  color:black;
   opacity: 0.8;
   font-weight: 500;
   letter-spacing: 1px;
@@ -1146,9 +1145,8 @@ p {
   right: -2px;
   bottom: -2px;
   background: linear-gradient(45deg, 
-    #00ffff, #ff00ff, #ffff00, #00ff88, 
-    #ff0080, #8000ff, #00ffff);
-  background-size: 400% 400%;
+    #00ffff, #ff00ff, #00ffff, #ff00ff);
+  background-size: 200% 200%;
   border-radius: 52px;
   z-index: -1;
   animation: borderGlow 3s ease-in-out infinite;
