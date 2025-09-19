@@ -138,7 +138,7 @@ export default function Nav() {
           <>
             {/* 👤 User Menu */}
             <li id='personal-pts-balance-nav' className={styles.navItem}>
-              <FaCoins color="gold" />&nbsp;
+              <FaCoins className={styles.userStatIcon} />&nbsp;
               {user?.bbcPoints ? user.bbcPoints : 0}
             </li>
             <li className={`${styles.navItem} ${styles.dropdown}`} ref={dropdownRef}>
@@ -156,39 +156,36 @@ export default function Nav() {
 
               {dropdownOpen && (
                 <div className={styles.dropdownMenu}>
-                  {/* <div className="flex-align-center-padding">
-                    <Avatar name={user?.email.split('@')[0]} size="30" round className="contact-avatar" />
-                    &nbsp;
-                    <span className="overflow-auto">{user?.displayName || user?.email}</span>
-                  </div> */}
-                                    
-                  {/*
-                  <hr />
-                  {user?.walletStored ? (
-                    <div> &nbsp;&nbsp;
-                    💳&nbsp;<span className='glitch mt-neg-15'>{user?.walletStored.slice(0, 5)}...{user?.walletStored.slice(-4)} {data?.symbol} </span>
-                  </div> ) : (
-                    <div className="mx-4 my-3">
-                        <button
-                          className={stylesMain.submitBtnLarge}
-                          // onClick={readWalletAddress}
-                        >
-                          <span>Connect Wallet</span>
-                          <img src="/images/logos/starknet-logo.svg" className="position-absolute" style={{ top: 30, margin: '0 auto', left: 10 }} alt="blockbeats-logo" width={60} />
-                        </button>
-                        <br />
+                  {/* User Info Section */}
+                  <div className={styles.userInfoSection}>
+                    <Avatar
+                      size="48"
+                      round={true}
+                      name={user?.displayName || user?.email || 'User'}
+                      color="var(--secondary-color)"
+                      className={styles.userAvatar}
+                    />
+                    <div className={styles.userName}>
+                      {user?.displayName || user?.email?.split('@')[0] || 'User'}
                     </div>
-                  )} */}
-                  
-                  <hr />
-                  <div className="flex-align-center-padding">
-                    <span style={{ color: '#00ffc3' }}>🤖</span>&nbsp; Robot:&nbsp; <span style={{ color: '#00ffc3' }}>{user?.robotName || 'BEATO'}</span>
+                    <div className={styles.userEmail}>
+                      {user?.email}
+                    </div>
+                    <div className={styles.userStats}>
+                      <div className={styles.userStat}>
+                        <span className={styles.userStatIcon}>🤖</span>
+                        <span>{user?.robotName || 'BEATO'}</span>
+                      </div>
+                      <div className={styles.userStat}>
+                        <FaCoins className={styles.userStatIcon} />
+                        <span className={styles.userStatValue}>{user?.bbcPoints || 0}</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex-align-center-padding">
-                    <FaCoins color="gold" />&nbsp; Points:&nbsp; {user?.bbcPoints ? user.bbcPoints : 0} &nbsp;
-                  </div>
-             
-                  <hr />
+
+                  <div className={styles.dropdownDivider} />
+
+                  {/* Navigation Section */}
                   <Link href="/dashboard">
                     <div className={styles.dropdownItem}>
                       <MdDashboard className={styles.icon} /> Dashboard
@@ -219,9 +216,11 @@ export default function Nav() {
                       <BiGlasses className={styles.icon} /> Profile
                     </div>
                   </Link>
-                  <hr />
+
+                  <div className={styles.dropdownDivider} />
+
+                  {/* Logout Section */}
                   <div className={`${styles.logout} flex-justify-center cursor-pointer p-25`} onClick={() => {
-                    // alert to confirm logout
                     handleLogout();
                   }}>
                     <FaSignOutAlt className={styles.icon} /> Logout
@@ -241,64 +240,69 @@ export default function Nav() {
               {notifOpen && (
                 <div className={styles.notificationDropdown}>
                   {notifications.length === 0 ? (
-                    <div className="p-35">No notifications</div>
+                    <div className={styles.emptyState}>
+                      <div style={{ fontSize: '2rem', marginBottom: '8px' }}>🔔</div>
+                      No notifications
+                    </div>
                   ) : (
-                    notifications.map((n, index) => (
-                     <>
-                        {index === 0 && (
-                          <div className={styles.clearButtonWrapper} key="clear-notifications">
-                            <button
-                              className={styles.clearButton}
-                              onClick={handleClearNotifications}
-                            >
-                              Clear Notifications
-                            </button>
-                            <br />
-                          </div>
-                        )}
+                    <>
+                      <div className={styles.notificationHeader}>
+                        Notifications ({notifications.length})
+                      </div>
+                      {notifications.length > 0 && (
+                        <button
+                          className={styles.clearButton}
+                          onClick={handleClearNotifications}
+                        >
+                          Clear All
+                        </button>
+                      )}
+                      {notifications.map((n) => (
+                        <div
+                          key={n.id}
+                          className={`${styles.notificationItem} ${!n.visited ? styles.unread : ''}`}
+                          onClick={() => {
+                            // update in firebase 
+                            if (user) {
+                              // find this notification and remove it from the notifications array
+                              const updatedNotifications = (user.notifications ?? []).filter((notif: any) => notif.id !== n.id);
+                            
+                              updateDoc(doc(db, 'accounts', user.uid), {
+                                notifications: updatedNotifications,
+                              })
+                              .then(() => {
+                                toast.success('Notification marked as read');
+                              })
+                              .catch((error) => {
+                                console.error('Error updating document: ', error);
+                                toast.error('Error marking notification as read');
+                              });
 
-                      <div
-                        key={n.id}
-                        className={`${styles.dropdownItem}`}
-                        onClick={() => {
-                          // update in firebase 
-                          if (user) {
-                            // find this notification and remove it from the notifications array
-                            const updatedNotifications = (user.notifications ?? []).filter((notif: any) => notif.id !== n.id);
-                          
-                            updateDoc(doc(db, 'accounts', user.uid), {
-                              notifications: updatedNotifications,
-                            })
-                            .then(() => {
-                              toast.success('Notification marked as read');
-                            })
-                            .catch((error) => {
-                              console.error('Error updating document: ', error);
-                              toast.error('Error marking notification as read');
-                            });
+                              setNotifications((prev) =>
+                                prev.filter((notif) => notif.id !== n.id)
+                              );
+                              
+
+                            } else {
+                              toast.error('User not found');
+                            }
 
                             setNotifications((prev) =>
-                              prev.filter((notif) => notif.id !== n.id)
+                              prev.map((notif) =>
+                                notif.id === n.id ? { ...notif, visited: true } : notif
+                              )
                             );
-                            
-
-                          } else {
-                            toast.error('User not found');
-                          }
-
-                          setNotifications((prev) =>
-                            prev.map((notif) =>
-                              notif.id === n.id ? { ...notif, visited: true } : notif
-                            )
-                          );
-                        }}
-                      >
-                        {n.text}
-                        
-                      </div>
-                      <hr />
-                     </>
-                    ))
+                          }}
+                        >
+                          <p className={styles.notificationText}>
+                            {n.text}
+                          </p>
+                          <div className={styles.notificationTimestamp}>
+                            {!n.visited && <span style={{ color: '#3b82f6', fontWeight: 'bold' }}>● New</span>}
+                          </div>
+                        </div>
+                      ))}
+                    </>
                   )}
                 </div>
               )}

@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import styles from "@/app/assets/styles/components/Web3StatsPanel.module.css";
 import Link from "next/link";
 import { Line } from "react-chartjs-2";
-import { FaCoins } from 'react-icons/fa';
+import { FaInfinity } from 'react-icons/fa';
 import {
   Chart as ChartJS,
   LineElement,
@@ -114,7 +114,15 @@ const Web3StatsPanel: React.FC<Web3StatsPanelProps> = ({ totalNFTCreations, tota
             <hr />
             <li className={styles.coinsContainer}>
               <div className={styles.coinRow}>
-                <p className={styles.tokenMeta}><strong> <RiGalleryLine /> </strong>: <span className="glitch">{totalNFTCreations}</span> | <strong> <BiCollection /></strong>: <span className="glitch">{totalTopCollections}</span></p>
+                <p className={styles.tokenMeta}>
+                  Artworks: <strong> <RiGalleryLine /> </strong>: <span className="glitch">{totalNFTCreations}</span> 
+                </p>
+                <p className={styles.tokenMeta}>
+                  NFTs minted: <strong> <FaInfinity /> </strong>: <span className="glitch">0</span> 
+                </p>
+                <p className={styles.tokenMeta}>
+                  Collections: <strong> <BiCollection /></strong>: <span className="glitch">{totalTopCollections}</span>
+                </p>
               </div>
             </li>
           </ul>
