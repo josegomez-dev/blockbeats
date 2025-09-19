@@ -7,9 +7,13 @@ import PatternControls from './PatternControls';
 import DrumSequencer from './DrumSequencer';
 import DrumGrid from './DrumGrid';
 import SoundSidebar from './SoundSidebar';
+import PremiumRowModal from './PremiumRowModal';
+import CustomSoundModal from './CustomSoundModal';
 import { BACKING_TRACKS, DRUM_SOUNDS } from '../../../utils/constants/drumMachine';
 import { playSound } from '../../../utils/helpers/audioHelper';
 import Footer from '@/components/layout/Footer';
+import { useAuth } from '@/context/AuthContext';
+import toast from 'react-hot-toast';
 
 const MIN_STEPS = 4;
 const MAX_STEPS = 32;
@@ -18,6 +22,16 @@ const INITIAL_INSTRUMENTS = 4;
 
 const MAX_FREE_ROWS = 7; // 4 default + 3 more allowed
 const PREMIUM_LOCK_THRESHOLD = MAX_FREE_ROWS;
+const SINGLE_ROW_PRICE = 500; // BBC coins for 1 row
+const TRIPLE_ROW_PRICE = 800; // BBC coins for 3 rows
+
+interface CustomSound {
+  id: string;
+  name: string;
+  file: File;
+  url: string;
+  duration?: number;
+}
 
 
 interface DrumDesignerProps {
@@ -75,10 +89,18 @@ const DrumDesigner = forwardRef<DrumDesignerRef, DrumDesignerProps>(({
   const [selectedRowForSound, setSelectedRowForSound] = useState<number | null>(null);
   const [previewedSound, setPreviewedSound] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isPremiumModalOpen, setIsPremiumModalOpen] = useState(false);
+  const [premiumModalAction, setPremiumModalAction] = useState<'single' | 'triple' | null>(null);
+  const [isCustomSoundModalOpen, setIsCustomSoundModalOpen] = useState(false);
+  const [customSounds, setCustomSounds] = useState<CustomSound[]>([]);
+  
+  // Auth context for BBC coins
+  const { user, updateCoinsInFirestore } = useAuth();
   
   // Internal state for tempo and steps
   const [internalTempo, setInternalTempo] = useState(120);
   const [internalSteps, setInternalSteps] = useState(8);
+  const [internalVolume, setInternalVolume] = useState(80); // Default volume at 80%
   const [timeSignature, setTimeSignature] = useState({ beats: 4, noteValue: 4 }); // 4/4 by default
   
   // Internal state for independent operation
@@ -88,7 +110,7 @@ const DrumDesigner = forwardRef<DrumDesignerRef, DrumDesignerProps>(({
   const isPlaying = externalIsPlaying !== undefined ? externalIsPlaying : internalIsPlaying;
   const tempo = externalTempo !== undefined ? externalTempo : internalTempo;
   const steps = externalSteps !== undefined ? externalSteps : internalSteps;
-  const volume = externalVolume !== undefined ? externalVolume : 80;
+  const volume = externalVolume !== undefined ? externalVolume : internalVolume;
 
 
   const audioRefs = useRef<{ [key: string]: HTMLAudioElement }>({});
@@ -165,6 +187,112 @@ const DrumDesigner = forwardRef<DrumDesignerRef, DrumDesignerProps>(({
     setSelectedSounds((prev) => [...prev, DRUM_SOUNDS[0].name]);
   };
 
+  const unlockSingleRow = async () => {
+    if (!user || (user.bbcPoints || 0) < SINGLE_ROW_PRICE) {
+      toast.error('Insufficient BBC coins!');
+      return;
+    }
+
+    if (grid.length >= MAX_INSTRUMENTS) {
+      toast.error('Maximum instruments reached!');
+      return;
+    }
+
+    try {
+      // Deduct coins
+      await updateCoinsInFirestore(-SINGLE_ROW_PRICE, 'Unlocked 1 premium drum row');
+      
+      // Add the row
+      setGrid((prev) => [...prev, Array(steps).fill(false)]);
+      setSelectedSounds((prev) => [...prev, DRUM_SOUNDS[0].name]);
+      
+      closePremiumModal();
+      toast.success('Premium row unlocked! 🥁');
+    } catch (error) {
+      console.error('Error unlocking row:', error);
+      toast.error('Failed to unlock row. Please try again.');
+    }
+  };
+
+  const unlockTripleRows = async () => {
+    if (!user || (user.bbcPoints || 0) < TRIPLE_ROW_PRICE) {
+      toast.error('Insufficient BBC coins!');
+      return;
+    }
+
+    const rowsToAdd = Math.min(3, MAX_INSTRUMENTS - grid.length);
+    if (rowsToAdd <= 0) {
+      toast.error('Maximum instruments reached!');
+      return;
+    }
+
+    try {
+      // Deduct coins
+      await updateCoinsInFirestore(-TRIPLE_ROW_PRICE, `Unlocked ${rowsToAdd} premium drum rows`);
+      
+      // Add the rows
+      const newRows = Array(rowsToAdd).fill(null).map(() => Array(steps).fill(false));
+      const newSounds = Array(rowsToAdd).fill(DRUM_SOUNDS[0].name);
+      
+      setGrid((prev) => [...prev, ...newRows]);
+      setSelectedSounds((prev) => [...prev, ...newSounds]);
+      
+      closePremiumModal();
+      toast.success(`${rowsToAdd} premium rows unlocked! 🥁🥁🥁`);
+    } catch (error) {
+      console.error('Error unlocking rows:', error);
+      toast.error('Failed to unlock rows. Please try again.');
+    }
+  };
+
+  const openPremiumModal = (action: 'single' | 'triple') => {
+    setPremiumModalAction(action);
+    setIsPremiumModalOpen(true);
+  };
+
+  const closePremiumModal = () => {
+    setIsPremiumModalOpen(false);
+    setPremiumModalAction(null);
+  };
+
+  const addCustomSound = (sound: CustomSound) => {
+    setCustomSounds(prev => [...prev, sound]);
+    toast.success(`Custom sound "${sound.name}" added! 🎵`);
+  };
+
+  const removeCustomSound = (id: string) => {
+    setCustomSounds(prev => {
+      const sound = prev.find(s => s.id === id);
+      if (sound) {
+        URL.revokeObjectURL(sound.url); // Clean up memory
+        toast.success(`Custom sound "${sound.name}" removed! 🗑️`);
+      }
+      return prev.filter(s => s.id !== id);
+    });
+  };
+
+  const selectCustomSound = (sound: CustomSound) => {
+    if (selectedRowForSound !== null) {
+      // Add custom sound to the available sounds for this row
+      setSelectedSounds(prev => {
+        const newSounds = [...prev];
+        newSounds[selectedRowForSound] = sound.name;
+        return newSounds;
+      });
+      
+      // Create audio element for the custom sound
+      if (!audioRefs.current[sound.name]) {
+        const audio = new Audio(sound.url);
+        audio.preload = 'auto';
+        audio.volume = volume / 100;
+        audioRefs.current[sound.name] = audio;
+      }
+      
+      setIsCustomSoundModalOpen(false);
+      toast.success(`Custom sound "${sound.name}" assigned to row ${selectedRowForSound + 1}! 🥁`);
+    }
+  };
+
   const getTypeOfSelected = (rowIndex: number) => {
     const selectedName = selectedSounds[rowIndex];
     return DRUM_SOUNDS.find((s) => s.name === selectedName)?.type;
@@ -231,8 +359,8 @@ const DrumDesigner = forwardRef<DrumDesignerRef, DrumDesignerProps>(({
   const generateAutoPattern = () => {
     setIsGenerating(true);
     
-    // Randomly change tempo (120-200 BPM for faster, more energetic beats)
-    const randomTempo = Math.floor(Math.random() * 81) + 120; // 120-200
+    // Randomly change tempo (40-400 BPM for diverse musical styles)
+    const randomTempo = Math.floor(Math.random() * 361) + 40; // 40-400 BPM
     changeTempo(randomTempo);
     
     // Randomly change time signature
@@ -501,12 +629,14 @@ const DrumDesigner = forwardRef<DrumDesignerRef, DrumDesignerProps>(({
           isPlaying={isPlaying}
           tempo={tempo}
           steps={steps}
+          volume={volume}
           timeSignature={timeSignature}
           onPlay={startPlayback}
           onStop={stopPlayback}
           onReset={reset}
           onTempoChange={changeTempo}
           onStepsChange={changeSteps}
+          onVolumeChange={setInternalVolume}
           onTimeSignatureChange={setTimeSignature}
         />
 
@@ -514,11 +644,14 @@ const DrumDesigner = forwardRef<DrumDesignerRef, DrumDesignerProps>(({
         <PatternControls
           gridLength={grid.length}
           maxInstruments={MAX_INSTRUMENTS}
+          maxFreeRows={MAX_FREE_ROWS}
           isSoundSidebarOpen={isSoundSidebarOpen}
           isGenerating={isGenerating}
           onAddRow={addInstrumentRow}
           onToggleSoundSidebar={() => setIsSoundSidebarOpen(!isSoundSidebarOpen)}
           onGenerateAutoPattern={generateAutoPattern}
+          onOpenPremiumModal={openPremiumModal}
+          onOpenCustomSoundModal={() => setIsCustomSoundModalOpen(true)}
         />
       </div>
 
@@ -583,6 +716,30 @@ const DrumDesigner = forwardRef<DrumDesignerRef, DrumDesignerProps>(({
         {backingTrack && <audio src={backingTrack} controls autoPlay loop />}
         <br />
       </div>
+
+      {/* Premium Row Unlock Modal */}
+      <PremiumRowModal
+        isOpen={isPremiumModalOpen}
+        onClose={closePremiumModal}
+        onUnlockSingle={unlockSingleRow}
+        onUnlockTriple={unlockTripleRows}
+        currentRows={grid.length}
+        maxFreeRows={MAX_FREE_ROWS}
+        userCoins={user?.bbcPoints || 0}
+        singleRowPrice={SINGLE_ROW_PRICE}
+        tripleRowPrice={TRIPLE_ROW_PRICE}
+        action={premiumModalAction}
+      />
+
+      {/* Custom Sound Upload Modal */}
+      <CustomSoundModal
+        isOpen={isCustomSoundModalOpen}
+        onClose={() => setIsCustomSoundModalOpen(false)}
+        customSounds={customSounds}
+        onAddSound={addCustomSound}
+        onRemoveSound={removeCustomSound}
+        onSelectSound={selectCustomSound}
+      />
     </>
   );
 });

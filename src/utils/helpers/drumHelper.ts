@@ -12,7 +12,8 @@ export const ctx = AudioContextGlobal ? new AudioContextGlobal() : null;
 ───────────────────────────────────────────── */
 export const playNote = (
   noteFreq: number,
-  duration: number = AUDIO.NOTE_LENGTH
+  duration: number = AUDIO.NOTE_LENGTH,
+  volume: number = 0.4
 ) => {
   if (!ctx) return;
   ctx.resume();
@@ -23,7 +24,10 @@ export const playNote = (
   osc.type = AUDIO.OSC_TYPE as OscillatorType;
   osc.frequency.value = noteFreq;
 
-  gain.gain.setValueAtTime(0.4, ctx.currentTime);
+  // Convert volume percentage (0-100) to gain value (0-1)
+  const gainValue = Math.max(0, Math.min(1, volume / 100));
+  
+  gain.gain.setValueAtTime(gainValue, ctx.currentTime);
   gain.gain.exponentialRampToValueAtTime(
     0.001,
     ctx.currentTime + duration

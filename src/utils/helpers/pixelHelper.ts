@@ -21,11 +21,12 @@ export const TOGGLE = (
 export const TOGGLE_COLOR = (
   list: { noteIndex: number; time: number; color: string }[],
   noteIdx: number,
-  time: number
+  time: number,
+  color: string = RANDOM_COLOR()
 ) =>
   list.some((c) => c.noteIndex === noteIdx && c.time === time)
     ? list.filter((c) => !(c.noteIndex === noteIdx && c.time === time))
-    : [...list, { noteIndex: noteIdx, time, color: RANDOM_COLOR() }];
+    : [...list, { noteIndex: noteIdx, time, color }];
 
 export const RANDOM_COLOR = () =>
   `hsl(${Math.floor(Math.random() * 360)}, 100%, 60%)`;

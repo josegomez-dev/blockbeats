@@ -1,19 +1,21 @@
 'use client';
 
 import React from 'react';
-import { FaPlay, FaPause, FaStop, FaUndo } from 'react-icons/fa';
+import { FaPlay, FaPause, FaStop, FaUndo, FaVolumeUp } from 'react-icons/fa';
 import styles from '@/app/assets/styles/components/DrumDesigner.module.css';
 
 interface TransportControlsProps {
   isPlaying: boolean;
   tempo: number;
   steps: number;
+  volume: number;
   timeSignature: { beats: number; noteValue: number };
   onPlay: () => void;
   onStop: () => void;
   onReset: () => void;
   onTempoChange: (tempo: number) => void;
   onStepsChange: (steps: number) => void;
+  onVolumeChange: (volume: number) => void;
   onTimeSignatureChange: (timeSig: { beats: number; noteValue: number }) => void;
 }
 
@@ -21,12 +23,14 @@ const TransportControls: React.FC<TransportControlsProps> = ({
   isPlaying,
   tempo,
   steps,
+  volume,
   timeSignature,
   onPlay,
   onStop,
   onReset,
   onTempoChange,
   onStepsChange,
+  onVolumeChange,
   onTimeSignatureChange,
 }) => {
   return (
@@ -60,8 +64,8 @@ const TransportControls: React.FC<TransportControlsProps> = ({
           <label className={styles.controlLabel}>Tempo</label>
           <input 
             type="number" 
-            min="60" 
-            max="200" 
+            min="40" 
+            max="400" 
             value={tempo}
             onChange={(e) => onTempoChange(Number(e.target.value))}
             className={styles.controlInput}
@@ -95,6 +99,22 @@ const TransportControls: React.FC<TransportControlsProps> = ({
             onChange={(e) => onStepsChange(Number(e.target.value))}
             className={styles.controlInput}
           />
+        </div>
+
+        <div className={styles.controlGroup}>
+          <label className={styles.controlLabel}>Volume</label>
+          <div className={styles.volumeControl}>
+            <FaVolumeUp className={styles.volumeIcon} />
+            <input 
+              type="range" 
+              min="0" 
+              max="100" 
+              value={volume}
+              onChange={(e) => onVolumeChange(Number(e.target.value))}
+              className={styles.volumeSlider}
+            />
+            <span className={styles.volumeValue}>{volume}%</span>
+          </div>
         </div>
       </div>
     </div>

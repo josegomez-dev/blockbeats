@@ -73,8 +73,8 @@ const DrumDesignerPlaybackControls: React.FC<DrumDesignerPlaybackControlsProps> 
         <label className={styles.controlLabel}>Tempo</label>
         <input 
           type="number" 
-          min="60" 
-          max="200" 
+          min="40" 
+          max="400" 
           value={tempo}
           onChange={(e) => onTempoChange(Number(e.target.value))}
           className={styles.controlInput}

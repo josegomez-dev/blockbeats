@@ -1,41 +1,60 @@
 'use client';
 
 import React from 'react';
-import { FaPlus } from 'react-icons/fa';
+import { FaPlus, FaLock, FaCoins, FaUpload } from 'react-icons/fa';
 import styles from '@/app/assets/styles/components/DrumDesigner.module.css';
 
 interface PatternControlsProps {
   gridLength: number;
   maxInstruments: number;
+  maxFreeRows: number;
   isSoundSidebarOpen: boolean;
   isGenerating: boolean;
   onAddRow: () => void;
   onToggleSoundSidebar: () => void;
   onGenerateAutoPattern: () => void;
+  onOpenPremiumModal: (action: 'single' | 'triple') => void;
+  onOpenCustomSoundModal: () => void;
 }
 
 const PatternControls: React.FC<PatternControlsProps> = ({
   gridLength,
   maxInstruments,
+  maxFreeRows,
   isSoundSidebarOpen,
   isGenerating,
   onAddRow,
   onToggleSoundSidebar,
   onGenerateAutoPattern,
+  onOpenPremiumModal,
+  onOpenCustomSoundModal,
 }) => {
   return (
     <div className={styles.patternControlsBar}>
       <div className={styles.patternButtons}>
         <div className={styles.controlGroup}>
-          <button 
-            className={styles.addRowBtn}
-            onClick={onAddRow}
-            disabled={gridLength >= maxInstruments}
-            title={gridLength >= maxInstruments ? "Maximum instruments reached" : "Add Instrument Row"}
-          >
-            <FaPlus />
-            <span>Add Row</span>
-          </button>
+          {gridLength < maxFreeRows ? (
+            <button 
+              className={styles.addRowBtn}
+              onClick={onAddRow}
+              disabled={gridLength >= maxInstruments}
+              title={gridLength >= maxInstruments ? "Maximum instruments reached" : "Add Instrument Row"}
+            >
+              <FaPlus />
+              <span>Add Row</span>
+            </button>
+          ) : (
+            <button 
+              className={styles.premiumUnlockBtn}
+              onClick={() => onOpenPremiumModal('single')}
+              disabled={gridLength >= maxInstruments}
+              title={gridLength >= maxInstruments ? "Maximum instruments reached" : "Unlock Premium Rows"}
+            >
+              <FaLock />
+              <span>Premium Rows</span>
+              <FaCoins className={styles.coinIcon} />
+            </button>
+          )}
         </div>
 
         <div className={styles.controlGroup}>
@@ -50,12 +69,52 @@ const PatternControls: React.FC<PatternControlsProps> = ({
 
         <div className={styles.controlGroup}>
           <button 
+            className={styles.customSoundBtn}
+            onClick={onOpenCustomSoundModal}
+            title="Upload Custom Sounds"
+          >
+            <FaUpload />
+            <span>Upload Sounds</span>
+          </button>
+        </div>
+
+        <div className={styles.controlGroup}>
+          <button 
             className={`${styles.autoPatternBtn} ${isGenerating ? styles.generating : ''}`}
             onClick={onGenerateAutoPattern}
             disabled={isGenerating}
             title="Generate random drum patterns with different time signatures, tempos, and sounds!"
           >
             {isGenerating ? '🎵 Generating...' : '🎲 Random Beat'}
+          </button>
+        </div>
+
+        {/* Premium Unlock Buttons - Always Visible */}
+        <div className={styles.controlGroup}>
+          <button 
+            className={styles.premiumSingleBtn}
+            onClick={() => onOpenPremiumModal('single')}
+            disabled={gridLength >= maxInstruments}
+            title={gridLength >= maxInstruments ? "Maximum instruments reached" : "Unlock 1 Premium Row (500 BBC)"}
+          >
+            <FaLock />
+            <span>+1 Row</span>
+            <FaCoins className={styles.coinIcon} />
+            <span className={styles.priceTag}>500</span>
+          </button>
+        </div>
+
+        <div className={styles.controlGroup}>
+          <button 
+            className={styles.premiumTripleBtn}
+            onClick={() => onOpenPremiumModal('triple')}
+            disabled={gridLength >= maxInstruments}
+            title={gridLength >= maxInstruments ? "Maximum instruments reached" : "Unlock 3 Premium Rows (800 BBC)"}
+          >
+            <FaLock />
+            <span>+3 Rows</span>
+            <FaCoins className={styles.coinIcon} />
+            <span className={styles.priceTag}>800</span>
           </button>
         </div>
       </div>

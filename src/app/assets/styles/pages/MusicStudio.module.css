@@ -944,6 +944,38 @@
   box-shadow: 0 4px 15px rgba(255, 167, 38, 0.4);
 }
 
+/* Drums button in transport section */
+.transportBtn.drumToggle {
+  background: linear-gradient(135deg, #9c27b0, #673ab7);
+  color: white;
+}
+
+.transportBtn.drumToggle:hover {
+  background: linear-gradient(135deg, #8e24aa, #5e35b1);
+  box-shadow: 0 4px 15px rgba(156, 39, 176, 0.4);
+}
+
+.transportBtn.drumToggle.enabled {
+  background: linear-gradient(135deg, #32cd32, #228b22);
+  box-shadow: 0 0 15px rgba(50, 205, 50, 0.3);
+}
+
+.transportBtn.drumToggle.disabled {
+  background: linear-gradient(135deg, #666666, #444444);
+  box-shadow: 0 2px 8px rgba(102, 102, 102, 0.3);
+}
+
+.transportBtn.drumToggle:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.transportBtn.drumToggle:disabled:hover {
+  transform: none;
+  box-shadow: 0 2px 8px rgba(102, 102, 102, 0.3);
+}
+
 .controlGroup {
   display: flex;
   flex-direction: column;
@@ -1072,6 +1104,389 @@
   box-shadow: 0 0 15px rgba(255, 107, 107, 0.3);
 }
 
+.colorPickerBtn {
+  background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+}
+
+.colorPickerBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.5);
+  background: linear-gradient(135deg, #ff5252, #ff7043);
+}
+
+.quickGenerateBtn {
+  background: linear-gradient(135deg, #9c27b0, #673ab7);
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 8px rgba(156, 39, 176, 0.3);
+}
+
+.quickGenerateBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(156, 39, 176, 0.5);
+  background: linear-gradient(135deg, #8e24aa, #5e35b1);
+}
+
+/* Volume Control */
+.volumeControl {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.volumeIcon {
+  color: #00ffff;
+  font-size: 1rem;
+  min-width: 16px;
+}
+
+.volumeSlider {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.volumeSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #00ffff;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+  transition: all 0.2s ease;
+}
+
+.volumeSlider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.8);
+}
+
+.volumeSlider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #00ffff;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+  transition: all 0.2s ease;
+}
+
+.volumeSlider::-moz-range-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.8);
+}
+
+.volumeValue {
+  color: #00ffff;
+  font-size: 0.8rem;
+  font-weight: bold;
+  min-width: 35px;
+  text-align: right;
+}
+
+/* MIDI Status */
+.midiStatus {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.midiIndicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+}
+
+.midiIndicator.connected {
+  background: linear-gradient(135deg, #32cd32, #228b22);
+  color: white;
+  box-shadow: 0 0 8px rgba(50, 205, 50, 0.5);
+  animation: pulse 2s infinite;
+}
+
+.midiIndicator.disconnected {
+  background: linear-gradient(135deg, #666666, #444444);
+  color: #aaa;
+}
+
+.midiLabel {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #fff;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 8px rgba(50, 205, 50, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(50, 205, 50, 0.8);
+  }
+  100% {
+    box-shadow: 0 0 8px rgba(50, 205, 50, 0.5);
+  }
+}
+
+/* Color Sidebar Styles */
+.sidebarBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  backdrop-filter: blur(2px);
+}
+
+.colorSidebar {
+  position: fixed;
+  top: 0;
+  right: -400px;
+  width: 400px;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.95);
+  border-left: 2px solid #00ffff;
+  transition: right 0.3s ease;
+  z-index: 1000;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.colorSidebar.sidebarOpen {
+  right: 0;
+}
+
+.sidebarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #00ffff;
+  background: rgba(0, 255, 255, 0.1);
+}
+
+.sidebarHeader h3 {
+  color: #00ffff;
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.closeSidebar {
+  background: none;
+  border: none;
+  color: #00ffff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.closeSidebar:hover {
+  background: rgba(0, 255, 255, 0.2);
+}
+
+.sidebarContent {
+  padding: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.currentColorSection,
+.colorPaletteSection,
+.customColorSection,
+.colorInstructions {
+  background: rgba(0, 255, 255, 0.05);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.currentColorSection h4,
+.colorPaletteSection h4,
+.customColorSection h4,
+.colorInstructions h4 {
+  color: #00ffff;
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.currentColorDisplay {
+  width: 100%;
+  height: 60px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #00ffff;
+  position: relative;
+}
+
+.colorHex {
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-family: monospace;
+  font-weight: bold;
+}
+
+.colorGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.colorButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.75rem;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 0.8rem;
+  min-height: 80px;
+}
+
+.colorButton:hover {
+  border-color: #00ffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 255, 255, 0.3);
+}
+
+.colorButton.selectedColor {
+  border-color: #00ffff;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+  transform: scale(1.05);
+}
+
+.colorIcon {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.colorName {
+  font-weight: 500;
+  text-align: center;
+}
+
+.customColorPicker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.colorInput {
+  width: 80px;
+  height: 80px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 3px solid #00ffff;
+  background: none;
+}
+
+.colorInput::-webkit-color-swatch-wrapper {
+  padding: 0;
+  border-radius: 50%;
+}
+
+.colorInput::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
+}
+
+.customColorLabel {
+  color: #00ffff;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.colorInstructions ul {
+  margin: 0;
+  padding-left: 1.5rem;
+  color: #ccc;
+}
+
+.colorInstructions li {
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+/* Responsive adjustments for color sidebar */
+@media (max-width: 768px) {
+  .colorSidebar {
+    width: 100vw;
+    right: -100vw;
+  }
+  
+  .colorGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .colorButton {
+    min-height: 70px;
+    padding: 0.5rem;
+  }
+  
+  .colorIcon {
+    font-size: 1.2rem;
+  }
+  
+  .colorName {
+    font-size: 0.7rem;
+  }
+}
+
 /* Responsive adjustments for integrated controls */
 @media (max-width: 768px) {
   .machineControls {
@@ -1116,7 +1531,9 @@
   .drumToggle,
   .freqBtn,
   .randomMelodyBtn,
-  .silenceBtn {
+  .silenceBtn,
+  .colorPickerBtn,
+  .quickGenerateBtn {
     font-size: 0.8rem;
     padding: 0.6rem 0.8rem;
   }
@@ -1160,7 +1577,9 @@
   .drumToggle,
   .freqBtn,
   .randomMelodyBtn,
-  .silenceBtn {
+  .silenceBtn,
+  .colorPickerBtn,
+  .quickGenerateBtn {
     font-size: 0.7rem;
     padding: 0.5rem 0.6rem;
   }

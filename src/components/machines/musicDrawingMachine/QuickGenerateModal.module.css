@@ -1,0 +1,259 @@
+/* Quick Generate Modal Styles */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.modalContent {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  border-radius: 20px;
+  border: 2px solid rgba(0, 255, 195, 0.3);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  max-width: 800px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  color: #fff;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(0, 255, 195, 0.2);
+}
+
+.modalTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 1.5rem;
+  background: linear-gradient(135deg, #00ffc3, #0088ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.titleIcon {
+  color: #00ffc3;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: #00ffc3;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.closeButton:hover {
+  background: rgba(0, 255, 195, 0.1);
+  transform: scale(1.1);
+}
+
+.modalBody {
+  padding: 1.5rem;
+}
+
+.introSection {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.introText {
+  font-size: 1.1rem;
+  color: #e0e0e0;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.genreGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.genreCard {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid transparent;
+  border-radius: 16px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+.genreCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--genre-color);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.genreCard:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--genre-color);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.genreCard:hover::before {
+  transform: scaleX(1);
+}
+
+.genreIcon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.genreInfo {
+  text-align: center;
+}
+
+.genreName {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: #fff;
+}
+
+.genreDescription {
+  font-size: 0.9rem;
+  color: #ccc;
+  margin: 0 0 1rem 0;
+  line-height: 1.4;
+}
+
+.genreDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.genreDetail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: #aaa;
+  padding: 0.25rem 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+}
+
+.detailIcon {
+  font-size: 0.7rem;
+  color: var(--genre-color);
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem;
+  border-top: 1px solid rgba(0, 255, 195, 0.2);
+}
+
+.cancelButton {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.cancelButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .modalContent {
+    width: 95%;
+    max-height: 90vh;
+  }
+
+  .genreGrid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .genreCard {
+    padding: 1rem;
+  }
+
+  .genreIcon {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .genreName {
+    font-size: 1.1rem;
+  }
+
+  .genreDescription {
+    font-size: 0.85rem;
+  }
+
+  .genreDetail {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .modalHeader {
+    padding: 1rem;
+  }
+
+  .modalBody {
+    padding: 1rem;
+  }
+
+  .modalFooter {
+    padding: 1rem;
+  }
+
+  .genreCard {
+    padding: 0.75rem;
+  }
+
+  .genreIcon {
+    font-size: 1.8rem;
+  }
+
+  .genreName {
+    font-size: 1rem;
+  }
+
+  .genreDescription {
+    font-size: 0.8rem;
+  }
+}

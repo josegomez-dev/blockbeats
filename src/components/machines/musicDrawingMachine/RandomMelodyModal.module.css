@@ -399,3 +399,94 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Color Options Styles */
+.colorOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.colorOption {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+  width: 100%;
+}
+
+.colorOption:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(0, 255, 195, 0.3);
+  transform: translateY(-2px);
+}
+
+.colorOption.selected {
+  background: rgba(0, 255, 195, 0.1);
+  border-color: #00ffc3;
+  box-shadow: 0 0 20px rgba(0, 255, 195, 0.2);
+}
+
+.colorOptionIcon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.colorOptionContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.colorOptionTitle {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.colorOptionDesc {
+  font-size: 0.85rem;
+  color: #ccc;
+  opacity: 0.8;
+}
+
+.colorDescription {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  background: rgba(0, 255, 195, 0.05);
+  border-radius: 8px;
+  border-left: 3px solid #00ffc3;
+  font-size: 0.9rem;
+  color: #e0e0e0;
+  line-height: 1.4;
+}
+
+/* Responsive adjustments for color options */
+@media (max-width: 768px) {
+  .colorOptions {
+    gap: 0.5rem;
+  }
+  
+  .colorOption {
+    padding: 0.75rem;
+    gap: 0.75rem;
+  }
+  
+  .colorOptionIcon {
+    font-size: 1.5rem;
+  }
+  
+  .colorOptionTitle {
+    font-size: 0.9rem;
+  }
+  
+  .colorOptionDesc {
+    font-size: 0.8rem;
+  }
+}

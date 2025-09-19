@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { FaPlay, FaPause, FaStop, FaUndo, FaDrum, FaMusic, FaDice, FaVolumeMute } from 'react-icons/fa';
+import { FaPlay, FaPause, FaStop, FaUndo, FaDrum, FaMusic, FaDice, FaVolumeMute, FaPalette, FaRocket, FaVolumeUp, FaPlug, FaUnlink } from 'react-icons/fa';
 import styles from '@/app/assets/styles/pages/MusicStudio.module.css';
 
 // Function to get dynamic styling based on frequency range
@@ -39,6 +39,8 @@ interface MusicDrawingMachinePlaybackControlsProps {
   steps: number;
   isDrumEnabled: boolean;
   selectedRange: string;
+  volume: number;
+  isMidiConnected: boolean;
   onPlay: () => void;
   onPause: () => void;
   onResume: () => void;
@@ -46,11 +48,14 @@ interface MusicDrawingMachinePlaybackControlsProps {
   onReset: () => void;
   onTempoChange: (tempo: number) => void;
   onStepsChange: (steps: number) => void;
+  onVolumeChange: (volume: number) => void;
   onToggleDrums: (enabled: boolean) => void;
   onOpenFreqModal: () => void;
   onOpenRandomMelodyModal: () => void;
   onAddSilence?: () => void;
   isSilenceMode?: boolean;
+  onOpenColorSidebar?: () => void;
+  onOpenQuickGenerate?: () => void;
 }
 
 const MusicDrawingMachinePlaybackControls: React.FC<MusicDrawingMachinePlaybackControlsProps> = ({
@@ -60,6 +65,8 @@ const MusicDrawingMachinePlaybackControls: React.FC<MusicDrawingMachinePlaybackC
   steps,
   isDrumEnabled,
   selectedRange,
+  volume,
+  isMidiConnected,
   onPlay,
   onPause,
   onResume,
@@ -67,11 +74,14 @@ const MusicDrawingMachinePlaybackControls: React.FC<MusicDrawingMachinePlaybackC
   onReset,
   onTempoChange,
   onStepsChange,
+  onVolumeChange,
   onToggleDrums,
   onOpenFreqModal,
   onOpenRandomMelodyModal,
   onAddSilence,
   isSilenceMode = false,
+  onOpenColorSidebar,
+  onOpenQuickGenerate,
 }) => {
   return (
     <div className={styles.machineControls}>
@@ -99,6 +109,15 @@ const MusicDrawingMachinePlaybackControls: React.FC<MusicDrawingMachinePlaybackC
           >
             <FaUndo />
           </button>
+          <button 
+            className={`${styles.transportBtn} ${styles.drumToggle} ${isDrumEnabled ? styles.enabled : styles.disabled}`}
+            onClick={() => onToggleDrums(!isDrumEnabled)}
+            disabled={isPlaying && !isPaused}
+            title={(isPlaying && !isPaused) ? "Cannot toggle drums while playing" : (isDrumEnabled ? "Disable Drums" : "Enable Drums")}
+          >
+            <FaDrum />
+            <span>{isDrumEnabled ? 'ON' : 'OFF'}</span>
+          </button>
         </div>
 
         <div className={styles.timingControls}>
@@ -106,8 +125,8 @@ const MusicDrawingMachinePlaybackControls: React.FC<MusicDrawingMachinePlaybackC
             <label className={styles.controlLabel}>Tempo</label>
             <input 
               type="number" 
-              min="60" 
-              max="200" 
+              min="40" 
+              max="400" 
               value={tempo}
               onChange={(e) => onTempoChange(Number(e.target.value))}
               className={styles.controlInput}
@@ -125,24 +144,39 @@ const MusicDrawingMachinePlaybackControls: React.FC<MusicDrawingMachinePlaybackC
               className={styles.controlInput}
             />
           </div>
+
+          <div className={styles.controlGroup}>
+            <label className={styles.controlLabel}>Volume</label>
+            <div className={styles.volumeControl}>
+              <FaVolumeUp className={styles.volumeIcon} />
+              <input 
+                type="range" 
+                min="0" 
+                max="100" 
+                value={volume}
+                onChange={(e) => onVolumeChange(Number(e.target.value))}
+                className={styles.volumeSlider}
+              />
+              <span className={styles.volumeValue}>{volume}%</span>
+            </div>
+          </div>
+
+          <div className={styles.controlGroup}>
+            <div className={styles.midiStatus}>
+              <div className={`${styles.midiIndicator} ${isMidiConnected ? styles.connected : styles.disconnected}`}>
+                {isMidiConnected ? <FaPlug /> : <FaUnlink />}
+              </div>
+              <span className={styles.midiLabel}>
+                {isMidiConnected ? 'MIDI Connected' : 'No MIDI'}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Second Control Bar: Drums and Frequency Controls */}
       <div className={styles.patternControlsBar}>
         <div className={styles.patternButtons}>
-          <div className={styles.controlGroup}>
-            <button 
-              className={`${styles.drumToggle} ${isDrumEnabled ? styles.enabled : styles.disabled}`}
-              onClick={() => onToggleDrums(!isDrumEnabled)}
-              disabled={isPlaying && !isPaused}
-              title={(isPlaying && !isPaused) ? "Cannot toggle drums while playing" : (isDrumEnabled ? "Disable Drums" : "Enable Drums")}
-            >
-              <FaDrum />
-              <span>{isDrumEnabled ? 'Drums ON' : 'Drums OFF'}</span>
-            </button>
-          </div>
-
           <div className={styles.controlGroup}>
             <button 
               className={styles.freqBtn}
@@ -171,6 +205,17 @@ const MusicDrawingMachinePlaybackControls: React.FC<MusicDrawingMachinePlaybackC
 
           <div className={styles.controlGroup}>
             <button 
+              className={styles.randomMelodyBtn}
+              onClick={onOpenQuickGenerate}
+              title="Quick Generate by Genre"
+            >
+              <FaRocket />
+              <span>Quick Generate</span>
+            </button>
+          </div>
+
+          <div className={styles.controlGroup}>
+            <button 
               className={`${styles.silenceBtn} ${isSilenceMode ? styles.active : ''}`}
               onClick={onAddSilence}
               title="Add Silence (Shift key)"
@@ -179,6 +224,19 @@ const MusicDrawingMachinePlaybackControls: React.FC<MusicDrawingMachinePlaybackC
               <span>Silence</span>
             </button>
           </div>
+
+          <div className={styles.controlGroup}>
+            <button 
+              className={styles.colorPickerBtn}
+              onClick={onOpenColorSidebar}
+              title="Color Palette"
+            >
+              <FaPalette />
+              <span>Colors</span>
+            </button>
+          </div>
+
+          
         </div>
       </div>
     </div>

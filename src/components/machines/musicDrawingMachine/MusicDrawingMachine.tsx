@@ -15,6 +15,7 @@ import {
   notes,
   frequencyRanges,
   SEQUENCER,
+  AUDIO,
   midiNoteToFrequency,
   ScaleName,
   scaleIntervals,
@@ -36,6 +37,8 @@ import PixelCanvas from './PixelCanvas';
 import Piano from './Piano';
 import FrequencyModal from './FrequencyModal';
 import RandomMelodyModal from './RandomMelodyModal';
+import QuickGenerateModal from './QuickGenerateModal';
+import ColorSidebar from './ColorSidebar';
 
 import styles from '@/app/assets/styles/pages/MusicStudio.module.css';
 
@@ -72,6 +75,7 @@ export interface MusicDrawingMachineRef {
     density: number;
     tempo?: number;
     steps?: number;
+    useRandomColors?: boolean;
   }) => void;
   getData: () => {
     notesPlayed: { noteIndex: number; time: number }[];
@@ -108,11 +112,12 @@ const MusicDrawingMachine = forwardRef<MusicDrawingMachineRef, MusicDrawingMachi
   // Internal state for tempo and steps
   const [internalTempo, setInternalTempo] = useState(120);
   const [internalSteps, setInternalSteps] = useState(32);
+  const [internalVolume, setInternalVolume] = useState(80); // Default volume at 80%
   
   // Use external props or fallback to internal state
   const tempo = externalTempo ?? internalTempo;
   const steps = externalSteps ?? internalSteps;
-  const volume = externalVolume ?? 80;
+  const volume = externalVolume ?? internalVolume;
   
   const [playIndex, setPlayIndex] = useState<number | null>(null);
   const [isFreqModalOpen, setFreqModalOpen] = useState(false);
@@ -136,6 +141,9 @@ const MusicDrawingMachine = forwardRef<MusicDrawingMachineRef, MusicDrawingMachi
   const [midiConnected, setMidiConnected] = useState(false);
   const [midiDeviceName, setMidiDeviceName] = useState<string | null>(null);
   const [isSilenceMode, setIsSilenceMode] = useState(false);
+  const [isColorSidebarOpen, setIsColorSidebarOpen] = useState(false);
+  const [selectedColor, setSelectedColor] = useState('#ffffff');
+  const [isQuickGenerateModalOpen, setIsQuickGenerateModalOpen] = useState(false);
 
   const frequencyStyle = frequencyRanges.find((r) => r.name === selectedRange)!;
 
@@ -161,11 +169,12 @@ const MusicDrawingMachine = forwardRef<MusicDrawingMachineRef, MusicDrawingMachi
     density: number; // 0.1 to 1.0
     tempo?: number;
     steps?: number;
+    useRandomColors?: boolean;
   }) => {
-    const { scale, mode, density, tempo: newTempo, steps: newSteps } = options;
+    const { scale, mode, density, tempo: newTempo, steps: newSteps, useRandomColors = false } = options;
     
     // Generate random tempo and steps if not provided
-    const randomTempo = newTempo || Math.floor(Math.random() * 141) + 60; // 60-200 BPM
+    const randomTempo = newTempo || Math.floor(Math.random() * 361) + 40; // 40-400 BPM
     const randomSteps = newSteps || Math.floor(Math.random() * 25) + 8; // 8-32 steps
     
     // Update tempo and steps
@@ -213,15 +222,16 @@ const MusicDrawingMachine = forwardRef<MusicDrawingMachineRef, MusicDrawingMachi
         const interval = intervals[intervalIndex];
         const noteIndex = (rootNoteIndex + interval) % notes.length;
         
+        const noteColor = useRandomColors ? RANDOM_COLOR() : '#ffffff';
         newNotes.push({
           noteIndex,
           time,
-          color: RANDOM_COLOR()
+          color: noteColor
         });
         newColors.push({
           noteIndex,
           time,
-          color: RANDOM_COLOR()
+          color: noteColor
         });
         notesGenerated++;
       }
@@ -250,15 +260,16 @@ const MusicDrawingMachine = forwardRef<MusicDrawingMachineRef, MusicDrawingMachi
 
         // Add chord notes
         chordNotes.forEach(noteIndex => {
+          const chordColor = useRandomColors ? RANDOM_COLOR() : '#ffffff';
           newNotes.push({
             noteIndex,
             time, // Same discrete time value for all chord notes
-            color: RANDOM_COLOR()
+            color: chordColor
           });
           newColors.push({
             noteIndex,
             time, // Same discrete time value for all chord notes
-            color: RANDOM_COLOR()
+            color: chordColor
           });
           notesGenerated++;
         });
@@ -302,11 +313,11 @@ const MusicDrawingMachine = forwardRef<MusicDrawingMachineRef, MusicDrawingMachi
 
   const handleCanvasClick = (noteIdx: number, time: number) => {
     const updatedNotes = TOGGLE(notesPlayed, noteIdx, time);
-    const updatedColors = TOGGLE_COLOR(colorMap, noteIdx, time);
+    const updatedColors = TOGGLE_COLOR(colorMap, noteIdx, time, selectedColor);
 
     setNotesPlayed(updatedNotes);
     setColorMap(updatedColors);
-    playNote(notes[noteIdx][1]);
+    playNote(notes[noteIdx][1], AUDIO.NOTE_LENGTH, volume);
     setNextTimeStep(time + 1);
   };
 
@@ -319,7 +330,7 @@ const handleNotePlay = (noteIdx: number, isMidi = false) => {
     setNextTimeStep((prev) => (prev + 1) % steps);
 
     const newNote = { noteIndex: noteIdx, time };
-    const newColor = { noteIndex: noteIdx, time, color: RANDOM_COLOR() };
+    const newColor = { noteIndex: noteIdx, time, color: selectedColor };
 
     setNotesPlayed((prev) => [...prev, newNote]);
     setColorMap((prev) => [...prev, newColor]);
@@ -341,7 +352,7 @@ const handleNotePlay = (noteIdx: number, isMidi = false) => {
       const chordColors = chordBuffer.current.map((noteIndex) => ({
         noteIndex,
         time,
-        color: RANDOM_COLOR(),
+        color: selectedColor,
       }));
 
       setNotesPlayed((prev) => [...prev, ...chordNotes]);
@@ -426,7 +437,7 @@ const handleNotePlay = (noteIdx: number, isMidi = false) => {
       notesAtStep.forEach(({ noteIndex }) => {
         // Skip silence notes (noteIndex === -1)
         if (noteIndex !== -1 && freqMap[noteIndex]) {
-          playNote(freqMap[noteIndex]);
+          playNote(freqMap[noteIndex], AUDIO.NOTE_LENGTH, volume);
         }
       });
 
@@ -505,7 +516,7 @@ const handleNotePlay = (noteIdx: number, isMidi = false) => {
       notesAtStep.forEach(({ noteIndex }) => {
         // Skip silence notes (noteIndex === -1)
         if (noteIndex !== -1 && freqMap[noteIndex]) {
-          playNote(freqMap[noteIndex]);
+          playNote(freqMap[noteIndex], AUDIO.NOTE_LENGTH, volume);
         }
       });
 
@@ -596,6 +607,8 @@ const handleNotePlay = (noteIdx: number, isMidi = false) => {
               steps={steps}
               isDrumEnabled={isDrumEnabled}
               selectedRange={selectedRange}
+              volume={volume}
+              isMidiConnected={midiConnected}
               onPlay={playback}
               onPause={pausePlayback}
               onResume={resumePlayback}
@@ -603,6 +616,7 @@ const handleNotePlay = (noteIdx: number, isMidi = false) => {
               onReset={handleReset}
               onTempoChange={setInternalTempo}
               onStepsChange={setInternalSteps}
+              onVolumeChange={setInternalVolume}
               onToggleDrums={(enabled) => {
                 console.log('🥁 PlaybackControls onToggleDrums:', { 
                   enabled, 
@@ -622,6 +636,8 @@ const handleNotePlay = (noteIdx: number, isMidi = false) => {
               onOpenRandomMelodyModal={() => setRandomMelodyModalOpen(true)}
               onAddSilence={() => addSilence(nextTimeStep)}
               isSilenceMode={isSilenceMode}
+              onOpenColorSidebar={() => setIsColorSidebarOpen(true)}
+              onOpenQuickGenerate={() => setIsQuickGenerateModalOpen(true)}
             />
         </div>
 
@@ -634,6 +650,7 @@ const handleNotePlay = (noteIdx: number, isMidi = false) => {
             onCanvasClick={handleCanvasClick}
             cols={steps}
             fullscreen={true}
+            notesPlayed={notesPlayed}
           />
         </main>
 
@@ -662,6 +679,19 @@ const handleNotePlay = (noteIdx: number, isMidi = false) => {
           onGenerate={generateRandomMelody}
         />
       )}
+
+      <ColorSidebar
+        isOpen={isColorSidebarOpen}
+        selectedColor={selectedColor}
+        onClose={() => setIsColorSidebarOpen(false)}
+        onColorSelect={setSelectedColor}
+      />
+
+      <QuickGenerateModal
+        isVisible={isQuickGenerateModalOpen}
+        onClose={() => setIsQuickGenerateModalOpen(false)}
+        onGenerate={generateRandomMelody}
+      />
     </>
   );
 });

@@ -496,6 +496,549 @@
   box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
 }
 
+/* Volume Control */
+.volumeControl {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.volumeIcon {
+  color: #00ffff;
+  font-size: 1rem;
+  min-width: 16px;
+}
+
+.volumeSlider {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.volumeSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #00ffff;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+  transition: all 0.2s ease;
+}
+
+.volumeSlider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.8);
+}
+
+.volumeSlider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #00ffff;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+  transition: all 0.2s ease;
+}
+
+.volumeSlider::-moz-range-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.8);
+}
+
+.volumeValue {
+  color: #00ffff;
+  font-size: 0.8rem;
+  font-weight: bold;
+  min-width: 35px;
+  text-align: right;
+}
+
+/* Premium Row Modal */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.premiumModal {
+  background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+  border: 2px solid #00ffff;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 255, 255, 0.3);
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  border-bottom: 1px solid #00ffff;
+  background: rgba(0, 255, 255, 0.1);
+}
+
+.modalTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #00ffff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.titleIcon {
+  color: #ffd700;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: #00ffff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.closeButton:hover {
+  background: rgba(0, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.modalBody {
+  padding: 1.5rem;
+}
+
+.coinBalance {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 215, 0, 0.1);
+  border: 1px solid #ffd700;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.coinIcon {
+  color: #ffd700;
+  font-size: 1.2rem;
+}
+
+.balanceText {
+  color: #ffd700;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.unlockOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.unlockCard {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.unlockCard:hover {
+  border-color: #00ffff;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+}
+
+.unlockCard.highlighted {
+  border-color: #ffd700;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+  background: rgba(255, 215, 0, 0.05);
+}
+
+.unlockHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.unlockIcon {
+  color: #00ffff;
+  font-size: 1.1rem;
+}
+
+.unlockTitle {
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0;
+  flex: 1;
+}
+
+.priceTag {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: rgba(255, 215, 0, 0.2);
+  border: 1px solid #ffd700;
+  border-radius: 20px;
+  padding: 0.3rem 0.8rem;
+}
+
+.priceIcon {
+  color: #ffd700;
+  font-size: 0.9rem;
+}
+
+.price {
+  color: #ffd700;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.savingsBadge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: linear-gradient(135deg, #ff6b6b, #ff5252);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 0.2rem 0.5rem;
+  border-radius: 10px;
+  transform: rotate(15deg);
+}
+
+.unlockDescription {
+  color: #aaa;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.unlockButton {
+  width: 100%;
+  background: linear-gradient(135deg, #00ffff, #00ff88);
+  border: none;
+  border-radius: 8px;
+  color: #1a1a1a;
+  font-weight: bold;
+  padding: 0.8rem 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.unlockButton:hover:not(.disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 255, 255, 0.4);
+}
+
+.unlockButton.tripleButton {
+  background: linear-gradient(135deg, #ffd700, #ffb347);
+  color: #1a1a1a;
+}
+
+.unlockButton.tripleButton:hover:not(.disabled) {
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+}
+
+.unlockButton.disabled {
+  background: linear-gradient(135deg, #666666, #444444);
+  color: #aaa;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.unlockButton.disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.modalFooter {
+  border-top: 1px solid #333;
+  padding-top: 1rem;
+}
+
+.footerText {
+  color: #aaa;
+  font-size: 0.8rem;
+  text-align: center;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Custom Sound Modal */
+.customSoundModal {
+  background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+  border: 2px solid #00ffff;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 255, 255, 0.3);
+}
+
+.uploadSection {
+  margin-bottom: 2rem;
+}
+
+.uploadArea {
+  border: 2px dashed #00ffff;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  background: rgba(0, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.uploadArea:hover {
+  background: rgba(0, 255, 255, 0.1);
+  border-color: #00ff88;
+}
+
+.fileInput {
+  display: none;
+}
+
+.uploadLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  color: #00ffff;
+}
+
+.uploadIcon {
+  font-size: 2rem;
+  color: #00ffff;
+}
+
+.uploadText {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #00ffff;
+}
+
+.uploadSubtext {
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+.soundsSection {
+  margin-bottom: 2rem;
+}
+
+.sectionTitle {
+  color: #00ffff;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #333;
+  padding-bottom: 0.5rem;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 2rem;
+  color: #aaa;
+}
+
+.emptyIcon {
+  font-size: 3rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.soundsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.soundItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+.soundItem:hover {
+  border-color: #00ffff;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+}
+
+.soundInfo {
+  flex: 1;
+}
+
+.soundName {
+  color: #fff;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.soundDetails {
+  color: #aaa;
+  font-size: 0.8rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.soundActions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.playButton,
+.selectButton,
+.deleteButton {
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.playButton {
+  background: linear-gradient(135deg, #00ffff, #00ff88);
+  color: #1a1a1a;
+  width: 35px;
+  height: 35px;
+}
+
+.playButton:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.selectButton {
+  background: linear-gradient(135deg, #4caf50, #388e3c);
+  color: white;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+}
+
+.selectButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(76, 175, 80, 0.4);
+}
+
+.deleteButton {
+  background: linear-gradient(135deg, #f44336, #d32f2f);
+  color: white;
+  width: 35px;
+  height: 35px;
+}
+
+.deleteButton:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(244, 67, 54, 0.5);
+}
+
+.instructionsSection {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.instructionsSection h4 {
+  color: #00ffff;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.instructionsSection ul {
+  color: #aaa;
+  font-size: 0.8rem;
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.instructionsSection li {
+  margin-bottom: 0.3rem;
+  line-height: 1.4;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .premiumModal,
+  .customSoundModal {
+    width: 95%;
+    margin: 1rem;
+  }
+  
+  .modalHeader {
+    padding: 1rem;
+  }
+  
+  .modalBody {
+    padding: 1rem;
+  }
+  
+  .unlockCard {
+    padding: 1rem;
+  }
+  
+  .unlockOptions {
+    gap: 0.8rem;
+  }
+  
+  .uploadArea {
+    padding: 1.5rem;
+  }
+  
+  .soundItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .soundActions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
 .controlSelect option {
   background: #000;
   color: #00ffff;
@@ -527,6 +1070,42 @@
   opacity: 0.5;
 }
 
+/* Premium Unlock Button */
+.premiumUnlockBtn {
+  background: linear-gradient(135deg, #ffd700, #ffb347);
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  color: #1a1a1a;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+}
+
+.premiumUnlockBtn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.5);
+  background: linear-gradient(135deg, #ffb347, #ff8c00);
+}
+
+.premiumUnlockBtn:disabled {
+  background: linear-gradient(135deg, #666666, #444444);
+  color: #aaa;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 2px 8px rgba(102, 102, 102, 0.3);
+}
+
+.premiumUnlockBtn .coinIcon {
+  color: #1a1a1a;
+  font-size: 0.8rem;
+}
+
 
 .soundGalleryBtn {
   background: linear-gradient(135deg, #00ffff, #00ff88);
@@ -547,6 +1126,112 @@
 .soundGalleryBtn:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(0, 255, 255, 0.4);
+}
+
+/* Custom Sound Upload Button */
+.customSoundBtn {
+  background: linear-gradient(135deg, #9c27b0, #673ab7);
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 8px rgba(156, 39, 176, 0.3);
+}
+
+.customSoundBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(156, 39, 176, 0.5);
+  background: linear-gradient(135deg, #8e24aa, #5e35b1);
+}
+
+/* Premium Single Row Button */
+.premiumSingleBtn {
+  background: linear-gradient(135deg, #ffd700, #ffb347);
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  color: #1a1a1a;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+  position: relative;
+}
+
+.premiumSingleBtn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.5);
+  background: linear-gradient(135deg, #ffb347, #ff8c00);
+}
+
+.premiumSingleBtn:disabled {
+  background: linear-gradient(135deg, #666666, #444444);
+  color: #aaa;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 2px 8px rgba(102, 102, 102, 0.3);
+}
+
+/* Premium Triple Row Button */
+.premiumTripleBtn {
+  background: linear-gradient(135deg, #ff6b6b, #e63946);
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+  position: relative;
+}
+
+.premiumTripleBtn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.5);
+  background: linear-gradient(135deg, #e63946, #d32f2f);
+}
+
+.premiumTripleBtn:disabled {
+  background: linear-gradient(135deg, #666666, #444444);
+  color: #aaa;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 2px 8px rgba(102, 102, 102, 0.3);
+}
+
+/* Price Tag for Premium Buttons */
+.premiumSingleBtn .priceTag,
+.premiumTripleBtn .priceTag {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.7rem;
+  font-weight: bold;
+  margin-left: 0.3rem;
+}
+
+.premiumSingleBtn .priceTag {
+  color: #1a1a1a;
+}
+
+.premiumTripleBtn .priceTag {
+  color: white;
 }
 
 .autoPatternBtn {
