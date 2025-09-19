@@ -121,7 +121,7 @@ const MusicDrawingMachinePlaybackControls: React.FC<MusicDrawingMachinePlaybackC
             disabled={isPlaying && !isPaused}
             title={(isPlaying && !isPaused) ? "Cannot toggle drums while playing" : (isDrumEnabled ? "Disable Drums" : "Enable Drums")}
           >
-            <span><FaDrum /> {isDrumEnabled ? 'ON' : 'OFF'}</span>
+            <span> <FaDrum />{isDrumEnabled ? 'ON' : 'OFF'}</span>
           </button>
         </div>
 
