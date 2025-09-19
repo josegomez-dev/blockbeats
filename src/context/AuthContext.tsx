@@ -65,9 +65,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (user && typeof window !== 'undefined' && window.location.pathname !== '/') {
         // User is signed in, fetch user data from Firestore
         const accountRef = doc(db, "accounts", user.uid);
-        getDoc(accountRef).then((accountSnap) => {
+        getDoc(accountRef).then(async (accountSnap) => {
           if (accountSnap.exists()) {
             const accountData = accountSnap.data();
+            
+            // Migrate createdAt if missing (for existing users)
+            if (!accountData.createdAt || isNaN(new Date(accountData.createdAt).getTime())) {
+              const { xpService } = await import('../utils/xpService');
+              await xpService.migrateUserCreatedAt(user.uid);
+            }
+            
             setUser({
               ...EMPTY_USER,
               ...accountData,
@@ -227,6 +234,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         ...EMPTY_USER,
         uid: user.uid,
         email: user.email,
+        displayName: user.email?.split('@')[0] || 'User',
+        createdAt: new Date(),
+        updatedAt: new Date(),
       };
 
       const sanitizedUser = removeUndefined({
@@ -273,8 +283,19 @@ const removeUndefined = (obj: any): any => {
         ...EMPTY_USER,
         uid: user.uid,
         email: user.email,
+        displayName: user.email?.split('@')[0] || 'User',
         walletStored: _walletConnection.address,
         emailVerified: true,
+        currentAvatarPhase: 1,
+        maxUnlockedPhase: 1,
+        availablePhases: [1],
+        totalCreations: 0,
+        drawingMachineCreations: 0,
+        drumMachineCreations: 0,
+        totalXP: 0,
+        robotName: 'BEATO',
+        createdAt: new Date(),
+        updatedAt: new Date(),
       };
 
       const sanitizedUser = removeUndefined({
@@ -305,6 +326,14 @@ const removeUndefined = (obj: any): any => {
         displayName: profile?.name || `Wallet User ${walletAddress.slice(0, 6)}`,
         walletStored: walletAddress,
         emailVerified: false, // Wallet-only users haven't verified email
+        currentAvatarPhase: 1,
+        maxUnlockedPhase: 1,
+        availablePhases: [1],
+        totalCreations: 0,
+        drawingMachineCreations: 0,
+        drumMachineCreations: 0,
+        totalXP: 0,
+        robotName: 'BEATO',
         createdAt: new Date(),
         updatedAt: new Date(),
       };

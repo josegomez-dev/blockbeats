@@ -14,6 +14,17 @@ export interface User {
   bbcPoints?: number;
   tnxLog?: TNXLOG[];
   collections?: string[];
+  // Avatar phase tracking
+  currentAvatarPhase?: number;
+  maxUnlockedPhase?: number;
+  availablePhases?: number[];
+  // User creations tracking
+  totalCreations?: number;
+  drawingMachineCreations?: number;
+  drumMachineCreations?: number;
+  totalXP?: number; // Total XP
+  // Robot customization
+  robotName?: string; // Custom robot name
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -31,6 +42,14 @@ export const EMPTY_USER: User = {
   bbcPoints: 0,
   tnxLog: [],
   emailVerified: true,
+  currentAvatarPhase: 1,
+  maxUnlockedPhase: 1,
+  availablePhases: [1],
+  totalCreations: 0,
+  drawingMachineCreations: 0,
+  drumMachineCreations: 0,
+  totalXP: 0,
+  robotName: 'BEATO', // Default robot name
   createdAt: new Date(),
   updatedAt: new Date(),
   walletStored: '',

@@ -100,9 +100,12 @@ a {
   }
 }
 
-.custom-nav-spacer {
-  height: 60px;
+@media (min-width: 700px) {  
+  .custom-nav-spacer {
+    height: 60px;
+  }
 }
+
 
 .custom-spacer {
   height: 15px;
@@ -859,19 +862,19 @@ p {
   text-align: center;
 }
 
-/* Start Button Styles - Enhanced Futuristic Musical Design */
+/* Start Button Styles - Clean Elegant Neon Design */
 .start-button {
-  background: linear-gradient(135deg, #00ffff, #ff00ff);
-  background-size: 200% 200%;
+  background: linear-gradient(135deg, #00ffc3, #0088ff, #6a5acd);
   border: none;
   border-radius: 50px;
   padding: 20px 40px;
   cursor: pointer;
   transition: all 0.4s ease;
   box-shadow: 
-    0 8px 25px rgba(0, 255, 255, 0.4),
-    0 0 50px rgba(255, 0, 255, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    0 8px 25px rgba(0, 255, 195, 0.5),
+    0 0 50px rgba(0, 136, 255, 0.4),
+    0 0 80px rgba(106, 90, 205, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
   position: relative;
   overflow: hidden;
   min-width: 200px;
@@ -884,12 +887,7 @@ p {
   z-index: 10;
 }
 
-/* Animated gradient background */
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+/* Removed animated gradient background - no more rainbow effect */
 
 /* Shimmer effect */
 .start-button::before {
@@ -941,15 +939,15 @@ p {
 .start-button:hover {
   transform: translateY(-5px) scale(1.05);
   box-shadow: 
-    0 15px 35px rgba(0, 255, 255, 0.6),
-    0 0 80px rgba(255, 0, 255, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  background: linear-gradient(135deg, #00ffff, #ff00ff);
-  animation-duration: 1.5s, 1s;
+    0 15px 35px rgba(0, 255, 195, 0.7),
+    0 0 80px rgba(0, 136, 255, 0.6),
+    0 0 120px rgba(106, 90, 205, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  background: linear-gradient(135deg, #00ffc3, #0088ff, #6a5acd);
 }
 
 .start-button:hover::after {
-  animation-duration: 1.5s;
+  animation-duration: 2s;
 }
 
 .start-button:active {
@@ -961,8 +959,9 @@ p {
   font-weight: bold;
   color: #fff;
   text-shadow: 
-    0 2px 4px rgba(255, 255, 255, 0.3),
-    0 0 10px rgba(0, 255, 255, 0.5);
+    0 2px 4px rgba(255, 255, 255, 0.4),
+    0 0 15px rgba(0, 255, 195, 0.6),
+    0 0 25px rgba(0, 136, 255, 0.4);
   letter-spacing: 2px;
   position: relative;
   z-index: 3;
@@ -972,24 +971,30 @@ p {
 @keyframes textGlow {
   0% { 
     text-shadow: 
-      0 2px 4px rgba(255, 255, 255, 0.3),
-      0 0 10px rgba(0, 255, 255, 0.5);
+      0 2px 4px rgba(255, 255, 255, 0.4),
+      0 0 15px rgba(0, 255, 195, 0.6),
+      0 0 25px rgba(0, 136, 255, 0.4);
   }
   100% { 
     text-shadow: 
-      0 2px 4px rgba(255, 255, 255, 0.5),
-      0 0 20px rgba(255, 0, 255, 0.7);
+      0 2px 4px rgba(255, 255, 255, 0.6),
+      0 0 25px rgba(0, 255, 195, 0.8),
+      0 0 40px rgba(106, 90, 205, 0.6),
+      0 0 60px rgba(0, 136, 255, 0.4);
   }
 }
 
 .start-button-subtitle {
   font-size: 0.9rem;
-  color:black;
-  opacity: 0.8;
+  color: #fff;
+  opacity: 0.9;
   font-weight: 500;
   letter-spacing: 1px;
   position: relative;
   z-index: 3;
+  text-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.5),
+    0 0 8px rgba(0, 255, 195, 0.4);
 }
 
 /* Sound wave rings effect */
@@ -1005,9 +1010,12 @@ p {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border: 2px solid rgba(0, 255, 255, 0.3);
+  border: 2px solid rgba(0, 255, 195, 0.4);
   border-radius: 50%;
   animation: soundWaves 2s ease-out infinite;
+  box-shadow: 
+    0 0 20px rgba(0, 255, 195, 0.3),
+    0 0 40px rgba(0, 136, 255, 0.2);
 }
 
 .start-button-container::before {
@@ -1130,41 +1138,10 @@ p {
   }
 }
 
-/* Enhanced holographic border effect */
+/* Clean border effect - removed rainbow/holographic effects */
 .start-button {
-  border: 2px solid transparent;
-  background-clip: padding-box;
+  border: 2px solid rgba(0, 255, 195, 0.3);
   position: relative;
-}
-
-.start-button::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: linear-gradient(45deg, 
-    #00ffff, #ff00ff, #00ffff, #ff00ff);
-  background-size: 200% 200%;
-  border-radius: 52px;
-  z-index: -1;
-  animation: borderGlow 3s ease-in-out infinite;
-}
-
-@keyframes borderGlow {
-  0% { 
-    background-position: 0% 50%;
-    filter: hue-rotate(0deg);
-  }
-  50% { 
-    background-position: 100% 50%;
-    filter: hue-rotate(180deg);
-  }
-  100% { 
-    background-position: 0% 50%;
-    filter: hue-rotate(360deg);
-  }
 }
 
 /* Co-operative Mode Button Styles */

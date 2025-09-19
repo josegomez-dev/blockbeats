@@ -1,0 +1,594 @@
+/* Profile Tab Content Styles */
+.tabContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.section {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+}
+
+.section h3 {
+  color: #00ffc3;
+  margin: 0 0 1.5rem 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Account Information */
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.infoItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: rgba(0, 255, 195, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(0, 255, 195, 0.2);
+}
+
+.infoLabel {
+  color: #ccc;
+  font-weight: 500;
+}
+
+.infoValue {
+  color: #00ffc3;
+  font-weight: bold;
+}
+
+/* Avatar Information */
+.avatarInfo {
+  display: flex;
+  justify-content: center;
+}
+
+.avatarDisplay {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem;
+  background: rgba(0, 255, 195, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 255, 195, 0.3);
+}
+
+.avatarImage {
+  border-radius: 50%;
+  border: 2px solid rgba(0, 255, 195, 0.5);
+}
+
+.avatarDetails h4 {
+  color: #00ffc3;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+}
+
+.avatarDetails p {
+  color: #ccc;
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+}
+
+/* Progress Overview */
+.progressGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.progressCard {
+  background: rgba(0, 255, 195, 0.05);
+  border: 1px solid rgba(0, 255, 195, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.progressCard h4 {
+  color: #00ffc3;
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+}
+
+.phaseProgress {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.phaseDot {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.phaseDot.unlocked {
+  background: linear-gradient(135deg, #00ffc3, #0088ff);
+  color: #000;
+  box-shadow: 0 0 10px rgba(0, 255, 195, 0.5);
+}
+
+.phaseDot.locked {
+  background: #333;
+  color: #666;
+  border: 1px solid #555;
+}
+
+.phaseDot.current {
+  background: linear-gradient(135deg, #ff6b6b, #ffa500);
+  color: #000;
+  box-shadow: 0 0 15px rgba(255, 107, 107, 0.6);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.xpBar {
+  width: 100%;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.xpFill {
+  height: 100%;
+  background: linear-gradient(90deg, #00ffc3, #0088ff);
+  border-radius: 5px;
+  transition: width 0.5s ease;
+  box-shadow: 0 0 10px rgba(0, 255, 195, 0.5);
+}
+
+/* Statistics Grid */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.statCard {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(0, 255, 195, 0.05);
+  border-radius: 10px;
+  border: 1px solid rgba(0, 255, 195, 0.2);
+  transition: all 0.3s ease;
+}
+
+.statCard:hover {
+  background: rgba(0, 255, 195, 0.1);
+  transform: translateY(-3px);
+}
+
+.statIcon {
+  font-size: 2rem;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 255, 195, 0.1);
+  border-radius: 50%;
+  border: 2px solid rgba(0, 255, 195, 0.3);
+}
+
+.statContent h4 {
+  color: #00ffc3;
+  margin: 0 0 0.25rem 0;
+  font-size: 0.9rem;
+}
+
+.statValue {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Creations */
+.creationsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.creationCard {
+  background: rgba(0, 255, 195, 0.05);
+  border: 1px solid rgba(0, 255, 195, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.creationCard:hover {
+  background: rgba(0, 255, 195, 0.1);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 255, 195, 0.2);
+}
+
+.creationHeader {
+  margin-bottom: 1rem;
+}
+
+.creationBadge {
+  display: inline-block;
+  background: linear-gradient(135deg, #00ffc3, #0088ff);
+  color: #000;
+  padding: 0.25rem 0.75rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.creationName {
+  color: #fff;
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.creationPreview {
+  margin-bottom: 1rem;
+}
+
+.pixelPreview {
+  width: 100%;
+  height: 150px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 255, 195, 0.2);
+}
+
+.previewPlaceholder {
+  color: #ccc;
+  font-size: 0.9rem;
+}
+
+.creationDate {
+  color: #ccc;
+  margin: 0;
+  font-size: 0.8rem;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 3rem;
+  color: #ccc;
+}
+
+.emptyIcon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.emptyState h4 {
+  color: #00ffc3;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.3rem;
+}
+
+.emptyState p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* Creation Statistics */
+.creationStatsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.creationStatCard {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: rgba(0, 255, 195, 0.05);
+  border-radius: 15px;
+  border: 1px solid rgba(0, 255, 195, 0.2);
+  transition: all 0.3s ease;
+}
+
+.creationStatCard:hover {
+  background: rgba(0, 255, 195, 0.1);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 255, 195, 0.2);
+}
+
+.creationStatIcon {
+  font-size: 2.5rem;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 255, 195, 0.1);
+  border-radius: 50%;
+  border: 2px solid rgba(0, 255, 195, 0.3);
+}
+
+.creationStatContent h4 {
+  color: #00ffc3;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.creationStatValue {
+  color: #fff;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 0 0 0.25rem 0;
+}
+
+.creationStatLabel {
+  color: #ccc;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* Quest History */
+.questHistoryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.questHistoryCard {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(0, 255, 195, 0.05);
+  border: 1px solid rgba(0, 255, 195, 0.3);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.questHistoryCard:hover {
+  background: rgba(0, 255, 195, 0.1);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 255, 195, 0.2);
+}
+
+.questHistoryIcon {
+  font-size: 2rem;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 255, 195, 0.1);
+  border-radius: 50%;
+  border: 2px solid rgba(0, 255, 195, 0.3);
+}
+
+.questHistoryContent h4 {
+  color: #00ffc3;
+  margin: 0 0 0.25rem 0;
+  font-size: 1rem;
+}
+
+.questHistoryCount {
+  color: #ccc;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.questSummary {
+  display: flex;
+  justify-content: space-around;
+  padding: 1.5rem;
+  background: rgba(0, 255, 195, 0.05);
+  border: 1px solid rgba(0, 255, 195, 0.3);
+  border-radius: 15px;
+}
+
+.questSummaryItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.questSummaryLabel {
+  color: #ccc;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.questSummaryValue {
+  color: #00ffc3;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .section {
+    padding: 1rem;
+  }
+
+  .infoGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .progressGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .creationsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .creationStatsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .questHistoryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .questSummary {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .avatarDisplay {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .phaseProgress {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 0.75rem;
+  }
+
+  .section h3 {
+    font-size: 1.3rem;
+  }
+
+  .infoItem {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.25rem;
+  }
+
+  .infoLabel {
+    font-size: 0.7rem;
+  }
+
+  .infoValue {
+    font-size: 0.8rem;
+  }
+
+  .avatarDisplay {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .avatarImage {
+    width: 100px;
+    height: 100px;
+  }
+
+  .avatarDetails h4 {
+    font-size: 1rem;
+  }
+
+  .avatarDetails p {
+    font-size: 0.8rem;
+  }
+
+  .statCard {
+    flex-direction: column;
+    text-align: center;
+    padding: 0.75rem;
+  }
+
+  .statIcon {
+    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
+  }
+
+  .statContent h4 {
+    font-size: 0.8rem;
+  }
+
+  .statValue {
+    font-size: 1.2rem;
+  }
+
+  .creationStatCard {
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .creationStatIcon {
+    font-size: 2rem;
+    width: 60px;
+    height: 60px;
+  }
+
+  .creationStatContent h4 {
+    font-size: 1rem;
+  }
+
+  .creationStatValue {
+    font-size: 2rem;
+  }
+
+  .creationStatLabel {
+    font-size: 0.8rem;
+  }
+
+  .questHistoryCard {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .phaseDot {
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
+  }
+
+  .emptyState {
+    padding: 2rem 1rem;
+  }
+
+  .emptyIcon {
+    font-size: 3rem;
+  }
+
+  .emptyState h4 {
+    font-size: 1.1rem;
+  }
+
+  .emptyState p {
+    font-size: 0.9rem;
+  }
+}

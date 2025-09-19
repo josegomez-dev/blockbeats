@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import { doc, arrayUnion, updateDoc } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 import LevelUpOverlay from '../modals/LevelUpOverlay';
+import RobotNameModal from '../modals/RobotNameModal';
 import styles from '@/app/assets/styles/components/CharacterPanel.module.css';
 import { db } from '../../../firebase';
 import { useAuth } from '../../context/AuthContext';
@@ -24,10 +25,10 @@ type StatState = {
   level: number;
 };
 
-const MAX_LEVEL = 10;
+const MAX_LEVEL = 6;
 const MAX_PHASE = 6;
-const MIN_PHASE = 0;
-const LEVEL_XP_THRESHOLD = 100;
+const MIN_PHASE = 1;
+const LEVEL_XP_THRESHOLD = 1000; // 1k XP per level
 
 const initialState: StatState = {
   energy: 0,
@@ -76,6 +77,10 @@ const CharacterPanel: React.FC = () => {
   const [overlayMsg, setOverlayMsg] = useState<string | null>(null);
   const [animateLevel, setAnimateLevel] = useState(false);
   const [phaseIndex, setPhaseIndex] = useState(1);
+  const [availablePhases, setAvailablePhases] = useState<number[]>([1]);
+  const [maxUnlockedPhase, setMaxUnlockedPhase] = useState(1);
+  const [robotName, setRobotName] = useState(user?.robotName || 'BEATO');
+  const [showRobotNameModal, setShowRobotNameModal] = useState(false);
 
   const prevLevel = useRef(level);
   const sessionStartTime = useRef<number>(Date.now());
@@ -99,6 +104,13 @@ const CharacterPanel: React.FC = () => {
       loadUserXPData();
     }
   }, [user]);
+
+  // Update robot name when user context changes
+  useEffect(() => {
+    if (user?.robotName) {
+      setRobotName(user.robotName);
+    }
+  }, [user?.robotName]);
 
   // Subscribe to XP updates from the service
   useEffect(() => {
@@ -137,8 +149,14 @@ const CharacterPanel: React.FC = () => {
     if (!user) return;
     
     try {
-      const { xp, level, phase } = await xpService.loadUserXPData(user.uid);
-      setPhaseIndex(phase);
+      const { xp, level, phase, totalXP } = await xpService.loadUserXPData(user.uid);
+      const avatarData = await xpService.getUserAvatarData(user.uid);
+      const currentRobotName = await xpService.getRobotName(user.uid);
+      
+      setPhaseIndex(avatarData.currentPhase);
+      setAvailablePhases(avatarData.availablePhases);
+      setMaxUnlockedPhase(avatarData.maxUnlockedPhase);
+      setRobotName(currentRobotName);
       
       dispatch({
         type: 'INCREMENT_STATS',
@@ -156,12 +174,13 @@ const CharacterPanel: React.FC = () => {
       prevLevel.current = level;
       const newPhase = Math.min(level, MAX_PHASE);
       
-      if (newPhase > phaseIndex) {
-        setPhaseIndex(newPhase);
+      if (newPhase > maxUnlockedPhase) {
         handleLevelUp(newPhase);
+        // Unlock new phase in Firebase (now with quest requirements)
+        xpService.unlockNewPhase(user?.uid || '', newPhase);
       }
     }
-  }, [level, phaseIndex]);
+  }, [level, maxUnlockedPhase, user?.uid]);
 
   const handleLevelUp = async (newLevel: number) => {
     setAnimateLevel(true);
@@ -217,6 +236,29 @@ const CharacterPanel: React.FC = () => {
 
   const avatarSrc = `/images/avatars/phase-${phaseIndex}.webp`;
 
+  // Phase navigation functions
+  const goToPreviousPhase = async () => {
+    if (!user) return;
+    
+    const currentIndex = availablePhases.indexOf(phaseIndex);
+    if (currentIndex > 0) {
+      const newPhase = availablePhases[currentIndex - 1];
+      setPhaseIndex(newPhase);
+      await xpService.updateUserAvatarPhase(user.uid, newPhase);
+    }
+  };
+
+  const goToNextPhase = async () => {
+    if (!user) return;
+    
+    const currentIndex = availablePhases.indexOf(phaseIndex);
+    if (currentIndex < availablePhases.length - 1) {
+      const newPhase = availablePhases[currentIndex + 1];
+      setPhaseIndex(newPhase);
+      await xpService.updateUserAvatarPhase(user.uid, newPhase);
+    }
+  };
+
 
 
 
@@ -235,37 +277,114 @@ const CharacterPanel: React.FC = () => {
         />
       )}
 
-      <h2> <span className='glitch box'>BEATO</span> </h2>
-      <br />
-      <div className={styles.description}>
-        This is <span className='glitch'>BEATO</span> your <strong style={{ color: 'var(--clr-3)' }}>Musical Bot</strong> <br />
+      <div className={styles.robotHeader}>
+        <div className={styles.description}>
+          This is <span className='glitch'>{robotName}</span> &nbsp;
+          <button 
+            className={styles.editNameButton}
+            onClick={() => setShowRobotNameModal(true)}
+            title="Edit robot name"
+          >
+            ✏️
+          </button>
+        </div>
       </div>
 
 
 
-      <div>
-
-        <img
-          src={avatarSrc}
-          alt="Character"
-          className={`${styles.avatar} ${animateLevel ? styles.avatarEvolve : ''}`}
-        />
+      <div >
+        {/* Phase Navigation Arrows */}
+        <div className={styles.phaseNavigation}>
+          <button 
+            className={`${styles.phaseArrow} ${availablePhases.indexOf(phaseIndex) === 0 ? styles.disabled : ''}`}
+            onClick={goToPreviousPhase}
+            disabled={availablePhases.indexOf(phaseIndex) === 0}
+            title="Previous Phase"
+          >
+            ⬅️
+          </button>
+          
+          <div className={styles.avatarWrapper}>
+            <img
+              src={avatarSrc}
+              alt="Character"
+              className={`${styles.avatar} ${animateLevel ? styles.avatarEvolve : ''}`}
+            />
+          </div>
+          
+          <button 
+            className={`${styles.phaseArrow} ${availablePhases.indexOf(phaseIndex) === availablePhases.length - 1 ? styles.disabled : ''}`}
+            onClick={goToNextPhase}
+            disabled={availablePhases.indexOf(phaseIndex) === availablePhases.length - 1}
+            title="Next Phase"
+          >
+            ➡️
+          </button>
+        </div>
+        
         <p className={styles.status}>
-          Level:{' '}
-          <span className={`glitch ${animateLevel ? styles.levelUp : ''}`} data-text={level}>
+          Phase:{' '}
+          <span className={`glitch ${animateLevel ? styles.levelUp : ''}`} data-text={phaseIndex}>
             {phaseIndex}
           </span>{' '}
+          | Level:{' '}
+          <span className={`glitch ${animateLevel ? styles.levelUp : ''}`} data-text={level}>
+            {level}
+          </span>{' '}
           | XP:{' '}
-          <span data-text={`${Math.floor(xp)}%`} className="glitch">
-            {Math.floor(xp)}%
+          <span data-text={`${Math.floor(xp)}/1000`} className="glitch">
+            {Math.floor(xp)}/1000
           </span>
         </p>
+        
+        <p className={styles.phaseInfo}>
+          Available Phases: {availablePhases.join(', ')} | Max Unlocked: {maxUnlockedPhase}/6
+        </p>
+
+        {/* Phase Progress */}
+        <div className={styles.phaseProgress}>
+          <div className={styles.phaseProgressLabel}>Phase Progress</div>
+          <div className={styles.phaseDots}>
+            {[1, 2, 3, 4, 5, 6].map((phase) => (
+              <div
+                key={phase}
+                className={`${styles.phaseDot} ${
+                  availablePhases.includes(phase) ? styles.unlocked : styles.locked
+                } ${phaseIndex === phase ? styles.current : ''}`}
+                title={`Phase ${phase}${phaseIndex === phase ? ' (Current)' : ''}`}
+              >
+                {phase}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Next Phase Info */}
+        {maxUnlockedPhase < 6 && (
+          <div className={styles.nextPhaseInfo}>
+            <div className={styles.nextPhaseLabel}>Next Phase</div>
+            <div className={styles.nextPhaseValue}>
+              Phase {maxUnlockedPhase + 1} - Need {1000 - Math.floor(xp)} more XP
+            </div>
+          </div>
+        )}
+        
       </div>
 
+      <br />
+
       <p className={styles.description}>
-        <strong style={{ color: 'var(--clr-3)' }}>Level up</strong> by <strong style={{ color: 'var(--neon-color)' }}>completing quests</strong> and <strong style={{ color: 'var(--clr-3)' }}>earning XP</strong>! <br />
+        <strong style={{ color: 'var(--clr-3)' }}>Level up</strong> by <strong style={{ color: 'var(--neon-color)' }}>earning XP</strong>! <br />
         <strong style={{ color: 'var(--clr-3)' }}>Boost your creativity</strong> with <strong style={{ color: 'var(--neon-color)' }}>special items</strong> and <strong style={{ color: 'var(--neon-color)' }}>rewards</strong>!
       </p>
+
+      {/* Robot Name Modal */}
+      <RobotNameModal
+        isVisible={showRobotNameModal}
+        onClose={() => setShowRobotNameModal(false)}
+        currentName={robotName}
+        onNameUpdated={(newName) => setRobotName(newName)}
+      />
 
     </div>
   );

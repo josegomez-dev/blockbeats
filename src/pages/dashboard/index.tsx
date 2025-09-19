@@ -200,15 +200,16 @@ const DashboardLayout = () => {
             </div>
           </div>
 
-          <hr />
+          {/* <hr />
           <p className="dashboard-description-large">
             <span>
               <strong className="glitch">BlockBeats 3.0</strong> empowers anyone to <strong className="text-neon-color">trade music</strong> and <strong className="text-neon-color">support artists</strong> through an interactive platform <strong className="text-clr-3">that connects art and real-world experiences</strong>.
             </span>
-          </p>
-          <hr />
+          </p> */}
         </div>
       </div>
+      
+      
       <Footer />
     </>
   );

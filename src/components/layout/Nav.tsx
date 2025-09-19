@@ -146,11 +146,11 @@ export default function Nav() {
                 <Avatar
                   size="40"
                   round={true}
-                  name={user?.email || 'User'}
+                  name={user?.displayName || user?.email || 'User'}
                   color="var(--secondary-color)"
                 />
                 <span className={styles.userEmail}>
-                  {user?.email?.split('@')[0]}
+                  {user?.displayName || user?.email?.split('@')[0] || 'User'}
                 </span>
               </button>
 
@@ -182,6 +182,9 @@ export default function Nav() {
                   
                   <hr />
                   <div className="flex-align-center-padding">
+                    <span style={{ color: '#00ffc3' }}>🤖</span>&nbsp; Robot:&nbsp; <span style={{ color: '#00ffc3' }}>{user?.robotName || 'BEATO'}</span>
+                  </div>
+                  <div className="flex-align-center-padding">
                     <FaCoins color="gold" />&nbsp; Points:&nbsp; {user?.bbcPoints ? user.bbcPoints : 0} &nbsp;
                   </div>
              
@@ -189,6 +192,11 @@ export default function Nav() {
                   <Link href="/dashboard">
                     <div className={styles.dropdownItem}>
                       <MdDashboard className={styles.icon} /> Dashboard
+                    </div>
+                  </Link>
+                  <Link href="/profile">
+                    <div className={styles.dropdownItem}>
+                      <BiGlasses className={styles.icon} /> Profile
                     </div>
                   </Link>
                   <Link href="/studio">

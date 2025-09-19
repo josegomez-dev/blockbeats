@@ -1,0 +1,247 @@
+/* Sticky Progress Modal Styles */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.modal {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(0, 20, 40, 0.9));
+  border-radius: 20px;
+  border: 1px solid rgba(0, 255, 195, 0.3);
+  padding: 2rem;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 255, 195, 0.2);
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(0, 255, 195, 0.3);
+}
+
+.modalHeader h3 {
+  color: #00ffc3;
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.closeButton {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeButton:hover {
+  background: rgba(255, 0, 0, 0.2);
+  border-color: rgba(255, 0, 0, 0.5);
+  color: #ff6b6b;
+}
+
+.progressSection {
+  margin-bottom: 2rem;
+}
+
+.progressBar {
+  width: 100%;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #00ffc3, #0088ff);
+  border-radius: 6px;
+  transition: width 0.5s ease;
+  box-shadow: 0 0 10px rgba(0, 255, 195, 0.5);
+}
+
+.progressText {
+  color: #00ffc3;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
+}
+
+.requirementsSection {
+  margin-bottom: 2rem;
+}
+
+.requirementsSection h4 {
+  color: #fff;
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.requirementItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  background: rgba(0, 255, 195, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(0, 255, 195, 0.2);
+  transition: all 0.3s ease;
+}
+
+.requirementItem:hover {
+  background: rgba(0, 255, 195, 0.1);
+  transform: translateX(5px);
+}
+
+.requirementIcon {
+  font-size: 1.2rem;
+  width: 24px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.requirementIcon.completed {
+  color: #00ffc3;
+  transform: scale(1.1);
+}
+
+.requirementText {
+  color: #ccc;
+  font-size: 0.9rem;
+  flex: 1;
+}
+
+.rewardSection {
+  background: rgba(0, 255, 195, 0.05);
+  border: 1px solid rgba(0, 255, 195, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.rewardSection h4 {
+  color: #00ffc3;
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.rewardsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.rewardItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.rewardItem:hover {
+  background: rgba(0, 255, 195, 0.1);
+  transform: translateX(5px);
+}
+
+.rewardIcon {
+  font-size: 1.2rem;
+  width: 24px;
+  text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .modal {
+    padding: 1.5rem;
+    max-width: 95%;
+  }
+
+  .modalHeader h3 {
+    font-size: 1.3rem;
+  }
+
+  .requirementItem {
+    padding: 0.5rem;
+  }
+
+  .requirementText {
+    font-size: 0.8rem;
+  }
+
+  .rewardSection {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal {
+    padding: 1rem;
+    border-radius: 15px;
+  }
+
+  .modalHeader {
+    margin-bottom: 1rem;
+  }
+
+  .modalHeader h3 {
+    font-size: 1.2rem;
+  }
+
+  .closeButton {
+    width: 25px;
+    height: 25px;
+    font-size: 0.9rem;
+  }
+
+  .requirementItem {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+
+  .requirementText {
+    font-size: 0.8rem;
+  }
+}

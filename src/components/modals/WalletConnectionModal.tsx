@@ -120,8 +120,10 @@ const WalletConnectionModal: React.FC<WalletConnectionModalProps> = ({
   return (
     <div className={styles.modalOverlay} onClick={handleClose}>
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+        <br />
+        <br />
         <div className={styles.modalHeader}>
-          <h2>🎵 Complete Your BlockBeats Profile</h2>
+          <h2>🎵 Complete Your Profile</h2>
           <button 
             className={styles.modalCloseButton} 
             onClick={handleClose}
@@ -141,29 +143,14 @@ const WalletConnectionModal: React.FC<WalletConnectionModalProps> = ({
             )}
           </div>
 
-          {/* Profile Preview */}
-          <div className={styles.profilePreview}>
-            <h3>👤 Profile Preview</h3>
-            <div className={styles.previewCard}>
-              <div className={styles.avatarContainer}>
-                <div className={styles.avatar}>
-                  {displayName ? getInitials(displayName) : '??'}
-                </div>
-              </div>
-              <div className={styles.previewInfo}>
-                <div className={styles.previewName}>
-                  {displayName || 'Your Display Name'}
-                </div>
-                <div className={styles.previewEmail}>
-                  {email || 'your.email@example.com'}
-                </div>
-              </div>
-            </div>
-          </div>
-
           <form onSubmit={handleSubmit} className={styles.modalForm}>
             <div className={styles.formGroup}>
-              <label htmlFor="displayName">Display Name</label>
+              <span>
+                <label htmlFor="displayName">Display Name</label> &nbsp;
+                <small className={styles.formHint}>
+                  This will be your public name on BlockBeats
+                </small>
+              </span>
               <div className={styles.inputWithButton}>
                 <input
                   type="text"
@@ -185,13 +172,16 @@ const WalletConnectionModal: React.FC<WalletConnectionModalProps> = ({
                   🎲
                 </button>
               </div>
-              <small className={styles.formHint}>
-                This will be your public name on BlockBeats
-              </small>
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="email">Email Address</label>
+              <span>
+                <label htmlFor="email">Email Address</label>
+                {/* &nbsp;
+                <small className={styles.formHint}>
+                  We'll use this to send you updates and notifications
+                </small> */}
+              </span>
               <input
                 type="email"
                 id="email"
@@ -202,9 +192,6 @@ const WalletConnectionModal: React.FC<WalletConnectionModalProps> = ({
                 disabled={isSubmitting}
                 className={styles.modalInput}
               />
-              <small className={styles.formHint}>
-                We'll use this to send you updates and notifications
-              </small>
             </div>
 
             <div className={styles.modalActions}>
