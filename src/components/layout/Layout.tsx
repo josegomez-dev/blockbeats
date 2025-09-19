@@ -15,12 +15,17 @@ const Layout = ({ children }: LayoutProps) => {
   // check if location is different from /collections
   const isCollectionsPage = typeof window !== 'undefined' && window.location.pathname.includes('/collections')
 
+  // Define paths where SidebarMenu should be hidden
+  const hiddenSidebarPaths = ['/studio', '/dashboard', '/marketplace', '/collections']
+  const shouldHideSidebar = typeof window !== 'undefined' && 
+    hiddenSidebarPaths.some(path => window.location.pathname.startsWith(path))
+
   return (
       <>
         <Nav />
         {authenticated && (
           <>
-            {location.pathname !== '/studio' && (
+            {!shouldHideSidebar && (
               <SidebarMenu />
             )}
             {/* <SidebarChatPanel /> */}

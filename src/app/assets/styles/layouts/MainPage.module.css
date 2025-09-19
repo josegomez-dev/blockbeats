@@ -298,17 +298,7 @@
   gap: 1rem;
   height: 100%;
   padding: 1rem;
-  margin-left: 70px;
 }
-
-@media (max-width: 700px) {
-  .desktopGrid {
-    margin-left: 0;
-  }
-}
-
-
-
 
 .leftPanel,
 .centerPanel,
@@ -1000,6 +990,169 @@
   
   .noNftsMessage h3 {
     font-size: 1.2rem;
+  }
+}
+
+/* Collections Page Styles */
+.collectionsSection {
+  margin: 3rem 0;
+  padding: 0 2rem;
+}
+
+.sectionTitle {
+  color: #ffffff;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  text-align: center;
+  position: relative;
+}
+
+.sectionTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #00ffc3, #00d4aa);
+  border-radius: 2px;
+}
+
+.collectionsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.playlistView {
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 20px;
+  padding: 2rem;
+  margin: 2rem;
+  border: 1px solid rgba(0, 255, 195, 0.2);
+  backdrop-filter: blur(15px);
+}
+
+.playlistContainer {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  padding: 1.5rem;
+  border: 1px solid rgba(0, 255, 195, 0.1);
+}
+
+.playlistHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(0, 255, 195, 0.2);
+}
+
+.playlistInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.playlistTitle {
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.songCount {
+  color: #00ffc3;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.playlistItems {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.emptyPlaylist {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: #888888;
+}
+
+.emptyIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.emptyPlaylist h3 {
+  color: #ffffff;
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.emptyPlaylist p {
+  color: #888888;
+  font-size: 1rem;
+}
+
+/* Responsive design for collections */
+@media (max-width: 768px) {
+  .collectionsSection {
+    margin: 2rem 0;
+    padding: 0 1rem;
+  }
+  
+  .sectionTitle {
+    font-size: 1.5rem;
+  }
+  
+  .collectionsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .playlistView {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+  
+  .playlistContainer {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .collectionsSection {
+    margin: 1.5rem 0;
+    padding: 0 0.5rem;
+  }
+  
+  .sectionTitle {
+    font-size: 1.3rem;
+  }
+  
+  .collectionsGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .playlistView {
+    margin: 0.5rem;
+    padding: 1rem;
+  }
+  
+  .playlistContainer {
+    padding: 0.8rem;
+  }
+  
+  .playlistHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
   }
 }
 

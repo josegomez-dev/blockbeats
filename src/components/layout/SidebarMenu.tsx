@@ -26,11 +26,11 @@ const SidebarMenu = () => {
 
   const menuItems = [
     { icon: <MdDashboard />, label: 'Dashboard', href: '/dashboard' },
-    { icon: <BiGlasses />, label: 'Profile', href: '/profile' },
     { icon: <FaMusic />, label: 'Studio', href: '/studio' },
     { icon: <BiCollection />, label: 'Top Collections', href: '/collections' },
     { icon: <FaStore />, label: 'Marketplace', href: '/marketplace' },
     { icon: <FaChalkboardTeacher />, label: 'Quick Tutorials', href: '/studio/tutorials' },
+    { icon: <BiGlasses />, label: 'Profile', href: '/profile' },
   ];
 
   return (

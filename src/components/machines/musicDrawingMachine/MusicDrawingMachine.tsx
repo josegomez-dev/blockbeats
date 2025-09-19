@@ -135,8 +135,24 @@ const MusicDrawingMachine = forwardRef<MusicDrawingMachineRef, MusicDrawingMachi
 
   const [midiConnected, setMidiConnected] = useState(false);
   const [midiDeviceName, setMidiDeviceName] = useState<string | null>(null);
+  const [isSilenceMode, setIsSilenceMode] = useState(false);
 
   const frequencyStyle = frequencyRanges.find((r) => r.name === selectedRange)!;
+
+  // Add silence/blank step function
+  const addSilence = useCallback((timeStep: number) => {
+    // Add a special "silence" note with index -1 to represent a blank step
+    const silenceNote = { noteIndex: -1, time: timeStep };
+    const silenceColor = { noteIndex: -1, time: timeStep, color: '#333333' }; // Dark gray for silence
+    
+    setNotesPlayed((prev) => [...prev, silenceNote]);
+    setColorMap((prev) => [...prev, silenceColor]);
+    
+    // Move to next time step
+    setNextTimeStep((prev) => prev + 1);
+    
+    toast.success(`🔇 Silence added at step ${timeStep + 1}`);
+  }, []);
 
   // Random melody generator
   const generateRandomMelody = useCallback((options: {
@@ -408,7 +424,10 @@ const handleNotePlay = (noteIdx: number, isMidi = false) => {
       setCurrentStep(stepCounter);
       const notesAtStep = notesPlayed.filter(n => n.time === stepCounter);
       notesAtStep.forEach(({ noteIndex }) => {
-        playNote(freqMap[noteIndex]);
+        // Skip silence notes (noteIndex === -1)
+        if (noteIndex !== -1 && freqMap[noteIndex]) {
+          playNote(freqMap[noteIndex]);
+        }
       });
 
       stepCounter++;
@@ -484,7 +503,10 @@ const handleNotePlay = (noteIdx: number, isMidi = false) => {
       setCurrentStep(stepCounter);
       const notesAtStep = notesPlayed.filter(n => n.time === stepCounter);
       notesAtStep.forEach(({ noteIndex }) => {
-        playNote(freqMap[noteIndex]);
+        // Skip silence notes (noteIndex === -1)
+        if (noteIndex !== -1 && freqMap[noteIndex]) {
+          playNote(freqMap[noteIndex]);
+        }
       });
 
       stepCounter++;
@@ -598,6 +620,8 @@ const handleNotePlay = (noteIdx: number, isMidi = false) => {
               }}
               onOpenFreqModal={() => setFreqModalOpen(true)}
               onOpenRandomMelodyModal={() => setRandomMelodyModalOpen(true)}
+              onAddSilence={() => addSilence(nextTimeStep)}
+              isSilenceMode={isSilenceMode}
             />
         </div>
 
@@ -614,7 +638,12 @@ const handleNotePlay = (noteIdx: number, isMidi = false) => {
         </main>
 
         <footer className={styles.bottomBar}>
-          <Piano onNotePlay={handleNotePlay} />
+          <Piano 
+            onNotePlay={handleNotePlay} 
+            onSilenceAdd={addSilence}
+            isSilenceMode={isSilenceMode}
+            currentTimeStep={nextTimeStep}
+          />
         </footer>
       </div>
 

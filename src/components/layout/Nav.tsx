@@ -194,11 +194,6 @@ export default function Nav() {
                       <MdDashboard className={styles.icon} /> Dashboard
                     </div>
                   </Link>
-                  <Link href="/profile">
-                    <div className={styles.dropdownItem}>
-                      <BiGlasses className={styles.icon} /> Profile
-                    </div>
-                  </Link>
                   <Link href="/studio">
                     <div className={styles.dropdownItem}>
                       <FaMusic className={styles.icon} /> Studio
@@ -217,6 +212,11 @@ export default function Nav() {
                   <Link href="/studio/tutorials">
                     <div className={styles.dropdownItem}>
                       <FaChalkboardTeacher className={styles.icon} /> Quick Tutorials
+                    </div>
+                  </Link>
+                  <Link href="/profile">
+                    <div className={styles.dropdownItem}>
+                      <BiGlasses className={styles.icon} /> Profile
                     </div>
                   </Link>
                   <hr />

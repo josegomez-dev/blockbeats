@@ -1,8 +1,36 @@
 'use client';
 
 import React, { useState } from 'react';
-import { FaPlay, FaPause, FaStop, FaUndo, FaDrum, FaMusic, FaDice } from 'react-icons/fa';
+import { FaPlay, FaPause, FaStop, FaUndo, FaDrum, FaMusic, FaDice, FaVolumeMute } from 'react-icons/fa';
 import styles from '@/app/assets/styles/pages/MusicStudio.module.css';
+
+// Function to get dynamic styling based on frequency range
+const getFrequencyButtonStyle = (selectedRange: string) => {
+  const colorMap: { [key: string]: { background: string; boxShadow: string } } = {
+    'Mono': {
+      background: 'linear-gradient(135deg, #808080, #696969)',
+      boxShadow: '0 2px 8px rgba(128, 128, 128, 0.3)'
+    },
+    'Harmonic': {
+      background: 'linear-gradient(135deg, #32cd32, #228b22)',
+      boxShadow: '0 2px 8px rgba(50, 205, 50, 0.3)'
+    },
+    'Ornamental': {
+      background: 'linear-gradient(135deg, #1e90ff, #0066cc)',
+      boxShadow: '0 2px 8px rgba(30, 144, 255, 0.3)'
+    },
+    'Fractal': {
+      background: 'linear-gradient(135deg, #ffd700, #ffb347)',
+      boxShadow: '0 2px 8px rgba(255, 215, 0, 0.3)'
+    },
+    'Celestial': {
+      background: 'linear-gradient(135deg, #ee82ee, #ba55d3)',
+      boxShadow: '0 2px 8px rgba(238, 130, 238, 0.3)'
+    }
+  };
+
+  return colorMap[selectedRange] || colorMap['Ornamental'];
+};
 
 interface MusicDrawingMachinePlaybackControlsProps {
   isPlaying: boolean;
@@ -21,6 +49,8 @@ interface MusicDrawingMachinePlaybackControlsProps {
   onToggleDrums: (enabled: boolean) => void;
   onOpenFreqModal: () => void;
   onOpenRandomMelodyModal: () => void;
+  onAddSilence?: () => void;
+  isSilenceMode?: boolean;
 }
 
 const MusicDrawingMachinePlaybackControls: React.FC<MusicDrawingMachinePlaybackControlsProps> = ({
@@ -40,6 +70,8 @@ const MusicDrawingMachinePlaybackControls: React.FC<MusicDrawingMachinePlaybackC
   onToggleDrums,
   onOpenFreqModal,
   onOpenRandomMelodyModal,
+  onAddSilence,
+  isSilenceMode = false,
 }) => {
   return (
     <div className={styles.machineControls}>
@@ -116,9 +148,13 @@ const MusicDrawingMachinePlaybackControls: React.FC<MusicDrawingMachinePlaybackC
               className={styles.freqBtn}
               onClick={onOpenFreqModal}
               title="Frequency Range"
+              style={{
+                background: getFrequencyButtonStyle(selectedRange).background,
+                boxShadow: getFrequencyButtonStyle(selectedRange).boxShadow
+              }}
             >
               <FaMusic />
-              <span>{selectedRange}</span>
+              <span>Change Frequency</span>
             </button>
           </div>
 
@@ -130,6 +166,17 @@ const MusicDrawingMachinePlaybackControls: React.FC<MusicDrawingMachinePlaybackC
             >
               <FaDice />
               <span>Random Melody</span>
+            </button>
+          </div>
+
+          <div className={styles.controlGroup}>
+            <button 
+              className={`${styles.silenceBtn} ${isSilenceMode ? styles.active : ''}`}
+              onClick={onAddSilence}
+              title="Add Silence (Shift key)"
+            >
+              <FaVolumeMute />
+              <span>Silence</span>
             </button>
           </div>
         </div>

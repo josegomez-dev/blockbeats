@@ -7,11 +7,27 @@ import { playNote } from '@/utils/helpers/drumHelper';
 
 interface PianoProps {
   onNotePlay: (noteIndex: number) => void;
+  onSilenceAdd?: (timeStep: number) => void;
+  isSilenceMode?: boolean;
+  currentTimeStep?: number;
 }
 
-const Piano: React.FC<PianoProps> = ({ onNotePlay }) => {
+const Piano: React.FC<PianoProps> = ({ 
+  onNotePlay, 
+  onSilenceAdd, 
+  isSilenceMode = false, 
+  currentTimeStep = 0 
+}) => {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Handle Shift key for silence mode
+      if (e.key === 'Shift') {
+        if (onSilenceAdd && currentTimeStep !== undefined) {
+          onSilenceAdd(currentTimeStep);
+        }
+        return;
+      }
+
       const key = e.key.toUpperCase();
       const noteIndex = keyMap.findIndex(k => k.toUpperCase() === key);
 
@@ -24,7 +40,7 @@ const Piano: React.FC<PianoProps> = ({ onNotePlay }) => {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [onNotePlay]);
+  }, [onNotePlay, onSilenceAdd, currentTimeStep]);
 
   return (
     <div

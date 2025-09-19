@@ -1,0 +1,225 @@
+.collectionCard {
+  position: relative;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 255, 195, 0.3);
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.collectionCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border-color: rgba(0, 255, 195, 0.6);
+}
+
+.collectionCard.selected {
+  border-color: #00ffc3;
+  box-shadow: 0 0 20px rgba(0, 255, 195, 0.3);
+  background: rgba(0, 255, 195, 0.1);
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.collectionIcon {
+  margin-bottom: 1rem;
+}
+
+.iconWrapper {
+  width: 60px;
+  height: 60px;
+  background: rgba(0, 255, 195, 0.2);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  border: 1px solid rgba(0, 255, 195, 0.3);
+}
+
+.collectionInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.collectionName {
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.collectionDescription {
+  color: #cccccc;
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.collectionStats {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: auto;
+  font-size: 0.8rem;
+  color: #888888;
+}
+
+.songCount {
+  color: #00ffc3;
+  font-weight: 500;
+}
+
+.separator {
+  color: #666666;
+}
+
+.createdBy {
+  color: #888888;
+}
+
+.playButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 255, 195, 0.3);
+}
+
+.collectionCard:hover .playButton {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.playIcon {
+  font-size: 1rem;
+  color: #00ffc3;
+}
+
+.cardOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 255, 195, 0.1), rgba(0, 255, 195, 0.05));
+  opacity: 0;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+}
+
+.collectionCard:hover .cardOverlay {
+  opacity: 1;
+}
+
+.overlayContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.playButtonLarge {
+  width: 60px;
+  height: 60px;
+  background: rgba(0, 255, 195, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #000000;
+  transform: scale(0.8);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 255, 195, 0.3);
+}
+
+.collectionCard:hover .playButtonLarge {
+  transform: scale(1);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .collectionCard {
+    padding: 1rem;
+    min-height: 180px;
+  }
+  
+  .collectionName {
+    font-size: 1.1rem;
+  }
+  
+  .collectionDescription {
+    font-size: 0.85rem;
+  }
+  
+  .iconWrapper {
+    width: 50px;
+    height: 50px;
+    font-size: 1.3rem;
+  }
+  
+  .playButton {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .playIcon {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .collectionCard {
+    padding: 0.8rem;
+    min-height: 160px;
+  }
+  
+  .collectionName {
+    font-size: 1rem;
+  }
+  
+  .collectionDescription {
+    font-size: 0.8rem;
+  }
+  
+  .iconWrapper {
+    width: 45px;
+    height: 45px;
+    font-size: 1.2rem;
+  }
+  
+  .collectionStats {
+    font-size: 0.75rem;
+  }
+}

@@ -1,0 +1,285 @@
+.collectionHeader {
+  padding: 2rem;
+  border-radius: 15px;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(0, 255, 195, 0.3);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.collectionHeader::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1));
+  z-index: 1;
+}
+
+.headerContent {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.collectionInfo {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex: 1;
+}
+
+.collectionIcon {
+  flex-shrink: 0;
+}
+
+.iconWrapper {
+  width: 120px;
+  height: 120px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  border: 2px solid rgba(0, 255, 195, 0.3);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.collectionDetails {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.collectionName {
+  color: #ffffff;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.collectionDescription {
+  color: #cccccc;
+  font-size: 1.1rem;
+  margin: 0;
+  line-height: 1.4;
+  max-width: 500px;
+}
+
+.collectionStats {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.songCount {
+  color: #00ffc3;
+  font-weight: 600;
+}
+
+.separator {
+  color: #666666;
+}
+
+.createdBy {
+  color: #888888;
+}
+
+.headerActions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.playButtons {
+  display: flex;
+  gap: 1rem;
+}
+
+.playAllButton {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #00ffc3, #00d4aa);
+  border: none;
+  border-radius: 25px;
+  color: #000000;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 15px rgba(0, 255, 195, 0.3);
+}
+
+.playAllButton:hover {
+  background: linear-gradient(135deg, #00d4aa, #00b894);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 255, 195, 0.4);
+}
+
+.playAllButton.playing {
+  background: linear-gradient(135deg, #ff6b6b, #ff5252);
+  color: #ffffff;
+  animation: pulse 2s infinite;
+}
+
+.shuffleButton {
+  padding: 0.75rem 1.5rem;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(0, 255, 195, 0.3);
+  border-radius: 25px;
+  color: #00ffc3;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.shuffleButton:hover {
+  background: rgba(0, 255, 195, 0.1);
+  border-color: rgba(0, 255, 195, 0.6);
+  transform: translateY(-2px);
+}
+
+.closeButton {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeButton:hover {
+  background: rgba(255, 107, 107, 0.2);
+  border-color: rgba(255, 107, 107, 0.5);
+  color: #ff6b6b;
+  transform: scale(1.1);
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 107, 107, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 107, 107, 0);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .collectionHeader {
+    padding: 1.5rem;
+  }
+  
+  .headerContent {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+  
+  .collectionInfo {
+    width: 100%;
+  }
+  
+  .iconWrapper {
+    width: 100px;
+    height: 100px;
+    font-size: 2.5rem;
+  }
+  
+  .collectionName {
+    font-size: 2rem;
+  }
+  
+  .collectionDescription {
+    font-size: 1rem;
+  }
+  
+  .headerActions {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .playButtons {
+    flex: 1;
+    justify-content: flex-start;
+  }
+  
+  .playAllButton,
+  .shuffleButton {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .collectionHeader {
+    padding: 1rem;
+  }
+  
+  .collectionInfo {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .iconWrapper {
+    width: 80px;
+    height: 80px;
+    font-size: 2rem;
+  }
+  
+  .collectionName {
+    font-size: 1.5rem;
+  }
+  
+  .collectionDescription {
+    font-size: 0.9rem;
+  }
+  
+  .headerActions {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .playButtons {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .playAllButton,
+  .shuffleButton {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+}
