@@ -1,10 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import styles from "@/app/assets/styles/layouts/MainPage.module.css";
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../../firebase';
-import PixelPreview from '../../components/machines/PixelPreview';
-import { Modal } from "react-responsive-modal";
 import SignInUnautorizedModal from '../../components/modals/SignInUnautorizedModal';
 import GalleryHeader from '../../components/layout/GalleryHeader';
 import { NFT } from '@/types/nftTypes';
@@ -12,16 +10,19 @@ import { playMelody, playDrumLoop } from "@/utils/helpers/drumHelper";
 import { notes } from "@/utils/constants/musicDrawingMachine"; // for frequency mapping
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import CategoryFilter from '../../components/marketplace/CategoryFilter';
+import NFTCard from '../../components/marketplace/NFTCard';
 
 
 const MarketplaceScreen = () => {
 
   const [nfts, setNFTs] = React.useState<NFT[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState('all');
 
-  const [showViewModal, setShowViewModal] = React.useState(false);
-  const [selectedNFT, setSelectedNFT] = React.useState<NFT | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const [isPlaying, setIsPlaying] = React.useState(false);
+  const [playingNFTId, setPlayingNFTId] = React.useState<string | null>(null);
   const [stopMelodyRef, setStopMelodyRef] = React.useState<(() => void) | null>(null);
   const [stopDrumRef, setStopDrumRef] = React.useState<(() => void) | null>(null);
 
@@ -37,13 +38,48 @@ const MarketplaceScreen = () => {
     fetchNFTs();
   }, []);
 
+  // Filter NFTs based on selected category and search query
+  const filteredNFTs = useMemo(() => {
+    let filtered = nfts;
+
+    // Filter by category
+    if (selectedCategory === 'all') {
+      filtered = nfts;
+    } else if (selectedCategory === 'collaborative') {
+      filtered = nfts.filter(nft => nft.isCollaborative);
+    } else {
+      filtered = nfts.filter(nft => nft.machineType === selectedCategory);
+    }
+
+    // Filter by search query (name)
+    if (searchQuery.trim()) {
+      filtered = filtered.filter(nft => 
+        nft.songName?.toLowerCase().includes(searchQuery.toLowerCase().trim())
+      );
+    }
+
+    return filtered;
+  }, [nfts, selectedCategory, searchQuery]);
+
+  // Calculate NFT counts for each category
+  const nftCounts = useMemo(() => {
+    return {
+      all: nfts.length,
+      drawing: nfts.filter(nft => nft.machineType === 'drawing').length,
+      drums: nfts.filter(nft => nft.machineType === 'drums').length,
+      voicemusic: nfts.filter(nft => nft.machineType === 'voicemusic').length,
+      collaborative: nfts.filter(nft => nft.isCollaborative).length
+    };
+  }, [nfts]);
+
   const handlePlayNFT = (nft: NFT) => {
-    if (isPlaying && selectedNFT?.id === nft.id) return;
+    if (isPlaying && playingNFTId === nft.id) return;
 
     stopMelodyRef?.();
     stopDrumRef?.();
 
     setIsPlaying(true);
+    setPlayingNFTId(nft.id);
 
     const melody = (nft.colorMap ?? []).map(({ noteIndex, time }) => ({ noteIndex, time }));
     const tempo = nft.tempo || 300;
@@ -58,6 +94,7 @@ const MarketplaceScreen = () => {
       () => {
         stopDrum?.();
         setIsPlaying(false);
+        setPlayingNFTId(null);
         setStopDrumRef(null);
         setStopMelodyRef(null);
       }
@@ -77,20 +114,6 @@ const MarketplaceScreen = () => {
     );
   }
 
-  const handleViewNFT = (nft: NFT) => {
-    setSelectedNFT(nft);
-    setShowViewModal(true);
-  };
-  
-  const handleCloseModal = () => {
-    stopMelodyRef?.();
-    stopDrumRef?.();
-    setStopMelodyRef(null);
-    setStopDrumRef(null);
-    setIsPlaying(false);
-    setShowViewModal(false);
-    setSelectedNFT(null);
-  };
 
   return (
     <>
@@ -121,59 +144,57 @@ const MarketplaceScreen = () => {
       
       </div>
 
-          {selectedNFT && (
-        <Modal
-          open={showViewModal}
-          onClose={() => handleCloseModal()}
-          center
-          styles={{ modal: { backgroundColor: 'rgba(0, 0, 0, 0.8)', height: 'auto' } }}
-          showCloseIcon={false}
-        >
-          <div className={`${styles.modalContent} text-center`}>
-            <div className={styles.nftDetails}>
-              <h3>{selectedNFT.songName || 'Untitled'}</h3>
-              <PixelPreview
-                colorMap={selectedNFT.colorMap || []}
-                size={200}
-                backgroundColor={selectedNFT.color || '#000'}
-              />
-              <br />
-              <p>
-                Created by: {selectedNFT.createdBy
-                  ? `${selectedNFT.createdBy.slice(0, 6)}...${selectedNFT.createdBy.slice(-4)}`
-                  : 'Unknown'}
-              </p>
-            </div>
-            <button className={styles.submitBtn} onClick={handleCloseModal}>Close</button>
-          </div>
-
-        </Modal>
-      )}
 
       <div className="gallery-screen gallery-screen-padding">
-        <div className="gallery-grid">
-          {nfts.map((src, index) => (
-            <div className="gallery-item" key={index} onClick={() => handleViewNFT(src)}>
-              <h4 className="gallery-item-title">
-                {src.songName}
-              </h4>
-              <div className="gallery-item-overlay">
-                  <PixelPreview
-                    colorMap={src.colorMap || []}
-                    size={100}
-                    backgroundColor={src.color || '#000'}
-                  />
-                  <button
-                    className={styles.submitBtn}
-                    style={{ marginBottom: '10px', animation: 'none', backgroundColor: isPlaying && src.songName === selectedNFT?.songName ? "var(--neon-color)" : "transparent", color: isPlaying && src.songName === selectedNFT?.songName ? "white" : "var(--neon-color)" }}
-                    onClick={() => handlePlayNFT(src)}
-                  >
-                    {isPlaying && src.songName === selectedNFT?.songName ? "Playing..." : "▶ Play NFT"}
-                  </button>
-
-              </div>
+        {/* Search Filter */}
+        <div className={styles.searchContainer}>
+          <div className={styles.searchInputWrapper}>
+            <input
+              type="text"
+              placeholder="Search NFTs by name..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className={styles.searchInput}
+            />
+            <div className={styles.searchIcon}>🔍</div>
+          </div>
+          {searchQuery && (
+            <div className={styles.searchResults}>
+              Found {filteredNFTs.length} NFT{filteredNFTs.length !== 1 ? 's' : ''} matching "{searchQuery}"
             </div>
-          ))}          
+          )}
+        </div>
+
+        {/* Category Filter */}
+        <CategoryFilter
+          selectedCategory={selectedCategory}
+          onCategoryChange={setSelectedCategory}
+          nftCounts={nftCounts}
+        />
+
+        {/* NFT Grid */}
+        <div className="gallery-grid">
+          {filteredNFTs.map((nft, index) => (
+            <NFTCard
+              key={nft.id || index}
+              nft={nft}
+              isPlaying={isPlaying && playingNFTId === nft.id}
+              onPlay={handlePlayNFT}
+            />
+          ))}
+          
+          {filteredNFTs.length === 0 && (
+            <div className={styles.noNftsMessage}>
+              <h3>No NFTs found in this category</h3>
+              <p>Try selecting a different category or create some new NFTs!</p>
+              <button 
+                onClick={() => router.push('/dashboard')} 
+                className={styles.submitBtn}
+              >
+                Create New NFT
+              </button>
+            </div>
+          )}
         </div>
       </div>
 

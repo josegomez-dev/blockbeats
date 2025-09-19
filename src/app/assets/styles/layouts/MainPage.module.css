@@ -782,6 +782,227 @@
   animation: modalSlideIn 0.3s ease-out;
 }
 
+.nftDetails {
+  padding: 1.5rem;
+  color: #ffffff;
+}
+
+.nftDetails h3 {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.nftDetails p {
+  color: #cccccc;
+  margin: 0.5rem 0;
+  text-align: center;
+}
+
+/* Marketplace Modal Enhancements */
+.machineTypeBadge {
+  display: inline-block;
+  background: rgba(0, 255, 195, 0.2);
+  color: #00ffc3;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 1rem 0;
+  border: 1px solid rgba(0, 255, 195, 0.3);
+}
+
+.collaborativeAuthors {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: rgba(249, 202, 36, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(249, 202, 36, 0.3);
+}
+
+.collaborativeAuthors h4 {
+  color: #f9ca24;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.authorsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.nftDescription {
+  color: #cccccc;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 1rem 0;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.nftTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.nftTags .tag {
+  background: rgba(0, 255, 195, 0.2);
+  color: #00ffc3;
+  padding: 0.3rem 0.6rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid rgba(0, 255, 195, 0.3);
+}
+
+/* Responsive adjustments for marketplace modal */
+@media (max-width: 768px) {
+  .authorsGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .collaborativeAuthors {
+    padding: 0.75rem;
+  }
+  
+  .modalContent {
+    max-width: 90vw;
+    margin: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .machineTypeBadge {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+  
+  .nftDetails {
+    padding: 1rem;
+  }
+  
+  .nftDetails h3 {
+    font-size: 1.3rem;
+  }
+}
+
+/* Search Container */
+.searchContainer {
+  margin-bottom: 2rem;
+}
+
+.searchInputWrapper {
+  position: relative;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 1rem 3rem 1rem 1rem;
+  background: rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(0, 255, 195, 0.3);
+  border-radius: 12px;
+  color: #ffffff;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: rgba(0, 255, 195, 0.6);
+  box-shadow: 0 0 20px rgba(0, 255, 195, 0.2);
+}
+
+.searchInput::placeholder {
+  color: #888888;
+}
+
+.searchIcon {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  color: #00ffc3;
+  pointer-events: none;
+}
+
+.searchResults {
+  text-align: center;
+  margin-top: 1rem;
+  color: #00ffc3;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* No NFTs Message */
+.noNftsMessage {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem 2rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  border: 1px solid rgba(0, 255, 195, 0.2);
+}
+
+.noNftsMessage h3 {
+  color: #ffffff;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.noNftsMessage p {
+  color: #cccccc;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .noNftsMessage {
+    padding: 2rem 1rem;
+  }
+  
+  .noNftsMessage h3 {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .searchInput {
+    padding: 0.8rem 2.5rem 0.8rem 0.8rem;
+    font-size: 0.9rem;
+  }
+  
+  .searchIcon {
+    right: 0.8rem;
+    font-size: 1rem;
+  }
+  
+  .searchResults {
+    font-size: 0.8rem;
+  }
+  
+  .noNftsMessage {
+    padding: 1.5rem 0.75rem;
+  }
+  
+  .noNftsMessage h3 {
+    font-size: 1.2rem;
+  }
+}
+
 @keyframes modalSlideIn {
   from {
     opacity: 0;

@@ -1,0 +1,230 @@
+.nftCard {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 15px;
+  border: 1px solid rgba(0, 255, 195, 0.2);
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.nftCard:hover {
+  border-color: rgba(0, 255, 195, 0.4);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.machineBadge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: white;
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.machineIcon {
+  font-size: 0.8rem;
+}
+
+.machineName {
+  font-size: 0.65rem;
+}
+
+.nftPreview {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+  padding-top: 0.5rem;
+}
+
+.nftInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.nftTitle {
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nftDescription {
+  color: #cccccc;
+  font-size: 0.85rem;
+  margin: 0;
+  text-align: center;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.collaborativeSection {
+  background: rgba(249, 202, 36, 0.1);
+  border: 1px solid rgba(249, 202, 36, 0.3);
+  border-radius: 10px;
+  padding: 0.75rem;
+}
+
+.collaborativeLabel {
+  color: #f9ca24;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.authorsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.moreAuthors {
+  color: #f9ca24;
+  font-size: 0.75rem;
+  text-align: center;
+  font-style: italic;
+}
+
+.singleAuthor {
+  text-align: center;
+}
+
+.authorLabel {
+  color: #888888;
+  font-size: 0.8rem;
+}
+
+.tagsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  justify-content: center;
+}
+
+.tag {
+  background: rgba(0, 255, 195, 0.2);
+  color: #00ffc3;
+  padding: 0.2rem 0.4rem;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.moreTags {
+  color: #888888;
+  font-size: 0.7rem;
+  font-style: italic;
+}
+
+.playButton {
+  background: black;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.playButton:hover {
+  background: linear-gradient(135deg, #00d4aa, #00b894);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 255, 195, 0.3);
+}
+
+.playButton.playing {
+  background: linear-gradient(135deg, #ff6b6b, #ff5252);
+  color: #ffffff;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 107, 107, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 107, 107, 0);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .nftCard {
+    padding: 0.75rem;
+  }
+  
+  .nftTitle {
+    font-size: 1rem;
+  }
+  
+  .nftDescription {
+    font-size: 0.8rem;
+  }
+  
+  .playButton {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+  }
+  
+  .machineBadge {
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0.2rem 0.4rem;
+  }
+  
+  .machineName {
+    font-size: 0.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .nftCard {
+    padding: 0.5rem;
+  }
+  
+  .nftTitle {
+    font-size: 0.9rem;
+  }
+  
+  .nftDescription {
+    font-size: 0.75rem;
+  }
+  
+  .playButton {
+    padding: 0.5rem 0.7rem;
+    font-size: 0.8rem;
+  }
+  
+  .collaborativeSection {
+    padding: 0.5rem;
+  }
+  
+  .collaborativeLabel {
+    font-size: 0.75rem;
+  }
+}

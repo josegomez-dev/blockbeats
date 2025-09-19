@@ -24,6 +24,14 @@ export const EMPTY_NFT: NFTData = {
     metadata: {},
 };
 
+export interface Author {
+    uid: string;
+    displayName: string;
+    robotName: string;
+    robotPhase: number;
+    avatar?: string;
+}
+
 export type NFT = {
     id: string;
     createdBy?: string;
@@ -33,4 +41,9 @@ export type NFT = {
     createdAt?: string; // or Date, depending on your data structure
     tempo?: number; // default tempo or use nft.tempo if available
     color?: string; // background or frequency color
+    machineType?: 'drawing' | 'drums' | 'voicemusic' | 'launchpad'; // Machine type
+    authors?: Author[]; // For collaborative songs
+    isCollaborative?: boolean; // Whether this is a multi-author song
+    description?: string; // Optional description
+    tags?: string[]; // Optional tags for categorization
 };

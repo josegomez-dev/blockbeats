@@ -4,6 +4,7 @@ import styles from '@/app/assets/styles/layouts/SidebarMenu.module.css';
 import { FaHome, FaStore, FaChalkboardTeacher, FaMusic } from 'react-icons/fa';
 import Link from 'next/link';
 import { BiCollection, BiGlasses, BiGlassesAlt } from 'react-icons/bi';
+import { MdDashboard } from 'react-icons/md';
 
 const SidebarMenu = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -24,7 +25,8 @@ const SidebarMenu = () => {
   }, [isExpanded]);
 
   const menuItems = [
-    { icon: <FaHome />, label: 'Dashboard', href: '/dashboard' },
+    { icon: <MdDashboard />, label: 'Dashboard', href: '/dashboard' },
+    { icon: <BiGlasses />, label: 'Profile', href: '/profile' },
     { icon: <FaMusic />, label: 'Studio', href: '/studio' },
     { icon: <BiCollection />, label: 'Top Collections', href: '/collections' },
     { icon: <FaStore />, label: 'Marketplace', href: '/marketplace' },

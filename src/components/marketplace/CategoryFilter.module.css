@@ -1,0 +1,156 @@
+.categoryFilter {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 15px;
+  padding: 1.5rem;
+  border: 1px solid rgba(0, 255, 195, 0.2);
+  backdrop-filter: blur(10px);
+  margin-bottom: 2rem;
+}
+
+.filterTitle {
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.categoryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.categoryButton {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+
+.categoryButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, var(--category-color, #00ffc3), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+}
+
+.categoryButton:hover::before {
+  opacity: 0.1;
+}
+
+.categoryButton:hover {
+  border-color: var(--category-color, #00ffc3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.categoryButton.active {
+  border-color: var(--category-color, #00ffc3);
+  background: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.categoryButton.active::before {
+  opacity: 0.2;
+}
+
+.categoryIcon {
+  font-size: 1.5rem;
+  color: var(--category-color, #00ffc3);
+  z-index: 1;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.categoryInfo {
+  z-index: 1;
+  position: relative;
+  flex: 1;
+}
+
+.categoryName {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+  color: #ffffff;
+}
+
+.categoryDescription {
+  font-size: 0.8rem;
+  color: #cccccc;
+  margin-bottom: 0.25rem;
+}
+
+.categoryCount {
+  font-size: 0.75rem;
+  color: var(--category-color, #00ffc3);
+  font-weight: 500;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .categoryFilter {
+    padding: 1rem;
+  }
+  
+  .categoryGrid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .categoryButton {
+    padding: 0.75rem;
+    gap: 0.75rem;
+  }
+  
+  .categoryIcon {
+    font-size: 1.25rem;
+  }
+  
+  .categoryName {
+    font-size: 0.9rem;
+  }
+  
+  .categoryDescription {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .categoryFilter {
+    padding: 0.75rem;
+  }
+  
+  .categoryButton {
+    padding: 0.5rem;
+    gap: 0.5rem;
+  }
+  
+  .categoryIcon {
+    font-size: 1.1rem;
+  }
+  
+  .categoryName {
+    font-size: 0.85rem;
+  }
+  
+  .categoryDescription {
+    font-size: 0.7rem;
+  }
+}
