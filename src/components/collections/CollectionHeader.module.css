@@ -2,7 +2,7 @@
   padding: 2rem;
   border-radius: 15px;
   margin-bottom: 2rem;
-  border: 1px solid rgba(0, 255, 195, 0.3);
+  border: 1px solid var(--primary-color, rgba(0, 255, 195, 0.3));
   backdrop-filter: blur(10px);
   position: relative;
   overflow: hidden;
@@ -48,7 +48,7 @@
   align-items: center;
   justify-content: center;
   font-size: 3rem;
-  border: 2px solid rgba(0, 255, 195, 0.3);
+  border: 2px solid var(--primary-color, rgba(0, 255, 195, 0.3));
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
@@ -85,7 +85,7 @@
 }
 
 .songCount {
-  color: #00ffc3;
+  color: var(--primary-color, #00ffc3);
   font-weight: 600;
 }
 
@@ -111,7 +111,7 @@
 
 .playAllButton {
   padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, #00ffc3, #00d4aa);
+  background: linear-gradient(135deg, var(--primary-color, #00ffc3), var(--primary-color, #00d4aa));
   border: none;
   border-radius: 25px;
   color: #000000;
@@ -122,13 +122,13 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  box-shadow: 0 4px 15px rgba(0, 255, 195, 0.3);
+  box-shadow: 0 4px 15px var(--primary-color, rgba(0, 255, 195, 0.3));
 }
 
 .playAllButton:hover {
-  background: linear-gradient(135deg, #00d4aa, #00b894);
+  background: linear-gradient(135deg, var(--primary-color, #00d4aa), var(--primary-color, #00b894));
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 255, 195, 0.4);
+  box-shadow: 0 6px 20px var(--primary-color, rgba(0, 255, 195, 0.4));
 }
 
 .playAllButton.playing {
@@ -140,9 +140,9 @@
 .shuffleButton {
   padding: 0.75rem 1.5rem;
   background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(0, 255, 195, 0.3);
+  border: 1px solid var(--primary-color, rgba(0, 255, 195, 0.3));
   border-radius: 25px;
-  color: #00ffc3;
+  color: var(--primary-color, #00ffc3);
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
@@ -153,8 +153,8 @@
 }
 
 .shuffleButton:hover {
-  background: rgba(0, 255, 195, 0.1);
-  border-color: rgba(0, 255, 195, 0.6);
+  background: var(--primary-color, rgba(0, 255, 195, 0.1));
+  border-color: var(--primary-color, rgba(0, 255, 195, 0.6));
   transform: translateY(-2px);
 }
 

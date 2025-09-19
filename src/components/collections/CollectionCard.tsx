@@ -16,10 +16,14 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
   isSelected = false 
 }) => {
   const getGradientStyle = (color: string) => {
+    // Use collectionColor if available, otherwise fall back to color, then default
+    const primaryColor = collection.collectionColor || collection.color || color;
+    
     return {
-      background: `linear-gradient(135deg, ${color}20, ${color}40, ${color}20)`,
-      borderColor: color,
-    };
+      background: `linear-gradient(135deg, ${primaryColor}15, ${primaryColor}25, ${primaryColor}15)`,
+      borderColor: `${primaryColor}60`,
+      '--primary-color': primaryColor,
+    } as React.CSSProperties;
   };
 
   return (

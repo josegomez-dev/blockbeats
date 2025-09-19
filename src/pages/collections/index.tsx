@@ -15,6 +15,7 @@ import CollectionCard from '../../components/collections/CollectionCard';
 import CollectionHeader from '../../components/collections/CollectionHeader';
 import PlaylistItem from '../../components/collections/PlaylistItem';
 import Footer from '../../components/layout/Footer';
+import SignInUnautorizedModal from '../../components/modals/SignInUnautorizedModal';
 
 const CollectionsScreen = () => {
   const [userNFTS, setUserNFTS] = useState<NFT[]>([]);
@@ -27,35 +28,123 @@ const CollectionsScreen = () => {
   const [stopMelodyRef, setStopMelodyRef] = useState<(() => void) | null>(null);
   const [stopDrumRef, setStopDrumRef] = useState<(() => void) | null>(null);
   const [isPlayingAll, setIsPlayingAll] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const { user, authenticated } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    const fetchNFTs = async () => {
-      const querySnapshot = await getDocs(collection(db, "signatures"));
-      const nfts = querySnapshot.docs.map((doc) => ({ ...(doc.data() as NFT), id: doc.id })) as NFT[];
-      setUserNFTS(nfts);
-    };
-    fetchNFTs();
-  }, [user]);
+    const fetchCollectionsData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        
+        // Fetch both collections and NFTs in parallel
+        const [collectionsSnapshot, nftsSnapshot] = await Promise.all([
+          getDocs(collection(db, "topCollections")),
+          authenticated && user ? getDocs(collection(db, "signatures")) : Promise.resolve(null)
+        ]);
+        
+        // Process collections data
+        const topCollections = collectionsSnapshot.docs.map((doc) => ({ 
+          ...(doc.data() as TopCollections), 
+          id: doc.id 
+        }));
+        setTopCollections(topCollections);
+        console.log('Fetched top collections:', topCollections.length);
+        console.log('Collections data:', topCollections.map(col => ({
+          id: col.id,
+          name: col.collectionName,
+          nftsCount: col.nftsList?.length || 0,
+          nftsList: col.nftsList
+        })));
+        
+        // Process NFTs data (only if user is authenticated)
+        if (nftsSnapshot && authenticated && user) {
+          const nfts = nftsSnapshot.docs.map((doc) => ({ 
+            ...(doc.data() as NFT), 
+            id: doc.id 
+          })) as NFT[];
+          setUserNFTS(nfts);
+          console.log('Fetched NFTs for collections:', nfts.length);
+          console.log('NFT IDs:', nfts.map(nft => nft.id));
+        } else {
+          setUserNFTS([]);
+          console.log('No NFTs fetched - user not authenticated');
+        }
 
-  useEffect(() => {
-    const fetchTopCollections = async () => {
-      const querySnapshot = await getDocs(collection(db, "topCollections"));
-      const topCollections = querySnapshot.docs.map((doc) => ({ ...(doc.data() as TopCollections), id: doc.id }));
-      setTopCollections(topCollections);
+        console.log(topCollections);
+        
+      } catch (error) {
+        console.error('Error fetching collections data:', error);
+        setError('Failed to load collections data');
+      } finally {
+        setLoading(false);
+      }
     };
-    fetchTopCollections();
-  }, []);
+    
+    fetchCollectionsData();
+  }, [user, authenticated]);
 
   const handleViewCollection = async (collectionId: string) => {
     const selected = topCollections.find(item => item.id === collectionId);
     if (selected) {
-      const filtered = userNFTS.filter(nft => selected.nftsList?.includes(nft.id));
+      console.log('=== COLLECTION SELECTION DEBUG ===');
+      console.log('Selected collection:', selected);
+      console.log('Collection name:', selected.collectionName);
+      console.log('Collection nftsList:', selected.nftsList);
+      console.log('nftsList type:', typeof selected.nftsList);
+      console.log('nftsList length:', selected.nftsList?.length);
+      
+      console.log('Available NFTs count:', userNFTS.length);
+      console.log('Available NFT IDs:', userNFTS.map(nft => nft.id));
+      
+      // Check if nftsList exists and is an array
+      if (!selected.nftsList || !Array.isArray(selected.nftsList)) {
+        console.warn('Collection has no nftsList or it\'s not an array:', selected.nftsList);
+        setSelectedCollection(selected);
+        setCollectionNFTs([]);
+        setIsCollectionViewOpen(true);
+        return;
+      }
+      
+      // Filter NFTs that match the collection's nftsList IDs
+      const filtered = userNFTS.filter(nft => {
+        const isMatch = selected.nftsList?.includes(nft.id);
+        if (isMatch) {
+          console.log(`✅ Found match: NFT ${nft.id} is in collection`);
+        }
+        return isMatch;
+      });
+      
+      // Log unmatched IDs for debugging
+      const unmatchedIds = selected.nftsList?.filter(id => 
+        !userNFTS.some(nft => nft.id === id)
+      ) || [];
+      
+      console.log('Filtered NFTs count:', filtered.length);
+      console.log('Matched NFT IDs:', filtered.map(nft => nft.id));
+      console.log('Unmatched IDs in collection:', unmatchedIds);
+      console.log('=== END DEBUG ===');
+      
       setSelectedCollection(selected);
       setCollectionNFTs(filtered);
       setIsCollectionViewOpen(true);
+      
+      // Smooth scroll to the collection view after a short delay
+      setTimeout(() => {
+        const collectionView = document.querySelector('[data-collection-view]');
+        if (collectionView) {
+          collectionView.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start',
+            inline: 'nearest'
+          });
+        }
+      }, 100);
+    } else {
+      console.error('Collection not found:', collectionId);
     }
   };
 
@@ -124,6 +213,10 @@ const CollectionsScreen = () => {
     setStopMelodyRef(() => stopMelody);
   };
 
+  if (!user || !authenticated) {
+    return <SignInUnautorizedModal open={true} onClose={() => {}} pageName="Collections" />;
+  }
+
   return (
     <>
       <div className="gallery-screen">
@@ -188,7 +281,7 @@ const CollectionsScreen = () => {
 
         {/* Collection Playlist View */}
         {isCollectionViewOpen && selectedCollection && (
-          <div className={styles.playlistView}>
+          <div className={styles.playlistView} data-collection-view>
             <CollectionHeader
               collection={selectedCollection}
               onClose={handleCloseCollection}

@@ -20,9 +20,13 @@ const CollectionHeader: React.FC<CollectionHeaderProps> = ({
   isPlaying = false
 }) => {
   const getGradientStyle = (color: string) => {
+    // Use collectionColor if available, otherwise fall back to color, then default
+    const primaryColor = collection.collectionColor || collection.color || color;
+    
     return {
-      background: `linear-gradient(135deg, ${color}40, ${color}20, ${color}10)`,
-    };
+      background: `linear-gradient(135deg, ${primaryColor}40, ${primaryColor}20, ${primaryColor}10)`,
+      '--primary-color': primaryColor,
+    } as React.CSSProperties;
   };
 
   return (

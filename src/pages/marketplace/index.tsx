@@ -26,7 +26,7 @@ const MarketplaceScreen = () => {
   const [stopMelodyRef, setStopMelodyRef] = React.useState<(() => void) | null>(null);
   const [stopDrumRef, setStopDrumRef] = React.useState<(() => void) | null>(null);
 
-  const { user } = useAuth();
+  const { user, authenticated } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
@@ -104,12 +104,12 @@ const MarketplaceScreen = () => {
   };
 
 
-  if (!user) {
+  if (!user || !authenticated) {
     return (
       <SignInUnautorizedModal 
         open={true}
         onClose={() => {}}
-        pageName="Gallery"
+        pageName="Marketplace"
       />
     );
   }
