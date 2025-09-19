@@ -151,6 +151,8 @@ const DashboardLayout = () => {
                     </div>
                     
                     {/* Start Button */}
+                    <br />
+                    <br />
                     <div className="start-button-container">
                       <button 
                         className="start-button"
@@ -175,6 +177,8 @@ const DashboardLayout = () => {
                   </div>
                 </div>
 
+                <br />
+                
                 {/* Bottom Text Content */}
                 <div className="launchpad-bottom" style={{ position: 'relative', zIndex: 2 }}>
                   <div className="dashboard-description">
