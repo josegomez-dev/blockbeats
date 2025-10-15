@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import CharacterPanel from '../../components/features/CharacterPanel';
 import Web3StatsPanel from '../../components/features/Web3StatsPanel';
 import DailyRewardModal from '../../components/modals/DailyRewardModal';
@@ -8,7 +8,7 @@ import SignInUnautorizedModal from '../../components/modals/SignInUnautorizedMod
 import Image from "next/image";
 import { RxAvatar } from "react-icons/rx";
 import { SiWeb3Dotjs } from "react-icons/si";
-import { FaMusic } from "react-icons/fa";
+import { FaMusic, FaPlay, FaPause, FaVolumeUp, FaVolumeMute } from "react-icons/fa";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { useAuth } from '../../context/AuthContext';
@@ -26,8 +26,38 @@ const DashboardLayout = () => {
   const [showVegasGame, setShowVegasGame] = useState(false);
   const [showRewards, setShowRewards] = useState(true);
 
+  // Audio player state
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [volume, setVolume] = useState(0.5);
+  const [isMuted, setIsMuted] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
   const { user, authenticated } = useAuth();
   const router = useRouter();
+
+  // ────────────────────────────────────────────────
+  // 🎵 Audio Player Effects
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = isMuted ? 0 : volume;
+    }
+  }, [volume, isMuted]);
+
+  useEffect(() => {
+    // Auto-play when component mounts
+    if (audioRef.current && user && authenticated) {
+      const playAudio = async () => {
+        try {
+          await audioRef.current?.play();
+          setIsPlaying(true);
+        } catch (error) {
+          console.log('Auto-play prevented by browser:', error);
+          setIsPlaying(false);
+        }
+      };
+      playAudio();
+    }
+  }, [user, authenticated]);
 
   // ────────────────────────────────────────────────
   // 📦 Initial Rewards Check
@@ -82,6 +112,29 @@ const DashboardLayout = () => {
     });
   };
 
+  // 🎵 Audio Control Functions
+  const togglePlayPause = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      } else {
+        audioRef.current.play();
+        setIsPlaying(true);
+      }
+    }
+  };
+
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newVolume = parseFloat(e.target.value);
+    setVolume(newVolume);
+    setIsMuted(newVolume === 0);
+  };
+
+  const toggleMute = () => {
+    setIsMuted(!isMuted);
+  };
+
   if (!user || !authenticated) {
     return <SignInUnautorizedModal open={true} onClose={() => {}} pageName="Dashboard" />;
   }
@@ -119,11 +172,90 @@ const DashboardLayout = () => {
           />
         )}
 
+        {/* 🎵 Audio Player */}
+        <audio
+          ref={audioRef}
+          src="/sounds/app/dashboard.mp3"
+          loop
+          preload="auto"
+          onEnded={() => setIsPlaying(false)}
+        />
+
         {/* 📱 Mobile App-style Buttons */}
         <div className={styles.buttonsContainer}>
           <button onClick={() => showPanel('left')} className={styles.button}><RxAvatar /></button>
           <button onClick={() => showPanel('center')} className={styles.button}><FaMusic /></button>
           <button onClick={() => showPanel('right')} className={styles.button}><SiWeb3Dotjs /></button>
+        </div>
+
+        {/* 🎨 Enhanced Dashboard Header */}
+        <div className="dashboard-header-enhanced">
+          <div className="header-background-effects">
+            <div className="floating-particles">
+              <div className="particle"></div>
+              <div className="particle"></div>
+              <div className="particle"></div>
+              <div className="particle"></div>
+              <div className="particle"></div>
+            </div>
+          </div>
+          
+          <div className="header-content">
+            <div className="main-title-container">
+              <h1 className="dashboard-main-title">
+                Your Musical NFTs Collection & Web3 Stats
+              </h1>
+            </div>
+            
+            <div className="subtitle-container">
+              <p className="dashboard-subtitle">
+                🎵 Immerse yourself in your musical universe 🎵
+              </p>
+              <p className="dashboard-description">
+                Explore your NFT collection, track character progression, monitor Web3 stats, 
+                and access the creative launchpad for crafting new musical masterpieces.
+              </p>
+            </div>
+
+            {/* 🎛️ Audio Controls */}
+            <div className="audio-controls-panel">
+              <div className="audio-controls">
+                <button 
+                  className="play-pause-btn"
+                  onClick={togglePlayPause}
+                  title={isPlaying ? "Pause Music" : "Play Music"}
+                >
+                  {isPlaying ? <FaPause /> : <FaPlay />}
+                </button>
+                
+                <div className="volume-control">
+                  <button 
+                    className="mute-btn"
+                    onClick={toggleMute}
+                    title={isMuted ? "Unmute" : "Mute"}
+                  >
+                    {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
+                  </button>
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.1"
+                    value={isMuted ? 0 : volume}
+                    onChange={handleVolumeChange}
+                    className="volume-slider"
+                    title="Volume Control"
+                  />
+                </div>
+                
+                <div className="audio-status">
+                  <span className="status-indicator">
+                    {isPlaying ? "🎵 Playing" : "⏸️ Paused"}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* 🖥️ Main 3-Panel Grid */}
