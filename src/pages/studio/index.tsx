@@ -56,6 +56,38 @@ const MusicStudioPage = () => {
       color: '#45b7d1',
       category: 'Sampler'
     },
+    {
+      id: 'lofi',
+      name: 'LoFi Beats Machine',
+      description: 'Create chill lo-fi hip hop beats with vintage vibes and vinyl crackle',
+      ready: false,
+      color: '#ff9f43',
+      category: 'LoFi Producer'
+    },
+    {
+      id: 'web3sounds',
+      name: 'Web3 Sounds Machine',
+      description: 'Generate ambient sounds and sound effects for Web3 apps and games',
+      ready: false,
+      color: '#6c5ce7',
+      category: 'Web3 Audio'
+    },
+    {
+      id: 'rapperbeats',
+      name: 'Rapper Beats Machine',
+      description: 'Craft hard-hitting beats and instrumentals for rap and hip-hop artists',
+      ready: false,
+      color: '#fd79a8',
+      category: 'Hip-Hop Producer'
+    },
+    {
+      id: 'ambient',
+      name: 'Ambient Soundscape Machine',
+      description: 'Generate atmospheric ambient music and soundscapes for meditation',
+      ready: false,
+      color: '#00cec9',
+      category: 'Ambient Creator'
+    },
   ];
 
   const renderMachine = () => {

@@ -533,13 +533,44 @@
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background: rgba(255, 0, 0, 0.8);
+  background: linear-gradient(135deg, #ff6b6b, #ff8e53, #ff6b6b);
+  background-size: 200% 200%;
   color: white;
-  padding: 0.3rem 0.8rem;
-  border-radius: 15px;
-  font-size: 0.8rem;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
   font-weight: bold;
   z-index: 4;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  box-shadow: 
+    0 4px 15px rgba(255, 107, 107, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: comingSoonPulse 3s ease-in-out infinite, gradientShift 4s ease-in-out infinite;
+  backdrop-filter: blur(10px);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes comingSoonPulse {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 
+      0 4px 15px rgba(255, 107, 107, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+  50% { 
+    transform: scale(1.05);
+    box-shadow: 
+      0 6px 20px rgba(255, 107, 107, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .machineHover {
