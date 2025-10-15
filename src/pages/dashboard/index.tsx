@@ -24,20 +24,20 @@ const DashboardLayout = () => {
   const [totalTopCollections, setTotalTopCollections] = useState(0);
 
   const [showVegasGame, setShowVegasGame] = useState(false);
-  const [showRewards, setShowRewards] = useState(false);
+  const [showRewards, setShowRewards] = useState(true);
 
   const { user, authenticated } = useAuth();
   const router = useRouter();
 
   // ────────────────────────────────────────────────
   // 📦 Initial Rewards Check
-  useEffect(() => {
-    const lastClaim = localStorage.getItem("lastRewardClaimDate");
-    const today = new Date().toISOString().split("T")[0];
-    if (lastClaim !== today) {
-      setShowRewards(true);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const lastClaim = localStorage.getItem("lastRewardClaimDate");
+  //   const today = new Date().toISOString().split("T")[0];
+  //   if (lastClaim !== today) {
+  //     setShowRewards(true);
+  //   }
+  // }, []);
 
   // ────────────────────────────────────────────────
   // 📡 Fetch Data
