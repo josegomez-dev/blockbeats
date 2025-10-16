@@ -159,7 +159,7 @@ const ProfileTabContent: React.FC<ProfileTabContentProps> = ({
               </div>
 
               <div className={styles.statCard}>
-                <div className={styles.statIcon}>🎨</div>
+                <div className={styles.statIcon}>🚧</div>
                 <div className={styles.statContent}>
                   <h4>Total Creations</h4>
                   <p className={styles.statValue}>{userStats?.totalCreations || 0}</p>
