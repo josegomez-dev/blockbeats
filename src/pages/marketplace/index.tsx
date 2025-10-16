@@ -7,6 +7,7 @@ import SignInUnautorizedModal from '../../components/modals/SignInUnautorizedMod
 import GalleryHeader from '../../components/layout/GalleryHeader';
 import { NFT } from '@/types/nftTypes';
 import { playMelody, playDrumLoop } from "@/utils/helpers/drumHelper";
+import { playDrumPattern } from "@/utils/helpers/drumPatternHelper";
 import { notes } from "@/utils/constants/musicDrawingMachine"; // for frequency mapping
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -195,14 +196,48 @@ const MarketplaceScreen = () => {
     }
     // Handle Drum Designer songs
     else if (nft.machineType === 'drums' && nft.drumMachine) {
-      // For drum patterns, we'll play a basic drum loop
-      // You might want to implement drum pattern playback here
-      const stopDrum = playDrumLoop(tempo, () => {
-        setIsPlaying(false);
-        setPlayingNFTId(null);
-        setStopDrumRef(null);
-      });
-      setStopDrumRef(() => stopDrum);
+      console.log('Playing drum pattern NFT:', nft.drumMachine);
+      
+      // Parse drum machine data if it's a string
+      let drumData;
+      try {
+        drumData = typeof nft.drumMachine === 'string' 
+          ? JSON.parse(nft.drumMachine) 
+          : nft.drumMachine;
+      } catch (error) {
+        console.error('Failed to parse drum machine data:', error);
+        drumData = nft.drumMachine;
+      }
+
+      // Play the actual drum pattern with proper sounds
+      if (drumData && drumData.grid && drumData.selectedSounds) {
+        const stopDrum = playDrumPattern(
+          {
+            grid: drumData.grid,
+            selectedSounds: drumData.selectedSounds
+          },
+          {
+            tempo: tempo,
+            steps: drumData.grid[0]?.length || 8,
+            volume: 80,
+            onStop: () => {
+              setIsPlaying(false);
+              setPlayingNFTId(null);
+              setStopDrumRef(null);
+            }
+          }
+        );
+        setStopDrumRef(() => stopDrum);
+      } else {
+        console.warn('Invalid drum machine data:', drumData);
+        // Fallback to basic drum loop
+        const stopDrum = playDrumLoop(tempo, () => {
+          setIsPlaying(false);
+          setPlayingNFTId(null);
+          setStopDrumRef(null);
+        });
+        setStopDrumRef(() => stopDrum);
+      }
     }
     // Fallback for songs without proper data
     else {
