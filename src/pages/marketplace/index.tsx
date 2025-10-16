@@ -31,9 +31,86 @@ const MarketplaceScreen = () => {
 
   useEffect(() => {
     const fetchNFTs = async () => {
+      try {
       const querySnapshot = await getDocs(collection(db, "signatures"));
-      const nfts = querySnapshot.docs.map((doc) => ({ ...(doc.data() as NFT), id: doc.id })) as NFT[];
-      setNFTs(nfts);
+      const nfts = querySnapshot.docs.map((doc) => {
+        const data = doc.data();
+        
+        // Safe JSON parsing function
+        const safeJsonParse = (jsonString: any) => {
+          try {
+            if (typeof jsonString === 'object' && jsonString !== null) {
+              return jsonString;
+            }
+            if (typeof jsonString === 'string') {
+              return JSON.parse(jsonString);
+            }
+            return null;
+          } catch (error) {
+            console.warn('Failed to parse JSON:', jsonString, error);
+            return null;
+          }
+        };
+        
+        // Detect if this is an old format NFT (has direct colorMap) or new format (has pixelData)
+        const isOldFormat = data.colorMap && Array.isArray(data.colorMap);
+        const isNewFormat = data.pixelData || data.drawingMachine || data.drumMachine;
+        
+        console.log(`NFT ${doc.id}:`, {
+          isOldFormat,
+          isNewFormat,
+          hasColorMap: !!data.colorMap,
+          hasPixelData: !!data.pixelData,
+          hasDrawingMachine: !!data.drawingMachine,
+          hasDrumMachine: !!data.drumMachine,
+          data
+        });
+        
+        if (isOldFormat) {
+          // Handle old format NFTs
+          return {
+            id: doc.id,
+            ...data,
+            songName: data.songName || data.name || 'Untitled',
+            colorMap: data.colorMap || [],
+            // Keep original structure for old NFTs
+            createdBy: data.createdBy,
+            description: data.description,
+            tempo: data.tempo || 120,
+            machineType: data.machineType || 'drawing', // Assume drawing for old NFTs
+            tags: data.tags || [],
+            isCollaborative: data.isCollaborative || false,
+            authors: data.authors || [],
+            isOldFormat: true
+          } as NFT;
+        } else {
+          // Handle new format NFTs
+          return {
+            id: doc.id,
+            ...data,
+            // Map our Firebase fields to the expected NFT fields
+            songName: data.name || 'Untitled',
+            colorMap: data.pixelData ? safeJsonParse(data.pixelData) : [],
+            drawingMachine: data.drawingMachine ? safeJsonParse(data.drawingMachine) : null,
+            drumMachine: data.drumMachine ? safeJsonParse(data.drumMachine) : null,
+            // Keep original fields for backward compatibility
+            createdBy: data.createdBy,
+            description: data.description,
+            tempo: data.tempo || 120,
+            machineType: data.machineType,
+            tags: data.tags || [],
+            isCollaborative: data.isCollaborative || false,
+            authors: data.authors || [],
+            isOldFormat: false
+          } as NFT;
+        }
+      });
+        
+        console.log('Fetched NFTs:', nfts);
+        setNFTs(nfts);
+      } catch (error) {
+        console.error('Error fetching NFTs:', error);
+      }
     };
     fetchNFTs();
   }, []);
@@ -47,6 +124,10 @@ const MarketplaceScreen = () => {
       filtered = nfts;
     } else if (selectedCategory === 'collaborative') {
       filtered = nfts.filter(nft => nft.isCollaborative);
+    } else if (selectedCategory === 'classic') {
+      filtered = nfts.filter(nft => nft.isOldFormat);
+    } else if (selectedCategory === 'modern') {
+      filtered = nfts.filter(nft => !nft.isOldFormat);
     } else {
       filtered = nfts.filter(nft => nft.machineType === selectedCategory);
     }
@@ -68,12 +149,19 @@ const MarketplaceScreen = () => {
       drawing: nfts.filter(nft => nft.machineType === 'drawing').length,
       drums: nfts.filter(nft => nft.machineType === 'drums').length,
       voicemusic: nfts.filter(nft => nft.machineType === 'voicemusic').length,
-      collaborative: nfts.filter(nft => nft.isCollaborative).length
+      collaborative: nfts.filter(nft => nft.isCollaborative).length,
+      classic: nfts.filter(nft => nft.isOldFormat).length,
+      modern: nfts.filter(nft => !nft.isOldFormat).length
     };
   }, [nfts]);
 
   const handlePlayNFT = (nft: NFT) => {
     if (isPlaying && playingNFTId === nft.id) return;
+
+    console.log('Playing NFT:', nft);
+    console.log('NFT colorMap:', nft.colorMap);
+    console.log('NFT drawingMachine:', nft.drawingMachine);
+    console.log('NFT drumMachine:', nft.drumMachine);
 
     stopMelodyRef?.();
     stopDrumRef?.();
@@ -81,26 +169,54 @@ const MarketplaceScreen = () => {
     setIsPlaying(true);
     setPlayingNFTId(nft.id);
 
-    const melody = (nft.colorMap ?? []).map(({ noteIndex, time }) => ({ noteIndex, time }));
-    const tempo = nft.tempo || 300;
+    const tempo = nft.tempo || 120;
 
-    const stopDrum = playDrumLoop(tempo, () => {});
-    setStopDrumRef(() => stopDrum);
+    // Handle Music Drawing Machine songs (both old and new format)
+    if ((nft.machineType === 'drawing' || nft.isOldFormat) && nft.colorMap && nft.colorMap.length > 0) {
+      const melody = nft.colorMap.map(({ noteIndex, time }) => ({ noteIndex, time }));
+      
+      const stopDrum = playDrumLoop(tempo, () => {});
+      setStopDrumRef(() => stopDrum);
 
-    const stopMelody = playMelody(
-      melody,
-      tempo,
-      notes.map(n => n[1]),
-      () => {
-        stopDrum?.();
+      const stopMelody = playMelody(
+        melody,
+        tempo,
+        notes.map(n => n[1]),
+        () => {
+          stopDrum?.();
+          setIsPlaying(false);
+          setPlayingNFTId(null);
+          setStopDrumRef(null);
+          setStopMelodyRef(null);
+        }
+      );
+
+      setStopMelodyRef(() => stopMelody);
+    }
+    // Handle Drum Designer songs
+    else if (nft.machineType === 'drums' && nft.drumMachine) {
+      // For drum patterns, we'll play a basic drum loop
+      // You might want to implement drum pattern playback here
+      const stopDrum = playDrumLoop(tempo, () => {
         setIsPlaying(false);
         setPlayingNFTId(null);
         setStopDrumRef(null);
-        setStopMelodyRef(null);
-      }
-    );
-
-    setStopMelodyRef(() => stopMelody);
+      });
+      setStopDrumRef(() => stopDrum);
+    }
+    // Fallback for songs without proper data
+    else {
+      console.warn('No valid music data found for NFT:', nft.id);
+      console.warn('NFT data:', {
+        machineType: nft.machineType,
+        isOldFormat: nft.isOldFormat,
+        hasColorMap: !!nft.colorMap,
+        colorMapLength: nft.colorMap?.length,
+        hasDrumMachine: !!nft.drumMachine
+      });
+      setIsPlaying(false);
+      setPlayingNFTId(null);
+    }
   };
 
 

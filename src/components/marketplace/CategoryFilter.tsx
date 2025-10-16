@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { FaMusic, FaDrum, FaMicrophone, FaSquare } from 'react-icons/fa';
+import { FaMusic, FaDrum, FaMicrophone, FaSquare, FaBuilding, FaRocket } from 'react-icons/fa';
 import styles from './CategoryFilter.module.css';
 
 export interface Category {
@@ -47,6 +47,20 @@ const categories: Category[] = [
     icon: <FaMusic />,
     description: 'Multi-author songs',
     color: '#f9ca24'
+  },
+  {
+    id: 'classic',
+    name: 'Classic NFTs',
+    icon: <FaBuilding />,
+    description: 'Original format NFTs',
+    color: '#ff9800'
+  },
+  {
+    id: 'modern',
+    name: 'Modern NFTs',
+    icon: <FaRocket />,
+    description: 'New format NFTs',
+    color: '#00ff88'
   }
 ];
 

@@ -1,11 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
-import { FaList, FaMusic, FaPlay, FaHome } from 'react-icons/fa';
+import { FaList, FaMusic, FaPlay, FaHome, FaSave } from 'react-icons/fa';
 import MusicDrawingMachine, { MusicDrawingMachineRef } from '../../components/machines/musicDrawingMachine/MusicDrawingMachine';
 import DrumDesigner, { DrumDesignerRef } from '../../components/machines/drumDesigner/DrumDesigner';
 import SongManagerModal from '../../components/modals/SongManagerModal';
+import SaveSongModal from '../../components/modals/SaveSongModal';
 import { SongData } from '@/utils/helpers/songStorage';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../../../firebase';
+import { useRouter } from 'next/router';
+import { useAuth } from '@/context/AuthContext';
+import toast from 'react-hot-toast';
 import styles from '@/app/assets/styles/pages/MusicStudio.module.css';
 
 const MusicStudioPage = () => {
@@ -16,10 +22,80 @@ const MusicStudioPage = () => {
   
   // Song management state
   const [showSongManager, setShowSongManager] = useState(false);
+  const [showSaveModal, setShowSaveModal] = useState(false);
+  const [loadingSong, setLoadingSong] = useState(false);
+  const [saveModalSongData, setSaveModalSongData] = useState<SongData | null>(null);
+  
   
   // Refs for machine communication
   const musicDrawingMachineRef = useRef<MusicDrawingMachineRef>(null);
   const drumDesignerRef = useRef<DrumDesignerRef>(null);
+  
+  // Audio ref for studio background music
+  const studioAudioRef = useRef<HTMLAudioElement>(null);
+  
+  // Router and auth
+  const router = useRouter();
+  const { user } = useAuth();
+
+  // Safe JSON parsing function
+  const safeJsonParse = (jsonString: any) => {
+    try {
+      // If it's already an object, return it
+      if (typeof jsonString === 'object' && jsonString !== null) {
+        return jsonString;
+      }
+      // If it's a string, try to parse it
+      if (typeof jsonString === 'string') {
+        return JSON.parse(jsonString);
+      }
+      // If it's anything else, return null
+      return null;
+    } catch (error) {
+      console.warn('Failed to parse JSON:', jsonString, error);
+      return null;
+    }
+  };
+
+  // Load song from URL parameter
+  useEffect(() => {
+    const loadSongFromUrl = async () => {
+      const { loadSong } = router.query;
+      if (loadSong && typeof loadSong === 'string') {
+        await loadSongById(loadSong);
+      }
+    };
+
+    if (router.isReady) {
+      loadSongFromUrl();
+    }
+  }, [router.isReady, router.query]);
+
+  // Handle studio background music
+  useEffect(() => {
+    const audio = studioAudioRef.current;
+    if (!audio) return;
+
+    // Play studio music when on machine selection screen
+    if (!selectedMachine) {
+      audio.play().catch((error) => {
+        console.log('Auto-play prevented:', error);
+        // Auto-play was prevented, user will need to interact first
+      });
+    } else {
+      // Pause studio music when a machine is selected
+      audio.pause();
+      audio.currentTime = 0;
+    }
+
+    // Cleanup function
+    return () => {
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    };
+  }, [selectedMachine]);
 
   const machines = [
     {
@@ -93,7 +169,9 @@ const MusicStudioPage = () => {
   const renderMachine = () => {
     // Minimal props since machines now have integrated controls
     const machineProps = {
-      onFreqModalOpen: () => setShowFreqModal(true)
+      onFreqModalOpen: () => setShowFreqModal(true),
+      // Disable machine updates when save modal or creations modal is open
+      isPaused: showSaveModal
     };
 
     switch (selectedMachine) {
@@ -137,6 +215,57 @@ const MusicStudioPage = () => {
     };
   };
 
+  const loadSongById = async (songId: string) => {
+    if (!user) {
+      toast.error('You must be logged in to load songs');
+      return;
+    }
+
+    try {
+      setLoadingSong(true);
+      const songDoc = await getDoc(doc(db, 'signatures', songId));
+      
+      if (!songDoc.exists()) {
+        toast.error('Song not found');
+        return;
+      }
+
+      const songData = songDoc.data();
+      
+      // Check if user owns this song
+      if (songData.createdBy !== user.uid) {
+        toast.error('You can only edit your own songs');
+        return;
+      }
+
+      // Set the appropriate machine
+      if (songData.machineType === 'drawing') {
+        setSelectedMachine('drawing');
+        // Load data into drawing machine
+        setTimeout(() => {
+          if (musicDrawingMachineRef.current && songData.drawingMachine) {
+            musicDrawingMachineRef.current.loadData?.(songData.drawingMachine);
+          }
+        }, 500);
+      } else if (songData.machineType === 'drums') {
+        setSelectedMachine('drums');
+        // Load data into drum machine
+        setTimeout(() => {
+          if (drumDesignerRef.current && songData.drumMachine) {
+            drumDesignerRef.current.loadData?.(songData.drumMachine);
+          }
+        }, 500);
+      }
+
+      toast.success(`Loaded "${songData.name}"`);
+    } catch (error) {
+      console.error('Error loading song:', error);
+      toast.error('Failed to load song');
+    } finally {
+      setLoadingSong(false);
+    }
+  };
+
   const handleLoadSong = (songData: SongData) => {
     // Load song data into machines
     if (songData.drawingMachine) {
@@ -154,6 +283,8 @@ const MusicStudioPage = () => {
 
 
 
+
+
   return (
     <>
       <Head>
@@ -165,6 +296,15 @@ const MusicStudioPage = () => {
         <meta property="og:image" content="https://blockbeats-tau.vercel.app/images/logos/logo.webp" />
         <meta property="og:url" content="https://blockbeats-tau.vercel.app/studio" />
       </Head>
+
+      {/* Studio Background Audio */}
+      <audio
+        ref={studioAudioRef}
+        src="/sounds/app/studio.mp3"
+        loop
+        preload="auto"
+        volume={0.3}
+      />
 
       <div className={styles.studioContainer}>
         <br />
@@ -244,18 +384,50 @@ const MusicStudioPage = () => {
           ) : (
             <div className={styles.machineWorkspace}>
               <div className={styles.workspaceHeader}>
-                <button 
-                  className={styles.backButton}
-                  onClick={handleBackToStudio}
-                >
-                  <FaHome />
-                  Back to Studio
-                </button>
+                <div className={styles.headerButtons}>
+                  <button 
+                    className={styles.backButton}
+                    onClick={handleBackToStudio}
+                  >
+                    <FaHome />
+                    Back to Studio
+                  </button>
+                  <button 
+                    className={styles.saveButton}
+                    onClick={() => {
+                      // Collect song data once when opening the modal
+                      const currentSongData = collectCurrentSongData();
+                      setSaveModalSongData(currentSongData);
+                      setShowSaveModal(true);
+                    }}
+                  >
+                    <FaSave />
+                    Save Song
+                  </button>
+                </div>
                 <h3 className={styles.workspaceTitle}>
                   {machines.find(m => m.id === selectedMachine)?.name}
                 </h3>
               </div>
               <div className={styles.workspaceContent}>
+                {/* Loading Indicator */}
+                {loadingSong && (
+                  <div className={styles.loadingOverlay}>
+                    <div className={styles.loadingSpinner} />
+                    <p>Loading song...</p>
+                  </div>
+                )}
+
+                {/* Save Modal Overlay - Prevents interaction with machine */}
+                {showSaveModal && (
+                  <div className={styles.modalOverlay}>
+                    <div className={styles.modalOverlayMessage}>
+                      <FaSave className={styles.modalOverlayIcon} />
+                      <p>Save your musical NFT</p>
+                    </div>
+                  </div>
+                )}
+
                 {/* Video Background for Drums Designer Machine */}
                 {selectedMachine === 'drums' && (
                   <>
@@ -287,6 +459,22 @@ const MusicStudioPage = () => {
           onLoadSong={handleLoadSong}
           currentSongData={collectCurrentSongData()}
         />
+
+        {/* Save Song Modal */}
+        <SaveSongModal
+          isOpen={showSaveModal}
+          onClose={() => {
+            setShowSaveModal(false);
+            setSaveModalSongData(null);
+          }}
+          songData={saveModalSongData || collectCurrentSongData()}
+          onSaveSuccess={() => {
+            // Refresh any data if needed
+            console.log('Song saved successfully!');
+            setSaveModalSongData(null);
+          }}
+        />
+
 
       </div>
     </>

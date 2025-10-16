@@ -8,6 +8,7 @@ interface Tab {
   label: string;
   icon: string;
   content: React.ReactNode;
+  disabled?: boolean;
 }
 
 interface ProfileTabsProps {
@@ -26,11 +27,13 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ tabs, defaultTab }) => {
         {tabs.map((tab) => (
           <button
             key={tab.id}
-            className={`${styles.tabHeader} ${activeTab === tab.id ? styles.active : ''}`}
-            onClick={() => setActiveTab(tab.id)}
+            className={`${styles.tabHeader} ${activeTab === tab.id ? styles.active : ''} ${tab.disabled ? styles.disabled : ''}`}
+            onClick={() => !tab.disabled && setActiveTab(tab.id)}
+            disabled={tab.disabled}
           >
             <span className={styles.tabIcon}>{tab.icon}</span>
             <span className={styles.tabLabel}>{tab.label}</span>
+            {tab.disabled && <span className={styles.disabledIcon}>🚧</span>}
           </button>
         ))}
       </div>

@@ -279,7 +279,7 @@ const CharacterPanel: React.FC = () => {
 
       <div className={styles.robotHeader}>
         <div className={styles.description}>
-          This is <span className='glitch'>{robotName}</span> &nbsp;
+          <span className='glitch'>{robotName}</span> &nbsp;
           <button 
             className={styles.editNameButton}
             onClick={() => setShowRobotNameModal(true)}

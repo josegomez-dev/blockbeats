@@ -46,4 +46,7 @@ export type NFT = {
     isCollaborative?: boolean; // Whether this is a multi-author song
     description?: string; // Optional description
     tags?: string[]; // Optional tags for categorization
+    isOldFormat?: boolean; // Whether this is an old format NFT
+    drawingMachine?: any; // New format drawing machine data
+    drumMachine?: any; // New format drum machine data
 };

@@ -36,13 +36,49 @@ const NFTCard: React.FC<NFTCardProps> = ({ nft, isPlaying, onPlay }) => {
         <span className={styles.machineName}>{machineInfo.name}</span>
       </div>
 
+      {/* Format Badge for Old NFTs */}
+      {nft.isOldFormat && (
+        <div className={styles.formatBadge}>
+          <span className={styles.formatIcon}>🏛️</span>
+          <span className={styles.formatLabel}>Classic</span>
+        </div>
+      )}
+
       {/* NFT Preview */}
       <div className={styles.nftPreview}>
-        <PixelPreview
-          colorMap={nft.colorMap || []}
-          size={120}
-          backgroundColor={nft.color || '#000'}
-        />
+        {nft.machineType === 'drawing' || (nft.isOldFormat && nft.colorMap) ? (
+          <PixelPreview
+            colorMap={nft.colorMap || []}
+            size={120}
+            backgroundColor={nft.color || '#000'}
+          />
+        ) : nft.machineType === 'drums' && nft.drumMachine ? (
+          <div className={styles.drumPreview}>
+            {/* Simple drum pattern visualization */}
+            <div className={styles.drumGrid}>
+              {Array.from({ length: 8 }, (_, row) => (
+                <div key={row} className={styles.drumRow}>
+                  {Array.from({ length: 8 }, (_, col) => (
+                    <div 
+                      key={col} 
+                      className={`${styles.drumBeat} ${
+                        nft.drumMachine?.grid?.[row]?.[col] ? styles.active : ''
+                      }`}
+                    />
+                  ))}
+                </div>
+              ))}
+            </div>
+            <div className={styles.drumLabel}>🥁 Drum Pattern</div>
+          </div>
+        ) : (
+          <div className={styles.unknownPreview}>
+            <div className={styles.unknownIcon}>🎵</div>
+            <div className={styles.unknownLabel}>
+              {nft.isOldFormat ? 'Classic NFT' : 'Audio NFT'}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* NFT Info */}

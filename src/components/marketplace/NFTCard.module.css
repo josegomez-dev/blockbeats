@@ -40,11 +40,106 @@
   font-size: 0.65rem;
 }
 
+/* Format Badge for Old NFTs */
+.formatBadge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(145deg, #ff9800, #f57c00);
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(255, 152, 0, 0.3);
+}
+
+.formatIcon {
+  font-size: 0.7rem;
+}
+
+.formatLabel {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
 .nftPreview {
   display: flex;
   justify-content: center;
   margin-bottom: 1rem;
   padding-top: 0.5rem;
+}
+
+/* Drum Preview Styles */
+.drumPreview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.drumGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.drumRow {
+  display: flex;
+  gap: 2px;
+}
+
+.drumBeat {
+  width: 12px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  transition: all 0.2s ease;
+}
+
+.drumBeat.active {
+  background: #4ecdc4;
+  box-shadow: 0 0 4px rgba(78, 205, 196, 0.5);
+}
+
+.drumLabel {
+  color: #4ecdc4;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Unknown Preview Styles */
+.unknownPreview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.unknownIcon {
+  font-size: 2rem;
+  opacity: 0.6;
+}
+
+.unknownLabel {
+  color: #cccccc;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-align: center;
 }
 
 .nftInfo {

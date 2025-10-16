@@ -68,6 +68,25 @@
   font-size: 0.9rem;
 }
 
+.tabHeader.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  position: relative;
+}
+
+.tabHeader.disabled:hover {
+  background: transparent;
+  color: #ccc;
+}
+
+.disabledIcon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
 .tabContent {
   background: rgba(0, 0, 0, 0.7);
   border-radius: 0 0 15px 15px;

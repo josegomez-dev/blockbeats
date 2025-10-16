@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import PixelPreview from '../machines/PixelPreview';
 import styles from './ProfileTabContent.module.css';
 
 interface UserStats {
@@ -22,6 +23,13 @@ interface UserCreation {
   type: 'drawing' | 'drums';
   createdAt: Date;
   data: any;
+  description?: string;
+  tempo?: number;
+  machineType?: string;
+  isOldFormat?: boolean;
+  colorMap?: any[];
+  drawingMachine?: any;
+  drumMachine?: any;
 }
 
 interface ProfileTabContentProps {
@@ -166,68 +174,36 @@ const ProfileTabContent: React.FC<ProfileTabContentProps> = ({
       return (
         <div className={styles.tabContent}>
           <div className={styles.section}>
-            <h3>🎵 Your Musical Creations</h3>
-            
-            {userCreations.length === 0 ? (
-              <div className={styles.emptyState}>
-                <div className={styles.emptyIcon}>🎼</div>
-                <h4>No creations yet</h4>
-                <p>Start creating with our music machines to see your masterpieces here!</p>
+            <div className={styles.comingSoonContainer}>
+              <div className={styles.comingSoonBadge}>
+                <span className={styles.comingSoonIcon}>🚧</span>
+                <span className={styles.comingSoonText}>Coming Soon</span>
               </div>
-            ) : (
-              <div className={styles.creationsGrid}>
-                {userCreations.map((creation) => (
-                  <div key={creation.id} className={styles.creationCard}>
-                    <div className={styles.creationHeader}>
-                      <span className={styles.creationBadge}>
-                        {creation.type === 'drawing' ? '🎨 Music Drawing' : '🥁 Drum Designer'}
-                      </span>
-                      <h4 className={styles.creationName}>{creation.name}</h4>
-                    </div>
-                    <div className={styles.creationPreview}>
-                      {creation.type === 'drawing' && creation.data?.colorMap && (
-                        <div className={styles.pixelPreview}>
-                          {/* PixelPreview component would go here */}
-                          <div className={styles.previewPlaceholder}>
-                            🎨 Pixel Art Preview
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                    <p className={styles.creationDate}>Created: {creation.createdAt.toLocaleDateString()}</p>
+              <h3>🎵 Your Musical Creations</h3>
+              <div className={styles.comingSoonContent}>
+                <div className={styles.comingSoonIcon}>🎼</div>
+                <h4>Creations Gallery Coming Soon!</h4>
+                <p>We're working on bringing your musical NFT collection to your profile. In the meantime, you can view and manage your creations in the <strong>Marketplace</strong>.</p>
+                <div className={styles.comingSoonFeatures}>
+                  <div className={styles.featureItem}>
+                    <span className={styles.featureIcon}>🎨</span>
+                    <span>Pixel Art Previews</span>
                   </div>
-                ))}
-              </div>
-            )}
-          </div>
-
-          <div className={styles.section}>
-            <h3>📊 Creation Statistics</h3>
-            <div className={styles.creationStatsGrid}>
-              <div className={styles.creationStatCard}>
-                <div className={styles.creationStatIcon}>🎨</div>
-                <div className={styles.creationStatContent}>
-                  <h4>Music Drawing</h4>
-                  <p className={styles.creationStatValue}>{userStats?.drawingMachineCreations || 0}</p>
-                  <p className={styles.creationStatLabel}>Pixel Melodies</p>
+                  <div className={styles.featureItem}>
+                    <span className={styles.featureIcon}>🎵</span>
+                    <span>Audio Playback</span>
+                  </div>
+                  <div className={styles.featureItem}>
+                    <span className={styles.featureIcon}>📊</span>
+                    <span>Creation Statistics</span>
+                  </div>
+                  <div className={styles.featureItem}>
+                    <span className={styles.featureIcon}>✏️</span>
+                    <span>Edit & Manage</span>
+                  </div>
                 </div>
-              </div>
-
-              <div className={styles.creationStatCard}>
-                <div className={styles.creationStatIcon}>🥁</div>
-                <div className={styles.creationStatContent}>
-                  <h4>Drum Designer</h4>
-                  <p className={styles.creationStatValue}>{userStats?.drumMachineCreations || 0}</p>
-                  <p className={styles.creationStatLabel}>Rhythm Patterns</p>
-                </div>
-              </div>
-
-              <div className={styles.creationStatCard}>
-                <div className={styles.creationStatIcon}>🎵</div>
-                <div className={styles.creationStatContent}>
-                  <h4>Local Creations</h4>
-                  <p className={styles.creationStatValue}>{userCreations.length}</p>
-                  <p className={styles.creationStatLabel}>Saved Locally</p>
+                <div className={styles.comingSoonAction}>
+                  <p>Visit the <strong>Marketplace</strong> to see your musical NFTs!</p>
                 </div>
               </div>
             </div>

@@ -278,6 +278,204 @@
   font-size: 0.8rem;
 }
 
+/* Creation Info Styles */
+.creationInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.creationDescription {
+  color: #ddd;
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.creationMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.creationTempo {
+  color: #00ff88;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.formatBadge {
+  background: linear-gradient(145deg, #ff9800, #f57c00);
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+/* Drum Preview Styles */
+.drumPreview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.drumGridSmall {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.drumRowSmall {
+  display: flex;
+  gap: 2px;
+}
+
+.drumBeatSmall {
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 1px;
+  transition: all 0.2s ease;
+}
+
+.drumBeatSmall.active {
+  background: #4ecdc4;
+  box-shadow: 0 0 4px rgba(78, 205, 196, 0.5);
+}
+
+/* Coming Soon Styles */
+.comingSoonContainer {
+  text-align: center;
+  position: relative;
+}
+
+.comingSoonBadge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: linear-gradient(135deg, #ff6b35, #f7931e);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+  animation: pulse 2s infinite;
+}
+
+.comingSoonIcon {
+  font-size: 1rem;
+}
+
+.comingSoonText {
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.comingSoonContent {
+  padding: 2rem 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.comingSoonContent .comingSoonIcon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  opacity: 0.6;
+}
+
+.comingSoonContent h4 {
+  color: #00ffc3;
+  font-size: 1.5rem;
+  margin: 0 0 1rem 0;
+  font-weight: bold;
+}
+
+.comingSoonContent p {
+  color: #ddd;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+}
+
+.comingSoonFeatures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.featureItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: rgba(0, 255, 195, 0.05);
+  border: 1px solid rgba(0, 255, 195, 0.2);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.featureItem:hover {
+  background: rgba(0, 255, 195, 0.1);
+  transform: translateY(-2px);
+}
+
+.featureIcon {
+  font-size: 1.5rem;
+}
+
+.featureItem span:last-child {
+  color: #00ffc3;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.comingSoonAction {
+  background: rgba(255, 107, 53, 0.1);
+  border: 1px solid rgba(255, 107, 53, 0.3);
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.comingSoonAction p {
+  color: #ff6b35;
+  margin: 0;
+  font-weight: 500;
+}
+
+.comingSoonAction strong {
+  color: #ff6b35;
+  font-weight: bold;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(255, 107, 53, 0.5);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+  }
+}
+
 .emptyState {
   text-align: center;
   padding: 3rem;
