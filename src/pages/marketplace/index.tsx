@@ -76,7 +76,7 @@ const MarketplaceScreen = () => {
             // Keep original structure for old NFTs
             createdBy: data.createdBy,
             description: data.description,
-            tempo: data.tempo || 120,
+            tempo: data.tempo || 300,
             machineType: data.machineType || 'drawing', // Assume drawing for old NFTs
             tags: data.tags || [],
             isCollaborative: data.isCollaborative || false,
@@ -96,7 +96,7 @@ const MarketplaceScreen = () => {
             // Keep original fields for backward compatibility
             createdBy: data.createdBy,
             description: data.description,
-            tempo: data.tempo || 120,
+            tempo: data.tempo || 300,
             machineType: data.machineType,
             tags: data.tags || [],
             isCollaborative: data.isCollaborative || false,
@@ -169,7 +169,7 @@ const MarketplaceScreen = () => {
     setIsPlaying(true);
     setPlayingNFTId(nft.id);
 
-    const tempo = nft.tempo || 120;
+    const tempo = nft.tempo || 300;
 
     // Handle Music Drawing Machine songs (both old and new format)
     if ((nft.machineType === 'drawing' || nft.isOldFormat) && nft.colorMap && nft.colorMap.length > 0) {
