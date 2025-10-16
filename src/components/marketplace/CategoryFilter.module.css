@@ -155,8 +155,8 @@
 
 .specialCount {
   position: absolute;
-  top: -8px;
-  right: -8px;
+  top: 5px;
+  right: 8px;
   min-width: 24px;
   height: 24px;
   border-radius: 12px;
