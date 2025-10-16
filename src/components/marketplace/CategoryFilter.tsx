@@ -7,9 +7,10 @@ import styles from './CategoryFilter.module.css';
 export interface Category {
   id: string;
   name: string;
-  icon: React.ReactNode;
+  icon: React.ReactNode | null;
   description: string;
   color: string;
+  specialStyle?: boolean;
 }
 
 const categories: Category[] = [
@@ -51,16 +52,18 @@ const categories: Category[] = [
   {
     id: 'classic',
     name: 'Classic NFTs',
-    icon: <FaBuilding />,
+    icon: null,
     description: 'Original format NFTs',
-    color: '#ff9800'
+    color: '#ff9800',
+    specialStyle: true
   },
   {
     id: 'modern',
     name: 'Modern NFTs',
-    icon: <FaRocket />,
+    icon: null,
     description: 'New format NFTs',
-    color: '#00ff88'
+    color: '#00ff88',
+    specialStyle: true
   }
 ];
 
@@ -84,28 +87,58 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
             key={category.id}
             className={`${styles.categoryButton} ${
               selectedCategory === category.id ? styles.active : ''
-            }`}
+            } ${category.specialStyle ? styles.specialStyle : ''}`}
             onClick={() => onCategoryChange(category.id)}
             style={{
               '--category-color': category.color
             } as React.CSSProperties}
+            data-category-color={category.color}
           >
-            <div className={styles.categoryIcon}>
-              {category.icon}
-            </div>
-            <div className={styles.categoryInfo}>
-              <div className={styles.categoryName}>
-                {category.name}
-              </div>
-              <div className={styles.categoryDescription}>
-                {category.description}
-              </div>
-              {nftCounts[category.id] !== undefined && (
-                <div className={styles.categoryCount}>
-                  {nftCounts[category.id]} NFTs
+            {category.specialStyle ? (
+              <>
+                <div className={styles.specialIcon}>
+                  <div 
+                    className={styles.colorCircle}
+                    style={{ backgroundColor: category.color }}
+                  />
                 </div>
-              )}
-            </div>
+                <div className={styles.categoryInfo}>
+                  <div className={styles.categoryName}>
+                    {category.name}
+                  </div>
+                  <div className={styles.categoryDescription}>
+                    {category.description}
+                  </div>
+                </div>
+                {nftCounts[category.id] !== undefined && (
+                  <div 
+                    className={styles.specialCount}
+                    style={{ backgroundColor: category.color }}
+                  >
+                    {nftCounts[category.id]}
+                  </div>
+                )}
+              </>
+            ) : (
+              <>
+                <div className={styles.categoryIcon}>
+                  {category.icon}
+                </div>
+                <div className={styles.categoryInfo}>
+                  <div className={styles.categoryName}>
+                    {category.name}
+                  </div>
+                  <div className={styles.categoryDescription}>
+                    {category.description}
+                  </div>
+                  {nftCounts[category.id] !== undefined && (
+                    <div className={styles.categoryCount}>
+                      {nftCounts[category.id]} NFTs
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
           </button>
         ))}
       </div>

@@ -103,6 +103,74 @@
   font-weight: 500;
 }
 
+/* Special styling for Classic and Modern NFTs */
+.categoryButton.specialStyle {
+  position: relative;
+  background: rgba(255, 152, 0, 0.15); /* Default orange background */
+  border: 2px solid rgba(255, 152, 0, 0.3);
+}
+
+.categoryButton.specialStyle:hover {
+  border-color: var(--category-color, #ff9800);
+  background: rgba(255, 152, 0, 0.25);
+}
+
+.categoryButton.specialStyle.active {
+  border-color: var(--category-color, #ff9800);
+  background: rgba(255, 152, 0, 0.3);
+  box-shadow: 0 0 25px rgba(255, 152, 0, 0.4);
+}
+
+/* Modern NFTs specific styling - Green background */
+.categoryButton.specialStyle[data-category-color="#00ff88"] {
+  background: rgba(0, 255, 136, 0.15) !important;
+  border-color: rgba(0, 255, 136, 0.3) !important;
+}
+
+.categoryButton.specialStyle[data-category-color="#00ff88"]:hover {
+  background: rgba(0, 255, 136, 0.25) !important;
+}
+
+.categoryButton.specialStyle[data-category-color="#00ff88"].active {
+  background: rgba(0, 255, 136, 0.3) !important;
+  box-shadow: 0 0 25px rgba(0, 255, 136, 0.4) !important;
+}
+
+.specialIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.colorCircle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.specialCount {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  min-width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: #000;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  z-index: 2;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .categoryFilter {
@@ -130,6 +198,22 @@
   .categoryDescription {
     font-size: 0.75rem;
   }
+  
+  .specialIcon {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .colorCircle {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .specialCount {
+    min-width: 20px;
+    height: 20px;
+    font-size: 0.65rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -152,5 +236,21 @@
   
   .categoryDescription {
     font-size: 0.7rem;
+  }
+  
+  .specialIcon {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .colorCircle {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .specialCount {
+    min-width: 18px;
+    height: 18px;
+    font-size: 0.6rem;
   }
 }
