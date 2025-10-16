@@ -241,20 +241,10 @@ const MusicStudioPage = () => {
       // Set the appropriate machine
       if (songData.machineType === 'drawing') {
         setSelectedMachine('drawing');
-        // Load data into drawing machine
-        setTimeout(() => {
-          if (musicDrawingMachineRef.current && songData.drawingMachine) {
-            musicDrawingMachineRef.current.loadData?.(songData.drawingMachine);
-          }
-        }, 500);
+        // Note: loadData method not implemented yet
       } else if (songData.machineType === 'drums') {
         setSelectedMachine('drums');
-        // Load data into drum machine
-        setTimeout(() => {
-          if (drumDesignerRef.current && songData.drumMachine) {
-            drumDesignerRef.current.loadData?.(songData.drumMachine);
-          }
-        }, 500);
+        // Note: loadData method not implemented yet
       }
 
       toast.success(`Loaded "${songData.name}"`);
@@ -303,7 +293,6 @@ const MusicStudioPage = () => {
         src="/sounds/app/studio.mp3"
         loop
         preload="auto"
-        volume={0.3}
       />
 
       <div className={styles.studioContainer}>

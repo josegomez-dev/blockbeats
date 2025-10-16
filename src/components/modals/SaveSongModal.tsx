@@ -161,21 +161,21 @@ const SaveSongModal: React.FC<SaveSongModalProps> = ({
       }
       
       onClose();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error saving song:', error);
       console.error('Error details:', {
-        message: error.message,
-        code: error.code,
-        stack: error.stack
+        message: error?.message || 'Unknown error',
+        code: error?.code || 'unknown',
+        stack: error?.stack || 'No stack trace'
       });
       
       // More specific error messages
       let errorMessage = 'Failed to save song. Please try again.';
-      if (error.code === 'permission-denied') {
+      if (error?.code === 'permission-denied') {
         errorMessage = 'Permission denied. Please check your authentication.';
-      } else if (error.code === 'unavailable') {
+      } else if (error?.code === 'unavailable') {
         errorMessage = 'Firebase is currently unavailable. Please try again later.';
-      } else if (error.code === 'invalid-argument') {
+      } else if (error?.code === 'invalid-argument') {
         errorMessage = 'Invalid data provided. Please check your song data.';
       }
       
