@@ -39,7 +39,7 @@ const NFTCard: React.FC<NFTCardProps> = ({ nft, isPlaying, onPlay }) => {
       {/* Format Badge for Old NFTs */}
       {nft.isOldFormat && (
         <div className={styles.formatBadge}>
-          <span className={styles.formatIcon}>🏛️</span>
+          {/* <span className={styles.formatIcon}>🏛️</span> */}
           <span className={styles.formatLabel}>Classic</span>
         </div>
       )}
@@ -83,66 +83,66 @@ const NFTCard: React.FC<NFTCardProps> = ({ nft, isPlaying, onPlay }) => {
 
       {/* NFT Info */}
       <div className={styles.nftInfo}>
-        <h4 className={styles.nftTitle}>
-          {nft.songName || 'Untitled'}
-        </h4>
-        
-        {nft.description && (
+        <div className={styles.nftContent}>
+          <h4 className={styles.nftTitle}>
+            {nft.songName || 'Untitled'}
+          </h4>
+          
           <p className={styles.nftDescription}>
-            {nft.description}
+            {nft.description || `A ${machineInfo.name.toLowerCase()} creation`}
           </p>
-        )}
 
-        {/* Collaborative Authors */}
-        {nft.isCollaborative && nft.authors && nft.authors.length > 0 && (
-          <div className={styles.collaborativeSection}>
-            <div className={styles.collaborativeLabel}>
-              🎵 Collaborative Song
+          {/* Collaborative Authors */}
+          {nft.isCollaborative && nft.authors && nft.authors.length > 0 && (
+            <div className={styles.collaborativeSection}>
+              <div className={styles.collaborativeLabel}>
+                🎵 Collaborative Song
+              </div>
+              <div className={styles.authorsList}>
+                {nft.authors.slice(0, 3).map((author, index) => (
+                  <AuthorCard
+                    key={author.uid}
+                    author={author}
+                    size="small"
+                    showRobotName={false}
+                  />
+                ))}
+                {nft.authors.length > 3 && (
+                  <div className={styles.moreAuthors}>
+                    +{nft.authors.length - 3} more
+                  </div>
+                )}
+              </div>
             </div>
-            <div className={styles.authorsList}>
-              {nft.authors.slice(0, 3).map((author, index) => (
-                <AuthorCard
-                  key={author.uid}
-                  author={author}
-                  size="small"
-                  showRobotName={false}
-                />
+          )}
+
+          {/* Single Author */}
+          {!nft.isCollaborative && nft.createdBy && (
+            <div className={styles.singleAuthor}>
+              <div className={styles.authorLabel}>
+                Created by: {nft.createdBy.slice(0, 6)}...{nft.createdBy.slice(-4)}
+              </div>
+            </div>
+          )}
+
+          {/* Tags */}
+          {nft.tags && nft.tags.length > 0 && (
+            <div className={styles.tagsList}>
+              {nft.tags.slice(0, 3).map((tag, index) => (
+                <span key={index} className={styles.tag}>
+                  #{tag}
+                </span>
               ))}
-              {nft.authors.length > 3 && (
-                <div className={styles.moreAuthors}>
-                  +{nft.authors.length - 3} more
-                </div>
+              {nft.tags.length > 3 && (
+                <span className={styles.moreTags}>
+                  +{nft.tags.length - 3}
+                </span>
               )}
             </div>
-          </div>
-        )}
+          )}
+        </div>
 
-        {/* Single Author */}
-        {!nft.isCollaborative && nft.createdBy && (
-          <div className={styles.singleAuthor}>
-            <div className={styles.authorLabel}>
-              Created by: {nft.createdBy.slice(0, 6)}...{nft.createdBy.slice(-4)}
-            </div>
-          </div>
-        )}
-
-        {/* Tags */}
-        {nft.tags && nft.tags.length > 0 && (
-          <div className={styles.tagsList}>
-            {nft.tags.slice(0, 3).map((tag, index) => (
-              <span key={index} className={styles.tag}>
-                #{tag}
-              </span>
-            ))}
-            {nft.tags.length > 3 && (
-              <span className={styles.moreTags}>
-                +{nft.tags.length - 3}
-              </span>
-            )}
-          </div>
-        )}
-
-        {/* Play Button */}
+        {/* Play Button - Always at bottom */}
         <button
           className={`${styles.playButton} ${isPlaying ? styles.playing : ''}`}
           onClick={(e) => {
