@@ -97,7 +97,12 @@ const DrumGrid: React.FC<DrumGridProps> = ({
                 className={`${styles.cell} ${cell ? styles.active : ''} ${
                   stepIndex === currentStep ? styles.playing : ''
                 }`}
-                onClick={() => onToggleCell(rowIndex, stepIndex)}
+                onClick={(e) => {
+                  console.log('🔥 DRUM CELL CLICKED!', { rowIndex, stepIndex, cell });
+                  console.log('Event target:', e.target);
+                  console.log('Event currentTarget:', e.currentTarget);
+                  onToggleCell(rowIndex, stepIndex);
+                }}
               />
             ))}
           </div>

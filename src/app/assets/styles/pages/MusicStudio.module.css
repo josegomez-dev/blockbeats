@@ -429,6 +429,7 @@
   z-index: 1;
   border-radius: 18px;
   transition: background 0.4s ease;
+  pointer-events: none;
 }
 
 .machineCard:hover .videoOverlay {
@@ -889,6 +890,7 @@
   z-index: 0;
   opacity: 0.15;
   transition: opacity 0.4s ease;
+  pointer-events: none;
 }
 
 /* Video Overlay for Music Drawing Machine */

@@ -175,9 +175,11 @@ const DrumDesigner = forwardRef<DrumDesignerRef, DrumDesignerProps>(({
   }, [volume]);
 
   const toggleCell = (row: number, step: number) => {
+    console.log('🎵 toggleCell called with:', { row, step });
     const updated = grid.map((r, ri) =>
       ri === row ? r.map((c, ci) => (ci === step ? !c : c)) : r
     );
+    console.log('🎵 Grid updated, new state:', updated);
     setGrid(updated);
   };
 
