@@ -49,4 +49,12 @@ export type NFT = {
     isOldFormat?: boolean; // Whether this is an old format NFT
     drawingMachine?: any; // New format drawing machine data
     drumMachine?: any; // New format drum machine data
+    // Minting-related fields
+    tokenId?: string; // Blockchain token ID
+    contractAddress?: string; // Contract address where it's minted
+    isMinted?: boolean; // Whether this NFT has been minted
+    mintedAt?: string; // When it was minted
+    mintedBy?: string; // Who minted it
+    ipfsImageUrl?: string; // IPFS URL for the image
+    ipfsMetadataUrl?: string; // IPFS URL for the metadata
 };

@@ -4,15 +4,26 @@ import React from 'react';
 import { NFT } from '@/types/nftTypes';
 import PixelPreview from '../machines/PixelPreview';
 import AuthorCard from './AuthorCard';
+import MintButton from './MintButton';
 import styles from './NFTCard.module.css';
 
 interface NFTCardProps {
   nft: NFT;
   isPlaying?: boolean;
   onPlay?: (nft: NFT) => void;
+  contractAddress?: string;
+  tokenId?: string;
+  isMinted?: boolean;
 }
 
-const NFTCard: React.FC<NFTCardProps> = ({ nft, isPlaying, onPlay }) => {
+const NFTCard: React.FC<NFTCardProps> = ({ 
+  nft, 
+  isPlaying, 
+  onPlay, 
+  contractAddress, 
+  tokenId, 
+  isMinted 
+}) => {
   const getMachineTypeInfo = (machineType?: string) => {
     const types = {
       drawing: { name: 'Music Drawing', icon: '🎨', color: '#ff6b6b' },
@@ -26,7 +37,7 @@ const NFTCard: React.FC<NFTCardProps> = ({ nft, isPlaying, onPlay }) => {
   const machineInfo = getMachineTypeInfo(nft.machineType);
 
   return (
-    <div className={styles.nftCard}>
+    <div className={styles.nftCard} data-nft-id={nft.id}>
       {/* Machine Type Badge */}
       <div 
         className={styles.machineBadge}
@@ -47,11 +58,13 @@ const NFTCard: React.FC<NFTCardProps> = ({ nft, isPlaying, onPlay }) => {
       {/* NFT Preview */}
       <div className={styles.nftPreview}>
         {nft.machineType === 'drawing' || (nft.isOldFormat && nft.colorMap) ? (
-          <PixelPreview
-            colorMap={nft.colorMap || []}
-            size={120}
-            backgroundColor={nft.color || '#000'}
-          />
+          <div id={`pixel-preview-${nft.id}`}>
+            <PixelPreview
+              colorMap={nft.colorMap || []}
+              size={120}
+              backgroundColor={nft.color || '#000'}
+            />
+          </div>
         ) : nft.machineType === 'drums' && nft.drumMachine ? (
           <div className={styles.drumPreview}>
             {/* Simple drum pattern visualization */}
@@ -152,6 +165,14 @@ const NFTCard: React.FC<NFTCardProps> = ({ nft, isPlaying, onPlay }) => {
         >
           {isPlaying ? '⏸️ Playing...' : '▶️ Play NFT'}
         </button>
+
+        {/* Mint Button */}
+        <MintButton
+          nft={nft}
+          contractAddress={contractAddress}
+          tokenId={tokenId}
+          isMinted={isMinted}
+        />
       </div>
     </div>
   );

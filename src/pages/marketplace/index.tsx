@@ -27,6 +27,9 @@ const MarketplaceScreen = () => {
   const [stopMelodyRef, setStopMelodyRef] = React.useState<(() => void) | null>(null);
   const [stopDrumRef, setStopDrumRef] = React.useState<(() => void) | null>(null);
 
+  // Contract configuration - you'll need to set this after deploying your contract
+  const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS || '';
+
   const { user, authenticated } = useAuth();
   const router = useRouter();
 
@@ -331,6 +334,9 @@ const MarketplaceScreen = () => {
               nft={nft}
               isPlaying={isPlaying && playingNFTId === nft.id}
               onPlay={handlePlayNFT}
+              contractAddress={CONTRACT_ADDRESS}
+              tokenId={nft.tokenId}
+              isMinted={false}
             />
           ))}
           

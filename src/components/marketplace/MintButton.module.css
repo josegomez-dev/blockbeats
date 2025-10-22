@@ -1,0 +1,101 @@
+.mintContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.mintButton {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.mintButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.mintButton:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.mintingButton {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  animation: pulse 1.5s infinite;
+}
+
+.viewButton {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.viewButton:hover:not(:disabled) {
+  box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
+}
+
+.disabledButton {
+  background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.disabledButton:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.progressText {
+  font-size: 12px;
+  color: #666;
+  text-align: center;
+  font-style: italic;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .mintButton {
+    min-width: 120px;
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+  
+  .progressText {
+    font-size: 11px;
+  }
+}
