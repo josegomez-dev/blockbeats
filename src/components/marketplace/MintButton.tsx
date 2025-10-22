@@ -18,6 +18,7 @@ import { db } from '../../../firebase';
 import { NFT } from '@/types/nftTypes';
 import toast from 'react-hot-toast';
 import styles from './MintButton.module.css';
+import { showNFTMintingSuccess } from './NFTMintingNotification';
 
 interface MintButtonProps {
   nft: NFT;
@@ -89,7 +90,19 @@ const MintButton: React.FC<MintButtonProps> = ({
       );
       
       if (blockchainResult.success) {
-        toast.success('NFT minted successfully! Check your wallet!');
+        // Create URLs for the minted NFT
+        const explorerUrl = `https://starknet.io/explorer/contract/${contractAddress}`;
+        const openSeaUrl = getOpenSeaUrl(contractAddress, tokenId);
+        
+        // Show detailed success notification with links
+        showNFTMintingSuccess({
+          tokenId,
+          transactionHash: blockchainResult.transactionHash,
+          contractAddress,
+          openSeaUrl,
+          explorerUrl
+        });
+        
         setMintingProgress('Minting complete!');
         
         // Update database with minting info
@@ -132,6 +145,14 @@ const MintButton: React.FC<MintButtonProps> = ({
   };
 
   const handleViewInWallet = () => {
+    if (contractAddress && tokenId) {
+      // Open Starknet explorer for the specific token
+      const explorerUrl = `https://starknet.io/explorer/contract/${contractAddress}`;
+      window.open(explorerUrl, '_blank');
+    }
+  };
+
+  const handleViewTokenOnExplorer = () => {
     if (contractAddress && tokenId) {
       // Open Starknet explorer for the specific token
       const explorerUrl = `https://starknet.io/explorer/contract/${contractAddress}`;

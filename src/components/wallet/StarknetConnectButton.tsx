@@ -93,7 +93,32 @@ const StarknetConnectButton: React.FC<StarknetConnectButtonProps> = ({
       const result = await connect({ connector });
       console.log('✅ Wallet connection result:', result);
       
-      toast.success('Wallet connected successfully!');
+          toast.success(
+            <div style={{ textAlign: 'left' }}>
+              <div style={{ fontWeight: 'bold', marginBottom: '8px' }}>
+                🔗 Wallet Connected Successfully!
+              </div>
+              <div style={{ fontSize: '14px', marginBottom: '8px', color: '#ccc' }}>
+                Address: <span style={{ color: '#4facfe', fontWeight: 'bold' }}>
+                  {address?.slice(0, 6)}...{address?.slice(-4)}
+                </span>
+              </div>
+              <div style={{ fontSize: '12px', color: '#888' }}>
+                You can now mint NFTs from your musical signatures! 🎨
+              </div>
+            </div>,
+            {
+              duration: 5000,
+              style: {
+                background: 'linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%)',
+                color: '#fff',
+                border: '1px solid #333',
+                borderRadius: '12px',
+                padding: '16px',
+                maxWidth: '350px'
+              }
+            }
+          );
       
       // Set flag to trigger useEffect when address becomes available
       setHasTriggeredConnect(true);
