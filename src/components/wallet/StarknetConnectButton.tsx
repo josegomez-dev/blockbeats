@@ -5,7 +5,6 @@ import {
   useAccount,
   useConnect,
   useDisconnect,
-  useStarkProfile,
 } from '@starknet-react/core';
 import { toast } from 'react-hot-toast';
 import styles from '@/app/assets/styles/layouts/MainPage.module.css';
@@ -22,20 +21,17 @@ const StarknetConnectButton: React.FC<StarknetConnectButtonProps> = ({
   const { address, isConnected } = useAccount();
   const { connect, connectors } = useConnect();
   const { disconnect } = useDisconnect();
-  const { data: profile, isLoading: profileLoading } = useStarkProfile({ 
-    address: address || undefined 
-  });
   const [isConnecting, setIsConnecting] = useState(false);
   const [hasTriggeredConnect, setHasTriggeredConnect] = useState(false);
 
   // Watch for when address becomes available after connection
   useEffect(() => {
     if (isConnected && address && hasTriggeredConnect && onConnect) {
-      console.log('🎯 Address available, calling onConnect:', { address, profile });
-      onConnect(address, profile);
+      console.log('🎯 Address available, calling onConnect:', { address });
+      onConnect(address);
       setHasTriggeredConnect(false); // Reset flag
     }
-  }, [isConnected, address, profile, hasTriggeredConnect, onConnect]);
+  }, [isConnected, address, hasTriggeredConnect, onConnect]);
 
   const getWalletButtonStyle = (connectorName: string, isConnecting: boolean) => {
     const baseStyle = {
@@ -177,25 +173,8 @@ const StarknetConnectButton: React.FC<StarknetConnectButtonProps> = ({
       >
         <div className="wallet-info">
           <div className="wallet-name">
-            {profileLoading ? (
-              'Loading...'
-            ) : (
-              profile?.name || `${address?.slice(0, 6)}...${address?.slice(-4)}`
-            )}
+            {address ? `${address.slice(0, 6)}...${address.slice(-4)}` : 'Connected'}
           </div>
-          {profile?.profilePicture && (
-            <img
-              src={profile.profilePicture}
-              alt="Profile"
-              width="32"
-              height="32"
-              className="wallet-profile-picture"
-              style={{
-                borderRadius: '50%',
-                marginLeft: '10px'
-              }}
-            />
-          )}
         </div>
         <div className="wallet-status">
           <span>Disconnect</span>

@@ -2081,19 +2081,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@starknet-react/chains@npm:^4.0.1-beta.3, @starknet-react/chains@npm:next":
-  version: 4.0.1-beta.3
-  resolution: "@starknet-react/chains@npm:4.0.1-beta.3"
-  checksum: e41afd5049ec0085428e5d2b17da7e5532624a0a603e44769c4937b24975d08e94ff202b99dab6cec1fe410acedc44530e29a6a334499a0257b2542b1daed3fa
+"@starknet-react/chains@npm:^5.0.3":
+  version: 5.0.3
+  resolution: "@starknet-react/chains@npm:5.0.3"
+  checksum: f519650ad54d197546e365e976389d083efdfa18981a0aefc6bebc86202795a2ca9686c8b0aa60436f2d9fa88fc804cb39005a7253a3d0caa7b9d0f290dd46c7
   languageName: node
   linkType: hard
 
-"@starknet-react/core@npm:next":
-  version: 4.0.1-beta.4
-  resolution: "@starknet-react/core@npm:4.0.1-beta.4"
+"@starknet-react/core@npm:^5.0.3":
+  version: 5.0.3
+  resolution: "@starknet-react/core@npm:5.0.3"
   dependencies:
     "@starknet-io/types-js": ^0.7.10
-    "@starknet-react/chains": ^4.0.1-beta.3
+    "@starknet-react/chains": ^5.0.3
     "@tanstack/react-query": ^5.25.0
     abi-wan-kanabi: ^2.2.4
     eventemitter3: ^5.0.1
@@ -2102,8 +2102,8 @@ __metadata:
   peerDependencies:
     get-starknet-core: ^4.0.0
     react: ^18.0
-    starknet: ^7.5.0
-  checksum: 40918d8167e1d9b4ede77f8a7d2dd5dab6b562798375d5cdb3e6134011d264f9fbd377fafa6222eae0f4910393716b2801c50ae9567ce5777615fcbb40256b1e
+    starknet: ^8.1.2
+  checksum: 349160180b751c99502f059934839c7d4efe7b7a85aee47f5f9dc44df641473bfb934c9c16fa754fd0951eb58b57f2290631c5b6e6c93964bb89f3ba3c0cf8bc
   languageName: node
   linkType: hard
 
@@ -9222,8 +9222,8 @@ __metadata:
     "@emotion/react": ^11.11.3
     "@emotion/styled": ^11.11.5
     "@next/third-parties": ^15.5.3
-    "@starknet-react/chains": next
-    "@starknet-react/core": next
+    "@starknet-react/chains": ^5.0.3
+    "@starknet-react/core": ^5.0.3
     "@types/node": ^20
     "@types/react": ^18
     "@types/react-dom": ^18

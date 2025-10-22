@@ -37,12 +37,27 @@
   animation: pulse 1.5s infinite;
 }
 
+.mintedButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
 .viewButton {
   background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
 }
 
 .viewButton:hover:not(:disabled) {
   box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
+}
+
+.openSeaButton {
+  background: linear-gradient(135deg, #00d4aa 0%, #00a8cc 100%);
+}
+
+.openSeaButton:hover:not(:disabled) {
+  box-shadow: 0 8px 25px rgba(0, 212, 170, 0.4);
 }
 
 .disabledButton {

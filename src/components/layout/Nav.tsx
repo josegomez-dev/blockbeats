@@ -12,7 +12,7 @@ import { RiGalleryLine } from 'react-icons/ri';
 import { BiCollection, BiGlasses } from 'react-icons/bi';
 import { FaStore, FaChalkboardTeacher, FaCog, FaStoreAlt } from 'react-icons/fa';
 import Avatar from 'react-avatar';
-import { useAccount, useBalance } from "@starknet-react/core";
+import { useAccount } from "@starknet-react/core";
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../firebase';
 import toast from 'react-hot-toast';
@@ -25,9 +25,6 @@ type UserNotification = {
 
 export default function Nav() {
   const { address } = useAccount();
-  const { data } = useBalance({
-    address,
-  });
 
   const { user, authenticated, setAuthenticated, setRole, logout } = useAuth();
   const router = useRouter();

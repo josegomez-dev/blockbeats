@@ -9,6 +9,7 @@ trait IBlockBeatsNFT<TContractState> {
     fn token_uri(self: @TContractState, token_id: u256) -> felt252;
     fn owner_of(self: @TContractState, token_id: u256) -> ContractAddress;
     fn balance_of(self: @TContractState, owner: ContractAddress) -> u256;
+    fn total_supply(self: @TContractState) -> u256;
 }
 
 #[starknet::contract]
@@ -23,9 +24,11 @@ mod BlockBeatsNFT {
         owner: ContractAddress,
         name: felt252,
         symbol: felt252,
-        next_token_id: u256,
-        // Simple storage for token data
         token_count: u256,
+        // Simple storage - we'll track the latest minted token
+        latest_token_id: u256,
+        latest_token_owner: ContractAddress,
+        latest_token_uri: felt252,
     }
 
     #[event]
@@ -64,8 +67,8 @@ mod BlockBeatsNFT {
         self.name.write(name);
         self.symbol.write(symbol);
         self.owner.write(owner);
-        self.next_token_id.write(1);
         self.token_count.write(0);
+        self.latest_token_id.write(0);
     }
 
     #[external(v0)]
@@ -77,6 +80,11 @@ mod BlockBeatsNFT {
     ) {
         let caller = get_caller_address();
         assert(caller == self.owner.read(), 'Not owner');
+        
+        // Store the latest minted token info
+        self.latest_token_id.write(token_id);
+        self.latest_token_owner.write(to);
+        self.latest_token_uri.write(token_uri);
         
         // Increment token count
         let current_count = self.token_count.read();
@@ -104,24 +112,36 @@ mod BlockBeatsNFT {
     }
 
     #[external(v0)]
-    fn token_uri(self: @ContractState, _token_id: u256) -> felt252 {
-        // Simple implementation - return empty string
-        // In a real contract, you'd store this in a map
-        ''
+    fn token_uri(self: @ContractState, token_id: u256) -> felt252 {
+        // Simple implementation - return the latest token URI if it matches
+        let latest_id = self.latest_token_id.read();
+        if token_id == latest_id {
+            self.latest_token_uri.read()
+        } else {
+            0 // Return empty for non-existent tokens
+        }
     }
 
     #[external(v0)]
-    fn owner_of(self: @ContractState, _token_id: u256) -> ContractAddress {
-        // Simple implementation - return zero address
-        // In a real contract, you'd store this in a map
-        0.try_into().unwrap()
+    fn owner_of(self: @ContractState, token_id: u256) -> ContractAddress {
+        // Simple implementation - return the latest token owner if it matches
+        let latest_id = self.latest_token_id.read();
+        if token_id == latest_id {
+            self.latest_token_owner.read()
+        } else {
+            0.try_into().unwrap() // Return zero address for non-existent tokens
+        }
     }
 
     #[external(v0)]
-    fn balance_of(self: @ContractState, _owner: ContractAddress) -> u256 {
-        // Simple implementation - return token count
-        // In a real contract, you'd track balances per owner
-        self.token_count.read()
+    fn balance_of(self: @ContractState, owner: ContractAddress) -> u256 {
+        // Simple implementation - return 1 if owner has the latest token, 0 otherwise
+        let latest_owner = self.latest_token_owner.read();
+        if owner == latest_owner {
+            1
+        } else {
+            0
+        }
     }
 
     #[external(v0)]

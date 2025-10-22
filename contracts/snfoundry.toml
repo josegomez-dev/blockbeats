@@ -1,0 +1,8 @@
+[tool.sncast]
+account = "mainnet_account"
+
+[accounts.mainnet_account]
+type = "oz"
+url = "https://starknet-mainnet.public.blastapi.io/rpc/v0_7"
+account = "0x07e7Ef290d991BCAa3EcB73737b383eCf6868d6F5a74808e9f4b7F99EE8849F4"
+private-key = "0x0135986b5a9f0e92285708d60a0212c52e5a6783c9335a910bee0795093b978b"

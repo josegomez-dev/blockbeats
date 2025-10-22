@@ -1,6 +1,6 @@
 import './../app/globals.css'
 
-import { sepolia } from "@starknet-react/chains";
+import { mainnet } from "@starknet-react/chains";
 import {
   StarknetConfig,
   publicProvider,
@@ -18,7 +18,7 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 import { Layout } from '../components/layout';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const chains = [sepolia];
+  const chains = [mainnet];
   const provider = publicProvider();
   const connectors = [braavos(), argent()];
   

@@ -2,7 +2,19 @@
 
 import React, { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { mintNFT, getOpenSeaUrl, canUserMintNFT } from '@/utils/nftMinting';
+import { useAccount } from '@starknet-react/core';
+import { 
+  mintNFT, 
+  getOpenSeaUrl, 
+  canUserMintNFT, 
+  generateImageFromPixelData,
+  uploadImageToIPFS,
+  createNFTMetadata,
+  uploadMetadataToIPFS
+} from '@/utils/nftMinting';
+import { useMintNFT } from '@/utils/starknetContract';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../../../firebase';
 import { NFT } from '@/types/nftTypes';
 import toast from 'react-hot-toast';
 import styles from './MintButton.module.css';
@@ -21,14 +33,17 @@ const MintButton: React.FC<MintButtonProps> = ({
   isMinted = false 
 }) => {
   const { user, walletConnectionAuth } = useAuth();
+  const { address: starknetAddress, isConnected } = useAccount();
+  const { mintNFT: mintNFTOnChain, isConnected: isWalletConnected } = useMintNFT();
   const [isMinting, setIsMinting] = useState(false);
   const [mintingProgress, setMintingProgress] = useState('');
 
   const userAddress = user?.walletStored || user?.uid;
 
   const handleMint = async () => {
-    if (!userAddress) {
-      toast.error('Please connect your wallet to mint NFTs');
+    // Check wallet connection first
+    if (!isConnected || !starknetAddress) {
+      toast.error('Please connect your Starknet wallet to mint NFTs');
       return;
     }
 
@@ -46,20 +61,58 @@ const MintButton: React.FC<MintButtonProps> = ({
     setMintingProgress('Generating image...');
 
     try {
-      setMintingProgress('Uploading to IPFS...');
+      // Step 1: Generate image and upload to IPFS
+      setMintingProgress('Generating image...');
+      const imageResult = await generateImageFromPixelData(
+        nft.colorMap || [],
+        nft.color || '#000',
+        512
+      );
       
-      const result = await mintNFT(nft, userAddress, contractAddress);
+      setMintingProgress('Uploading image to IPFS...');
+      const imageUrl = await uploadImageToIPFS(imageResult, `nft-${nft.id}-image.png`);
       
-      if (result.success) {
-        toast.success('NFT minted successfully!');
+      // Step 2: Create and upload metadata
+      setMintingProgress('Creating metadata...');
+      const metadata = createNFTMetadata(nft, imageUrl);
+      const metadataUrl = await uploadMetadataToIPFS(metadata);
+      
+      // Step 3: Generate token ID
+      const tokenId = Math.floor(Math.random() * 1000000).toString();
+      
+      // Step 4: Mint on blockchain
+      setMintingProgress('Minting on blockchain...');
+      const blockchainResult = await mintNFTOnChain(
+        contractAddress,
+        tokenId,
+        metadataUrl
+      );
+      
+      if (blockchainResult.success) {
+        toast.success('NFT minted successfully! Check your wallet!');
         setMintingProgress('Minting complete!');
         
-        // Update the NFT to mark it as minted
-        // You might want to update this in your database
-        console.log('Minting result:', result);
+        // Update database with minting info
+        try {
+          const nftRef = doc(db, 'signatures', nft.id);
+          await updateDoc(nftRef, {
+            tokenId,
+            contractAddress,
+            isMinted: true,
+            mintedAt: new Date().toISOString(),
+            mintedBy: starknetAddress,
+            ipfsImageUrl: imageUrl,
+            ipfsMetadataUrl: metadataUrl,
+            transactionHash: blockchainResult.transactionHash
+          });
+        } catch (dbError) {
+          console.error('Database update failed:', dbError);
+        }
+        
+        console.log('Minting result:', blockchainResult);
       } else {
-        toast.error(result.error || 'Failed to mint NFT');
-        setMintingProgress('Minting failed');
+        toast.error(blockchainResult.error || 'Failed to mint NFT on blockchain');
+        setMintingProgress('Blockchain minting failed');
       }
     } catch (error) {
       console.error('Minting error:', error);
@@ -78,14 +131,43 @@ const MintButton: React.FC<MintButtonProps> = ({
     }
   };
 
+  const handleViewInWallet = () => {
+    if (contractAddress && tokenId) {
+      // Open Starknet explorer for the specific token
+      const explorerUrl = `https://starknet.io/explorer/contract/${contractAddress}`;
+      window.open(explorerUrl, '_blank');
+    }
+  };
+
   if (isMinted && contractAddress && tokenId) {
     return (
+      <div className={styles.mintedButtons}>
+        <button
+          className={`${styles.mintButton} ${styles.viewButton}`}
+          onClick={handleViewInWallet}
+          title="View in Starknet Explorer"
+        >
+          🔍 View in Explorer
+        </button>
+        <button
+          className={`${styles.mintButton} ${styles.openSeaButton}`}
+          onClick={handleViewOnOpenSea}
+          title="View on OpenSea"
+        >
+          🌊 View on OpenSea
+        </button>
+      </div>
+    );
+  }
+
+  if (!isConnected) {
+    return (
       <button
-        className={`${styles.mintButton} ${styles.viewButton}`}
-        onClick={handleViewOnOpenSea}
-        title="View on OpenSea"
+        className={`${styles.mintButton} ${styles.disabledButton}`}
+        disabled
+        title="Connect your Starknet wallet to mint NFTs"
       >
-        🌊 View on OpenSea
+        🔌 Connect Wallet
       </button>
     );
   }

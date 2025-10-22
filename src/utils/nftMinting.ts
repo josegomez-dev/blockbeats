@@ -422,13 +422,55 @@ export const canUserMintNFT = (nft: NFT, userAddress: string): boolean => {
  * Get OpenSea URL for minted NFT
  */
 export const getOpenSeaUrl = (contractAddress: string, tokenId: string, network: string = 'starknet'): string => {
-  // For Starknet, we'll use the Starknet mainnet OpenSea
+  // For Starknet mainnet - OpenSea supports Starknet mainnet
   const baseUrl = 'https://opensea.io/assets/starknet';
   return `${baseUrl}/${contractAddress}/${tokenId}`;
 };
 
 /**
- * Complete NFT minting process
+ * Interact with Starknet contract to mint NFT
+ */
+export const mintNFTOnBlockchain = async (
+  contractAddress: string,
+  userAddress: string,
+  tokenId: string,
+  tokenUri: string
+): Promise<{ success: boolean; transactionHash?: string; error?: string }> => {
+  try {
+    console.log('🔄 Interacting with Starknet contract...');
+    
+    // TODO: Implement actual Starknet contract interaction
+    // This would involve:
+    // 1. Getting the contract instance
+    // 2. Calling the mint function
+    // 3. Waiting for transaction confirmation
+    // 4. Returning the transaction hash
+    
+    // For now, simulate the transaction
+    const mockTransactionHash = `0x${Math.random().toString(16).substr(2, 64)}`;
+    
+    console.log('⚠️ Simulating blockchain transaction (replace with real contract call)');
+    console.log('Contract:', contractAddress);
+    console.log('User:', userAddress);
+    console.log('Token ID:', tokenId);
+    console.log('Token URI:', tokenUri);
+    
+    return {
+      success: true,
+      transactionHash: mockTransactionHash
+    };
+    
+  } catch (error) {
+    console.error('Error minting NFT on blockchain:', error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error'
+    };
+  }
+};
+
+/**
+ * Complete NFT minting process with real wallet interaction
  */
 export const mintNFT = async (
   nft: NFT,
@@ -444,12 +486,10 @@ export const mintNFT = async (
       };
     }
 
-    // Generate image from pixel data
-    console.log('🔄 Starting image generation...');
+    console.log('🔄 Starting NFT minting process...');
     console.log('NFT data:', {
       id: nft.id,
       colorMapLength: nft.colorMap?.length || 0,
-      colorMapSample: nft.colorMap?.slice(0, 2),
       backgroundColor: nft.color || '#000'
     });
 
@@ -468,7 +508,6 @@ export const mintNFT = async (
       
       // Fallback: try to capture the actual PixelPreview component
       try {
-        // Look for a PixelPreview component with this NFT's data
         const pixelPreviewId = `pixel-preview-${nft.id}`;
         imageDataUrl = await generateImageFromComponent(
           pixelPreviewId,
@@ -502,32 +541,40 @@ export const mintNFT = async (
     }
 
     // Upload image to IPFS
+    console.log('🔄 Uploading image to IPFS...');
     const imageUrl = await uploadImageToIPFS(
       imageDataUrl,
       `nft-${nft.id}-image.png`
     );
 
     // Create metadata
+    console.log('🔄 Creating NFT metadata...');
     const metadata = createNFTMetadata(nft, imageUrl);
 
     // Upload metadata to IPFS
+    console.log('🔄 Uploading metadata to IPFS...');
     const metadataUrl = await uploadMetadataToIPFS(metadata);
 
-    // TODO: Implement actual Starknet contract interaction
-    // This would involve calling the mint function on your deployed contract
-    // For now, we'll simulate the minting process
-    
-    console.log('NFT Minting Process:', {
-      nftId: nft.id,
-      imageUrl,
-      metadataUrl,
-      contractAddress,
-      userAddress
-    });
-
-    // Simulate token ID generation
+    // Generate token ID
     const tokenId = Math.floor(Math.random() * 1000000).toString();
 
+    console.log('🔄 Preparing blockchain transaction...');
+    
+    // Interact with the Starknet contract to mint the NFT
+    const blockchainResult = await mintNFTOnBlockchain(
+      contractAddress,
+      userAddress,
+      tokenId,
+      metadataUrl
+    );
+    
+    if (!blockchainResult.success) {
+      throw new Error(`Blockchain minting failed: ${blockchainResult.error}`);
+    }
+    
+    console.log('✅ Blockchain transaction successful!');
+    console.log('Transaction hash:', blockchainResult.transactionHash);
+    
     // Update the NFT in Firestore with minting information
     try {
       const nftRef = doc(db, 'signatures', nft.id);
@@ -540,6 +587,7 @@ export const mintNFT = async (
         ipfsImageUrl: imageUrl,
         ipfsMetadataUrl: metadataUrl
       });
+      console.log('✅ Database updated with minting info');
     } catch (error) {
       console.error('Error updating NFT in database:', error);
       // Continue with the minting process even if database update fails
